@@ -8,6 +8,9 @@ open import Agda.Builtin.List using (List)
 open import Agda.Primitive
 open import Ffi.Hs.Data.Int   using (Int)
 
+open import Ffi.Hs.-base.Class public
+    using (Show)
+
 private
     variable
         aℓ : Level
@@ -17,7 +20,6 @@ ShowS : Set
 ShowS = List Char → List Char
 
 postulate
-    Show      : Set aℓ → Set aℓ
     showsPrec : ⦃ Show A ⦄ → Int → A → ShowS
     show      : ⦃ Show A ⦄ → A → List Char
     showList  : ⦃ Show A ⦄ → List A → ShowS

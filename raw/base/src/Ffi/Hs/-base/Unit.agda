@@ -7,3 +7,6 @@ record ⊤ {ℓ} : Set ℓ where
 
 {-# FOREIGN GHC type AgdaUnit ℓ = ()      #-}
 {-# COMPILE GHC ⊤ = data(1) AgdaUnit (()) #-}
+
+cast : ∀{aℓ bℓ} → ⊤ {aℓ} → ⊤ {bℓ}
+cast _ = _

@@ -7,8 +7,7 @@ open import Agda.Builtin.List using (List)
 open import Agda.Primitive
 
 open import Agda.Builtin.Maybe public
-    using    (Maybe)
-    renaming (just to Just; nothing to Nothing)
+    using    (Maybe; just; nothing)
 
 private
     variable

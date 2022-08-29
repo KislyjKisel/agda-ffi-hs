@@ -16,8 +16,8 @@ private
         D : Set dℓ
 
 data Either (A : Set aℓ) (B : Set bℓ) : Set (aℓ ⊔ bℓ) where
-    Left  : A → Either A B
-    Right : B → Either A B
+    left  : A → Either A B
+    right : B → Either A B
 
 postulate
     either           : (A → C) → (B → C) → Either A B → C

@@ -22,12 +22,14 @@ private
 postulate
     ReadPrec : Set aℓ → Set aℓ
 
-    Functor[ReadPrec]     : Functor     {aℓ} ReadPrec
-    Applicative[ReadPrec] : Applicative {aℓ} ReadPrec
-    Alternative[ReadPrec] : Alternative {aℓ} ReadPrec
-    Monad[ReadPrec]       : Monad       {aℓ} ReadPrec
-    MonadPlus[ReadPrec]   : MonadPlus   {aℓ} ReadPrec
-    MonadFail[ReadPrec]   : MonadFail   {aℓ} ReadPrec
+module Instances where
+    postulate
+        Functor[ReadPrec]     : Functor     {aℓ} ReadPrec
+        Applicative[ReadPrec] : Applicative {aℓ} ReadPrec
+        Alternative[ReadPrec] : Alternative {aℓ} ReadPrec
+        Monad[ReadPrec]       : Monad       {aℓ} ReadPrec
+        MonadPlus[ReadPrec]   : MonadPlus   {aℓ} ReadPrec
+        MonadFail[ReadPrec]   : MonadFail   {aℓ} ReadPrec
 
 {-# FOREIGN GHC type AgdaReadPrec aℓ = AgdaHsReadPrec.ReadPrec #-}
 {-# COMPILE GHC ReadPrec = type(1) AgdaReadPrec #-}
@@ -36,12 +38,12 @@ postulate
 {-# FOREIGN GHC import qualified MAlonzo.Code.Ffi.Hs.Control.Applicative as AgdaHsControlApp  #-}
 {-# FOREIGN GHC import qualified MAlonzo.Code.Ffi.Hs.Control.Monad       as AgdaHsControlMon  #-}
 {-# FOREIGN GHC import qualified MAlonzo.Code.Ffi.Hs.Control.Monad.Fail  as AgdaHsControlMonF #-}
-{-# COMPILE GHC Functor[ReadPrec]     = AgdaHsDataFun.AgdaFunctor     #-}
-{-# COMPILE GHC Applicative[ReadPrec] = AgdaHsDataApp.AgdaApplicative #-}
-{-# COMPILE GHC Alternative[ReadPrec] = AgdaHsDataApp.AgdaAlternative #-}
-{-# COMPILE GHC Monad[ReadPrec]       = AgdaHsDataMon.AgdaMonad       #-}
-{-# COMPILE GHC MonadPlus[ReadPrec]   = AgdaHsDataMon.AgdaMonadPlus   #-}
-{-# COMPILE GHC MonadFail[ReadPrec]   = AgdaHsDataMonF.AgdaMonadFail  #-}
+{-# COMPILE GHC Instances.Functor[ReadPrec]     = AgdaHsDataFun.AgdaFunctor     #-}
+{-# COMPILE GHC Instances.Applicative[ReadPrec] = AgdaHsDataApp.AgdaApplicative #-}
+{-# COMPILE GHC Instances.Alternative[ReadPrec] = AgdaHsDataApp.AgdaAlternative #-}
+{-# COMPILE GHC Instances.Monad[ReadPrec]       = AgdaHsDataMon.AgdaMonad       #-}
+{-# COMPILE GHC Instances.MonadPlus[ReadPrec]   = AgdaHsDataMon.AgdaMonadPlus   #-}
+{-# COMPILE GHC Instances.MonadFail[ReadPrec]   = AgdaHsDataMonF.AgdaMonadFail  #-}
 
 Prec : Set
 Prec = ReadPrec Int

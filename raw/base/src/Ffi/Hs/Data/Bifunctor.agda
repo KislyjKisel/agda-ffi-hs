@@ -15,14 +15,11 @@ private
         F : Set f1ℓ → Set f2ℓ → Set (f1ℓ ⊔ f2ℓ)
 
 postulate
-    Bifunctor : (Set f1ℓ → Set f2ℓ → Set bℓ) → Set (f1ℓ ⊔ f2ℓ ⊔ bℓ)
     bimap  : ⦃ Bifunctor F ⦄ → (A → B) → (C → D) → F A C → F B D
     first  : ⦃ Bifunctor F ⦄ → (A → B) → F A C → F B C
     second : ⦃ Bifunctor F ⦄ → (B → C) → F A B → F A C
 
 {-# FOREIGN GHC import qualified Data.Bifunctor #-}
-{-# FOREIGN GHC data AgdaBifunctor f1ℓ f2ℓ bℓ f = Data.Bifunctor.Bifunctor f => AgdaBifunctor #-}
-{-# COMPILE GHC Bifunctor = type(0) AgdaBifunctor #-}
 {-# COMPILE GHC bimap  = \ f1ℓ f2ℓ a b c d f AgdaBifunctor -> Data.Bifunctor.bimap  #-}
 {-# COMPILE GHC first  = \ f1ℓ f2ℓ a b c   f AgdaBifunctor -> Data.Bifunctor.first  #-}
 {-# COMPILE GHC second = \ f1ℓ f2ℓ a b c   f AgdaBifunctor -> Data.Bifunctor.second #-}

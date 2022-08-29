@@ -15,7 +15,6 @@ private
         A : Set aℓ
 
 postulate
-    Floating : Set aℓ → Set aℓ
     pi                : ⦃ Floating A ⦄ → A
     exp log sqrt      : ⦃ Floating A ⦄ → A → A
     sin cos tan       : ⦃ Floating A ⦄ → A → A
@@ -27,7 +26,6 @@ postulate
     log1pexp log1mexp : ⦃ Floating A ⦄ → A → A
     log1mexpOrd       : ⦃ Ord A ⦄ → ⦃ Floating A ⦄ → A → A
 
-    RealFloat : Set aℓ → Set aℓ
     floatRadix     : ⦃ RealFloat A ⦄ → A → Integer
     floatDigits    : ⦃ RealFloat A ⦄ → A → Int
     floatRange     : ⦃ RealFloat A ⦄ → A → Tuple2 Int Int

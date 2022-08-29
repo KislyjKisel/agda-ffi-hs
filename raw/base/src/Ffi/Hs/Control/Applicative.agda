@@ -2,13 +2,16 @@
 
 module Ffi.Hs.Control.Applicative where
 
-open import Agda.Builtin.Bool           using (Bool)
-open import Agda.Builtin.List           using (List)
-open import Agda.Builtin.Maybe          using (Maybe)
+open import Agda.Builtin.Bool  using (Bool)
+open import Agda.Builtin.List  using (List)
+open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.Data.Int             using (Int)
-open import Ffi.Hs.Data.Tuple using (Tuple2)
 open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.Data.Int    using (Int)
+open import Ffi.Hs.Data.Tuple  using (Tuple2)
+
+open import Ffi.Hs.-base.Class public
+    using (Applicative; Alternative)
 
 private
     variable
@@ -23,14 +26,12 @@ infixl 4 _<*>_ _*>_ _<*_ _<**>_
 infixl 3 _<|>_
 
 postulate
-    Applicative : (Set aℓ → Set aℓ) → Set aℓ
     pure   : ⦃ Applicative F ⦄ → A → F A
     _<*>_  : ⦃ Applicative F ⦄ → F (A → B) → F A → F B
     liftA2 : ⦃ Applicative F ⦄ → (A → B → C) → F A → F B → F C
     _*>_   : ⦃ Applicative F ⦄ → F A → F B → F B
     _<*_   : ⦃ Applicative F ⦄ → F A → F B → F A
 
-    Alternative : (Set aℓ → Set aℓ) → Set aℓ
     empty : ⦃ Alternative F ⦄ → F A
     _<|>_ : ⦃ Alternative F ⦄ → F A → F A → F A
     some  : ⦃ Alternative F ⦄ → F A → F (List A)
@@ -60,18 +61,14 @@ postulate
     when   : ⦃ Applicative F ⦄ → Bool → F ⊤ → F ⊤
     unless : ⦃ Applicative F ⦄ → Bool → F ⊤ → F ⊤ 
 
-{-# FOREIGN GHC import qualified Control.Applicative               #-}
+{-# FOREIGN GHC import qualified Control.Applicative #-}
 
-{-# FOREIGN GHC data AgdaApplicative aℓ f = Control.Applicative.Applicative f => AgdaApplicative #-}
-{-# COMPILE GHC Applicative = type(0) AgdaApplicative #-}
 {-# COMPILE GHC pure   = \ ℓ f a     AgdaApplicative -> Control.Applicative.pure   #-}
 {-# COMPILE GHC _<*>_  = \ ℓ f a b   AgdaApplicative -> (Control.Applicative.<*>)  #-}
 {-# COMPILE GHC liftA2 = \ ℓ f a b c AgdaApplicative -> Control.Applicative.liftA2 #-}
 {-# COMPILE GHC _*>_   = \ ℓ f a b   AgdaApplicative -> (Control.Applicative.*>)   #-}
 {-# COMPILE GHC _<*_   = \ ℓ f a b   AgdaApplicative -> (Control.Applicative.<*)   #-}
 
-{-# FOREIGN GHC data AgdaAlternative aℓ f = Control.Applicative.Alternative f => AgdaAlternative #-}
-{-# COMPILE GHC Alternative = type(0) AgdaAlternative                     #-}
 {-# COMPILE GHC empty = \ ℓ f a AgdaAlternative -> Control.Applicative.empty #-}
 {-# COMPILE GHC _<|>_ = \ ℓ f a AgdaAlternative -> (Control.Applicative.<|>) #-}
 {-# COMPILE GHC some  = \ ℓ f a AgdaAlternative -> Control.Applicative.some  #-}

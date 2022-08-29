@@ -6,6 +6,9 @@ open import Agda.Builtin.Bool  using (Bool)
 open import Agda.Primitive
 open import Ffi.Hs.Data.Tuple using (Tuple2)
 
+open import Ffi.Hs.-base.Class public
+    using (Ord)
+
 private
     variable
         aℓ bℓ : Level
@@ -17,12 +20,6 @@ data Ordering : Set where
 
 {-# FOREIGN GHC import qualified Data.Ord #-}
 {-# COMPILE GHC Ordering = data Data.Ord.Ordering (LT | EQ | GT) #-}
-
-postulate
-    Ord : Set aℓ → Set aℓ
-
-{-# FOREIGN GHC data AgdaOrd aℓ a = Ord a => AgdaOrd #-}
-{-# COMPILE GHC Ord = type(0) AgdaOrd #-}
 
 infix 4 _<_ _<=_ _>_ _>=_
 

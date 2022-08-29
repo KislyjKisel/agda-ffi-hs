@@ -4,14 +4,12 @@ module Ffi.Hs.Data.Fixed where
 
 open import Agda.Builtin.Bool using (Bool)
 open import Agda.Builtin.Char using (Char)
-open import Agda.Builtin.List using (List)
 open import Agda.Builtin.Int  using () renaming (Int to Integer)
+open import Agda.Builtin.List using (List)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Num using (Num)
-open import Ffi.Hs.-base.Real using (Real; RealFrac; Fractional; Integral)
-open import Ffi.Hs.-base.Enum using (Enum)
-open import Ffi.Hs.Data.Eq using (Eq)
-open import Ffi.Hs.Data.Ord using (Ord)
+open import Ffi.Hs.-base.Class
+open import Ffi.Hs.Data.Eq    using (Eq)
+open import Ffi.Hs.Data.Ord   using (Ord)
 open import Ffi.Hs.Data.Tuple using (Tuple2)
 
 {-# FOREIGN GHC import qualified Data.Fixed #-}
@@ -74,17 +72,29 @@ data Fixed (A : Set aℓ) : Set aℓ where
 postulate
     showFixed : ⦃ HasResolution A ⦄ → Bool → Fixed A → List Char
 
-    Enum[Fixed[A]] : Enum (Fixed A)
-    Num[Fixed[A]] : ⦃ HasResolution A ⦄ → Num (Fixed A)
-    Read[Fixed[A]] : ⦃ HasResolution A ⦄ → Read (Fixed A)
-    Fractional[Fixed[A]] : ⦃ HasResolution A ⦄ → Fractional (Fixed A)
-    Real[Fixed[A]] : ⦃ HasResolution A ⦄ → Real (Fixed A)
-    RealFrac[Fixed[A]] : ⦃ HasResolution A ⦄ → RealFrac (Fixed A)
-    Show[Fixed[A]] : ⦃ HasResolution A ⦄ → Show (Fixed A)
-    Eq[Fixed[A]] : Eq (Fixed A)
-    Ord[Fixed[A]] : Ord (Fixed A)
-
 {-# COMPILE GHC showFixed = \ aℓ a AgdaHasResolution -> Data.Fixed.showFixed #-}
+
+module Instances where
+    postulate
+        Enum[Fixed[A]]       : Enum (Fixed A)
+        Num[Fixed[A]]        : ⦃ HasResolution A ⦄ → Num (Fixed A)
+        Read[Fixed[A]]       : ⦃ HasResolution A ⦄ → Read (Fixed A)
+        Fractional[Fixed[A]] : ⦃ HasResolution A ⦄ → Fractional (Fixed A)
+        Real[Fixed[A]]       : ⦃ HasResolution A ⦄ → Real (Fixed A)
+        RealFrac[Fixed[A]]   : ⦃ HasResolution A ⦄ → RealFrac (Fixed A)
+        Show[Fixed[A]]       : ⦃ HasResolution A ⦄ → Show (Fixed A)
+        Eq[Fixed[A]]         : Eq (Fixed A)
+        Ord[Fixed[A]]        : Ord (Fixed A)
+
+{-# COMPILE GHC Instances.Enum[Fixed[A]]       = \ aℓ a                   -> AgdaEnum       #-}
+{-# COMPILE GHC Instances.Num[Fixed[A]]        = \ aℓ a AgdaHasResolution -> AgdaNum        #-}
+{-# COMPILE GHC Instances.Read[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaRead       #-}
+{-# COMPILE GHC Instances.Fractional[Fixed[A]] = \ aℓ a AgdaHasResolution -> AgdaFractional #-}
+{-# COMPILE GHC Instances.Real[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaReal       #-}
+{-# COMPILE GHC Instances.RealFrac[Fixed[A]]   = \ aℓ a AgdaHasResolution -> AgdaRealFrac   #-}
+{-# COMPILE GHC Instances.Show[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaShow       #-}
+{-# COMPILE GHC Instances.Eq[Fixed[A]]         = \ aℓ a                   -> AgdaEq         #-}
+{-# COMPILE GHC Instances.Ord[Fixed[A]]        = \ aℓ a                   -> AgdaOrd        #-}
 
 Uni : Set
 Uni = Fixed E0

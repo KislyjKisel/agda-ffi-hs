@@ -5,8 +5,9 @@ module Ffi.Hs.-base.Real where
 open import Agda.Builtin.Bool          using (Bool)
 open import Agda.Builtin.List          using (List)
 open import Agda.Primitive
+open import Ffi.Hs.-base.Class         using (Num; Real; Integral; Fractional; RealFrac)
 open import Ffi.Hs.-base.Enum          using (Enum; Bounded)
-open import Ffi.Hs.-base.Num           using (Integer; Num)
+open import Ffi.Hs.-base.Num           using (Integer)
 open import Ffi.Hs.Data.Int            using (Int)
 open import Ffi.Hs.Data.Ord            using (Ord)
 open import Ffi.Hs.Data.Tuple          using (Tuple2)
@@ -46,11 +47,9 @@ postulate
 
     ratioPrec  : Int
     ratioPrec1 : Int
-    
-    Real       : Set aℓ → Set aℓ
+
     toRational : ⦃ Real A ⦄ → A → Rational
 
-    Integral  : Set aℓ → Set aℓ
     quot      : ⦃ Integral A ⦄ → A → A → A
     rem       : ⦃ Integral A ⦄ → A → A → A
     div       : ⦃ Integral A ⦄ → A → A → A
@@ -62,12 +61,10 @@ postulate
     _%_    : ⦃ Integral A ⦄ → A → A → Ratio A
     reduce : ⦃ Integral A ⦄ → A → A → Ratio A
 
-    Fractional   : Set aℓ → Set aℓ
     _/_          : ⦃ Fractional A ⦄ → A → A → A
     recip        : ⦃ Fractional A ⦄ → A → A
     fromRational : ⦃ Fractional A ⦄ → Rational → A
 
-    RealFrac       : Set aℓ → Set aℓ
     properFraction : ⦃ RealFrac A ⦄ → ⦃ Integral B ⦄ → A → Tuple2 B A
     truncate       : ⦃ RealFrac A ⦄ → ⦃ Integral B ⦄ → A → B
     round          : ⦃ RealFrac A ⦄ → ⦃ Integral B ⦄ → A → B

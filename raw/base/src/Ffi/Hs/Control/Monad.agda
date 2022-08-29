@@ -2,10 +2,16 @@
 
 module Ffi.Hs.Control.Monad where
 
-open import Agda.Builtin.Bool           using (Bool)
+open import Agda.Builtin.Bool using (Bool)
 open import Agda.Primitive
 open import Ffi.Hs.Data.String using (String)
-open import Ffi.Hs.Control.Applicative using (Applicative)
+open import Ffi.Hs.-base.Class using (Applicative)
+
+open Ffi.Hs.-base.Class public
+    using (Monad; MonadPlus; MonadFail)
+
+open import Ffi.Hs.Control.Monad.Fail public
+    using (fail)
 
 private
     variable
@@ -28,10 +34,6 @@ postulate
     _>>=_  : ⦃ Monad M ⦄ → M A → (A → M B) → M B
     _>>_   : ⦃ Monad M ⦄ → M A → M B → M B
 
-    MonadFail : (Set aℓ → Set aℓ) → Set aℓ
-    fail : ⦃ MonadFail M ⦄ → String → M A
-
-    MonadPlus : (Set aℓ → Set aℓ) → Set aℓ
     mzero : ⦃ MonadPlus M ⦄ → M A
     mplus : ⦃ MonadPlus M ⦄ → M A → M A → M A
     

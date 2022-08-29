@@ -6,7 +6,7 @@ open import Agda.Builtin.Bool          using (Bool)
 open import Agda.Builtin.List          using (List)
 open import Agda.Builtin.Maybe         using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Num  using (Num)
+open import Ffi.Hs.-base.Class  using (Num; Eq)
 open import Ffi.Hs.-base.Unit using (⊤)
 open import Ffi.Hs.Control.Applicative using (Applicative; Alternative)
 open import Ffi.Hs.Control.Monad       using (Monad; MonadPlus)
@@ -14,6 +14,9 @@ open import Ffi.Hs.Data.Eq             using (Eq)
 open import Ffi.Hs.Data.Int            using (Int)
 open import Ffi.Hs.Data.Monoid         using (Monoid)
 open import Ffi.Hs.Data.Ord            using (Ord; Ordering)
+
+open Ffi.Hs.-base.Class public
+    using (Foldable)
 
 private
     variable
@@ -23,7 +26,6 @@ private
         F M : Set fℓ → Set fℓ
 
 postulate
-    Foldable   : ∀{ℓ} → (Set ℓ → Set ℓ) → Set ℓ
     fold       : ⦃ Foldable F ⦄ → ⦃ Monoid A ⦄ → F A → A
     foldMap    : ⦃ Foldable F ⦄ → ⦃ Monoid B ⦄ → (A → B) → F A → B
     foldMap'   : ⦃ Foldable F ⦄ → ⦃ Monoid B ⦄ → (A → B) → F A → B

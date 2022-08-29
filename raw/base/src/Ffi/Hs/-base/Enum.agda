@@ -16,11 +16,9 @@ private
         B : Set bℓ
 
 postulate
-    Bounded  : Set aℓ → Set aℓ
     minBound : ⦃ Bounded A ⦄ → A
     maxBound : ⦃ Bounded A ⦄ → A
 
-    Enum           : Set aℓ → Set aℓ
     succ           : ⦃ Enum A ⦄ → A → A
     pred           : ⦃ Enum A ⦄ → A → A
     toEnum         : ⦃ Enum A ⦄ → Int → A

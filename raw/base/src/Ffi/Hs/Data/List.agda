@@ -2,15 +2,14 @@
 
 module Ffi.Hs.Data.List where
 
-open import Agda.Builtin.Bool           using (Bool)
-open import Agda.Builtin.Maybe          using (Maybe)
+open import Agda.Builtin.Bool  using (Bool)
+open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.Data.Tuple using (Tuple2; Tuple3; Tuple4; Tuple5)
-open import Ffi.Hs.-base.Num   using (Num)
-open import Ffi.Hs.-base.Real  using (Integral)
-open import Ffi.Hs.Data.Eq              using (Eq)
-open import Ffi.Hs.Data.Int             using (Int)
-open import Ffi.Hs.Data.Ord             using (Ord; Ordering)
+open import Ffi.Hs.-base.Class using (Num; Integral)
+open import Ffi.Hs.Data.Eq     using (Eq)
+open import Ffi.Hs.Data.Int    using (Int)
+open import Ffi.Hs.Data.Ord    using (Ord; Ordering)
+open import Ffi.Hs.Data.Tuple  using (Tuple2; Tuple3; Tuple4; Tuple5)
 
 open import Agda.Builtin.List public
     using (List; []; _∷_)

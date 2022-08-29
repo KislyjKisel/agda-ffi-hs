@@ -1,25 +1,27 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --safe #-}
 
 module Ffi.Hs.Data.Bool where
 
 open import Agda.Builtin.Bool public
-    using    (Bool)
-    renaming (true to True; false to False)
+    using    (Bool; true; false)
 
 infixr 6 _&&_
 infixr 5 _||_
 
-postulate
-    _&&_      : Bool → Bool → Bool
-    _||_      : Bool → Bool → Bool
-    not       : Bool → Bool
-    otherwise : Bool
-    bool      : ∀{aℓ} {A : Set aℓ} → A → A → Bool → A
+_&&_ : Bool → Bool → Bool
+true  && x = x
+false && x = false
 
-{-# FOREIGN GHC import qualified Data.Bool #-}
+_||_ : Bool → Bool → Bool
+true  || x = true
+false || x = x
 
-{-# COMPILE GHC _&&_      = (Data.Bool.&&)          #-}
-{-# COMPILE GHC _||_      = (Data.Bool.||)          #-}
-{-# COMPILE GHC not       = Data.Bool.not           #-}
-{-# COMPILE GHC otherwise = Data.Bool.otherwise     #-}
-{-# COMPILE GHC bool      = \ ℓ a -> Data.Bool.bool #-}
+bool : ∀{aℓ} {A : Set aℓ} → A → A → Bool → A
+bool x y false = x
+bool x y true  = y
+
+not : Bool → Bool
+not true  = false
+not false = true
+
+otherwise = true
