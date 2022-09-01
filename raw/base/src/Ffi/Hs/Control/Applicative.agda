@@ -62,6 +62,7 @@ postulate
     unless : ⦃ Applicative F ⦄ → Bool → F ⊤ → F ⊤ 
 
 {-# FOREIGN GHC import qualified Control.Applicative #-}
+{-# FOREIGN GHC  #-}
 
 {-# COMPILE GHC pure   = \ ℓ f a     AgdaApplicative -> Control.Applicative.pure   #-}
 {-# COMPILE GHC _<*>_  = \ ℓ f a b   AgdaApplicative -> (Control.Applicative.<*>)  #-}

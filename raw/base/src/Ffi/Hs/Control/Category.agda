@@ -3,7 +3,9 @@
 module Ffi.Hs.Control.Category where
 
 open import Agda.Primitive
-open import Ffi.Hs.-base.Class using (Category)
+
+open import Ffi.Hs.-base.Class public
+    using (Category)
 
 private
     variable
