@@ -29,3 +29,18 @@ postulate
     showString   : List Char → ShowS
     showParen    : Bool → ShowS → ShowS
     showListWith : (A → ShowS) → List A → ShowS
+
+{-# FOREIGN GHC
+import qualified Text.Show
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaShow)
+#-}
+
+{-# COMPILE GHC showsPrec = \ aℓ a AgdaShow -> Text.Show.showsPrec #-}
+{-# COMPILE GHC show      = \ aℓ a AgdaShow -> Text.Show.show      #-}
+{-# COMPILE GHC showList  = \ aℓ a AgdaShow -> Text.Show.showList  #-}
+
+{-# COMPILE GHC shows        = \ aℓ a AgdaShow -> Text.Show.shows        #-}
+{-# COMPILE GHC showChar     =                    Text.Show.showChar     #-}
+{-# COMPILE GHC showString   =                    Text.Show.showString   #-}
+{-# COMPILE GHC showParen    =                    Text.Show.showParen    #-}
+{-# COMPILE GHC showListWith = \ aℓ a ->          Text.Show.showListWith #-}
