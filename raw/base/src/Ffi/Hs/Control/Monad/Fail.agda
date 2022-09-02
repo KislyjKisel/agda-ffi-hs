@@ -2,21 +2,32 @@
 
 module Ffi.Hs.Control.Monad.Fail where
 
-open import Agda.Builtin.Char using (Char)
-open import Agda.Builtin.List using (List)
+open import Agda.Builtin.Char  using (Char)
+open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
+open import Ffi.Hs.-base.Class using (Monad)
 
-open import Ffi.Hs.-base.Class public
+open Ffi.Hs.-base.Class public
     using (MonadFail)
+
+{-# FOREIGN GHC
+import qualified Control.Monad.Fail
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class(AgdaMonad, AgdaMonadFail)
+#-}
 
 private
     variable
-        aℓ fℓ : Level
+        aℓ mℓ : Level
         A : Set aℓ
-        F : Set fℓ → Set fℓ
+        M : Set mℓ → Set mℓ
 
 postulate
-    fail : ⦃ MonadFail F ⦄ → List Char → F A
+    fail : ⦃ MonadFail M ⦄ → List Char → M A
 
-{-# FOREIGN GHC import qualified Control.Monad.Fail #-}
-{-# COMPILE GHC fail = \ fℓ a f AgdaMonadFail -> Control.Monad.Fail.fail #-}
+{-# COMPILE GHC fail = \ mℓ a m AgdaMonadFail -> Control.Monad.Fail.fail #-}
+
+module Instances where
+    postulate
+        MonadFail[M]⇒Monad[M] : ⦃ MonadFail M ⦄ → Monad M
+
+{-# COMPILE GHC Instances.MonadFail[M]⇒Monad[M] = \ mℓ m AgdaMonadFail -> AgdaMonad #-}

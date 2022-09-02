@@ -233,7 +233,11 @@ UnliftedType = TYPE `UnliftedRep
 LiftedType : Set aℓ → Set aℓ
 LiftedType = TYPE `LiftedRep
 
--- postulate
+postulate
+    RealWorld : Set
+
+{-# COMPILE GHC RealWorld = GHC.Exts.RealWorld #-}
+
 --     Addr# Void# Char# Double# Float# : Set
 --     ByteArray# ArrayArray# ThreadId# BCO Compact# : Set
 --     Int# Int8# Int16# Int32# Int64# : Set

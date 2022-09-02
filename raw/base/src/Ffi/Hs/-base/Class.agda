@@ -36,6 +36,8 @@ postulate
     MonadPlus   : (Set aℓ → Set aℓ) → Set aℓ
     MonadFail   : (Set aℓ → Set aℓ) → Set aℓ
     MonadFix    : (Set aℓ → Set aℓ) → Set aℓ
+    MonadZip    : (Set aℓ → Set aℓ) → Set aℓ
+    MonadIO     : (Set aℓ → Set aℓ) → Set aℓ
     
     Category    : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Arrow       : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)

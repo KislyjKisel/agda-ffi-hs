@@ -6,12 +6,18 @@ open import Agda.Builtin.Bool  using (Bool)
 open import Agda.Builtin.List  using (List)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
+open import Ffi.Hs.-base.Class using (Functor)
 open import Ffi.Hs.-base.Unit  using (⊤)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Tuple  using (Tuple2)
 
-open import Ffi.Hs.-base.Class public
+open Ffi.Hs.-base.Class public
     using (Applicative; Alternative)
+
+{-# FOREIGN GHC
+import qualified Control.Applicative
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class(AgdaApplicative, AgdaAlternative, AgdaFunctor)
+#-}
 
 private
     variable
@@ -61,9 +67,6 @@ postulate
     when   : ⦃ Applicative F ⦄ → Bool → F ⊤ → F ⊤
     unless : ⦃ Applicative F ⦄ → Bool → F ⊤ → F ⊤ 
 
-{-# FOREIGN GHC import qualified Control.Applicative #-}
-{-# FOREIGN GHC  #-}
-
 {-# COMPILE GHC pure   = \ ℓ f a     AgdaApplicative -> Control.Applicative.pure   #-}
 {-# COMPILE GHC _<*>_  = \ ℓ f a b   AgdaApplicative -> (Control.Applicative.<*>)  #-}
 {-# COMPILE GHC liftA2 = \ ℓ f a b c AgdaApplicative -> Control.Applicative.liftA2 #-}
@@ -100,3 +103,11 @@ postulate
 {-# COMPILE GHC guard  = \ ℓ f AgdaAlternative -> Control.Monad.guard  #-}
 {-# COMPILE GHC when   = \ ℓ f AgdaApplicative -> Control.Monad.when   #-}
 {-# COMPILE GHC unless = \ ℓ f AgdaApplicative -> Control.Monad.unless #-}
+
+module Instances where
+    postulate
+        Applicative[F]⇒Functor[F]     : ⦃ Applicative F ⦄ → Functor F
+        Alternative[F]⇒Applicative[F] : ⦃ Alternative F ⦄ → Applicative F
+
+{-# COMPILE GHC Instances.Applicative[F]⇒Functor[F]     = \ fℓ f AgdaApplicative -> AgdaFunctor #-}
+{-# COMPILE GHC Instances.Alternative[F]⇒Applicative[F] = \ fℓ f AgdaAlternative -> AgdaFunctor #-}

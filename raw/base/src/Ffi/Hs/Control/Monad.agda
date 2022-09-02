@@ -5,13 +5,18 @@ module Ffi.Hs.Control.Monad where
 open import Agda.Builtin.Bool using (Bool)
 open import Agda.Primitive
 open import Ffi.Hs.Data.String using (String)
-open import Ffi.Hs.-base.Class using (Applicative)
+open import Ffi.Hs.-base.Class using (Applicative; Alternative)
 
 open Ffi.Hs.-base.Class public
     using (Monad; MonadPlus; MonadFail)
 
 open import Ffi.Hs.Control.Monad.Fail public
     using (fail)
+
+{-# FOREIGN GHC
+import qualified Control.Monad
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class(AgdaApplicative, AgdaAlternative, AgdaMonad, AgdaMonadPlus)
+#-}
 
 private
     variable
@@ -29,7 +34,6 @@ infixl 1 _>>=_ _>>_
 infixr 1 _=<<_ _>=>_ _<=<_
 
 postulate
-    Monad  : (Set aℓ → Set aℓ) → Set aℓ
     return : ⦃ Monad M ⦄ → A → M A
     _>>=_  : ⦃ Monad M ⦄ → M A → (A → M B) → M B
     _>>_   : ⦃ Monad M ⦄ → M A → M B → M B
@@ -38,8 +42,8 @@ postulate
     mplus : ⦃ MonadPlus M ⦄ → M A → M A → M A
     
     _=<<_ : ⦃ Monad M ⦄ → (A → M B) → M A → M B 
-    _>=>_ : ⦃ Monad M ⦄ → (A → M B) → (B → M C) → A → M C
-    _<=<_ : ⦃ Monad M ⦄ → (B → M C) → (A → M B) → A → M C
+    _>=>_ : {A B C : Set mℓ} → ⦃ Monad M ⦄ → (A → M B) → (B → M C) → A → M C
+    _<=<_ : {A B C : Set mℓ} → ⦃ Monad M ⦄ → (B → M C) → (A → M B) → A → M C
     
     forever : ⦃ Applicative M ⦄ → M A → M B
 
@@ -54,3 +58,38 @@ postulate
     ap     : ⦃ Monad M ⦄ → M (A → B) → M A → M B 
 
     _<$!>_ : ⦃ Monad M ⦄ → (A → B) → M A → M B
+
+{-# COMPILE GHC return = \ mℓ m a   AgdaMonad -> Control.Monad.return #-}
+{-# COMPILE GHC _>>=_  = \ mℓ m a b AgdaMonad -> (Control.Monad.>>=)  #-}
+{-# COMPILE GHC _>>_   = \ mℓ m a b AgdaMonad -> (Control.Monad.>>)   #-}
+
+{-# COMPILE GHC mzero = \ mℓ m a AgdaMonadPlus -> Control.Monad.mzero #-}
+{-# COMPILE GHC mplus = \ mℓ m a AgdaMonadPlus -> Control.Monad.mplus #-}
+
+{-# COMPILE GHC _=<<_ = \ mℓ m a b   AgdaMonad -> (Control.Monad.=<<) #-}
+{-# COMPILE GHC _>=>_ = \ mℓ a b c m AgdaMonad -> (Control.Monad.>=>) #-}
+{-# COMPILE GHC _<=<_ = \ mℓ a b c m AgdaMonad -> (Control.Monad.<=<) #-}
+
+{-# COMPILE GHC forever = \ mℓ m a b AgdaApplicative -> Control.Monad.forever #-}
+
+{-# COMPILE GHC join    = \ mℓ m a AgdaMonad     -> Control.Monad.join    #-}
+{-# COMPILE GHC mfilter = \ mℓ m a AgdaMonadPlus -> Control.Monad.mfilter #-}
+
+{-# COMPILE GHC liftM  = \ mℓ m a b         AgdaMonad -> Control.Monad.liftM  #-}
+{-# COMPILE GHC liftM2 = \ mℓ m a b c       AgdaMonad -> Control.Monad.liftM2 #-}
+{-# COMPILE GHC liftM3 = \ mℓ m a b c d     AgdaMonad -> Control.Monad.liftM3 #-}
+{-# COMPILE GHC liftM4 = \ mℓ m a b c d e   AgdaMonad -> Control.Monad.liftM4 #-}
+{-# COMPILE GHC liftM5 = \ mℓ m a b c d e f AgdaMonad -> Control.Monad.liftM5 #-}
+{-# COMPILE GHC ap     = \ mℓ m a b         AgdaMonad -> Control.Monad.ap     #-}
+
+{-# COMPILE GHC _<$!>_ = \ mℓ m a b AgdaMonad -> (Control.Monad.<$!>) #-}
+
+module Instances where
+    postulate
+        Monad[M]⇒Applicative[M]     : ⦃ Monad M ⦄ → Applicative M
+        MonadPlus[M]⇒Monad[M]       : ⦃ MonadPlus M ⦄ → Monad M
+        MonadPlus[M]⇒Alternative[M] : ⦃ MonadPlus M ⦄ → Alternative M
+
+{-# COMPILE GHC Instances.Monad[M]⇒Applicative[M]     = \ mℓ m AgdaMonad     -> AgdaApplicative #-}
+{-# COMPILE GHC Instances.MonadPlus[M]⇒Monad[M]       = \ mℓ m AgdaMonadPlus -> AgdaMonad       #-}
+{-# COMPILE GHC Instances.MonadPlus[M]⇒Alternative[M] = \ mℓ m AgdaMonadPlus -> AgdaAlternative #-}

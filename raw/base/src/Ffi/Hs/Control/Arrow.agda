@@ -85,10 +85,10 @@ record Kleisli (M : Set bℓ → Set bℓ) (A : Set aℓ) (B : Set bℓ) : Set (
 
 module Instances where
     postulate
-        Arrow[⟶]       : Arrow {aℓ} {bℓ} (\ a b → (a → b))
-        ArrowChoice[⟶] : ArrowChoice {aℓ} {bℓ} (\ a b → (a → b))
-        ArrowApply[⟶]  : ArrowApply {aℓ} {bℓ} (\ a b → (a → b))
-        ArrowLoop[⟶]   : ArrowLoop {aℓ} {bℓ} (\ a b → (a → b))
+        Arrow[⟶]       : Arrow {aℓ} {bℓ} (λ a b → (a → b))
+        ArrowChoice[⟶] : ArrowChoice {aℓ} {bℓ} (λ a b → (a → b))
+        ArrowApply[⟶]  : ArrowApply {aℓ} {bℓ} (λ a b → (a → b))
+        ArrowLoop[⟶]   : ArrowLoop {aℓ} {bℓ} (λ a b → (a → b))
 
         Arrow[Kleisli[M]]         : ⦃ Monad M ⦄       → Arrow {aℓ} (Kleisli M)
         Category[Kleisli[M]]      : ⦃ Monad M ⦄       → Category {aℓ} (Kleisli M)
