@@ -2,17 +2,20 @@
 
 module Ffi.Hs.Text.ParserCombinators.ReadPrec where
 
-open import Agda.Builtin.Char                   using (Char)
-open import Agda.Builtin.List                   using (List)
+open import Agda.Builtin.Char  using (Char)
+open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
-open import Ffi.Hs.Control.Applicative          using (Applicative; Alternative)
-open import Ffi.Hs.Control.Monad                using (Monad; MonadPlus)
-open import Ffi.Hs.Control.Monad.Fail           using (MonadFail)
-open import Ffi.Hs.Data.Functor                 using (Functor)
-open import Ffi.Hs.Data.Int                     using (Int)
+open import Ffi.Hs.-base.Class using (Functor; Applicative; Alternative; Monad; MonadFail; MonadPlus)
+open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Text.ParserCombinators.ReadP using (ReadP; ReadS)
 
-{-# FOREIGN GHC import qualified Text.ParserCombinators.ReadPrec as AgdaHsReadPrec #-}
+{-# FOREIGN GHC
+import qualified Text.ParserCombinators.ReadPrec as AgdaHsReadPrec
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
+    ( AgdaFunctor, AgdaApplicative, AgdaAlternative
+    , AgdaMonad, AgdaMonadFail, AgdaMonadPlus
+    )
+#-}
 
 private
     variable
@@ -22,28 +25,8 @@ private
 postulate
     ReadPrec : Set aℓ → Set aℓ
 
-module Instances where
-    postulate
-        Functor[ReadPrec]     : Functor     {aℓ} ReadPrec
-        Applicative[ReadPrec] : Applicative {aℓ} ReadPrec
-        Alternative[ReadPrec] : Alternative {aℓ} ReadPrec
-        Monad[ReadPrec]       : Monad       {aℓ} ReadPrec
-        MonadPlus[ReadPrec]   : MonadPlus   {aℓ} ReadPrec
-        MonadFail[ReadPrec]   : MonadFail   {aℓ} ReadPrec
-
 {-# FOREIGN GHC type AgdaReadPrec aℓ = AgdaHsReadPrec.ReadPrec #-}
 {-# COMPILE GHC ReadPrec = type(1) AgdaReadPrec #-}
-
-{-# FOREIGN GHC import qualified MAlonzo.Code.Ffi.Hs.Data.Functor        as AgdaHsDataFun     #-}
-{-# FOREIGN GHC import qualified MAlonzo.Code.Ffi.Hs.Control.Applicative as AgdaHsControlApp  #-}
-{-# FOREIGN GHC import qualified MAlonzo.Code.Ffi.Hs.Control.Monad       as AgdaHsControlMon  #-}
-{-# FOREIGN GHC import qualified MAlonzo.Code.Ffi.Hs.Control.Monad.Fail  as AgdaHsControlMonF #-}
-{-# COMPILE GHC Instances.Functor[ReadPrec]     = AgdaHsDataFun.AgdaFunctor     #-}
-{-# COMPILE GHC Instances.Applicative[ReadPrec] = AgdaHsDataApp.AgdaApplicative #-}
-{-# COMPILE GHC Instances.Alternative[ReadPrec] = AgdaHsDataApp.AgdaAlternative #-}
-{-# COMPILE GHC Instances.Monad[ReadPrec]       = AgdaHsDataMon.AgdaMonad       #-}
-{-# COMPILE GHC Instances.MonadPlus[ReadPrec]   = AgdaHsDataMon.AgdaMonadPlus   #-}
-{-# COMPILE GHC Instances.MonadFail[ReadPrec]   = AgdaHsDataMonF.AgdaMonadFail  #-}
 
 Prec : Set
 Prec = ReadPrec Int
@@ -86,3 +69,19 @@ postulate
 {-# COMPILE GHC readP_to_Prec = \ aℓ a -> AgdaHsReadPrec.readP_to_Prec #-}
 {-# COMPILE GHC readPrec_to_S = \ aℓ a -> AgdaHsReadPrec.readPrec_to_S #-}
 {-# COMPILE GHC readS_to_Prec = \ aℓ a -> AgdaHsReadPrec.readS_to_Prec #-}
+
+module Instances where
+    postulate
+        Functor[ReadPrec]     : Functor {aℓ} ReadPrec
+        Applicative[ReadPrec] : Applicative {aℓ} ReadPrec
+        Alternative[ReadPrec] : Alternative {aℓ} ReadPrec
+        Monad[ReadPrec]       : Monad {aℓ} ReadPrec
+        MonadFail[ReadPrec]   : MonadFail {aℓ} ReadPrec
+        MonadPlus[ReadPrec]   : MonadPlus {aℓ} ReadPrec
+
+{-# COMPILE GHC Instances.Functor[ReadPrec]     = \ aℓ -> AgdaFunctor     #-}
+{-# COMPILE GHC Instances.Applicative[ReadPrec] = \ aℓ -> AgdaApplicative #-}
+{-# COMPILE GHC Instances.Alternative[ReadPrec] = \ aℓ -> AgdaAlternative #-}
+{-# COMPILE GHC Instances.Monad[ReadPrec]       = \ aℓ -> AgdaMonad       #-}
+{-# COMPILE GHC Instances.MonadFail[ReadPrec]   = \ aℓ -> AgdaMonadFail   #-}
+{-# COMPILE GHC Instances.MonadPlus[ReadPrec]   = \ aℓ -> AgdaMonadPlus   #-}

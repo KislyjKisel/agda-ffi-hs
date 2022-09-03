@@ -5,9 +5,12 @@ module Ffi.Hs.-base.Float where
 open import Agda.Builtin.Bool  using (Bool)
 open import Agda.Builtin.Int   using () renaming (Int to Integer)
 open import Agda.Primitive
-open import Ffi.Hs.Data.Tuple using (Tuple2)
+open import Ffi.Hs.Data.Tuple  using (Tuple2)
 open import Ffi.Hs.Data.Int    using (Int)
-open import Ffi.Hs.Data.Ord    using (Ord)
+open import Ffi.Hs.-base.Class using (RealFloat; Floating; Ord)
+
+open import Agda.Builtin.Float public
+    using (Float)
 
 private
     variable
@@ -15,6 +18,8 @@ private
         A : Set aℓ
 
 postulate
+    Double : Set
+
     pi                : ⦃ Floating A ⦄ → A
     exp log sqrt      : ⦃ Floating A ⦄ → A → A
     sin cos tan       : ⦃ Floating A ⦄ → A → A

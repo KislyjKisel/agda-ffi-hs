@@ -5,8 +5,7 @@ module Ffi.Hs.-base.Real where
 open import Agda.Builtin.Bool          using (Bool)
 open import Agda.Builtin.List          using (List)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Class         using (Num; Real; Integral; Fractional; RealFrac)
-open import Ffi.Hs.-base.Enum          using (Enum; Bounded)
+open import Ffi.Hs.-base.Class         using (Num; Real; Integral; Fractional; RealFrac; Enum; Bounded)
 open import Ffi.Hs.-base.Num           using (Integer)
 open import Ffi.Hs.Data.Int            using (Int)
 open import Ffi.Hs.Data.Ord            using (Ord)
