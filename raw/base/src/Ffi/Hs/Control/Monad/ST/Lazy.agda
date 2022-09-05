@@ -38,14 +38,13 @@ postulate
 {-# COMPILE GHC strictToLazyST = \ s aℓ a -> Control.Monad.ST.Lazy.strictToLazyST #-}
 {-# COMPILE GHC lazyToStrictST = \ s aℓ a -> Control.Monad.ST.Lazy.lazyToStrictST #-}
 
-module Instances where
-    postulate
-        Functor[ST[S]]     : Functor {aℓ} (ST S)
-        Applicative[ST[S]] : Applicative {aℓ} (ST S)
-        Monad[ST[S]]       : Monad {aℓ} (ST S)
-        MonadFix[ST[S]]    : MonadFix {aℓ} (ST S)
+postulate
+    Functor[ST[S]]     : Functor {aℓ} (ST S)
+    Applicative[ST[S]] : Applicative {aℓ} (ST S)
+    Monad[ST[S]]       : Monad {aℓ} (ST S)
+    MonadFix[ST[S]]    : MonadFix {aℓ} (ST S)
 
-{-# COMPILE GHC Instances.Functor[ST[S]]     = \ s aℓ -> AgdaFunctor     #-}
-{-# COMPILE GHC Instances.Applicative[ST[S]] = \ s aℓ -> AgdaApplicative #-}
-{-# COMPILE GHC Instances.Monad[ST[S]]       = \ s aℓ -> AgdaMonad       #-}
-{-# COMPILE GHC Instances.MonadFix[ST[S]]    = \ s aℓ -> AgdaMonadFix    #-}
+{-# COMPILE GHC Functor[ST[S]]     = \ s aℓ -> AgdaFunctor     #-}
+{-# COMPILE GHC Applicative[ST[S]] = \ s aℓ -> AgdaApplicative #-}
+{-# COMPILE GHC Monad[ST[S]]       = \ s aℓ -> AgdaMonad       #-}
+{-# COMPILE GHC MonadFix[ST[S]]    = \ s aℓ -> AgdaMonadFix    #-}

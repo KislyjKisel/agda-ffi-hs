@@ -36,17 +36,16 @@ postulate
 {-# COMPILE GHC exitSuccess = \ aℓ a -> System.Exit.exitSuccess #-}
 {-# COMPILE GHC die         = \ aℓ a -> System.Exit.die         #-}
 
-module Instances where
-    postulate
-        Show[ExitCode]      : Show ExitCode
-        Read[ExitCode]      : Read ExitCode
-        Exception[ExitCode] : Exception ExitCode
-        Eq[ExitCode]        : Eq ExitCode
-        Ord[ExitCode]       : Ord ExitCode
-        -- todo: Rep, Generic
+postulate
+    Show[ExitCode]      : Show ExitCode
+    Read[ExitCode]      : Read ExitCode
+    Exception[ExitCode] : Exception ExitCode
+    Eq[ExitCode]        : Eq ExitCode
+    Ord[ExitCode]       : Ord ExitCode
+    -- todo: Rep, Generic
 
-{-# COMPILE GHC Instances.Show[ExitCode]      = AgdaShow      #-}
-{-# COMPILE GHC Instances.Read[ExitCode]      = AgdaRead      #-}
-{-# COMPILE GHC Instances.Exception[ExitCode] = AgdaException #-}
-{-# COMPILE GHC Instances.Eq[ExitCode]        = AgdaEq        #-}
-{-# COMPILE GHC Instances.Ord[ExitCode]       = AgdaOrd       #-}
+{-# COMPILE GHC Show[ExitCode]      = AgdaShow      #-}
+{-# COMPILE GHC Read[ExitCode]      = AgdaRead      #-}
+{-# COMPILE GHC Exception[ExitCode] = AgdaException #-}
+{-# COMPILE GHC Eq[ExitCode]        = AgdaEq        #-}
+{-# COMPILE GHC Ord[ExitCode]       = AgdaOrd       #-}

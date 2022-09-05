@@ -14,6 +14,9 @@ open import Ffi.Hs.Data.Tuple  using (Tuple2; Tuple3; Tuple4; Tuple5)
 open import Agda.Builtin.List public
     using (List; []; _∷_)
 
+open import Ffi.Hs.-base.Kind.List public
+    using (`List; `[]; _`∷_; lift`List)
+
 private
     variable
         aℓ bℓ cℓ dℓ eℓ : Level

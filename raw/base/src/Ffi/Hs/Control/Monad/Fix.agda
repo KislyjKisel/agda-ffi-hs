@@ -24,8 +24,7 @@ postulate
 
 {-# COMPILE GHC mfix = \ mℓ m a AgdaMonadFix -> Control.Monad.Fix.mfix #-}
 
-module Instances where
-    postulate
-        MonadFix[M]⇒Monad[M] : ⦃ MonadFix M ⦄ → Monad M
+postulate
+    MonadFix[M]⇒Monad[M] : ⦃ MonadFix M ⦄ → Monad M
 
-{-# COMPILE GHC Instances.MonadFix[M]⇒Monad[M] = \ mℓ m AgdaMonadFix -> AgdaMonad #-}
+{-# COMPILE GHC MonadFix[M]⇒Monad[M] = \ mℓ m AgdaMonadFix -> AgdaMonad #-}

@@ -29,8 +29,7 @@ postulate
 {-# COMPILE GHC mzipWith = \ mℓ m a b c AgdaMonadZip -> Control.Monad.Zip.mzipWith #-}
 {-# COMPILE GHC munzip   = \ mℓ m a b   AgdaMonadZip -> Control.Monad.Zip.munzip   #-}
 
-module Instances where
-    postulate
-        MonadZip[M]⇒Monad[M] : ⦃ MonadZip M ⦄ → Monad M
+postulate
+    MonadZip[M]⇒Monad[M] : ⦃ MonadZip M ⦄ → Monad M
 
-{-# COMPILE GHC Instances.MonadZip[M]⇒Monad[M] = \ mℓ m AgdaMonadZip -> AgdaMonad #-}
+{-# COMPILE GHC MonadZip[M]⇒Monad[M] = \ mℓ m AgdaMonadZip -> AgdaMonad #-}

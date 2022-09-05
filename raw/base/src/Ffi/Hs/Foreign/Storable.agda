@@ -19,21 +19,24 @@ private
         B : Set bℓ
 
 postulate
-    sizeOf      : A → Int
-    alignment   : A → Int
-    peekElemOff : Ptr A → Int → IO A
-    pokeElemOff : Ptr A → Int → A → IO (⊤ {lzero})
-    peekByteOff : Ptr B → Int → IO A
-    pokeByteOff : Ptr B → Int → A → IO (⊤ {lzero})
-    peek        : Ptr A → IO A
-    poke        : Ptr A → A → IO (⊤ {lzero})
+    sizeOf      : ⦃ Storable A ⦄ → A → Int
+    alignment   : ⦃ Storable A ⦄ → A → Int
+    peekElemOff : ⦃ Storable A ⦄ → Ptr A → Int → IO A
+    pokeElemOff : ⦃ Storable A ⦄ → Ptr A → Int → A → IO (⊤ {lzero})
+    peekByteOff : ⦃ Storable A ⦄ → Ptr B → Int → IO A
+    pokeByteOff : ⦃ Storable A ⦄ → Ptr B → Int → A → IO (⊤ {lzero})
+    peek        : ⦃ Storable A ⦄ → Ptr A → IO A
+    poke        : ⦃ Storable A ⦄ → Ptr A → A → IO (⊤ {lzero})
 
-{-# FOREIGN GHC import qualified Foreign.Storable #-}
-{-# COMPILE GHC sizeOf      = \ aℓ a      -> Foreign.Storable.sizeOf      #-}
-{-# COMPILE GHC alignment   = \ aℓ a      -> Foreign.Storable.alignment   #-}
-{-# COMPILE GHC peekElemOff = \ aℓ a      -> Foreign.Storable.peekElemOff #-}
-{-# COMPILE GHC pokeElemOff = \ aℓ a      -> Foreign.Storable.pokeElemOff #-}
-{-# COMPILE GHC peekByteOff = \ bℓ b aℓ a -> Foreign.Storable.peekByteOff #-}
-{-# COMPILE GHC pokeByteOff = \ bℓ b aℓ a -> Foreign.Storable.pokeByteOff #-}
-{-# COMPILE GHC peek        = \ aℓ a      -> Foreign.Storable.peek        #-}
-{-# COMPILE GHC poke        = \ aℓ a      -> Foreign.Storable.poke        #-}
+{-# FOREIGN GHC
+import qualified Foreign.Storable
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaStorable)
+#-}
+{-# COMPILE GHC sizeOf      = \ aℓ a      AgdaStorable -> Foreign.Storable.sizeOf      #-}
+{-# COMPILE GHC alignment   = \ aℓ a      AgdaStorable -> Foreign.Storable.alignment   #-}
+{-# COMPILE GHC peekElemOff = \ aℓ a      AgdaStorable -> Foreign.Storable.peekElemOff #-}
+{-# COMPILE GHC pokeElemOff = \ aℓ a      AgdaStorable -> Foreign.Storable.pokeElemOff #-}
+{-# COMPILE GHC peekByteOff = \ bℓ b aℓ a AgdaStorable -> Foreign.Storable.peekByteOff #-}
+{-# COMPILE GHC pokeByteOff = \ bℓ b aℓ a AgdaStorable -> Foreign.Storable.pokeByteOff #-}
+{-# COMPILE GHC peek        = \ aℓ a      AgdaStorable -> Foreign.Storable.peek        #-}
+{-# COMPILE GHC poke        = \ aℓ a      AgdaStorable -> Foreign.Storable.poke        #-}

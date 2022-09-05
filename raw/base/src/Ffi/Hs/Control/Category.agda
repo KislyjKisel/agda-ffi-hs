@@ -28,12 +28,11 @@ _<<<_ = _∘_
 _>>>_ : ⦃ Category Cat ⦄ → Cat A B → Cat B C → Cat A C
 f >>> g = g ∘ f
 
-module Instances where
-    postulate
-        Category[⟶] : Category {aℓ} {bℓ} (\ a b → (a → b))
+postulate
+    Category[⟶] : Category {aℓ} {bℓ} (\ a b → (a → b))
 
 {-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaCategory) #-}
 {-# FOREIGN GHC import qualified Control.Category as AgdaHsConCat #-}
 {-# COMPILE GHC id  = \ aℓ a rℓ cat AgdaCategory ->  AgdaHsConCat.id  #-}
 {-# COMPILE GHC _∘_ = \ aℓ cat a b c AgdaCategory -> (AgdaHsConCat..) #-}
-{-# COMPILE GHC Instances.Category[⟶] = \ aℓ bℓ -> AgdaCategory #-}
+{-# COMPILE GHC Category[⟶] = \ aℓ bℓ -> AgdaCategory #-}

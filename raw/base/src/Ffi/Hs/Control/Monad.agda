@@ -84,12 +84,11 @@ postulate
 
 {-# COMPILE GHC _<$!>_ = \ mℓ m a b AgdaMonad -> (Control.Monad.<$!>) #-}
 
-module Instances where
-    postulate
-        Monad[M]⇒Applicative[M]     : ⦃ Monad M ⦄ → Applicative M
-        MonadPlus[M]⇒Monad[M]       : ⦃ MonadPlus M ⦄ → Monad M
-        MonadPlus[M]⇒Alternative[M] : ⦃ MonadPlus M ⦄ → Alternative M
+postulate
+    Monad[M]⇒Applicative[M]     : ⦃ Monad M ⦄ → Applicative M
+    MonadPlus[M]⇒Monad[M]       : ⦃ MonadPlus M ⦄ → Monad M
+    MonadPlus[M]⇒Alternative[M] : ⦃ MonadPlus M ⦄ → Alternative M
 
-{-# COMPILE GHC Instances.Monad[M]⇒Applicative[M]     = \ mℓ m AgdaMonad     -> AgdaApplicative #-}
-{-# COMPILE GHC Instances.MonadPlus[M]⇒Monad[M]       = \ mℓ m AgdaMonadPlus -> AgdaMonad       #-}
-{-# COMPILE GHC Instances.MonadPlus[M]⇒Alternative[M] = \ mℓ m AgdaMonadPlus -> AgdaAlternative #-}
+{-# COMPILE GHC Monad[M]⇒Applicative[M]     = \ mℓ m AgdaMonad     -> AgdaApplicative #-}
+{-# COMPILE GHC MonadPlus[M]⇒Monad[M]       = \ mℓ m AgdaMonadPlus -> AgdaMonad       #-}
+{-# COMPILE GHC MonadPlus[M]⇒Alternative[M] = \ mℓ m AgdaMonadPlus -> AgdaAlternative #-}

@@ -3,42 +3,47 @@
 module Ffi.Hs.-base.Class where
 
 open import Agda.Primitive
+open import Ffi.Hs.-base.Kind using (IsKind)
 
 private
     variable
         aℓ bℓ cℓ : Level
 
 postulate
-    Fractional : Set aℓ → Set aℓ
-    Integral   : Set aℓ → Set aℓ
     Num        : Set aℓ → Set aℓ
-    Read       : Set aℓ → Set aℓ
+    Integral   : Set aℓ → Set aℓ
     Real       : Set aℓ → Set aℓ
+    Fractional : Set aℓ → Set aℓ
     RealFrac   : Set aℓ → Set aℓ
-    RealFloat  : Set aℓ → Set aℓ
     Floating   : Set aℓ → Set aℓ
+    RealFloat  : Set aℓ → Set aℓ
+    
+    Read       : Set aℓ → Set aℓ
     Show       : Set aℓ → Set aℓ
+
     Bounded    : Set aℓ → Set aℓ
     Enum       : Set aℓ → Set aℓ
+
     Eq         : Set aℓ → Set aℓ
     Ord        : Set aℓ → Set aℓ
     Ix         : Set aℓ → Set aℓ
-    Exception  : Set aℓ → Set aℓ
 
     Semigroup  : Set aℓ → Set aℓ
     Monoid     : Set aℓ → Set aℓ
 
     Foldable    : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
     Traversable : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
-    Functor     : (Set aℓ → Set aℓ) → Set aℓ
-    Applicative : (Set aℓ → Set aℓ) → Set aℓ
-    Alternative : (Set aℓ → Set aℓ) → Set aℓ
-    Monad       : (Set aℓ → Set aℓ) → Set aℓ
-    MonadPlus   : (Set aℓ → Set aℓ) → Set aℓ
-    MonadFail   : (Set aℓ → Set aℓ) → Set aℓ
-    MonadFix    : (Set aℓ → Set aℓ) → Set aℓ
-    MonadZip    : (Set aℓ → Set aℓ) → Set aℓ
-    MonadIO     : (Set aℓ → Set aℓ) → Set aℓ
+
+    Functor       : (Set aℓ → Set aℓ) → Set aℓ
+    Contravariant : (Set aℓ → Set aℓ) → Set aℓ
+    Applicative   : (Set aℓ → Set aℓ) → Set aℓ
+    Alternative   : (Set aℓ → Set aℓ) → Set aℓ
+    Monad         : (Set aℓ → Set aℓ) → Set aℓ
+    MonadPlus     : (Set aℓ → Set aℓ) → Set aℓ
+    MonadFail     : (Set aℓ → Set aℓ) → Set aℓ
+    MonadFix      : (Set aℓ → Set aℓ) → Set aℓ
+    MonadZip      : (Set aℓ → Set aℓ) → Set aℓ
+    MonadIO       : (Set aℓ → Set aℓ) → Set aℓ
     
     Category    : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Arrow       : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
@@ -52,7 +57,10 @@ postulate
     Bifoldable    : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Bitraversable : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     
-    Storable : Set aℓ → Set aℓ
+    Storable  : Set aℓ → Set aℓ
+    Exception : Set aℓ → Set aℓ
+
+    TestEquality : ∀{K : Set (lsuc aℓ)} → ⦃ IsKind K ⦄ → K → Set aℓ
 
 {-# FOREIGN GHC import qualified Text.Read #-}
 {-# FOREIGN GHC data AgdaRead aℓ a = Text.Read.Read a => AgdaRead #-}

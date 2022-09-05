@@ -52,22 +52,6 @@ data Lexeme : Set where
     | Text.Read.Lex.EOF
     ) #-}
 
-module Instances where
-    postulate
-        Eq[Lexeme]   : Eq Lexeme
-        Read[Lexeme] : Read Lexeme
-        Show[Lexeme] : Show Lexeme
-
-        Eq[Number]   : Eq Number
-        Show[Number] : Show Number
-
-{-# COMPILE GHC Instances.Eq[Lexeme]   = AgdaEq   #-}
-{-# COMPILE GHC Instances.Read[Lexeme] = AgdaRead #-}
-{-# COMPILE GHC Instances.Show[Lexeme] = AgdaShow #-}
-
-{-# COMPILE GHC Instances.Eq[Number]   = AgdaEq   #-}
-{-# COMPILE GHC Instances.Show[Number] = AgdaShow #-}
-
 postulate
     lex          : ReadP Lexeme
     expect       : Lexeme → ReadP (⊤ {lzero})
@@ -92,3 +76,18 @@ postulate
 {-# COMPILE GHC readOctP = \ aℓ a AgdaEq AgdaNum -> Text.Read.Lex.readOctP #-}
 {-# COMPILE GHC readDecP = \ aℓ a AgdaEq AgdaNum -> Text.Read.Lex.readDecP #-}
 {-# COMPILE GHC readHexP = \ aℓ a AgdaEq AgdaNum -> Text.Read.Lex.readHexP #-}
+
+postulate
+    Eq[Lexeme]   : Eq Lexeme
+    Read[Lexeme] : Read Lexeme
+    Show[Lexeme] : Show Lexeme
+
+    Eq[Number]   : Eq Number
+    Show[Number] : Show Number
+
+{-# COMPILE GHC Eq[Lexeme]   = AgdaEq   #-}
+{-# COMPILE GHC Read[Lexeme] = AgdaRead #-}
+{-# COMPILE GHC Show[Lexeme] = AgdaShow #-}
+
+{-# COMPILE GHC Eq[Number]   = AgdaEq   #-}
+{-# COMPILE GHC Show[Number] = AgdaShow #-}

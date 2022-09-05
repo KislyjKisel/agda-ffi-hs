@@ -128,56 +128,55 @@ postulate
 {-# COMPILE GHC errorBadArgument     = \ aℓ a -> Text.Printf.errorBadArgument     #-}
 {-# COMPILE GHC perror               = \ aℓ a -> Text.Printf.perror               #-}
 
-module Instances where
-    postulate
-        IsChar[Char] : IsChar Char
+postulate
+    IsChar[Char] : IsChar Char
 
-        PrintfType[IO[⊤]]      : PrintfType (IO (⊤ {aℓ}))
-        PrintfType[List[Char]] : PrintfType (List Char)
-        PrintfType[A⟶B]        : ⦃ PrintfArg A ⦄ → ⦃ PrintfType B ⦄ → PrintfType (A → B)
-        
-        HPrintfType[IO[⊤]] : HPrintfType (IO (⊤ {aℓ}))
-        HPrintfType[A⟶B]   : ⦃ PrintfArg A ⦄ → ⦃ HPrintfType B ⦄ → HPrintfType (A → B)
-        
-        PrintfArg[Int]        : PrintfArg Int
-        PrintfArg[Int8]       : PrintfArg Int8
-        PrintfArg[Int16]      : PrintfArg Int16
-        PrintfArg[Int32]      : PrintfArg Int32
-        PrintfArg[Int64]      : PrintfArg Int64
-        PrintfArg[Word]       : PrintfArg Word
-        PrintfArg[Word8]      : PrintfArg Word8
-        PrintfArg[Word16]     : PrintfArg Word16
-        PrintfArg[Word32]     : PrintfArg Word32
-        PrintfArg[Word64]     : PrintfArg Word64
-        PrintfArg[Integer]    : PrintfArg Integer
-        PrintfArg[Natural]    : PrintfArg Natural
-        PrintfArg[Char]       : PrintfArg Char
-        PrintfArg[List[Char]] : PrintfArg (List Char)
-        PrintfArg[Float]      : PrintfArg Float
-        PrintfArg[Double]     : PrintfArg Double
+    PrintfType[IO[⊤]]      : PrintfType (IO (⊤ {aℓ}))
+    PrintfType[List[Char]] : PrintfType (List Char)
+    PrintfType[A⟶B]        : ⦃ PrintfArg A ⦄ → ⦃ PrintfType B ⦄ → PrintfType (A → B)
+    
+    HPrintfType[IO[⊤]] : HPrintfType (IO (⊤ {aℓ}))
+    HPrintfType[A⟶B]   : ⦃ PrintfArg A ⦄ → ⦃ HPrintfType B ⦄ → HPrintfType (A → B)
+    
+    PrintfArg[Int]        : PrintfArg Int
+    PrintfArg[Int8]       : PrintfArg Int8
+    PrintfArg[Int16]      : PrintfArg Int16
+    PrintfArg[Int32]      : PrintfArg Int32
+    PrintfArg[Int64]      : PrintfArg Int64
+    PrintfArg[Word]       : PrintfArg Word
+    PrintfArg[Word8]      : PrintfArg Word8
+    PrintfArg[Word16]     : PrintfArg Word16
+    PrintfArg[Word32]     : PrintfArg Word32
+    PrintfArg[Word64]     : PrintfArg Word64
+    PrintfArg[Integer]    : PrintfArg Integer
+    PrintfArg[Natural]    : PrintfArg Natural
+    PrintfArg[Char]       : PrintfArg Char
+    PrintfArg[List[Char]] : PrintfArg (List Char)
+    PrintfArg[Float]      : PrintfArg Float
+    PrintfArg[Double]     : PrintfArg Double
 
-{-# COMPILE GHC Instances.IsChar[Char] = AgdaIsChar #-}
+{-# COMPILE GHC IsChar[Char] = AgdaIsChar #-}
 
-{-# COMPILE GHC Instances.PrintfType[IO[⊤]]      = \ aℓ                                     -> AgdaPrintfType #-}
-{-# COMPILE GHC Instances.PrintfType[List[Char]] =                                             AgdaPrintfType #-}
-{-# COMPILE GHC Instances.PrintfType[A⟶B]        = \ aℓ a bℓ b AgdaPrintfArg AgdaPrintfType -> AgdaPrintfType #-}
+{-# COMPILE GHC PrintfType[IO[⊤]]      = \ aℓ                                     -> AgdaPrintfType #-}
+{-# COMPILE GHC PrintfType[List[Char]] =                                             AgdaPrintfType #-}
+{-# COMPILE GHC PrintfType[A⟶B]        = \ aℓ a bℓ b AgdaPrintfArg AgdaPrintfType -> AgdaPrintfType #-}
 
-{-# COMPILE GHC Instances.HPrintfType[IO[⊤]] = \ aℓ                                      -> AgdaHPrintfType #-}
-{-# COMPILE GHC Instances.HPrintfType[A⟶B]   = \ aℓ a bℓ b AgdaPrintfArg AgdaHPrintfType -> AgdaHPrintfType #-}
+{-# COMPILE GHC HPrintfType[IO[⊤]] = \ aℓ                                      -> AgdaHPrintfType #-}
+{-# COMPILE GHC HPrintfType[A⟶B]   = \ aℓ a bℓ b AgdaPrintfArg AgdaHPrintfType -> AgdaHPrintfType #-}
 
-{-# COMPILE GHC Instances.PrintfArg[Int]        = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Int8]       = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Int16]      = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Int32]      = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Int64]      = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Word]       = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Word8]      = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Word16]     = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Word32]     = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Word64]     = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Integer]    = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Natural]    = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Char]       = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[List[Char]] = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Float]      = AgdaPrintfArg #-}
-{-# COMPILE GHC Instances.PrintfArg[Double]     = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Int]        = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Int8]       = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Int16]      = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Int32]      = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Int64]      = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Word]       = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Word8]      = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Word16]     = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Word32]     = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Word64]     = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Integer]    = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Natural]    = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Char]       = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[List[Char]] = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Float]      = AgdaPrintfArg #-}
+{-# COMPILE GHC PrintfArg[Double]     = AgdaPrintfArg #-}

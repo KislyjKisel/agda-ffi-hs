@@ -33,20 +33,19 @@ postulate
 {-# COMPILE GHC fixST  = \ aℓ a s -> Control.Monad.ST.fixST        #-}
 {-# COMPILE GHC stToIO = \ aℓ a   -> Control.Monad.ST.stToIO       #-}
 
-module Instances where
-    postulate
-        Show[ST[S,A]]      : Show (ST S A)
-        Functor[ST[S]]     : Functor {aℓ} (ST S)
-        Applicative[ST[S]] : Applicative {aℓ} (ST S)
-        Monad[ST[S]]       : Monad {aℓ} (ST S)
-        MonadFix[ST[S]]    : MonadFix {aℓ} (ST S)
-        Semigroup[ST[S,A]] : ⦃ Semigroup A ⦄ → Semigroup (ST S A)
-        Monoid[ST[S,A]]    : ⦃ Monoid A ⦄ → Monoid (ST S A)
+postulate
+    Show[ST[S,A]]      : Show (ST S A)
+    Functor[ST[S]]     : Functor {aℓ} (ST S)
+    Applicative[ST[S]] : Applicative {aℓ} (ST S)
+    Monad[ST[S]]       : Monad {aℓ} (ST S)
+    MonadFix[ST[S]]    : MonadFix {aℓ} (ST S)
+    Semigroup[ST[S,A]] : ⦃ Semigroup A ⦄ → Semigroup (ST S A)
+    Monoid[ST[S,A]]    : ⦃ Monoid A ⦄ → Monoid (ST S A)
 
-{-# COMPILE GHC Instances.Show[ST[S,A]]      = \ s aℓ a               -> AgdaShow        #-}
-{-# COMPILE GHC Instances.Functor[ST[S]]     = \ s aℓ                 -> AgdaFunctor     #-}
-{-# COMPILE GHC Instances.Applicative[ST[S]] = \ s aℓ                 -> AgdaApplicative #-}
-{-# COMPILE GHC Instances.Monad[ST[S]]       = \ s aℓ                 -> AgdaMonad       #-}
-{-# COMPILE GHC Instances.MonadFix[ST[S]]    = \ s aℓ                 -> AgdaMonadFix    #-}
-{-# COMPILE GHC Instances.Semigroup[ST[S,A]] = \ s aℓ a AgdaSemigroup -> AgdaSemigroup   #-}
-{-# COMPILE GHC Instances.Monoid[ST[S,A]]    = \ s aℓ a AgdaMonoid    -> AgdaMonoid      #-}
+{-# COMPILE GHC Show[ST[S,A]]      = \ s aℓ a               -> AgdaShow        #-}
+{-# COMPILE GHC Functor[ST[S]]     = \ s aℓ                 -> AgdaFunctor     #-}
+{-# COMPILE GHC Applicative[ST[S]] = \ s aℓ                 -> AgdaApplicative #-}
+{-# COMPILE GHC Monad[ST[S]]       = \ s aℓ                 -> AgdaMonad       #-}
+{-# COMPILE GHC MonadFix[ST[S]]    = \ s aℓ                 -> AgdaMonadFix    #-}
+{-# COMPILE GHC Semigroup[ST[S,A]] = \ s aℓ a AgdaSemigroup -> AgdaSemigroup   #-}
+{-# COMPILE GHC Monoid[ST[S,A]]    = \ s aℓ a AgdaMonoid    -> AgdaMonoid      #-}

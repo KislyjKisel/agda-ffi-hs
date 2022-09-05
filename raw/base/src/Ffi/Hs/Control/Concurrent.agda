@@ -77,12 +77,11 @@ postulate
 {-# COMPILE GHC runInUnboundThread      = \ aℓ a -> AgdaHsConCon.runInUnboundThread               #-}
 {-# COMPILE GHC mkWeakThreadId          = AgdaHsConCon.mkWeakThreadId                             #-}
 
-module Instances where
-    postulate
-        Show[ThreadId] : Show ThreadId
-        Eq[ThreadId]   : Eq ThreadId
-        Ord[ThreadId]  : Ord ThreadId
+postulate
+    Show[ThreadId] : Show ThreadId
+    Eq[ThreadId]   : Eq ThreadId
+    Ord[ThreadId]  : Ord ThreadId
 
-{-# COMPILE GHC Instances.Show[ThreadId] = AgdaShow #-}
-{-# COMPILE GHC Instances.Eq[ThreadId]   = AgdaEq   #-}
-{-# COMPILE GHC Instances.Ord[ThreadId]  = AgdaOrd  #-}
+{-# COMPILE GHC Show[ThreadId] = AgdaShow #-}
+{-# COMPILE GHC Eq[ThreadId]   = AgdaEq   #-}
+{-# COMPILE GHC Ord[ThreadId]  = AgdaOrd  #-}

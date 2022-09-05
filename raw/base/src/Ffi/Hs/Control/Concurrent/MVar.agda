@@ -58,9 +58,8 @@ postulate
 {-# COMPILE GHC tryReadMVar      = \ aℓ    a   -> Control.Concurrent.MVar.tryReadMVar      #-}
 {-# COMPILE GHC mkWeakMVar       = \ aℓ bℓ a   -> Control.Concurrent.MVar.mkWeakMVar       #-}
 
-module Instances where
-    postulate
-        Eq[MVar[A]] : Eq (MVar A)
+postulate
+    Eq[MVar[A]] : Eq (MVar A)
 
 {-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaEq) #-}
-{-# COMPILE GHC Instances.Eq[MVar[A]] = \ aℓ a -> AgdaEq #-}
+{-# COMPILE GHC Eq[MVar[A]] = \ aℓ a -> AgdaEq #-}

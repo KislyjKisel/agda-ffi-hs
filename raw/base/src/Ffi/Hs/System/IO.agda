@@ -270,82 +270,81 @@ postulate
 {-# COMPILE GHC universalNewlineMode = System.IO.universalNewlineMode #-}
 {-# COMPILE GHC nativeNewlineMode    = System.IO.nativeNewlineMode    #-}
 
-module Instances where
-    postulate
-        Functor[IO]      : Functor {aℓ} IO
-        Applicative[IO]  : Applicative {aℓ} IO
-        Alternative[IO]  : Alternative {aℓ} IO
-        Monad[IO]        : Monad {aℓ} IO
-        MonadFail[IO]    : MonadFail {aℓ} IO
-        MonadFix[IO]     : MonadFix {aℓ} IO
-        MonadIO[IO]      : MonadIO {aℓ} IO
-        MonadPlus[IO]    : MonadPlus {aℓ} IO
-        Semigroup[IO[A]] : ⦃ Semigroup A ⦄ → Semigroup (IO A)
-        Monoid[IO[A]]    : ⦃ Monoid A ⦄ → Monoid (IO A)
+postulate
+    Functor[IO]      : Functor {aℓ} IO
+    Applicative[IO]  : Applicative {aℓ} IO
+    Alternative[IO]  : Alternative {aℓ} IO
+    Monad[IO]        : Monad {aℓ} IO
+    MonadFail[IO]    : MonadFail {aℓ} IO
+    MonadFix[IO]     : MonadFix {aℓ} IO
+    MonadIO[IO]      : MonadIO {aℓ} IO
+    MonadPlus[IO]    : MonadPlus {aℓ} IO
+    Semigroup[IO[A]] : ⦃ Semigroup A ⦄ → Semigroup (IO A)
+    Monoid[IO[A]]    : ⦃ Monoid A ⦄ → Monoid (IO A)
 
-        Show[Handle] : Show Handle
-        Eq[Handle]   : Eq Handle
+    Show[Handle] : Show Handle
+    Eq[Handle]   : Eq Handle
 
-        Read[BufferMode] : Read BufferMode
-        Show[BufferMode] : Show BufferMode
-        Eq[BufferMode]   : Eq BufferMode
-        Ord[BufferMode]  : Ord BufferMode
+    Read[BufferMode] : Read BufferMode
+    Show[BufferMode] : Show BufferMode
+    Eq[BufferMode]   : Eq BufferMode
+    Ord[BufferMode]  : Ord BufferMode
 
-        Show[HandlePosn] : Show HandlePosn
-        Eq[HandlePosn]   : Eq HandlePosn
+    Show[HandlePosn] : Show HandlePosn
+    Eq[HandlePosn]   : Eq HandlePosn
 
-        Enum[SeekMode] : Enum SeekMode
-        Ix[SeekMode]   : Ix SeekMode
-        Read[SeekMode] : Read SeekMode
-        Show[SeekMode] : Show SeekMode
-        Eq[SeekMode]   : Eq SeekMode
-        Ord[SeekMode]  : Ord SeekMode
+    Enum[SeekMode] : Enum SeekMode
+    Ix[SeekMode]   : Ix SeekMode
+    Read[SeekMode] : Read SeekMode
+    Show[SeekMode] : Show SeekMode
+    Eq[SeekMode]   : Eq SeekMode
+    Ord[SeekMode]  : Ord SeekMode
 
-        Read[Newline] : Read Newline
-        Show[Newline] : Show Newline
-        Eq[Newline]   : Eq Newline
-        Ord[Newline]  : Ord Newline
+    Read[Newline] : Read Newline
+    Show[Newline] : Show Newline
+    Eq[Newline]   : Eq Newline
+    Ord[Newline]  : Ord Newline
 
-        Read[NewlineMode] : Read NewlineMode
-        Show[NewlineMode] : Show NewlineMode
-        Eq[NewlineMode]   : Eq NewlineMode
-        Ord[NewlineMode]  : Ord NewlineMode
+    Read[NewlineMode] : Read NewlineMode
+    Show[NewlineMode] : Show NewlineMode
+    Eq[NewlineMode]   : Eq NewlineMode
+    Ord[NewlineMode]  : Ord NewlineMode
 
-{-# COMPILE GHC Instances.Functor[IO]      = \ aℓ                 -> AgdaFunctor     #-}
-{-# COMPILE GHC Instances.Applicative[IO]  = \ aℓ                 -> AgdaApplicative #-}
-{-# COMPILE GHC Instances.Alternative[IO]  = \ aℓ                 -> AgdaAlternative #-}
-{-# COMPILE GHC Instances.Monad[IO]        = \ aℓ                 -> AgdaMonad       #-}
-{-# COMPILE GHC Instances.MonadFail[IO]    = \ aℓ                 -> AgdaMonadFail   #-}
-{-# COMPILE GHC Instances.MonadFix[IO]     = \ aℓ                 -> AgdaMonadFix    #-}
-{-# COMPILE GHC Instances.MonadIO[IO]      = \ aℓ                 -> AgdaMonadIO     #-}
-{-# COMPILE GHC Instances.MonadPlus[IO]    = \ aℓ                 -> AgdaMonadPlus   #-}
-{-# COMPILE GHC Instances.Semigroup[IO[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup   #-}
-{-# COMPILE GHC Instances.Monoid[IO[A]]    = \ aℓ a AgdaMonoid    -> AgdaMonoid      #-}
+{-# COMPILE GHC Functor[IO]      = \ aℓ                 -> AgdaFunctor     #-}
+{-# COMPILE GHC Applicative[IO]  = \ aℓ                 -> AgdaApplicative #-}
+{-# COMPILE GHC Alternative[IO]  = \ aℓ                 -> AgdaAlternative #-}
+{-# COMPILE GHC Monad[IO]        = \ aℓ                 -> AgdaMonad       #-}
+{-# COMPILE GHC MonadFail[IO]    = \ aℓ                 -> AgdaMonadFail   #-}
+{-# COMPILE GHC MonadFix[IO]     = \ aℓ                 -> AgdaMonadFix    #-}
+{-# COMPILE GHC MonadIO[IO]      = \ aℓ                 -> AgdaMonadIO     #-}
+{-# COMPILE GHC MonadPlus[IO]    = \ aℓ                 -> AgdaMonadPlus   #-}
+{-# COMPILE GHC Semigroup[IO[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup   #-}
+{-# COMPILE GHC Monoid[IO[A]]    = \ aℓ a AgdaMonoid    -> AgdaMonoid      #-}
 
-{-# COMPILE GHC Instances.Show[Handle] = AgdaShow #-}
-{-# COMPILE GHC Instances.Eq[Handle]   = AgdaEq   #-}
+{-# COMPILE GHC Show[Handle] = AgdaShow #-}
+{-# COMPILE GHC Eq[Handle]   = AgdaEq   #-}
 
-{-# COMPILE GHC Instances.Read[BufferMode] = AgdaRead #-}
-{-# COMPILE GHC Instances.Show[BufferMode] = AgdaShow #-}
-{-# COMPILE GHC Instances.Eq[BufferMode]   = AgdaEq   #-}
-{-# COMPILE GHC Instances.Ord[BufferMode]  = AgdaOrd  #-}
+{-# COMPILE GHC Read[BufferMode] = AgdaRead #-}
+{-# COMPILE GHC Show[BufferMode] = AgdaShow #-}
+{-# COMPILE GHC Eq[BufferMode]   = AgdaEq   #-}
+{-# COMPILE GHC Ord[BufferMode]  = AgdaOrd  #-}
 
-{-# COMPILE GHC Instances.Show[HandlePosn] = AgdaShow #-}
-{-# COMPILE GHC Instances.Eq[HandlePosn]   = AgdaEq   #-}
+{-# COMPILE GHC Show[HandlePosn] = AgdaShow #-}
+{-# COMPILE GHC Eq[HandlePosn]   = AgdaEq   #-}
 
-{-# COMPILE GHC Instances.Enum[SeekMode] = AgdaEnum #-}
-{-# COMPILE GHC Instances.Ix[SeekMode]   = AgdaIx   #-}
-{-# COMPILE GHC Instances.Read[SeekMode] = AgdaRead #-}
-{-# COMPILE GHC Instances.Show[SeekMode] = AgdaShow #-}
-{-# COMPILE GHC Instances.Eq[SeekMode]   = AgdaEq   #-}
-{-# COMPILE GHC Instances.Ord[SeekMode]  = AgdaOrd  #-}
+{-# COMPILE GHC Enum[SeekMode] = AgdaEnum #-}
+{-# COMPILE GHC Ix[SeekMode]   = AgdaIx   #-}
+{-# COMPILE GHC Read[SeekMode] = AgdaRead #-}
+{-# COMPILE GHC Show[SeekMode] = AgdaShow #-}
+{-# COMPILE GHC Eq[SeekMode]   = AgdaEq   #-}
+{-# COMPILE GHC Ord[SeekMode]  = AgdaOrd  #-}
 
-{-# COMPILE GHC Instances.Read[Newline] = AgdaRead #-}
-{-# COMPILE GHC Instances.Show[Newline] = AgdaShow #-}
-{-# COMPILE GHC Instances.Eq[Newline]   = AgdaEq   #-}
-{-# COMPILE GHC Instances.Ord[Newline]  = AgdaOrd  #-}
+{-# COMPILE GHC Read[Newline] = AgdaRead #-}
+{-# COMPILE GHC Show[Newline] = AgdaShow #-}
+{-# COMPILE GHC Eq[Newline]   = AgdaEq   #-}
+{-# COMPILE GHC Ord[Newline]  = AgdaOrd  #-}
 
-{-# COMPILE GHC Instances.Read[NewlineMode] = AgdaRead #-}
-{-# COMPILE GHC Instances.Show[NewlineMode] = AgdaShow #-}
-{-# COMPILE GHC Instances.Eq[NewlineMode]   = AgdaEq   #-}
-{-# COMPILE GHC Instances.Ord[NewlineMode]  = AgdaOrd  #-}
+{-# COMPILE GHC Read[NewlineMode] = AgdaRead #-}
+{-# COMPILE GHC Show[NewlineMode] = AgdaShow #-}
+{-# COMPILE GHC Eq[NewlineMode]   = AgdaEq   #-}
+{-# COMPILE GHC Ord[NewlineMode]  = AgdaOrd  #-}

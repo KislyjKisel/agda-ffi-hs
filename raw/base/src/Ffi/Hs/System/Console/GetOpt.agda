@@ -50,12 +50,11 @@ postulate
 {-# COMPILE GHC getOpt'   = \ aℓ a -> System.Console.GetOpt.getOpt'   #-}
 {-# COMPILE GHC usageInfo = \ aℓ a -> System.Console.GetOpt.usageInfo #-}
 
-module Instances where
-    postulate
-        Functor[ArgOrder] : Functor {aℓ} ArgOrder
-        Functor[OptDescr] : Functor {aℓ} OptDescr
-        Functor[ArgDescr] : Functor {aℓ} ArgDescr
+postulate
+    Functor[ArgOrder] : Functor {aℓ} ArgOrder
+    Functor[OptDescr] : Functor {aℓ} OptDescr
+    Functor[ArgDescr] : Functor {aℓ} ArgDescr
 
-{-# COMPILE GHC Instances.Functor[ArgOrder] = \ aℓ -> AgdaFunctor #-}
-{-# COMPILE GHC Instances.Functor[OptDescr] = \ aℓ -> AgdaFunctor #-}
-{-# COMPILE GHC Instances.Functor[ArgDescr] = \ aℓ -> AgdaFunctor #-}
+{-# COMPILE GHC Functor[ArgOrder] = \ aℓ -> AgdaFunctor #-}
+{-# COMPILE GHC Functor[OptDescr] = \ aℓ -> AgdaFunctor #-}
+{-# COMPILE GHC Functor[ArgDescr] = \ aℓ -> AgdaFunctor #-}

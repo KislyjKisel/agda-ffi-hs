@@ -109,18 +109,17 @@ postulate
 {-# COMPILE GHC readP-to-S = \ aℓ a -> AgdaHsReadP.readP-to-S #-}
 {-# COMPILE GHC readS-to-P = \ aℓ a -> AgdaHsReadP.readS-to-P #-}
 
-module Instances where
-    postulate
-        Functor[ReadP]     : Functor {aℓ} ReadP
-        Applicative[ReadP] : Applicative {aℓ} ReadP
-        Alternative[ReadP] : Alternative {aℓ} ReadP
-        Monad[ReadP]       : Monad {aℓ} ReadP
-        MonadFail[ReadP]   : MonadFail {aℓ} ReadP
-        MonadPlus[ReadP]   : MonadPlus {aℓ} ReadP
+postulate
+    Functor[ReadP]     : Functor {aℓ} ReadP
+    Applicative[ReadP] : Applicative {aℓ} ReadP
+    Alternative[ReadP] : Alternative {aℓ} ReadP
+    Monad[ReadP]       : Monad {aℓ} ReadP
+    MonadFail[ReadP]   : MonadFail {aℓ} ReadP
+    MonadPlus[ReadP]   : MonadPlus {aℓ} ReadP
 
-{-# COMPILE GHC Instances.Functor[ReadP]     = \ aℓ -> AgdaFunctor     #-}
-{-# COMPILE GHC Instances.Applicative[ReadP] = \ aℓ -> AgdaApplicative #-}
-{-# COMPILE GHC Instances.Alternative[ReadP] = \ aℓ -> AgdaAlternative #-}
-{-# COMPILE GHC Instances.Monad[ReadP]       = \ aℓ -> AgdaMonad       #-}
-{-# COMPILE GHC Instances.MonadFail[ReadP]   = \ aℓ -> AgdaMonadFail   #-}
-{-# COMPILE GHC Instances.MonadPlus[ReadP]   = \ aℓ -> AgdaMonadPlus   #-}
+{-# COMPILE GHC Functor[ReadP]     = \ aℓ -> AgdaFunctor     #-}
+{-# COMPILE GHC Applicative[ReadP] = \ aℓ -> AgdaApplicative #-}
+{-# COMPILE GHC Alternative[ReadP] = \ aℓ -> AgdaAlternative #-}
+{-# COMPILE GHC Monad[ReadP]       = \ aℓ -> AgdaMonad       #-}
+{-# COMPILE GHC MonadFail[ReadP]   = \ aℓ -> AgdaMonadFail   #-}
+{-# COMPILE GHC MonadPlus[ReadP]   = \ aℓ -> AgdaMonadPlus   #-}

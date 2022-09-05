@@ -7,7 +7,7 @@ open import Agda.Primitive
 private
     variable
         aℓ : Level
-        A : Set aℓ
+        A B : Set aℓ
 
 postulate
     IsKind : (A : Set aℓ) → Set
@@ -32,3 +32,10 @@ _⟶_ : ∀{aℓ bℓ} → Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
 A ⟶ B = A → B
 
 -- const : ∀{aℓ bℓ} → A :: Type ^ aℓ ∙ B :: Type ^ bℓ ∙ A ⟶ B ⟶ A
+
+postulate
+    IsKind[Set] : ∀{aℓ} → IsKind (Set (lsuc aℓ))
+    IsKind[A⟶B] : ⦃ IsKind A ⦄ → ⦃ IsKind B ⦄ → IsKind (A → B)
+
+{-# COMPILE GHC IsKind[Set] = \ aℓ                              -> AgdaIsKind #-}
+{-# COMPILE GHC IsKind[A⟶B] = \ aℓ a bℓ b AgdaIsKind AgdaIsKind -> AgdaIsKind #-}

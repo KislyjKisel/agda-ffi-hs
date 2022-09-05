@@ -104,10 +104,14 @@ postulate
 {-# COMPILE GHC when   = \ ℓ f AgdaApplicative -> Control.Monad.when   #-}
 {-# COMPILE GHC unless = \ ℓ f AgdaApplicative -> Control.Monad.unless #-}
 
-module Instances where
-    postulate
-        Applicative[F]⇒Functor[F]     : ⦃ Applicative F ⦄ → Functor F
-        Alternative[F]⇒Applicative[F] : ⦃ Alternative F ⦄ → Applicative F
+postulate
+    Applicative[F]⇒Functor[F]     : ⦃ Applicative F ⦄ → Functor F
+    Alternative[F]⇒Applicative[F] : ⦃ Alternative F ⦄ → Applicative F
 
-{-# COMPILE GHC Instances.Applicative[F]⇒Functor[F]     = \ fℓ f AgdaApplicative -> AgdaFunctor #-}
-{-# COMPILE GHC Instances.Alternative[F]⇒Applicative[F] = \ fℓ f AgdaAlternative -> AgdaFunctor #-}
+{-# COMPILE GHC Applicative[F]⇒Functor[F]     = \ fℓ f AgdaApplicative -> AgdaFunctor #-}
+{-# COMPILE GHC Alternative[F]⇒Applicative[F] = \ fℓ f AgdaAlternative -> AgdaFunctor #-}
+
+module Instanced where
+    instance
+        inst:Applicative[F]⇒Functor[F] = Applicative[F]⇒Functor[F]
+        inst:Alternative[F]⇒Applicative[F] = Alternative[F]⇒Applicative[F]

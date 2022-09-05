@@ -74,28 +74,6 @@ postulate
 
 {-# COMPILE GHC showFixed = \ aℓ a AgdaHasResolution -> Data.Fixed.showFixed #-}
 
-module Instances where
-    postulate
-        Enum[Fixed[A]]       : Enum (Fixed A)
-        Num[Fixed[A]]        : ⦃ HasResolution A ⦄ → Num (Fixed A)
-        Read[Fixed[A]]       : ⦃ HasResolution A ⦄ → Read (Fixed A)
-        Fractional[Fixed[A]] : ⦃ HasResolution A ⦄ → Fractional (Fixed A)
-        Real[Fixed[A]]       : ⦃ HasResolution A ⦄ → Real (Fixed A)
-        RealFrac[Fixed[A]]   : ⦃ HasResolution A ⦄ → RealFrac (Fixed A)
-        Show[Fixed[A]]       : ⦃ HasResolution A ⦄ → Show (Fixed A)
-        Eq[Fixed[A]]         : Eq (Fixed A)
-        Ord[Fixed[A]]        : Ord (Fixed A)
-
-{-# COMPILE GHC Instances.Enum[Fixed[A]]       = \ aℓ a                   -> AgdaEnum       #-}
-{-# COMPILE GHC Instances.Num[Fixed[A]]        = \ aℓ a AgdaHasResolution -> AgdaNum        #-}
-{-# COMPILE GHC Instances.Read[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaRead       #-}
-{-# COMPILE GHC Instances.Fractional[Fixed[A]] = \ aℓ a AgdaHasResolution -> AgdaFractional #-}
-{-# COMPILE GHC Instances.Real[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaReal       #-}
-{-# COMPILE GHC Instances.RealFrac[Fixed[A]]   = \ aℓ a AgdaHasResolution -> AgdaRealFrac   #-}
-{-# COMPILE GHC Instances.Show[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaShow       #-}
-{-# COMPILE GHC Instances.Eq[Fixed[A]]         = \ aℓ a                   -> AgdaEq         #-}
-{-# COMPILE GHC Instances.Ord[Fixed[A]]        = \ aℓ a                   -> AgdaOrd        #-}
-
 Uni : Set
 Uni = Fixed E0
 
@@ -116,3 +94,24 @@ Nano = Fixed E9
 
 Pico : Set
 Pico = Fixed E12
+
+postulate
+    Enum[Fixed[A]]       : Enum (Fixed A)
+    Num[Fixed[A]]        : ⦃ HasResolution A ⦄ → Num (Fixed A)
+    Read[Fixed[A]]       : ⦃ HasResolution A ⦄ → Read (Fixed A)
+    Fractional[Fixed[A]] : ⦃ HasResolution A ⦄ → Fractional (Fixed A)
+    Real[Fixed[A]]       : ⦃ HasResolution A ⦄ → Real (Fixed A)
+    RealFrac[Fixed[A]]   : ⦃ HasResolution A ⦄ → RealFrac (Fixed A)
+    Show[Fixed[A]]       : ⦃ HasResolution A ⦄ → Show (Fixed A)
+    Eq[Fixed[A]]         : Eq (Fixed A)
+    Ord[Fixed[A]]        : Ord (Fixed A)
+
+{-# COMPILE GHC Enum[Fixed[A]]       = \ aℓ a                   -> AgdaEnum       #-}
+{-# COMPILE GHC Num[Fixed[A]]        = \ aℓ a AgdaHasResolution -> AgdaNum        #-}
+{-# COMPILE GHC Read[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaRead       #-}
+{-# COMPILE GHC Fractional[Fixed[A]] = \ aℓ a AgdaHasResolution -> AgdaFractional #-}
+{-# COMPILE GHC Real[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaReal       #-}
+{-# COMPILE GHC RealFrac[Fixed[A]]   = \ aℓ a AgdaHasResolution -> AgdaRealFrac   #-}
+{-# COMPILE GHC Show[Fixed[A]]       = \ aℓ a AgdaHasResolution -> AgdaShow       #-}
+{-# COMPILE GHC Eq[Fixed[A]]         = \ aℓ a                   -> AgdaEq         #-}
+{-# COMPILE GHC Ord[Fixed[A]]        = \ aℓ a                   -> AgdaOrd        #-}

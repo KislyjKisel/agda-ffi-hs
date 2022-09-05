@@ -25,8 +25,7 @@ postulate
 
 {-# COMPILE GHC liftIO = \ mℓ m a AgdaMonadIO -> Control.Monad.IO.Class.liftIO #-}
 
-module Instances where
-    postulate
-        MonadIO[M]⇒Monad[M] : ⦃ MonadIO M ⦄ → Monad M
+postulate
+    MonadIO[M]⇒Monad[M] : ⦃ MonadIO M ⦄ → Monad M
 
-{-# COMPILE GHC Instances.MonadIO[M]⇒Monad[M] = \ mℓ m AgdaMonadIO -> AgdaMonad #-}
+{-# COMPILE GHC MonadIO[M]⇒Monad[M] = \ mℓ m AgdaMonadIO -> AgdaMonad #-}

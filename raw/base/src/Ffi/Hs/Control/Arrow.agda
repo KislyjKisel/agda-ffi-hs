@@ -83,77 +83,76 @@ record Kleisli (M : Set bℓ → Set bℓ) (A : Set aℓ) (B : Set bℓ) : Set (
 {-# FOREIGN GHC type AgdaKleisli bℓ aℓ = Control.Arrow.Kleisli #-}
 {-# COMPILE GHC Kleisli = data(2) AgdaKleisli (Control.Arrow.Kleisli) #-}
 
-module Instances where
-    postulate
-        Arrow[⟶]       : Arrow {aℓ} {bℓ} (λ a b → (a → b))
-        ArrowChoice[⟶] : ArrowChoice {aℓ} {bℓ} (λ a b → (a → b))
-        ArrowApply[⟶]  : ArrowApply {aℓ} {bℓ} (λ a b → (a → b))
-        ArrowLoop[⟶]   : ArrowLoop {aℓ} {bℓ} (λ a b → (a → b))
+postulate
+    Arrow[⟶]       : Arrow {aℓ} {bℓ} (λ a b → (a → b))
+    ArrowChoice[⟶] : ArrowChoice {aℓ} {bℓ} (λ a b → (a → b))
+    ArrowApply[⟶]  : ArrowApply {aℓ} {bℓ} (λ a b → (a → b))
+    ArrowLoop[⟶]   : ArrowLoop {aℓ} {bℓ} (λ a b → (a → b))
 
-        Arrow[Kleisli[M]]         : ⦃ Monad M ⦄       → Arrow {aℓ} (Kleisli M)
-        Category[Kleisli[M]]      : ⦃ Monad M ⦄       → Category {aℓ} (Kleisli M)
-        ArrowApply[Kleisli[M]]    : ⦃ Monad M ⦄       → ArrowApply {aℓ} (Kleisli M)
-        ArrowChoice[Kleisli[M]]   : ⦃ Monad M ⦄       → ArrowChoice {aℓ} (Kleisli M)
-        ArrowLoop[Kleisli[M]]     : ⦃ MonadFix M ⦄    → ArrowLoop {aℓ} (Kleisli M)
-        ArrowPlus[Kleisli[M]]     : ⦃ MonadPlus M ⦄   → ArrowPlus {aℓ} (Kleisli M)
-        ArrowZero[Kleisli[M]]     : ⦃ MonadPlus M ⦄   → ArrowZero {aℓ} (Kleisli M)
-        Alternative[Kleisli[M,A]] : ⦃ Alternative M ⦄ → Alternative (Kleisli {aℓ} {aℓ} M A)
-        Applicative[Kleisli[M,A]] : ⦃ Applicative M ⦄ → Applicative (Kleisli {aℓ} {aℓ} M A)
-        Functor[Kleisli[M,A]]     : ⦃ Functor M ⦄     → Functor (Kleisli {aℓ} {aℓ} M A)
-        Monad[Kleisli[M,A]]       : ⦃ Monad M ⦄       → Monad (Kleisli {aℓ} {aℓ} M A)
-        MonadPlus[Kleisli[M,A]]   : ⦃ MonadPlus M ⦄   → MonadPlus (Kleisli {aℓ} {aℓ} M A)
+    Arrow[Kleisli[M]]         : ⦃ Monad M ⦄       → Arrow {aℓ} (Kleisli M)
+    Category[Kleisli[M]]      : ⦃ Monad M ⦄       → Category {aℓ} (Kleisli M)
+    ArrowApply[Kleisli[M]]    : ⦃ Monad M ⦄       → ArrowApply {aℓ} (Kleisli M)
+    ArrowChoice[Kleisli[M]]   : ⦃ Monad M ⦄       → ArrowChoice {aℓ} (Kleisli M)
+    ArrowLoop[Kleisli[M]]     : ⦃ MonadFix M ⦄    → ArrowLoop {aℓ} (Kleisli M)
+    ArrowPlus[Kleisli[M]]     : ⦃ MonadPlus M ⦄   → ArrowPlus {aℓ} (Kleisli M)
+    ArrowZero[Kleisli[M]]     : ⦃ MonadPlus M ⦄   → ArrowZero {aℓ} (Kleisli M)
+    Alternative[Kleisli[M,A]] : ⦃ Alternative M ⦄ → Alternative (Kleisli {aℓ} {aℓ} M A)
+    Applicative[Kleisli[M,A]] : ⦃ Applicative M ⦄ → Applicative (Kleisli {aℓ} {aℓ} M A)
+    Functor[Kleisli[M,A]]     : ⦃ Functor M ⦄     → Functor (Kleisli {aℓ} {aℓ} M A)
+    Monad[Kleisli[M,A]]       : ⦃ Monad M ⦄       → Monad (Kleisli {aℓ} {aℓ} M A)
+    MonadPlus[Kleisli[M,A]]   : ⦃ MonadPlus M ⦄   → MonadPlus (Kleisli {aℓ} {aℓ} M A)
 
-        Functor[ArrowMonad[Cat]]      : ⦃ Arrow      {aℓ} {aℓ} {aℓ} Cat ⦄ → Functor (ArrowMonad Cat)
-        Applicative[ArrowMonad[Cat]]  : ⦃ Arrow      {aℓ} {aℓ} {aℓ} Cat ⦄ → Applicative (ArrowMonad Cat)
-        Alternative[ArrowMonad[Cat]]  : ⦃ ArrowPlus  {aℓ} {aℓ} {aℓ} Cat ⦄ → Alternative (ArrowMonad Cat)
-        Monad[ArrowMonad[Cat]]        : ⦃ ArrowApply {aℓ} {aℓ} {aℓ} Cat ⦄ → Monad (ArrowMonad Cat)
-        MonadPlus[ArrowMonad[Cat]]    : ⦃ ArrowApply {aℓ} {aℓ} {aℓ} Cat ⦄ → ⦃ ArrowPlus Cat ⦄ → MonadPlus (ArrowMonad Cat)
-        
-        Arrow[Cat]⇒Category[Cat]      : ⦃ Arrow Cat ⦄       → Category Cat
-        ArrowZero[Cat]⇒Arrow[Cat]     : ⦃ ArrowZero Cat ⦄   → Arrow Cat
-        ArrowPlus[Cat]⇒ArrowZero[Cat] : ⦃ ArrowPlus Cat ⦄   → ArrowZero Cat
-        ArrowChoice[Cat]⇒Arrow[Cat]   : ⦃ ArrowChoice Cat ⦄ → Arrow Cat
-        ArrowApply[Cat]⇒Arrow[Cat]    : ⦃ ArrowApply Cat ⦄  → Arrow Cat
-        ArrowLoop[Cat]⇒Arrow[Cat]     : ⦃ ArrowLoop Cat ⦄   → Arrow Cat
+    Functor[ArrowMonad[Cat]]      : ⦃ Arrow      {aℓ} {aℓ} {aℓ} Cat ⦄ → Functor (ArrowMonad Cat)
+    Applicative[ArrowMonad[Cat]]  : ⦃ Arrow      {aℓ} {aℓ} {aℓ} Cat ⦄ → Applicative (ArrowMonad Cat)
+    Alternative[ArrowMonad[Cat]]  : ⦃ ArrowPlus  {aℓ} {aℓ} {aℓ} Cat ⦄ → Alternative (ArrowMonad Cat)
+    Monad[ArrowMonad[Cat]]        : ⦃ ArrowApply {aℓ} {aℓ} {aℓ} Cat ⦄ → Monad (ArrowMonad Cat)
+    MonadPlus[ArrowMonad[Cat]]    : ⦃ ArrowApply {aℓ} {aℓ} {aℓ} Cat ⦄ → ⦃ ArrowPlus Cat ⦄ → MonadPlus (ArrowMonad Cat)
+    
+    Arrow[Cat]⇒Category[Cat]      : ⦃ Arrow Cat ⦄       → Category Cat
+    ArrowZero[Cat]⇒Arrow[Cat]     : ⦃ ArrowZero Cat ⦄   → Arrow Cat
+    ArrowPlus[Cat]⇒ArrowZero[Cat] : ⦃ ArrowPlus Cat ⦄   → ArrowZero Cat
+    ArrowChoice[Cat]⇒Arrow[Cat]   : ⦃ ArrowChoice Cat ⦄ → Arrow Cat
+    ArrowApply[Cat]⇒Arrow[Cat]    : ⦃ ArrowApply Cat ⦄  → Arrow Cat
+    ArrowLoop[Cat]⇒Arrow[Cat]     : ⦃ ArrowLoop Cat ⦄   → Arrow Cat
 
-{-# COMPILE GHC Instances.Arrow[⟶]       = \ aℓ bℓ -> AgdaArrow       #-}
-{-# COMPILE GHC Instances.ArrowChoice[⟶] = \ aℓ bℓ -> AgdaArrowChoice #-}
-{-# COMPILE GHC Instances.ArrowApply[⟶]  = \ aℓ bℓ -> AgdaArrowApply  #-}
-{-# COMPILE GHC Instances.ArrowLoop[⟶]   = \ aℓ bℓ -> AgdaArrowLoop   #-}
+{-# COMPILE GHC Arrow[⟶]       = \ aℓ bℓ -> AgdaArrow       #-}
+{-# COMPILE GHC ArrowChoice[⟶] = \ aℓ bℓ -> AgdaArrowChoice #-}
+{-# COMPILE GHC ArrowApply[⟶]  = \ aℓ bℓ -> AgdaArrowApply  #-}
+{-# COMPILE GHC ArrowLoop[⟶]   = \ aℓ bℓ -> AgdaArrowLoop   #-}
 
-{-# COMPILE GHC Instances.Arrow[Kleisli[M]]         = \ aℓ mℓ m AgdaMonad -> AgdaArrow       #-}
-{-# COMPILE GHC Instances.Category[Kleisli[M]]      = \ aℓ mℓ m AgdaMonad -> AgdaCategory    #-}
-{-# COMPILE GHC Instances.ArrowApply[Kleisli[M]]    = \ aℓ mℓ m AgdaMonad -> AgdaArrowApply  #-}
-{-# COMPILE GHC Instances.ArrowChoice[Kleisli[M]]   = \ aℓ mℓ m AgdaMonad -> AgdaArrowChoice #-}
-{-# COMPILE GHC Instances.ArrowLoop[Kleisli[M]]     = \ aℓ mℓ m AgdaMonad -> AgdaArrowLoop   #-}
-{-# COMPILE GHC Instances.ArrowPlus[Kleisli[M]]     = \ aℓ mℓ m AgdaMonad -> AgdaArrowPlus   #-}
-{-# COMPILE GHC Instances.ArrowZero[Kleisli[M]]     = \ aℓ mℓ m AgdaMonad -> AgdaArrowZero   #-}
-{-# COMPILE GHC Instances.Alternative[Kleisli[M,A]] = \ aℓ m a  AgdaMonad -> AgdaAlternative #-}
-{-# COMPILE GHC Instances.Applicative[Kleisli[M,A]] = \ aℓ m a  AgdaMonad -> AgdaApplicative #-}
-{-# COMPILE GHC Instances.Functor[Kleisli[M,A]]     = \ aℓ m a  AgdaMonad -> AgdaFunctor     #-}
-{-# COMPILE GHC Instances.Monad[Kleisli[M,A]]       = \ aℓ m a  AgdaMonad -> AgdaMonad       #-}
-{-# COMPILE GHC Instances.MonadPlus[Kleisli[M,A]]   = \ aℓ m a  AgdaMonad -> AgdaMonadPlus   #-}
+{-# COMPILE GHC Arrow[Kleisli[M]]         = \ aℓ mℓ m AgdaMonad -> AgdaArrow       #-}
+{-# COMPILE GHC Category[Kleisli[M]]      = \ aℓ mℓ m AgdaMonad -> AgdaCategory    #-}
+{-# COMPILE GHC ArrowApply[Kleisli[M]]    = \ aℓ mℓ m AgdaMonad -> AgdaArrowApply  #-}
+{-# COMPILE GHC ArrowChoice[Kleisli[M]]   = \ aℓ mℓ m AgdaMonad -> AgdaArrowChoice #-}
+{-# COMPILE GHC ArrowLoop[Kleisli[M]]     = \ aℓ mℓ m AgdaMonad -> AgdaArrowLoop   #-}
+{-# COMPILE GHC ArrowPlus[Kleisli[M]]     = \ aℓ mℓ m AgdaMonad -> AgdaArrowPlus   #-}
+{-# COMPILE GHC ArrowZero[Kleisli[M]]     = \ aℓ mℓ m AgdaMonad -> AgdaArrowZero   #-}
+{-# COMPILE GHC Alternative[Kleisli[M,A]] = \ aℓ m a  AgdaMonad -> AgdaAlternative #-}
+{-# COMPILE GHC Applicative[Kleisli[M,A]] = \ aℓ m a  AgdaMonad -> AgdaApplicative #-}
+{-# COMPILE GHC Functor[Kleisli[M,A]]     = \ aℓ m a  AgdaMonad -> AgdaFunctor     #-}
+{-# COMPILE GHC Monad[Kleisli[M,A]]       = \ aℓ m a  AgdaMonad -> AgdaMonad       #-}
+{-# COMPILE GHC MonadPlus[Kleisli[M,A]]   = \ aℓ m a  AgdaMonad -> AgdaMonadPlus   #-}
 
-{-# COMPILE GHC Instances.Functor[ArrowMonad[Cat]]     = \ aℓ cat AgdaArrow      -> AgdaFunctor                 #-}
-{-# COMPILE GHC Instances.Applicative[ArrowMonad[Cat]] = \ aℓ cat AgdaArrow      -> AgdaApplicative             #-}
-{-# COMPILE GHC Instances.Alternative[ArrowMonad[Cat]] = \ aℓ cat AgdaArrowPlus  -> AgdaAlternative             #-}
-{-# COMPILE GHC Instances.Monad[ArrowMonad[Cat]]       = \ aℓ cat AgdaArrowApply -> AgdaMonad                   #-}
-{-# COMPILE GHC Instances.MonadPlus[ArrowMonad[Cat]]   = \ aℓ cat AgdaArrowApply AgdaArrowPlus -> AgdaMonadPlus #-}
+{-# COMPILE GHC Functor[ArrowMonad[Cat]]     = \ aℓ cat AgdaArrow      -> AgdaFunctor                 #-}
+{-# COMPILE GHC Applicative[ArrowMonad[Cat]] = \ aℓ cat AgdaArrow      -> AgdaApplicative             #-}
+{-# COMPILE GHC Alternative[ArrowMonad[Cat]] = \ aℓ cat AgdaArrowPlus  -> AgdaAlternative             #-}
+{-# COMPILE GHC Monad[ArrowMonad[Cat]]       = \ aℓ cat AgdaArrowApply -> AgdaMonad                   #-}
+{-# COMPILE GHC MonadPlus[ArrowMonad[Cat]]   = \ aℓ cat AgdaArrowApply AgdaArrowPlus -> AgdaMonadPlus #-}
 
-{-# COMPILE GHC Instances.Arrow[Cat]⇒Category[Cat]      = \ aℓ bℓ cℓ cat AgdaArrow       -> AgdaCategory  #-}
-{-# COMPILE GHC Instances.ArrowZero[Cat]⇒Arrow[Cat]     = \ aℓ bℓ cℓ cat AgdaArrowZero   -> AgdaArrow     #-}
-{-# COMPILE GHC Instances.ArrowPlus[Cat]⇒ArrowZero[Cat] = \ aℓ bℓ cℓ cat AgdaArrowPlus   -> AgdaArrowZero #-}
-{-# COMPILE GHC Instances.ArrowChoice[Cat]⇒Arrow[Cat]   = \ aℓ bℓ cℓ cat AgdaArrowChoice -> AgdaArrow     #-}
-{-# COMPILE GHC Instances.ArrowApply[Cat]⇒Arrow[Cat]    = \ aℓ bℓ cℓ cat AgdaArrowApply  -> AgdaArrow     #-}
-{-# COMPILE GHC Instances.ArrowLoop[Cat]⇒Arrow[Cat]     = \ aℓ bℓ cℓ cat AgdaArrowLoop   -> AgdaArrow     #-}
+{-# COMPILE GHC Arrow[Cat]⇒Category[Cat]      = \ aℓ bℓ cℓ cat AgdaArrow       -> AgdaCategory  #-}
+{-# COMPILE GHC ArrowZero[Cat]⇒Arrow[Cat]     = \ aℓ bℓ cℓ cat AgdaArrowZero   -> AgdaArrow     #-}
+{-# COMPILE GHC ArrowPlus[Cat]⇒ArrowZero[Cat] = \ aℓ bℓ cℓ cat AgdaArrowPlus   -> AgdaArrowZero #-}
+{-# COMPILE GHC ArrowChoice[Cat]⇒Arrow[Cat]   = \ aℓ bℓ cℓ cat AgdaArrowChoice -> AgdaArrow     #-}
+{-# COMPILE GHC ArrowApply[Cat]⇒Arrow[Cat]    = \ aℓ bℓ cℓ cat AgdaArrowApply  -> AgdaArrow     #-}
+{-# COMPILE GHC ArrowLoop[Cat]⇒Arrow[Cat]     = \ aℓ bℓ cℓ cat AgdaArrowLoop   -> AgdaArrow     #-}
 
 returnA : ⦃ Arrow Cat ⦄ → Cat A A
-returnA = id ⦃ Instances.Arrow[Cat]⇒Category[Cat] ⦄
+returnA = id ⦃ Arrow[Cat]⇒Category[Cat] ⦄
 
 module _ ⦃ Arrow[Cat] : Arrow {aℓ} {aℓ} Cat ⦄ where
 
     private
-        instance _ = Instances.Arrow[Cat]⇒Category[Cat]
+        instance _ = Arrow[Cat]⇒Category[Cat]
 
     infixr 1 _^>>_ _>>^_ _<<^_ _^<<_
 
@@ -168,4 +167,3 @@ module _ ⦃ Arrow[Cat] : Arrow {aℓ} {aℓ} Cat ⦄ where
 
     _^<<_ : (B → C) → Cat A B → Cat A C
     f ^<< a = arr f <<< a
- 

@@ -26,8 +26,7 @@ postulate
 
 {-# COMPILE GHC fail = \ mℓ a m AgdaMonadFail -> Control.Monad.Fail.fail #-}
 
-module Instances where
-    postulate
-        MonadFail[M]⇒Monad[M] : ⦃ MonadFail M ⦄ → Monad M
+postulate
+    MonadFail[M]⇒Monad[M] : ⦃ MonadFail M ⦄ → Monad M
 
-{-# COMPILE GHC Instances.MonadFail[M]⇒Monad[M] = \ mℓ m AgdaMonadFail -> AgdaMonad #-}
+{-# COMPILE GHC MonadFail[M]⇒Monad[M] = \ mℓ m AgdaMonadFail -> AgdaMonad #-}

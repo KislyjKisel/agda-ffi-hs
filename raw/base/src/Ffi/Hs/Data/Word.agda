@@ -2,6 +2,14 @@
 
 module Ffi.Hs.Data.Word where
 
+{-# FOREIGN GHC
+import qualified Data.Word
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
+    ( AgdaSemigroup, AgdaException, AgdaIx, AgdaRead
+    , AgdaShow, AgdaEq, AgdaOrd, AgdaFunctor
+    )
+#-}
+
 postulate
     Word   : Set
     Word8  : Set
@@ -18,9 +26,6 @@ postulate
     bitReverse32 : Word32 → Word32
     bitReverse64 : Word64 → Word64
 
-
-{-# FOREIGN GHC import qualified Data.Word #-}
-
 {-# COMPILE GHC Word   = type Data.Word.Word   #-}
 {-# COMPILE GHC Word8  = type Data.Word.Word8  #-}
 {-# COMPILE GHC Word16 = type Data.Word.Word16 #-}
@@ -35,3 +40,9 @@ postulate
 {-# COMPILE GHC bitReverse16 = Data.Word.bitReverse16 #-}
 {-# COMPILE GHC bitReverse32 = Data.Word.bitReverse32 #-}
 {-# COMPILE GHC bitReverse64 = Data.Word.bitReverse64 #-}
+
+module Instances where
+    postulate
+        
+
+open Instances public

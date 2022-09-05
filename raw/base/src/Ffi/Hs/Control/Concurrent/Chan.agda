@@ -37,9 +37,8 @@ postulate
 {-# COMPILE GHC getChanContents = \ aℓ a -> AgdaHsChan.getChanContents #-}
 {-# COMPILE GHC writeList2Chan  = \ aℓ a -> AgdaHsChan.writeList2Chan  #-}
 
-module Instances where
-    postulate
-        Eq[Chan[A]] : Eq (Chan A)
+postulate
+    Eq[Chan[A]] : Eq (Chan A)
 
 {-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaEq) #-}
-{-# COMPILE GHC Instances.Eq[Chan[A]] = \ aℓ a -> AgdaEq #-}
+{-# COMPILE GHC Eq[Chan[A]] = \ aℓ a -> AgdaEq #-}
