@@ -22,6 +22,7 @@ postulate
     Enum       : Set aℓ → Set aℓ
     Eq         : Set aℓ → Set aℓ
     Ord        : Set aℓ → Set aℓ
+    Ix         : Set aℓ → Set aℓ
     Exception  : Set aℓ → Set aℓ
 
     Semigroup  : Set aℓ → Set aℓ
@@ -50,7 +51,8 @@ postulate
     Bifunctor     : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Bifoldable    : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Bitraversable : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
-        
+    
+    Storable : Set aℓ → Set aℓ
 
 {-# FOREIGN GHC import qualified Text.Read #-}
 {-# FOREIGN GHC data AgdaRead aℓ a = Text.Read.Read a => AgdaRead #-}
