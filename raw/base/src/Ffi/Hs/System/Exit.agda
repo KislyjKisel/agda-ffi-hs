@@ -45,4 +45,8 @@ module Instances where
         Ord[ExitCode]       : Ord ExitCode
         -- todo: Rep, Generic
 
--- todo: instances ffi
+{-# COMPILE GHC Instances.Show[ExitCode]      = AgdaShow      #-}
+{-# COMPILE GHC Instances.Read[ExitCode]      = AgdaRead      #-}
+{-# COMPILE GHC Instances.Exception[ExitCode] = AgdaException #-}
+{-# COMPILE GHC Instances.Eq[ExitCode]        = AgdaEq        #-}
+{-# COMPILE GHC Instances.Ord[ExitCode]       = AgdaOrd       #-}
