@@ -16,7 +16,6 @@ private
         B : Set bℓ
 
 postulate
-    Coercible : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
     coerce : ∀{k : RuntimeRep} → ⦃ TYPE k A ⦄ → ⦃ TYPE k B ⦄ → ⦃ Coercible A B ⦄ → A → B
 
     Coercible[A,A] : Coercible A A

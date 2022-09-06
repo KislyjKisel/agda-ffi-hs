@@ -60,7 +60,21 @@ postulate
     Storable  : Set aℓ → Set aℓ
     Exception : Set aℓ → Set aℓ
 
-    TestEquality : ∀{K : Set (lsuc aℓ)} → ⦃ IsKind K ⦄ → K → Set aℓ
+    Data         : {K : Set (lsuc aℓ)} → K → Set aℓ
+    Typeable     : {K : Set (lsuc aℓ)} → K → Set aℓ
+    TestEquality : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
+    TestCoercion : {K₁ : Set (lsuc aℓ)} {K₂ : Set (lsuc bℓ)} → (K₁ → K₂) → Set (aℓ ⊔ bℓ)
+    Coercible    : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
+
+{-# FOREIGN GHC
+data AgdaTypeable kℓ k (a :: k) = Type.Reflection.Typeable a => AgdaTypeable
+#-}
+{-# COMPILE GHC Typeable = type(0) AgdaTypeable #-}
+
+{-# FOREIGN GHC
+data AgdaTestEquality aℓ bℓ f = Data.Type.Equality.TestEquality f => AgdaTestEquality
+#-}
+{-# COMPILE GHC TestEquality = type(0) AgdaTestEquality #-}
 
 {-# FOREIGN GHC import qualified Text.Read #-}
 {-# FOREIGN GHC data AgdaRead aℓ a = Text.Read.Read a => AgdaRead #-}
