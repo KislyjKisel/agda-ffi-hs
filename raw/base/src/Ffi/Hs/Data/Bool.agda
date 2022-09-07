@@ -2,14 +2,19 @@
 
 module Ffi.Hs.Data.Bool where
 
+open import Ffi.Hs.-base.Class
 open import Ffi.Hs.-base.Kind using (IsKind)
 
 open import Agda.Builtin.Bool public
-    using    (Bool; true; false)
+    using (Bool; true; false)
 
 {-# FOREIGN GHC
 import qualified Data.Bool
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Kind (AgdaIsKind)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
+    ( AgdaData, AgdaStorable, AgdaBits, AgdaFiniteBits, AgdaBounded
+    , AgdaEnum, AgdaIx, AgdaRead, AgdaShow, AgdaEq, AgdaOrd
+    )
 #-}
 
 infixr 6 _&&_
@@ -32,6 +37,31 @@ not true  = false
 not false = true
 
 otherwise = true
+
+postulate
+    Data[Bool]       : Data Bool
+    Storable[Bool]   : Storable Bool
+    Bits[Bool]       : Bits Bool
+    FiniteBits[Bool] : FiniteBits Bool
+    Bounded[Bool]    : Bounded Bool
+    Enum[Bool]       : Enum Bool
+    Ix[Bool]         : Ix Bool
+    Read[Bool]       : Read Bool
+    Show[Bool]       : Show Bool
+    Eq[Bool]         : Eq Bool
+    Ord[Bool]        : Ord Bool
+
+{-# COMPILE GHC Data[Bool]       = AgdaData       #-}
+{-# COMPILE GHC Storable[Bool]   = AgdaStorable   #-}
+{-# COMPILE GHC Bits[Bool]       = AgdaBits       #-}
+{-# COMPILE GHC FiniteBits[Bool] = AgdaFiniteBits #-}
+{-# COMPILE GHC Bounded[Bool]    = AgdaBounded    #-}
+{-# COMPILE GHC Enum[Bool]       = AgdaEnum       #-}
+{-# COMPILE GHC Ix[Bool]         = AgdaIx         #-}
+{-# COMPILE GHC Read[Bool]       = AgdaRead       #-}
+{-# COMPILE GHC Show[Bool]       = AgdaShow       #-}
+{-# COMPILE GHC Eq[Bool]         = AgdaEq         #-}
+{-# COMPILE GHC Ord[Bool]        = AgdaOrd        #-}
 
 postulate
     `Bool  : Set₁

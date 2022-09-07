@@ -18,18 +18,21 @@ postulate
     Floating   : Set aℓ → Set aℓ
     RealFloat  : Set aℓ → Set aℓ
     
-    Read       : Set aℓ → Set aℓ
-    Show       : Set aℓ → Set aℓ
+    Bits       : Set aℓ → Set aℓ
+    FiniteBits : Set aℓ → Set aℓ
 
-    Bounded    : Set aℓ → Set aℓ
-    Enum       : Set aℓ → Set aℓ
+    Read : Set aℓ → Set aℓ
+    Show : Set aℓ → Set aℓ
 
-    Eq         : Set aℓ → Set aℓ
-    Ord        : Set aℓ → Set aℓ
-    Ix         : Set aℓ → Set aℓ
+    Bounded : Set aℓ → Set aℓ
+    Enum    : Set aℓ → Set aℓ
 
-    Semigroup  : Set aℓ → Set aℓ
-    Monoid     : Set aℓ → Set aℓ
+    Eq  : Set aℓ → Set aℓ
+    Ord : Set aℓ → Set aℓ
+    Ix  : Set aℓ → Set aℓ
+
+    Semigroup : Set aℓ → Set aℓ
+    Monoid    : Set aℓ → Set aℓ
 
     Foldable    : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
     Traversable : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)

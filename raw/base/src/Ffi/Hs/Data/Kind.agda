@@ -8,11 +8,14 @@ open import Ffi.Hs.GHC.Exts public
     using    ()
     renaming (LiftedType to Type)
 
+{-# FOREIGN GHC
+import qualified Data.Kind
+import MAlonzo.Code.QZ45Zbase.Kind (AgdaIsKind)
+#-}
+
 postulate
-    Constraint : Set
+    Constraint : Set₁
     IsKind[Constraint] : IsKind Constraint
 
-{-# FOREIGN GHC import MAlonzo.Code.QZ45Zbase.Kind (AgdaIsKind(AgdaIsKind)) #-}
-{-# FOREIGN GHC import qualified Data.Kind #-}
 {-# COMPILE GHC Constraint = type(0) Data.Kind.Constraint #-}
 {-# COMPILE GHC IsKind[Constraint] = AgdaIsKind #-}

@@ -12,11 +12,17 @@ open import Ffi.Hs.Type.Reflection as Reflect using ()
 open import Ffi.Hs.Data.Proxy using (Proxy; mkProxy)
 open import Ffi.Hs.Data.Type.Equality using (_:~:_)
 open import Ffi.Hs.Data.Tuple using (Tuple2)
-open import Ffi.Hs.-base.Fingerprint using (Fingerprint)
+open import Ffi.Hs.GHC.Fingerprint.Type using (Fingerprint)
 
 open Reflect public
-    using (Typeable; TyCon; tyConPackage; tyConModule; tyConName; rnfTyCon)
-    renaming (SomeTypeRep to TypeRep; rnfSomeTypeRep to rnfTypeRep; someTypeRep to typeRep)
+    using
+        ( Typeable ; TyCon ; tyConPackage
+        ; tyConModule ; tyConName ; rnfTyCon
+        )
+    renaming
+        ( SomeTypeRep to TypeRep ; rnfSomeTypeRep to rnfTypeRep
+        ; someTypeRep to typeRep
+        )
 
 {-# FOREIGN GHC
 import qualified Data.Typeable
