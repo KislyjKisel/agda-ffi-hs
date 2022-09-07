@@ -7,7 +7,10 @@ open import Ffi.Hs.-base.Class
 {-# FOREIGN GHC
 import qualified Foreign.C.Types
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( Agda
+    ( AgdaStorable, AgdaBits, AgdaFiniteBits, AgdaBounded
+    , AgdaEnum, AgdaIx, AgdaNum, AgdaRead, AgdaIntegral
+    , AgdaReal, AgdaShow, AgdaEq, AgdaOrd, AgdaFloating
+    , AgdaRealFloat, AgdaRealFrac
     )
 #-}
 
