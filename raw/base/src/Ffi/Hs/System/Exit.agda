@@ -3,15 +3,17 @@
 module Ffi.Hs.System.Exit where
 
 open import Agda.Builtin.Char  using (Char)
-open import Agda.Builtin.List using (List)
-open import Agda.Builtin.IO  using (IO)
+open import Agda.Builtin.IO    using (IO)
+open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
-open import Ffi.Hs.Data.Int using (Int)
 open import Ffi.Hs.-base.Class using (Show; Read; Eq; Ord; Exception)
+open import Ffi.Hs.Data.Int    using (Int)
 
 {-# FOREIGN GHC
 import qualified System.Exit
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaShow, AgdaRead, AgdaEq, AgdaOrd, AgdaException)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
+    ( AgdaShow, AgdaRead, AgdaEq, AgdaOrd, AgdaException
+    )
 #-}
 
 private
@@ -23,7 +25,7 @@ data ExitCode : Set where
     ExitSuccess : ExitCode
     ExitFailure : Int → ExitCode
 
-{-# COMPILE GHC ExitCode = data System.Exit.ExitCode (ExitSuccess | ExitFailure) #-}
+{-# COMPILE GHC ExitCode = data System.Exit.ExitCode (System.Exit.ExitSuccess | System.Exit.ExitFailure) #-}
 
 postulate
     exitWith    : ExitCode → IO A
@@ -42,7 +44,6 @@ postulate
     Exception[ExitCode] : Exception ExitCode
     Eq[ExitCode]        : Eq ExitCode
     Ord[ExitCode]       : Ord ExitCode
-    -- todo: Rep, Generic
 
 {-# COMPILE GHC Show[ExitCode]      = AgdaShow      #-}
 {-# COMPILE GHC Read[ExitCode]      = AgdaRead      #-}

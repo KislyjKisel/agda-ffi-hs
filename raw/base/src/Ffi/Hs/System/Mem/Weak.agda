@@ -29,9 +29,9 @@ postulate
 {-# FOREIGN GHC type AgdaWeak aℓ = System.Mem.Weak.Weak #-}
 {-# COMPILE GHC Weak = type(1) AgdaWeak #-}
 
-{-# COMPILE GHC mkWeak       = \ kℓ k vℓ v -> System.Mem.Weak.mkWeak #-}
-{-# COMPILE GHC deRefWeak    = \ kℓ k vℓ v -> System.Mem.Weak.deRefWeak #-}
-{-# COMPILE GHC finalize     = \ kℓ k vℓ v -> System.Mem.Weak.finalize #-}
-{-# COMPILE GHC mkWeakPtr    = \ kℓ k vℓ v -> System.Mem.Weak.mkWeakPtr #-}
-{-# COMPILE GHC addFinalizer = \ kℓ k vℓ v -> System.Mem.Weak.addFinalizer #-}
-{-# COMPILE GHC mkWeakPair   = \ kℓ k vℓ v -> System.Mem.Weak.mkWeakPair #-}
+{-# COMPILE GHC mkWeak       = \ kℓ k vℓ v ℓ -> System.Mem.Weak.mkWeak       #-}
+{-# COMPILE GHC deRefWeak    = \ vℓ v        -> System.Mem.Weak.deRefWeak    #-}
+{-# COMPILE GHC finalize     = \ vℓ v        -> System.Mem.Weak.finalize     #-}
+{-# COMPILE GHC mkWeakPtr    = \ kℓ k ℓ      -> System.Mem.Weak.mkWeakPtr    #-}
+{-# COMPILE GHC addFinalizer = \ kℓ k ℓ      -> System.Mem.Weak.addFinalizer #-}
+{-# COMPILE GHC mkWeakPair   = \ kℓ k vℓ v ℓ -> System.Mem.Weak.mkWeakPair   #-}
