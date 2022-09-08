@@ -17,13 +17,18 @@ open import Ffi.Hs.Foreign.Ptr using (Ptr)
 open import Agda.Builtin.IO public
     using (IO)
 
+open import Ffi.Hs.GHC.IO.Device public
+    using
+    ( SeekMode; AbsoluteSeek; RelativeSeek; SeekFromEnd
+    ; Enum[SeekMode]; Ix[SeekMode]; Read[SeekMode]
+    ; Show[SeekMode]; Eq[SeekMode]; Ord[SeekMode]
+    )
+
 {-# FOREIGN GHC
 import qualified System.IO
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaRead, AgdaShow, AgdaEq
-    , AgdaOrd, AgdaEnum, AgdaIx
-    , AgdaFunctor, AgdaApplicative, AgdaMonad
-    , AgdaMonadFail, AgdaMonadFix, AgdaMonadIO
+    ( AgdaRead, AgdaShow, AgdaEq, AgdaOrd, AgdaApplicative
+    , AgdaFunctor, AgdaMonad, AgdaMonadFail, AgdaMonadFix, AgdaMonadIO
     , AgdaAlternative, AgdaMonadPlus, AgdaSemigroup, AgdaMonoid
     )
 #-}
@@ -47,13 +52,6 @@ data BufferMode : Set where
     BlockBuffering : Maybe Int → BufferMode
 
 {-# COMPILE GHC BufferMode = data System.IO.BufferMode (System.IO.NoBuffering | System.IO.LineBuffering | System.IO.BlockBuffering) #-}
-
-data SeekMode : Set where
-    AbsoluteSeek : SeekMode
-    RelativeSeek : SeekMode
-    SeekFromEnd  : SeekMode
-
-{-# COMPILE GHC SeekMode = data System.IO.SeekMode (System.IO.AbsoluteSeek | System.IO.RelativeSeek | System.IO.SeekFromEnd) #-}
 
 data Newline : Set where
     LF CRLF : Newline
@@ -293,13 +291,6 @@ postulate
     Show[HandlePosn] : Show HandlePosn
     Eq[HandlePosn]   : Eq HandlePosn
 
-    Enum[SeekMode] : Enum SeekMode
-    Ix[SeekMode]   : Ix SeekMode
-    Read[SeekMode] : Read SeekMode
-    Show[SeekMode] : Show SeekMode
-    Eq[SeekMode]   : Eq SeekMode
-    Ord[SeekMode]  : Ord SeekMode
-
     Read[Newline] : Read Newline
     Show[Newline] : Show Newline
     Eq[Newline]   : Eq Newline
@@ -331,13 +322,6 @@ postulate
 
 {-# COMPILE GHC Show[HandlePosn] = AgdaShow #-}
 {-# COMPILE GHC Eq[HandlePosn]   = AgdaEq   #-}
-
-{-# COMPILE GHC Enum[SeekMode] = AgdaEnum #-}
-{-# COMPILE GHC Ix[SeekMode]   = AgdaIx   #-}
-{-# COMPILE GHC Read[SeekMode] = AgdaRead #-}
-{-# COMPILE GHC Show[SeekMode] = AgdaShow #-}
-{-# COMPILE GHC Eq[SeekMode]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[SeekMode]  = AgdaOrd  #-}
 
 {-# COMPILE GHC Read[Newline] = AgdaRead #-}
 {-# COMPILE GHC Show[Newline] = AgdaShow #-}

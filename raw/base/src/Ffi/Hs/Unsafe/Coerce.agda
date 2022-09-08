@@ -11,8 +11,8 @@ import MAlonzo.Code.Ffi.Hs.GHC.Exts (AgdaTYPE)
 #-}
 
 postulate
-    unsafeCoerce-lifted   : ∀{aℓ bℓ} → A :: LiftedType   ^ aℓ ∙ B :: LiftedType   ^ bℓ ∙ A ⟶ B
-    unsafeCoerce-unlifted : ∀{aℓ bℓ} → A :: UnliftedType ^ aℓ ∙ B :: UnliftedType ^ bℓ ∙ A ⟶ B
+    unsafeCoerce   : ∀{aℓ bℓ} {A : Set aℓ} {B : Set bℓ} → A → B
+    unsafeCoerce-u : ∀{aℓ bℓ} → A :: UnliftedType ^ aℓ ∙ B :: UnliftedType ^ bℓ ∙ A ⟶ B
 
-{-# COMPILE GHC unsafeCoerce-lifted   = \ aℓ bℓ a AgdaTYPE b AgdaTYPE -> Unsafe.Coerce.unsafeCoerce #-}
-{-# COMPILE GHC unsafeCoerce-unlifted = \ aℓ bℓ a AgdaTYPE b AgdaTYPE -> Unsafe.Coerce.unsafeCoerce #-}
+{-# COMPILE GHC unsafeCoerce   = \ aℓ bℓ a b                   -> Unsafe.Coerce.unsafeCoerce #-}
+{-# COMPILE GHC unsafeCoerce-u = \ aℓ bℓ a AgdaTYPE b AgdaTYPE -> Unsafe.Coerce.unsafeCoerce #-}
