@@ -3,7 +3,7 @@
 module Ffi.Hs.Data.Proxy where
 
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Kind using (IsKind)
+open import Ffi.Hs.-base.Kind  using (IsKind)
 open import Agda.Primitive
 
 {-# FOREIGN GHC
@@ -55,7 +55,6 @@ postulate
     Show[Proxy[A]]      : Show (Proxy A)
     Eq[Proxy[A]]        : Eq (Proxy A)
     Ord[Proxy[A]]       : Ord (Proxy A)
-    -- todo: Generic, Data, Rep, Rep1, Eq1, Ord1, Read1, Show1
 
 {-# COMPILE GHC Foldable[Proxy]      = \ aℓ -> AgdaFoldable      #-}
 {-# COMPILE GHC Traversable[Proxy]   = \ aℓ -> AgdaTraversable   #-}

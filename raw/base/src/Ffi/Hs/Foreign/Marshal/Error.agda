@@ -22,14 +22,14 @@ private
         A : Set aℓ
 
 postulate
-    throwIf         : (A → Bool) → (A → List Char) → IO A → IO A
-    throwIf-void    : (A → Bool) → (A → List Char) → IO A → IO (⊤ {lzero})
-    throwIfNeg      : ⦃ Ord A ⦄ → ⦃ Num A ⦄ → (A → List Char) → IO A → IO A
-    throwIfNeg-void : ⦃ Ord A ⦄ → ⦃ Num A ⦄ → (A → List Char) → IO A → IO (⊤ {lzero})
-    throwIfNull     : List Char → IO (Ptr A) → IO (Ptr A)
+    throwIf     : (A → Bool) → (A → List Char) → IO A → IO A
+    throwIf-    : (A → Bool) → (A → List Char) → IO A → IO (⊤ {lzero})
+    throwIfNeg  : ⦃ Ord A ⦄ → ⦃ Num A ⦄ → (A → List Char) → IO A → IO A
+    throwIfNeg- : ⦃ Ord A ⦄ → ⦃ Num A ⦄ → (A → List Char) → IO A → IO (⊤ {lzero})
+    throwIfNull : List Char → IO (Ptr A) → IO (Ptr A)
 
-{-# COMPILE GHC throwIf         = \ aℓ a                 -> Foreign.Marshal.Error.throwIf     #-}
-{-# COMPILE GHC throwIf-void    = \ aℓ a                 -> Foreign.Marshal.Error.throwIf_    #-}
-{-# COMPILE GHC throwIfNeg      = \ aℓ a AgdaOrd AgdaNum -> Foreign.Marshal.Error.throwIfNeg  #-}
-{-# COMPILE GHC throwIfNeg-void = \ aℓ a AgdaOrd AgdaNum -> Foreign.Marshal.Error.throwIfNeg_ #-}
-{-# COMPILE GHC throwIfNull     = \ aℓ a                 -> Foreign.Marshal.Error.throwIfNull #-}
+{-# COMPILE GHC throwIf     = \ aℓ a                 -> Foreign.Marshal.Error.throwIf     #-}
+{-# COMPILE GHC throwIf-    = \ aℓ a                 -> Foreign.Marshal.Error.throwIf_    #-}
+{-# COMPILE GHC throwIfNeg  = \ aℓ a AgdaOrd AgdaNum -> Foreign.Marshal.Error.throwIfNeg  #-}
+{-# COMPILE GHC throwIfNeg- = \ aℓ a AgdaOrd AgdaNum -> Foreign.Marshal.Error.throwIfNeg_ #-}
+{-# COMPILE GHC throwIfNull = \ aℓ a                 -> Foreign.Marshal.Error.throwIfNull #-}

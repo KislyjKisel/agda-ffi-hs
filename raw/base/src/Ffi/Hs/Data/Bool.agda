@@ -8,6 +8,7 @@ open import Ffi.Hs.-base.Kind using (IsKind)
 open import Agda.Builtin.Bool public
     using (Bool; true; false)
 
+{-# FOREIGN GHC {-# LANGUAGE DataKinds #-} #-}
 {-# FOREIGN GHC
 import qualified Data.Bool
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Kind (AgdaIsKind)

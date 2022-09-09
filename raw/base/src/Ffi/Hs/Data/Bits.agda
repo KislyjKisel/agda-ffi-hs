@@ -70,27 +70,27 @@ postulate
     _!>>∙_ : ⦃ Bits A ⦄ → A → Int → A
     _!<<∙_ : ⦃ Bits A ⦄ → A → Int → A
 
-{-# COMPILE GHC _∙&∙_ = \ aℓ a AgdaBits -> (Data.Bits..&.) #-}
-{-# COMPILE GHC _∙|∙_ = \ aℓ a AgdaBits -> (Data.Bits..|.) #-}
-{-# COMPILE GHC xor = \ aℓ a AgdaBits -> Data.Bits.xor #-}
-{-# COMPILE GHC complement = \ aℓ a AgdaBits -> Data.Bits.complement #-}
-{-# COMPILE GHC shift = \ aℓ a AgdaBits -> Data.Bits.shift #-}
-{-# COMPILE GHC rotate = \ aℓ a AgdaBits -> Data.Bits.rotate #-}
-{-# COMPILE GHC zeroBits = \ aℓ a AgdaBits -> Data.Bits.zeroBits #-}
-{-# COMPILE GHC bit = \ aℓ a AgdaBits -> Data.Bits.bit #-}
-{-# COMPILE GHC setBit = \ aℓ a AgdaBits -> Data.Bits.setBit #-}
-{-# COMPILE GHC clearBit = \ aℓ a AgdaBits -> Data.Bits.clearBit #-}
+{-# COMPILE GHC _∙&∙_         = \ aℓ a AgdaBits -> (Data.Bits..&.)         #-}
+{-# COMPILE GHC _∙|∙_         = \ aℓ a AgdaBits -> (Data.Bits..|.)         #-}
+{-# COMPILE GHC xor           = \ aℓ a AgdaBits -> Data.Bits.xor           #-}
+{-# COMPILE GHC complement    = \ aℓ a AgdaBits -> Data.Bits.complement    #-}
+{-# COMPILE GHC shift         = \ aℓ a AgdaBits -> Data.Bits.shift         #-}
+{-# COMPILE GHC rotate        = \ aℓ a AgdaBits -> Data.Bits.rotate        #-}
+{-# COMPILE GHC zeroBits      = \ aℓ a AgdaBits -> Data.Bits.zeroBits      #-}
+{-# COMPILE GHC bit           = \ aℓ a AgdaBits -> Data.Bits.bit           #-}
+{-# COMPILE GHC setBit        = \ aℓ a AgdaBits -> Data.Bits.setBit        #-}
+{-# COMPILE GHC clearBit      = \ aℓ a AgdaBits -> Data.Bits.clearBit      #-}
 {-# COMPILE GHC complementBit = \ aℓ a AgdaBits -> Data.Bits.complementBit #-}
-{-# COMPILE GHC testBit = \ aℓ a AgdaBits -> Data.Bits.testBit #-}
-{-# COMPILE GHC bitSizeMaybe = \ aℓ a AgdaBits -> Data.Bits.bitSizeMaybe #-}
-{-# COMPILE GHC isSigned = \ aℓ a AgdaBits -> Data.Bits.isSigned #-}
-{-# COMPILE GHC shiftL = \ aℓ a AgdaBits -> Data.Bits.shiftL #-}
-{-# COMPILE GHC unsafeShiftL = \ aℓ a AgdaBits -> Data.Bits.unsafeShiftL #-}
-{-# COMPILE GHC shiftR = \ aℓ a AgdaBits -> Data.Bits.shiftR #-}
-{-# COMPILE GHC unsafeShiftR = \ aℓ a AgdaBits -> Data.Bits.unsafeShiftR #-}
-{-# COMPILE GHC rotateL = \ aℓ a AgdaBits -> Data.Bits.rotateL #-}
-{-# COMPILE GHC rotateR = \ aℓ a AgdaBits -> Data.Bits.rotateR #-}
-{-# COMPILE GHC popCount = \ aℓ a AgdaBits -> Data.Bits.popCount #-}
+{-# COMPILE GHC testBit       = \ aℓ a AgdaBits -> Data.Bits.testBit       #-}
+{-# COMPILE GHC bitSizeMaybe  = \ aℓ a AgdaBits -> Data.Bits.bitSizeMaybe  #-}
+{-# COMPILE GHC isSigned      = \ aℓ a AgdaBits -> Data.Bits.isSigned      #-}
+{-# COMPILE GHC shiftL        = \ aℓ a AgdaBits -> Data.Bits.shiftL        #-}
+{-# COMPILE GHC unsafeShiftL  = \ aℓ a AgdaBits -> Data.Bits.unsafeShiftL  #-}
+{-# COMPILE GHC shiftR        = \ aℓ a AgdaBits -> Data.Bits.shiftR        #-}
+{-# COMPILE GHC unsafeShiftR  = \ aℓ a AgdaBits -> Data.Bits.unsafeShiftR  #-}
+{-# COMPILE GHC rotateL       = \ aℓ a AgdaBits -> Data.Bits.rotateL       #-}
+{-# COMPILE GHC rotateR       = \ aℓ a AgdaBits -> Data.Bits.rotateR       #-}
+{-# COMPILE GHC popCount      = \ aℓ a AgdaBits -> Data.Bits.popCount      #-}
 
 {-# COMPILE GHC finiteBitSize = \ aℓ a AgdaFiniteBits -> Data.Bits.finiteBitSize #-}
 {-# COMPILE GHC countLeadingZeros = \ aℓ a AgdaFiniteBits -> Data.Bits.countLeadingZeros #-}
@@ -148,6 +148,9 @@ postulate
 {-# COMPILE GHC getIff = \ aℓ a -> Data.Bits.getIff #-}
 
 postulate
+    Bits[A]⇒Eq[A]         : ⦃ Bits A ⦄ → Eq A
+    FiniteBits[A]⇒Bits[A] : ⦃ FiniteBits A ⦄ → Bits A
+
     Monoid[And[A]]     : ⦃ FiniteBits A ⦄ → Monoid (And A)
     Semigroup[And[A]]  : ⦃ Bits A ⦄ → Semigroup (And A)
     Bits[And[A]]       : ⦃ Bits A ⦄ → Bits (And A)
@@ -187,6 +190,9 @@ postulate
     Read[Iff[A]]       : ⦃ Read A ⦄ → Read (Iff A)
     Show[Iff[A]]       : ⦃ Show A ⦄ → Show (Iff A)
     Eq[Iff[A]]         : ⦃ Eq A ⦄ → Eq (Iff A)
+
+{-# COMPILE GHC Bits[A]⇒Eq[A]         = \ aℓ a AgdaBits       -> AgdaEq   #-}
+{-# COMPILE GHC FiniteBits[A]⇒Bits[A] = \ aℓ a AgdaFiniteBits -> AgdaBits #-}
 
 {-# COMPILE GHC Monoid[And[A]]     = \ aℓ a AgdaFiniteBits -> AgdaMonoid     #-}
 {-# COMPILE GHC Semigroup[And[A]]  = \ aℓ a AgdaBits       -> AgdaSemigroup  #-}

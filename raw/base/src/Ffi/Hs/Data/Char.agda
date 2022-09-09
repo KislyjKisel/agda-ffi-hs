@@ -4,6 +4,7 @@ module Ffi.Hs.Data.Char where
 
 open import Agda.Builtin.Bool                   using (Bool)
 open import Agda.Builtin.List                   using (List)
+open import Ffi.Hs.-base.Class
 open import Ffi.Hs.Data.Int                     using (Int)
 open import Ffi.Hs.Text.ParserCombinators.ReadP using (ReadS)
 open import Ffi.Hs.Text.Show                    using (ShowS)
@@ -11,7 +12,34 @@ open import Ffi.Hs.Text.Show                    using (ShowS)
 open import Agda.Builtin.Char public
     using (Char)
 
-{-# FOREIGN GHC import qualified Data.Char #-}
+{-# FOREIGN GHC
+import qualified Data.Char
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
+    ( AgdaData, AgdaStorable, AgdaBounded, AgdaEnum
+    , AgdaIx, AgdaRead, AgdaShow, AgdaEq, AgdaOrd
+    )
+#-}
+
+postulate
+    Data[Char]     : Data Char
+    Storable[Char] : Storable Char
+    Bounded[Char]  : Bounded Char
+    Enum[Char]     : Enum Char
+    Ix[Char]       : Ix Char
+    Read[Char]     : Read Char
+    Show[Char]     : Show Char
+    Eq[Char]       : Eq Char
+    Ord[Char]      : Ord Char
+
+{-# COMPILE GHC Data[Char]     = AgdaData     #-}
+{-# COMPILE GHC Storable[Char] = AgdaStorable #-}
+{-# COMPILE GHC Bounded[Char]  = AgdaBounded  #-}
+{-# COMPILE GHC Enum[Char]     = AgdaEnum     #-}
+{-# COMPILE GHC Ix[Char]       = AgdaIx       #-}
+{-# COMPILE GHC Read[Char]     = AgdaRead     #-}
+{-# COMPILE GHC Show[Char]     = AgdaShow     #-}
+{-# COMPILE GHC Eq[Char]       = AgdaEq       #-}
+{-# COMPILE GHC Ord[Char]      = AgdaOrd      #-}
 
 postulate
     isControl     : Char → Bool
@@ -88,9 +116,6 @@ data GeneralCategory : Set where
     PrivateUse           : GeneralCategory
     NotAssigned          : GeneralCategory
 
-postulate
-    generalCategory : Char → GeneralCategory
-
 {-# COMPILE GHC GeneralCategory = data Data.Char.GeneralCategory
     ( UppercaseLetter      | LowercaseLetter | TitlecaseLetter
     | ModifierLetter       | OtherLetter     | NonSpacingMark
@@ -105,7 +130,27 @@ postulate
     )
 #-}
 
+postulate
+    generalCategory : Char → GeneralCategory
+
 {-# COMPILE GHC generalCategory = Data.Char.generalCategory #-}
+
+postulate
+    Bounded[GeneralCategory] : Bounded GeneralCategory
+    Enum[GeneralCategory]    : Enum GeneralCategory
+    Ix[GeneralCategory]      : Ix GeneralCategory
+    Read[GeneralCategory]    : Read GeneralCategory
+    Show[GeneralCategory]    : Show GeneralCategory
+    Eq[GeneralCategory]      : Eq GeneralCategory
+    Ord[GeneralCategory]     : Ord GeneralCategory
+
+{-# COMPILE GHC Bounded[GeneralCategory] = AgdaBounded #-}
+{-# COMPILE GHC Enum[GeneralCategory]    = AgdaEnum    #-}
+{-# COMPILE GHC Ix[GeneralCategory]      = AgdaIx      #-}
+{-# COMPILE GHC Read[GeneralCategory]    = AgdaRead    #-}
+{-# COMPILE GHC Show[GeneralCategory]    = AgdaShow    #-}
+{-# COMPILE GHC Eq[GeneralCategory]      = AgdaEq      #-}
+{-# COMPILE GHC Ord[GeneralCategory]     = AgdaOrd     #-}
 
 postulate
     toUpper : Char → Char

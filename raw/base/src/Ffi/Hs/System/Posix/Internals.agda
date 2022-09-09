@@ -2,22 +2,22 @@
 
 module Ffi.Hs.System.Posix.Internals where
 
-open import Agda.Builtin.Char using (Char)
-open import Agda.Builtin.List using (List)
-open import Ffi.Hs.System.IO using (IO; IOMode)
-open import Agda.Builtin.Bool using (Bool)
-open import Agda.Builtin.Int using () renaming (Int to Integer)
+open import Agda.Builtin.Bool         using (Bool)
+open import Agda.Builtin.Char         using (Char)
+open import Agda.Builtin.Int          using () renaming (Int to Integer)
+open import Agda.Builtin.List         using (List)
 open import Agda.Primitive
-open import Ffi.Hs.Data.Int using (Int)
-open import Ffi.Hs.Data.Word using (Word8)
-open import Ffi.Hs.-base.Unit using (⊤)
-open import Ffi.Hs.Data.Tuple using (Tuple3)
+open import Ffi.Hs.-base.Unit         using (⊤)
+open import Ffi.Hs.Data.Int           using (Int)
+open import Ffi.Hs.Data.Tuple         using (Tuple3)
+open import Ffi.Hs.Data.Word          using (Word8)
+open import Ffi.Hs.Foreign.C.String   using (CString; CStringLen)
+open import Ffi.Hs.Foreign.C.Types    using (CInt; CLong; CTime)
+open import Ffi.Hs.Foreign.Ptr        using (Ptr)
+open import Ffi.Hs.GHC.IO.Device      using (IODeviceType)
+open import Ffi.Hs.GHC.IO.Exception   using (IOException)
+open import Ffi.Hs.System.IO          using (IO; IOMode)
 open import Ffi.Hs.System.Posix.Types
-open import Ffi.Hs.Foreign.Ptr using (Ptr)
-open import Ffi.Hs.Foreign.C.Types using (CInt; CLong; CTime)
-open import Ffi.Hs.Foreign.C.String using (CString; CStringLen)
-open import Ffi.Hs.GHC.IO.Device using (IODeviceType)
-open import Ffi.Hs.GHC.IO.Exception using (IOException)
 
 private
     variable

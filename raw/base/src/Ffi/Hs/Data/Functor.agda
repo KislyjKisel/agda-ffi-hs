@@ -8,6 +8,11 @@ open import Ffi.Hs.-base.Unit using (⊤)
 open import Ffi.Hs.-base.Class public
     using (Functor)
 
+{-# FOREIGN GHC
+import qualified Data.Functor
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaFunctor)
+#-}
+
 private
     variable
         aℓ bℓ fℓ : Level
@@ -26,11 +31,9 @@ postulate
     _<&>_   : ⦃ Functor F ⦄ → F A → (A → B) → F B
     void    : ⦃ Functor F ⦄ → F A → F ⊤
 
-{-# FOREIGN GHC import qualified Data.Functor #-}
-
-{-# COMPILE GHC fmap  = \ ℓ f a b AgdaFunctor -> Data.Functor.fmap  #-}
-{-# COMPILE GHC _<$_  = \ ℓ f a b AgdaFunctor -> (Data.Functor.<$)  #-}
-{-# COMPILE GHC _$>_  = \ ℓ f a b AgdaFunctor -> (Data.Functor.$>)  #-}
-{-# COMPILE GHC _<$>_ = \ ℓ f a b AgdaFunctor -> (Data.Functor.<$>) #-}
-{-# COMPILE GHC _<&>_ = \ ℓ f a b AgdaFunctor -> (Data.Functor.<&>) #-}
-{-# COMPILE GHC void  = \ ℓ f a b AgdaFunctor -> Data.Functor.void  #-}
+{-# COMPILE GHC fmap  = \ fℓ f a b AgdaFunctor -> Data.Functor.fmap  #-}
+{-# COMPILE GHC _<$_  = \ fℓ f a b AgdaFunctor -> (Data.Functor.<$)  #-}
+{-# COMPILE GHC _$>_  = \ fℓ f a b AgdaFunctor -> (Data.Functor.$>)  #-}
+{-# COMPILE GHC _<$>_ = \ fℓ f a b AgdaFunctor -> (Data.Functor.<$>) #-}
+{-# COMPILE GHC _<&>_ = \ fℓ f a b AgdaFunctor -> (Data.Functor.<&>) #-}
+{-# COMPILE GHC void  = \ fℓ f a b AgdaFunctor -> Data.Functor.void  #-}

@@ -69,6 +69,11 @@ postulate
     TestCoercion : {K₁ : Set (lsuc aℓ)} {K₂ : Set (lsuc bℓ)} → (K₁ → K₂) → Set (aℓ ⊔ bℓ)
     Coercible    : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
 
+    IsString : Set aℓ → Set aℓ
+
+{-# FOREIGN GHC data AgdaIsString aℓ a = IsString a => AgdaIsString #-}
+{-# COMPILE GHC IsString = type(0) AgdaIsString #-}
+
 {-# FOREIGN GHC
 data AgdaTypeable kℓ k (a :: k) = Type.Reflection.Typeable a => AgdaTypeable
 #-}

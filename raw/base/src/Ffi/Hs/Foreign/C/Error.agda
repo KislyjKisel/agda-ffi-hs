@@ -51,61 +51,61 @@ postulate
 {-# COMPILE GHC throwErrno     = \ aℓ a -> Foreign.C.Error.throwErrno     #-}
 
 postulate
-    throwErrnoIf           : (A → Bool) → List Char → IO A → IO A
-    throwErrnoIf-void      : (A → Bool) → List Char → IO A → IO (⊤ {lzero})
-    throwErrnoIfRetry      : (A → Bool) → List Char → IO A → IO A
-    throwErrnoIfRetry-void : (A → Bool) → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoIf       : (A → Bool) → List Char → IO A → IO A
+    throwErrnoIf-      : (A → Bool) → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoIfRetry  : (A → Bool) → List Char → IO A → IO A
+    throwErrnoIfRetry- : (A → Bool) → List Char → IO A → IO (⊤ {lzero})
 
-    throwErrnoIfMinus1           : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO A
-    throwErrnoIfMinus1-void      : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO (⊤ {lzero})
-    throwErrnoIfMinus1Retry      : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO A
-    throwErrnoIfMinus1Retry-void : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoIfMinus1       : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO A
+    throwErrnoIfMinus1-      : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoIfMinus1Retry  : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO A
+    throwErrnoIfMinus1Retry- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO (⊤ {lzero})
 
-    throwErrnoIfNull               : List Char → IO (Ptr A) → IO (Ptr A)
-    throwErrnoIfNullRetry          : List Char → IO (Ptr A) → IO (Ptr A)
-    throwErrnoIfRetryMayBlock      : (A → Bool) → List Char → IO A → IO B → IO A
-    throwErrnoIfRetryMayBlock-void : (A → Bool) → List Char → IO A → IO B → IO (⊤ {lzero})
+    throwErrnoIfNull           : List Char → IO (Ptr A) → IO (Ptr A)
+    throwErrnoIfNullRetry      : List Char → IO (Ptr A) → IO (Ptr A)
+    throwErrnoIfRetryMayBlock  : (A → Bool) → List Char → IO A → IO B → IO A
+    throwErrnoIfRetryMayBlock- : (A → Bool) → List Char → IO A → IO B → IO (⊤ {lzero})
 
-    throwErrnoIfMinus1RetryMayBlock      : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO B → IO A
-    throwErrnoIfMinus1RetryMayBlock-void : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO B → IO (⊤ {lzero})
+    throwErrnoIfMinus1RetryMayBlock  : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO B → IO A
+    throwErrnoIfMinus1RetryMayBlock- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO B → IO (⊤ {lzero})
 
     throwErrnoIfNullRetryMayBlock : List Char → IO (Ptr A) → IO B → IO (Ptr A)
     throwErrnoPath                : List Char → List Char → IO A
     throwErrnoPathIf              : (A → Bool) → List Char → List Char → IO A → IO A
-    throwErrnoPathIf-void         : (A → Bool) → List Char → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoPathIf-             : (A → Bool) → List Char → List Char → IO A → IO (⊤ {lzero})
     throwErrnoPathIfNull          : List Char → List Char → IO (Ptr A) → IO (Ptr A)
 
-    throwErrnoPathIfMinus1      : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → List Char → IO A → IO A
-    throwErrnoPathIfMinus1-void : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoPathIfMinus1  : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → List Char → IO A → IO A
+    throwErrnoPathIfMinus1- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → List Char → IO A → IO (⊤ {lzero})
 
-{-# COMPILE GHC throwErrnoIf                 = \ aℓ a -> Foreign.C.Error.throwErrnoIf       #-}
-{-# COMPILE GHC throwErrnoIf-void            = \ aℓ a -> Foreign.C.Error.throwErrnoIf_      #-}
-{-# COMPILE GHC throwErrnoIfRetry            = \ aℓ a -> Foreign.C.Error.throwErrnoIfRetry  #-}
-{-# COMPILE GHC throwErrnoIfRetry-void       = \ aℓ a -> Foreign.C.Error.throwErrnoIfRetry_ #-}
+{-# COMPILE GHC throwErrnoIf       = \ aℓ a -> Foreign.C.Error.throwErrnoIf       #-}
+{-# COMPILE GHC throwErrnoIf-      = \ aℓ a -> Foreign.C.Error.throwErrnoIf_      #-}
+{-# COMPILE GHC throwErrnoIfRetry  = \ aℓ a -> Foreign.C.Error.throwErrnoIfRetry  #-}
+{-# COMPILE GHC throwErrnoIfRetry- = \ aℓ a -> Foreign.C.Error.throwErrnoIfRetry_ #-}
 
-{-# COMPILE GHC throwErrnoIfMinus1           = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1       #-}
-{-# COMPILE GHC throwErrnoIfMinus1-void      = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1_      #-}
-{-# COMPILE GHC throwErrnoIfMinus1Retry      = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1Retry  #-}
-{-# COMPILE GHC throwErrnoIfMinus1Retry-void = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1Retry_ #-}
+{-# COMPILE GHC throwErrnoIfMinus1       = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1       #-}
+{-# COMPILE GHC throwErrnoIfMinus1-      = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1_      #-}
+{-# COMPILE GHC throwErrnoIfMinus1Retry  = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1Retry  #-}
+{-# COMPILE GHC throwErrnoIfMinus1Retry- = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1Retry_ #-}
 
-{-# COMPILE GHC throwErrnoIfNull               = \ aℓ a      -> Foreign.C.Error.throwErrnoIfNull           #-}
-{-# COMPILE GHC throwErrnoIfNullRetry          = \ aℓ a      -> Foreign.C.Error.throwErrnoIfNullRetry      #-}
-{-# COMPILE GHC throwErrnoIfRetryMayBlock      = \ aℓ a bℓ b -> Foreign.C.Error.throwErrnoIfRetryMayBlock  #-}
-{-# COMPILE GHC throwErrnoIfRetryMayBlock-void = \ aℓ a bℓ b -> Foreign.C.Error.throwErrnoIfRetryMayBlock_ #-}
+{-# COMPILE GHC throwErrnoIfNull           = \ aℓ a      -> Foreign.C.Error.throwErrnoIfNull           #-}
+{-# COMPILE GHC throwErrnoIfNullRetry      = \ aℓ a      -> Foreign.C.Error.throwErrnoIfNullRetry      #-}
+{-# COMPILE GHC throwErrnoIfRetryMayBlock  = \ aℓ a bℓ b -> Foreign.C.Error.throwErrnoIfRetryMayBlock  #-}
+{-# COMPILE GHC throwErrnoIfRetryMayBlock- = \ aℓ a bℓ b -> Foreign.C.Error.throwErrnoIfRetryMayBlock_ #-}
 
 {-# COMPILE GHC throwErrnoIfMinus1RetryMayBlock      =
     \ aℓ a bℓ b AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1RetryMayBlock  #-}
-{-# COMPILE GHC throwErrnoIfMinus1RetryMayBlock-void =
+{-# COMPILE GHC throwErrnoIfMinus1RetryMayBlock- =
     \ aℓ a bℓ b AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1RetryMayBlock_ #-}
 
 {-# COMPILE GHC throwErrnoIfNullRetryMayBlock = \ aℓ a bℓ b -> Foreign.C.Error.throwErrnoIfNullRetryMayBlock #-}
 {-# COMPILE GHC throwErrnoPath                = \ aℓ a      -> Foreign.C.Error.throwErrnoPath                #-}
 {-# COMPILE GHC throwErrnoPathIf              = \ aℓ a      -> Foreign.C.Error.throwErrnoPathIf              #-}
-{-# COMPILE GHC throwErrnoPathIf-void         = \ aℓ a      -> Foreign.C.Error.throwErrnoPathIf_             #-}
+{-# COMPILE GHC throwErrnoPathIf-             = \ aℓ a      -> Foreign.C.Error.throwErrnoPathIf_             #-}
 {-# COMPILE GHC throwErrnoPathIfNull          = \ aℓ a      -> Foreign.C.Error.throwErrnoPathIfNull          #-}
 
-{-# COMPILE GHC throwErrnoPathIfMinus1        = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoPathIfMinus1  #-}
-{-# COMPILE GHC throwErrnoPathIfMinus1-void   = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoPathIfMinus1_ #-}
+{-# COMPILE GHC throwErrnoPathIfMinus1  = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoPathIfMinus1  #-}
+{-# COMPILE GHC throwErrnoPathIfMinus1- = \ aℓ a AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoPathIfMinus1_ #-}
 
 postulate
     eOK e2BIG eACCES eADDRINUSE         : Errno
