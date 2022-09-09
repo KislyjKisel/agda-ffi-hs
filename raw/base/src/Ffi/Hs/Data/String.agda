@@ -6,6 +6,10 @@ open import Agda.Builtin.Char using (Char)
 open import Agda.Builtin.List using (List)
 open import Agda.Primitive
 
+{-# FOREIGN GHC
+import qualified Data.String
+#-}
+
 private
     variable
         aℓ : Level
@@ -23,8 +27,6 @@ postulate
     unlines : List String → String
     unwords : List String → String
 
-{-# FOREIGN GHC import qualified Data.String #-}
-
 {-# FOREIGN GHC data AgdaIsString aℓ a = IsString a => AgdaIsString #-}
 {-# COMPILE GHC IsString = type(0) AgdaIsString #-}
 {-# COMPILE GHC fromString = \ aℓ a AgdaIsString -> Data.String.fromString #-}
@@ -33,3 +35,8 @@ postulate
 {-# COMPILE GHC words   = Data.String.words   #-}
 {-# COMPILE GHC unlines = Data.String.unlines #-}
 {-# COMPILE GHC unwords = Data.String.unwords #-}
+
+postulate
+    IsString[String] : IsString String
+
+{-# COMPILE GHC IsString[String] = AgdaIsString #-}

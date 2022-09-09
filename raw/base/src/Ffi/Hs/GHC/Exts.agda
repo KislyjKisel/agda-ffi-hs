@@ -4,15 +4,17 @@ module Ffi.Hs.GHC.Exts where
 
 open import Agda.Builtin.Bool      using (Bool)
 open import Agda.Builtin.Char      using (Char)
+open import Agda.Builtin.Float     using (Float)
 open import Agda.Builtin.IO        using (IO)
 open import Agda.Builtin.List      using (List; []; _∷_)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Kind      using (IsKind)
 open import Ffi.Hs.-base.Kind.List using (`List; `[]; lift`List)
-open import Ffi.Hs.Data.Int        using (Int)
 
 {-# FOREIGN GHC {-# LANGUAGE KindSignatures, PolyKinds, DataKinds #-} #-}
-{-# FOREIGN GHC import qualified GHC.Exts #-}
+{-# FOREIGN GHC
+import qualified GHC.Exts
+#-}
 
 private
     variable
@@ -238,20 +240,112 @@ postulate
 
 {-# COMPILE GHC RealWorld = GHC.Exts.RealWorld #-}
 
---     Addr# Void# Char# Double# Float# : Set
---     ByteArray# ArrayArray# ThreadId# BCO Compact# : Set
---     Int# Int8# Int16# Int32# Int64# : Set
---     Word# Word8# Word16# Word32# Word64# : Set
---     Array# Weak# MutableByteArray# StablePtr# : Set aℓ → Set aℓ
---     StableName# MutableArrayArray# SmallArray# : Set aℓ → Set aℓ
---     TVar# MVar# IOPort# MutVar# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
---     SmallMutableArray# MutableArray# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
---     -- todo Proxy#, rep insts, Vec types, primops
+postulate
+    Addr# Void# Char# Double# Float# : Set
+    ByteArray# ArrayArray# ThreadId# BCO Compact# : Set
+    Int# Int8# Int16# Int32# Int64# : Set
+    Word# Word8# Word16# Word32# Word64# : Set
+    Array# Weak# MutableByteArray# StablePtr# : Set aℓ → Set aℓ
+    StableName# MutableArrayArray# SmallArray# : Set aℓ → Set aℓ
+    TVar# MVar# IOPort# MutVar# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
+    SmallMutableArray# MutableArray# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
+-- todo Proxy#, rep insts, Vec types, primops, seq : A → B → B
 
---     Ptr : Set aℓ → Set aℓ
---     FunPtr : Set aℓ → Set aℓ
---     seq : A → B → B
+{-# COMPILE GHC Addr#   = type GHC.Exts.Addr#   #-}
+{-# COMPILE GHC Void#   = type GHC.Exts.Void#   #-}
+{-# COMPILE GHC Char#   = type GHC.Exts.Char#   #-}
+{-# COMPILE GHC Double# = type GHC.Exts.Double# #-}
+{-# COMPILE GHC Float#  = type GHC.Exts.Float#  #-}
 
+{-# COMPILE GHC ByteArray#  = type GHC.Exts.ByteArray#  #-}
+{-# COMPILE GHC ArrayArray# = type GHC.Exts.ArrayArray# #-}
+{-# COMPILE GHC ThreadId#   = type GHC.Exts.ThreadId#   #-}
+{-# COMPILE GHC BCO         = type GHC.Exts.BCO         #-}
+{-# COMPILE GHC Compact#    = type GHC.Exts.Compact#    #-}
+
+{-# COMPILE GHC Int#   = type GHC.Exts.Int#   #-}
+{-# COMPILE GHC Int8#  = type GHC.Exts.Int8#  #-}
+{-# COMPILE GHC Int16# = type GHC.Exts.Int16# #-}
+{-# COMPILE GHC Int32# = type GHC.Exts.Int32# #-}
+{-# COMPILE GHC Int64# = type GHC.Exts.Int64# #-}
+
+{-# COMPILE GHC Word#   = type GHC.Exts.Word#   #-}
+{-# COMPILE GHC Word8#  = type GHC.Exts.Word8#  #-}
+{-# COMPILE GHC Word16# = type GHC.Exts.Word16# #-}
+{-# COMPILE GHC Word32# = type GHC.Exts.Word32# #-}
+{-# COMPILE GHC Word64# = type GHC.Exts.Word64# #-}
+
+{-# COMPILE GHC Array#             = type GHC.Exts.Array#             #-}
+{-# COMPILE GHC Weak#              = type GHC.Exts.Weak#              #-}
+{-# COMPILE GHC MutableByteArray#  = type GHC.Exts.MutableByteArray#  #-}
+{-# COMPILE GHC StablePtr#         = type GHC.Exts.StablePtr#         #-}
+{-# COMPILE GHC StableName#        = type GHC.Exts.StableName#        #-}
+{-# COMPILE GHC MutableArrayArray# = type GHC.Exts.MutableArrayArray# #-}
+{-# COMPILE GHC SmallArray#        = type GHC.Exts.SmallArray#        #-}
+{-# COMPILE GHC TVar#              = type GHC.Exts.TVar#              #-}
+{-# COMPILE GHC MVar#              = type GHC.Exts.MVar#              #-}
+{-# COMPILE GHC IOPort#            = type GHC.Exts.Word64#            #-}
+{-# COMPILE GHC MutVar#            = type GHC.Exts.MutVar#            #-}
+{-# COMPILE GHC SmallMutableArray# = type GHC.Exts.SmallMutableArray# #-}
+{-# COMPILE GHC MutableArray#      = type GHC.Exts.MutableArray#      #-}
+
+data Word : Set where
+    W# : Word# → Word
+
+data Word8 : Set where
+    W8# : Word8# → Word8
+
+data Word16 : Set where
+    W16# : Word16# → Word16
+
+data Word32 : Set where
+    W32# : Word32# → Word32
+
+data Word64 : Set where
+    W64# : Word64# → Word64
+
+{-# COMPILE GHC Word   = data GHC.Exts.Word   (GHC.Exts.W#)   #-}
+{-# COMPILE GHC Word8  = data GHC.Exts.Word8  (GHC.Exts.W8#)  #-}
+{-# COMPILE GHC Word16 = data GHC.Exts.Word16 (GHC.Exts.W16#) #-}
+{-# COMPILE GHC Word32 = data GHC.Exts.Word32 (GHC.Exts.W32#) #-}
+{-# COMPILE GHC Word64 = data GHC.Exts.Word64 (GHC.Exts.W64#) #-}
+
+data Int : Set where
+    I# : Int# → Int
+
+data Int8 : Set where
+    I8# : Int8# → Int8
+
+data Int16 : Set where
+    I16# : Int16# → Int16
+
+data Int32 : Set where
+    I32# : Int32# → Int32
+
+data Int64 : Set where
+    I64# : Int64# → Int64
+
+{-# COMPILE GHC Int   = data GHC.Exts.Int   (GHC.Exts.I#)   #-}
+{-# COMPILE GHC Int8  = data GHC.Exts.Int8  (GHC.Exts.I8#)  #-}
+{-# COMPILE GHC Int16 = data GHC.Exts.Int16 (GHC.Exts.I16#) #-}
+{-# COMPILE GHC Int32 = data GHC.Exts.Int32 (GHC.Exts.I32#) #-}
+{-# COMPILE GHC Int64 = data GHC.Exts.Int64 (GHC.Exts.I64#) #-}
+
+data Double : Set where
+    D# : Double# → Double
+
+{-# COMPILE GHC Double = data GHC.Exts.Double (GHC.Exts.D#) #-}
+
+postulate
+    F# : Float# → Float
+    unF# : Float → Float#
+    C# : Char# → Char
+    unC# : Char → Char#
+
+{-# COMPILE GHC F#   = GHC.Exts.F#            #-}
+{-# COMPILE GHC unF# = \ (GHC.Exts.F# x) -> x #-}
+{-# COMPILE GHC C#   = GHC.Exts.C#            #-}
+{-# COMPILE GHC unC# = \ (GHC.Exts.C# x) -> x #-}
 
 postulate
     breakpoint         : A → A
@@ -263,7 +357,7 @@ postulate
     considerAccessible : Bool
     maxTupleSize       : Int
 
-    oneShot-ll : ⦃ LiftedType A   ⦄ → ⦃ LiftedType B   ⦄ → (A → B) → A → B
+    oneShot    : (A → B) → A → B
     oneShot-lu : ⦃ LiftedType A   ⦄ → ⦃ UnliftedType B ⦄ → (A → B) → A → B
     oneShot-ul : ⦃ UnliftedType A ⦄ → ⦃ LiftedType B   ⦄ → (A → B) → A → B
     oneShot-uu : ⦃ UnliftedType A ⦄ → ⦃ UnliftedType B ⦄ → (A → B) → A → B
@@ -277,7 +371,7 @@ postulate
 {-# COMPILE GHC considerAccessible =           GHC.Exts.considerAccessible #-}
 {-# COMPILE GHC maxTupleSize       =           GHC.Exts.maxTupleSize       #-}
 
-{-# COMPILE GHC oneShot-ll = \ aℓ bℓ a b AgdaTYPE AgdaTYPE -> GHC.Exts.oneShot #-}
+{-# COMPILE GHC oneShot    = \ aℓ bℓ a b                   -> GHC.Exts.oneShot #-}
 {-# COMPILE GHC oneShot-lu = \ aℓ bℓ a b AgdaTYPE AgdaTYPE -> GHC.Exts.oneShot #-}
 {-# COMPILE GHC oneShot-ul = \ aℓ bℓ a b AgdaTYPE AgdaTYPE -> GHC.Exts.oneShot #-}
 {-# COMPILE GHC oneShot-uu = \ aℓ bℓ a b AgdaTYPE AgdaTYPE -> GHC.Exts.oneShot #-}

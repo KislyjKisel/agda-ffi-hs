@@ -26,7 +26,7 @@ private
         A : Set aℓ
 
 postulate
-    SomeException : Set
+    SomeException : Set -- todo: 0ℓ but contains any-level exceptions
     divZeroException        : SomeException
     overflowException       : SomeException
     ratioZeroDenomException : SomeException

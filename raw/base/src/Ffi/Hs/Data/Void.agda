@@ -39,7 +39,6 @@ postulate
     Show[Void]      : Show Void
     Eq[Void]        : Eq Void
     Ord[Void]       : Ord Void
-    -- todo: Data, Generic, Rep
 
 {-# COMPILE GHC Semigroup[Void] = AgdaSemigroup #-}
 {-# COMPILE GHC Exception[Void] = AgdaException #-}

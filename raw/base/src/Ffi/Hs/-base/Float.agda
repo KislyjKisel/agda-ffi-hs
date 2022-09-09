@@ -12,14 +12,15 @@ open import Ffi.Hs.-base.Class using (RealFloat; Floating; Ord)
 open import Agda.Builtin.Float public
     using (Float)
 
+open import Ffi.Hs.GHC.Exts public
+    using (Double)
+
 private
     variable
         aℓ : Level
         A : Set aℓ
 
 postulate
-    Double : Set
-
     pi                : ⦃ Floating A ⦄ → A
     exp log sqrt      : ⦃ Floating A ⦄ → A → A
     sin cos tan       : ⦃ Floating A ⦄ → A → A

@@ -4,6 +4,9 @@ module Ffi.Hs.Data.Int where
 
 open import Ffi.Hs.-base.Class
 
+open import Ffi.Hs.GHC.Exts public
+    using (Int; Int8; Int16; Int32; Int64)
+
 {-# FOREIGN GHC
 import qualified Data.Int
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
@@ -12,19 +15,6 @@ import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
     , AgdaShow, AgdaEq, AgdaOrd
     )
 #-}
-
-postulate
-    Int   : Set
-    Int8  : Set
-    Int16 : Set
-    Int32 : Set
-    Int64 : Set
-
-{-# COMPILE GHC Int   = type Data.Int.Int   #-}
-{-# COMPILE GHC Int8  = type Data.Int.Int8  #-}
-{-# COMPILE GHC Int16 = type Data.Int.Int16 #-}
-{-# COMPILE GHC Int32 = type Data.Int.Int32 #-}
-{-# COMPILE GHC Int64 = type Data.Int.Int64 #-}
 
 postulate
     Data[Int]       : Data Int
