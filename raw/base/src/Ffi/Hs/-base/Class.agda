@@ -71,6 +71,15 @@ postulate
 
     IsString : Set aℓ → Set aℓ
 
+    Eq1   : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
+    Ord1  : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
+    Read1 : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
+    Show1 : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
+    Eq2   : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
+    Ord2  : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
+    Read2 : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
+    Show2 : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
+
 {-# FOREIGN GHC data AgdaIsString aℓ a = IsString a => AgdaIsString #-}
 {-# COMPILE GHC IsString = type(0) AgdaIsString #-}
 

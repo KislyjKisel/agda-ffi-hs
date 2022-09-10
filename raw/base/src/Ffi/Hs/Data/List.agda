@@ -7,7 +7,6 @@ open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 open import Ffi.Hs.-base.Kind  using (IsKind)
-open import Ffi.Hs.Data.Eq     using (Eq)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Ord    using (Ordering)
 open import Ffi.Hs.Data.Tuple  using (Tuple2; Tuple3; Tuple4; Tuple5)
@@ -28,6 +27,7 @@ import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
     , AgdaApplicative, AgdaAlternative, AgdaMonad, AgdaOrd
     , AgdaMonadPlus, AgdaFoldable, AgdaTraversable
     , AgdaSemigroup, AgdaMonoid, AgdaData, AgdaEq
+    , AgdaEq1, AgdaOrd1, AgdaRead1, AgdaShow1
     )
 #-}
 
@@ -254,6 +254,10 @@ postulate
     Ord[List[A]]      : ⦃ Ord A ⦄ → Ord (List A)
     Show[List[A]]     : ⦃ Show A ⦄ → Show (List A)
     Read[List[A]]     : ⦃ Read A ⦄ → Read (List A)
+    Eq1[List]   : Eq1 {aℓ} List
+    Ord1[List]  : Ord1 {aℓ} List
+    Read1[List] : Read1 {aℓ} List
+    Show1[List] : Show1 {aℓ} List
 
 {-# COMPILE GHC Functor[List]     = \ aℓ            -> AgdaFunctor     #-}
 {-# COMPILE GHC Applicative[List] = \ aℓ            -> AgdaApplicative #-}
@@ -269,3 +273,7 @@ postulate
 {-# COMPILE GHC Ord[List[A]]      = \ aℓ a AgdaOrd  -> AgdaOrd         #-}
 {-# COMPILE GHC Show[List[A]]     = \ aℓ a AgdaShow -> AgdaShow        #-}
 {-# COMPILE GHC Read[List[A]]     = \ aℓ a AgdaRead -> AgdaRead        #-}
+{-# COMPILE GHC Eq1[List]         = \ aℓ            -> AgdaEq1         #-}
+{-# COMPILE GHC Ord1[List]        = \ aℓ            -> AgdaOrd1        #-}
+{-# COMPILE GHC Read1[List]       = \ aℓ            -> AgdaRead1       #-}
+{-# COMPILE GHC Show1[List]       = \ aℓ            -> AgdaShow1       #-}
