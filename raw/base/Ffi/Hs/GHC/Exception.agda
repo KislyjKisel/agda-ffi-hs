@@ -53,14 +53,14 @@ postulate
 {-# COMPILE GHC Ord[ErrorCall]       = AgdaOrd       #-}
 
 postulate
-    errorCallException              : List Char → SomeException
-    errorCallWithCallStackException : List Char → CallStack → SomeException
+    errorCallException              : List Char → SomeException {aℓ}
+    errorCallWithCallStackException : List Char → CallStack → SomeException {aℓ}
 
     prettyCallStackLines : CallStack → List (List Char)
     showCCSStack         : List (List Char) → List (List Char)
 
-{-# COMPILE GHC errorCallException              = GHC.Exception.errorCallException              #-}
-{-# COMPILE GHC errorCallWithCallStackException = GHC.Exception.errorCallWithCallStackException #-}
+{-# COMPILE GHC errorCallException              = \ aℓ -> GHC.Exception.errorCallException              #-}
+{-# COMPILE GHC errorCallWithCallStackException = \ aℓ -> GHC.Exception.errorCallWithCallStackException #-}
 
 {-# COMPILE GHC prettyCallStackLines = GHC.Exception.prettyCallStackLines #-}
 {-# COMPILE GHC showCCSStack         = GHC.Exception.showCCSStack         #-}

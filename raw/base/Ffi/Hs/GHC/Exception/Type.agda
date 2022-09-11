@@ -22,44 +22,45 @@ import MAlonzo.Code.Ffi.Hs.Type.Reflection
 
 private
     variable
-        aℓ : Level
+        aℓ seℓ : Level
         A : Set aℓ
 
-postulate
-    SomeException : Set -- todo: 0ℓ but contains any-level exceptions
-    divZeroException        : SomeException
-    overflowException       : SomeException
-    ratioZeroDenomException : SomeException
-    underflowException      : SomeException
+data SomeException {seℓ} : Set (lsuc seℓ) where
+    mkSomeException : {A : Set seℓ} → ⦃ Exception A ⦄ → A → SomeException 
 
-    toException      : ⦃ Exception A ⦄ → A → SomeException
-    fromException    : ⦃ Exception A ⦄ → SomeException → Maybe A
+{-# FOREIGN GHC type AgdaSomeException seℓ = GHC.Exception.Type.SomeException #-}
+{-# COMPILE GHC SomeException = data(1) AgdaSomeException (GHC.Exception.Type.SomeException) #-}
+
+postulate
+    divZeroException        : SomeException {seℓ}
+    overflowException       : SomeException {seℓ}
+    ratioZeroDenomException : SomeException {seℓ}
+    underflowException      : SomeException {seℓ}
+
+    toException      : ⦃ Exception A ⦄ → A → SomeException {seℓ}
+    fromException    : ⦃ Exception A ⦄ → SomeException {seℓ} → Maybe A
     displayException : ⦃ Exception A ⦄ → A → List Char
 
     Exception[A]⇒Typeable[A] : ⦃ Exception A ⦄ → Typeable A
     Exception[A]⇒Show[A]     : ⦃ Exception A ⦄ → Show A
 
-    Exception[SomeException] : Exception SomeException
-    Show[SomeException]      : Show SomeException
+    Exception[SomeException] : Exception {lsuc seℓ} SomeException
+    Show[SomeException]      : Show {lsuc seℓ} SomeException
 
-{-# COMPILE GHC SomeException = type GHC.Exception.Type.SomeException #-}
-{-# COMPILE GHC divZeroException        = GHC.Exception.Type.divZeroException        #-}
-{-# COMPILE GHC overflowException       = GHC.Exception.Type.overflowException       #-}
-{-# COMPILE GHC ratioZeroDenomException = GHC.Exception.Type.ratioZeroDenomException #-}
-{-# COMPILE GHC underflowException      = GHC.Exception.Type.underflowException      #-}
+{-# COMPILE GHC divZeroException        = \ seℓ -> GHC.Exception.Type.divZeroException        #-}
+{-# COMPILE GHC overflowException       = \ seℓ -> GHC.Exception.Type.overflowException       #-}
+{-# COMPILE GHC ratioZeroDenomException = \ seℓ -> GHC.Exception.Type.ratioZeroDenomException #-}
+{-# COMPILE GHC underflowException      = \ seℓ -> GHC.Exception.Type.underflowException      #-}
 
-{-# COMPILE GHC toException      = \ aℓ a AgdaException -> GHC.Exception.Type.toException      #-}
-{-# COMPILE GHC fromException    = \ aℓ a AgdaException -> GHC.Exception.Type.                 #-}
-{-# COMPILE GHC displayException = \ aℓ a AgdaException -> GHC.Exception.Type.displayException #-}
+{-# COMPILE GHC toException      = \ aℓ a seℓ AgdaException -> GHC.Exception.Type.toException      #-}
+{-# COMPILE GHC fromException    = \ aℓ a seℓ AgdaException -> GHC.Exception.Type.                 #-}
+{-# COMPILE GHC displayException = \ aℓ a    AgdaException -> GHC.Exception.Type.displayException #-}
 
 {-# COMPILE GHC Exception[A]⇒Typeable[A] = \ aℓ a AgdaException -> AgdaTypeable #-}
 {-# COMPILE GHC Exception[A]⇒Show[A]     = \ aℓ a AgdaException -> AgdaShow     #-}
 
-{-# COMPILE GHC Exception[SomeException] = AgdaException #-}
-{-# COMPILE GHC Show[SomeException]      = AgdaShow      #-}
-
-mkSomeException : ⦃ Exception A ⦄ → A → SomeException
-mkSomeException ⦃ _ ⦄ = toException
+{-# COMPILE GHC Exception[SomeException] = \ seℓ -> AgdaException #-}
+{-# COMPILE GHC Show[SomeException]      = \ seℓ -> AgdaShow      #-}
 
 data ArithException : Set where
     Overflow             : ArithException

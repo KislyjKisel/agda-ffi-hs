@@ -1,0 +1,3 @@
+name: ffi-hs-deepseq
+include: .
+depend: ffi-hs-base

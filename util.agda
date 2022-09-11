@@ -11,7 +11,7 @@
 -- #{-# COMPILE GHC $1[$2] = Agda$1 #-}
 
 -- * fn postulates ==> compile pragmas
--- # *(\w+) +: .*
+-- # *([\w'$<>\|]+) +: .*
 -- #{-# COMPILE GHC $1 = MODULE.$1 #-}
 
 {-# FOREIGN GHC

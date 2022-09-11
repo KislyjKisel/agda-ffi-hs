@@ -24,7 +24,7 @@ import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
 
 private
     variable
-        aℓ : Level
+        aℓ seℓ : Level
         A : Set aℓ
 
 data BlockedIndefinitelyOnMVar : Set where
@@ -37,12 +37,12 @@ postulate
     Exception[BlockedIndefinitelyOnMVar] : Exception BlockedIndefinitelyOnMVar
     Show[BlockedIndefinitelyOnMVar]      : Show BlockedIndefinitelyOnMVar
     
-    blockedIndefinitelyOnMVar : SomeException
+    blockedIndefinitelyOnMVar : SomeException {seℓ}
 
 {-# COMPILE GHC Exception[BlockedIndefinitelyOnMVar] = AgdaException #-}
 {-# COMPILE GHC Show[BlockedIndefinitelyOnMVar]      = AgdaShow      #-}
 
-{-# COMPILE GHC blockedIndefinitelyOnMVar = GHC.IO.Exception.blockedIndefinitelyOnMVar #-}
+{-# COMPILE GHC blockedIndefinitelyOnMVar = \ seℓ -> GHC.IO.Exception.blockedIndefinitelyOnMVar #-}
 
 data BlockedIndefinitelyOnSTM : Set where
     mkBlockedIndefinitelyOnSTM : BlockedIndefinitelyOnSTM
@@ -54,12 +54,12 @@ postulate
     Exception[BlockedIndefinitelyOnSTM] : Exception BlockedIndefinitelyOnSTM
     Show[BlockedIndefinitelyOnSTM]      : Show BlockedIndefinitelyOnSTM
     
-    blockedIndefinitelyOnSTM : SomeException
+    blockedIndefinitelyOnSTM : SomeException {seℓ}
 
 {-# COMPILE GHC Exception[BlockedIndefinitelyOnSTM] = AgdaException #-}
 {-# COMPILE GHC Show[BlockedIndefinitelyOnSTM]      = AgdaShow      #-}
 
-{-# COMPILE GHC blockedIndefinitelyOnSTM = GHC.IO.Exception.blockedIndefinitelyOnSTM #-}
+{-# COMPILE GHC blockedIndefinitelyOnSTM = \ seℓ -> GHC.IO.Exception.blockedIndefinitelyOnSTM #-}
 
 data Deadlock : Set where
     mkDeadlock : Deadlock
@@ -84,12 +84,12 @@ postulate
     Exception[AllocationLimitExceeded] : Exception AllocationLimitExceeded
     Show[AllocationLimitExceeded]      : Show AllocationLimitExceeded
     
-    allocationLimitExceeded : SomeException
+    allocationLimitExceeded : SomeException {seℓ}
 
 {-# COMPILE GHC Exception[AllocationLimitExceeded] = AgdaException #-}
 {-# COMPILE GHC Show[AllocationLimitExceeded]      = AgdaShow      #-}
 
-{-# COMPILE GHC allocationLimitExceeded = GHC.IO.Exception.allocationLimitExceeded #-}
+{-# COMPILE GHC allocationLimitExceeded = \ seℓ -> GHC.IO.Exception.allocationLimitExceeded #-}
 
 data AssertionFailed : Set where
     mkAssertionFailed : List Char → AssertionFailed
@@ -114,31 +114,35 @@ postulate
     Exception[CompactionFailed] : Exception CompactionFailed
     Show[CompactionFailed]      : Show CompactionFailed
 
-    cannotCompactFunction : SomeException
-    cannotCompactPinned   : SomeException
-    cannotCompactMutable  : SomeException
+    cannotCompactFunction : SomeException {seℓ}
+    cannotCompactPinned   : SomeException {seℓ}
+    cannotCompactMutable  : SomeException {seℓ}
 
 {-# COMPILE GHC Exception[CompactionFailed] = AgdaException #-}
 {-# COMPILE GHC Show[CompactionFailed]      = AgdaShow      #-}
 
-{-# COMPILE GHC cannotCompactFunction = GHC.IO.Exception.cannotCompactFunction #-}
-{-# COMPILE GHC cannotCompactPinned   = GHC.IO.Exception.cannotCompactPinned   #-}
-{-# COMPILE GHC cannotCompactMutable  = GHC.IO.Exception.cannotCompactMutable  #-}
+{-# COMPILE GHC cannotCompactFunction = \ seℓ -> GHC.IO.Exception.cannotCompactFunction #-}
+{-# COMPILE GHC cannotCompactPinned   = \ seℓ -> GHC.IO.Exception.cannotCompactPinned   #-}
+{-# COMPILE GHC cannotCompactMutable  = \ seℓ -> GHC.IO.Exception.cannotCompactMutable  #-}
 
-postulate
-    SomeAsyncException : Set -- todo: 0ℓ exception container
-    
-    Exception[SomeAsyncException] : Exception SomeAsyncException
-    Show[SomeAsyncException]      : Show SomeAsyncException
+data SomeAsyncException {sℓ} : Set (lsuc sℓ) where
+    mkSomeAsyncException : {A : Set sℓ} → ⦃ Exception A ⦄ → A → SomeAsyncException 
 
-    asyncExceptionToException   : ⦃ Exception A ⦄ → A → SomeException
-    asyncExceptionFromException : ⦃ Exception A ⦄ → SomeException → Maybe A
+{-# FOREIGN GHC type AgdaSomeAsyncException sℓ = GHC.Exception.Type.SomeAsyncException #-}
+{-# COMPILE GHC SomeAsyncException = data(1) AgdaSomeAsyncException (GHC.Exception.Type.SomeAsyncException) #-}
+
+postulate    
+    Exception[SomeAsyncException] : Exception {lsuc seℓ} SomeAsyncException
+    Show[SomeAsyncException]      : Show {lsuc seℓ} SomeAsyncException
+
+    asyncExceptionToException   : ⦃ Exception A ⦄ → A → SomeException {seℓ}
+    asyncExceptionFromException : ⦃ Exception A ⦄ → SomeException {seℓ} → Maybe A
 
 {-# COMPILE GHC Exception[SomeAsyncException] = AgdaException #-}
 {-# COMPILE GHC Show[SomeAsyncException]      = AgdaShow      #-}
 
-{-# COMPILE GHC asyncExceptionToException   = \ aℓ a AgdaException -> GHC.IO.Exception.asyncExceptionToException   #-}
-{-# COMPILE GHC asyncExceptionFromException = \ aℓ a AgdaException -> GHC.IO.Exception.asyncExceptionFromException #-}
+{-# COMPILE GHC asyncExceptionToException   = \ aℓ a seℓ AgdaException -> GHC.IO.Exception.asyncExceptionToException   #-}
+{-# COMPILE GHC asyncExceptionFromException = \ aℓ a seℓ AgdaException -> GHC.IO.Exception.asyncExceptionFromException #-}
 
 data AsyncException : Set where
     StackOverflow : AsyncException
@@ -160,16 +164,16 @@ postulate
     Eq[AsyncException]        : Eq AsyncException
     Ord[AsyncException]       : Ord AsyncException
 
-    stackOverflow : SomeException
-    heapOverflow  : SomeException
+    stackOverflow : SomeException {seℓ}
+    heapOverflow  : SomeException {seℓ}
 
 {-# COMPILE GHC Exception[AsyncException] = AgdaException #-}
 {-# COMPILE GHC Show[AsyncException]      = AgdaShow      #-}
 {-# COMPILE GHC Eq[AsyncException]        = AgdaEq        #-}
 {-# COMPILE GHC Ord[AsyncException]       = AgdaOrd       #-}
 
-{-# COMPILE GHC stackOverflow = GHC.IO.Exception.stackOverflow #-}
-{-# COMPILE GHC heapOverflow  = GHC.IO.Exception.heapOverflow  #-}
+{-# COMPILE GHC stackOverflow = \ seℓ -> GHC.IO.Exception.stackOverflow #-}
+{-# COMPILE GHC heapOverflow  = \ seℓ -> GHC.IO.Exception.heapOverflow  #-}
 
 data ArrayException : Set where
     IndexOutOfBounds : List Char → ArrayException
