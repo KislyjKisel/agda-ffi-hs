@@ -54,7 +54,13 @@ postulate
 
 {-# COMPILE GHC get = \ tℓ t aℓ a m AgdaHasGetter AgdaMonadIO -> Data.StateVar.get #-}
 
--- todo: compile instances
+{-# COMPILE GHC HasGetter[IO[A],A]         = \ aℓ a              -> AgdaHasGetter #-}
+{-# COMPILE GHC HasGetter[Ptr[A],A]        = \ aℓ a AgdaStorable -> AgdaHasGetter #-}
+{-# COMPILE GHC HasGetter[ForeignPtr[A],A] = \ aℓ a AgdaStorable -> AgdaHasGetter #-}
+{-# COMPILE GHC HasGetter[STM[A],A]        = \ aℓ a              -> AgdaHasGetter #-}
+{-# COMPILE GHC HasGetter[TVar[A],A]       = \ aℓ a              -> AgdaHasGetter #-}
+{-# COMPILE GHC HasGetter[IORef[A],A]      = \ aℓ a              -> AgdaHasGetter #-}
+{-# COMPILE GHC HasGetter[StateVar[A],A]   = \ aℓ a              -> AgdaHasGetter #-}
 
 GettableStateVar : Set aℓ → Set aℓ
 GettableStateVar = IO
@@ -64,6 +70,9 @@ makeGettableStateVar x = x
 
 data SettableStateVar (A : Set aℓ) : Set aℓ where
     mkSettableStateVar : (A → IO (⊤ {lzero})) → SettableStateVar A
+
+{-# FOREIGN GHC type AgdaSettableStateVar aℓ = Data.StateVar.SettableStateVar #-}
+{-# COMPILE GHC SettableStateVar = data(1) AgdaSettableStateVar (Data.StateVar.SettableStateVar) #-}
 
 infixr 2 _$=_ _$=!_
 
@@ -82,6 +91,22 @@ postulate
     Contravariant[SettableStateVar] : Contravariant {aℓ} SettableStateVar
     makeSettableStateVar : (A → IO (⊤ {lzero})) → SettableStateVar A
 
+{-# FOREIGN GHC data AgdaHasSetter tℓ aℓ t a = Data.StateVar.HasSetter t a => AgdaHasSetter #-}
+{-# COMPILE GHC HasSetter = type(0) AgdaHasSetter #-}
+
+{-# COMPILE GHC _$=_  = \ tℓ aℓ t a m AgdaHasSetter AgdaMonadIO -> (Data.StateVar.$=)  #-}
+{-# COMPILE GHC _$=!_ = \ tℓ aℓ t a m AgdaHasSetter AgdaMonadIO -> (Data.StateVar.$=!) #-}
+
+{-# COMPILE GHC HasSetter[Ptr[A],A]              = \ aℓ a AgdaStorable -> AgdaHasSetter #-}
+{-# COMPILE GHC HasSetter[ForeignPtr[A],A]       = \ aℓ a AgdaStorable -> AgdaHasSetter #-}
+{-# COMPILE GHC HasSetter[TVar[A],A]             = \ aℓ a              -> AgdaHasSetter #-}
+{-# COMPILE GHC HasSetter[IORef[A],A]            = \ aℓ a              -> AgdaHasSetter #-}
+{-# COMPILE GHC HasSetter[SettableStateVar[A],A] = \ aℓ a              -> AgdaHasSetter #-}
+{-# COMPILE GHC HasSetter[StateVar[A],A]         = \ aℓ a              -> AgdaHasSetter #-}
+
+{-# COMPILE GHC Contravariant[SettableStateVar] = \ aℓ -> AgdaContravariant #-}
+{-# COMPILE GHC makeSettableStateVar = \ aℓ a -> Data.StateVar.makeSettableStateVar #-}
+
 infixr 2 _$~_ _$~!_
 
 postulate
@@ -95,4 +120,18 @@ postulate
     HasUpdate[IORef[A],A,A]      : HasUpdate (IORef A) A A
     HasUpdate[StateVar[A],A,A]   : HasUpdate (StateVar A) A A
 
--- todo: compile Setter/Update
+    HasUpdate[T,A,B]⇒HasSetter[T,B] : ⦃ HasUpdate T A B ⦄ → HasSetter T B
+
+{-# FOREIGN GHC data AgdaHasUpdate tℓ aℓ bℓ t a b = Data.StateVar.HasUpdate t a b => AgdaHasUpdate #-}
+{-# COMPILE GHC HasUpdate = type(0) AgdaHasUpdate #-}
+
+{-# COMPILE GHC _$~_  = \ tℓ aℓ bℓ t a b m AgdaHasUpdate AgdaMonadIO -> (Data.StateVar.$~)  #-}
+{-# COMPILE GHC _$~!_ = \ tℓ aℓ bℓ t a b m AgdaHasUpdate AgdaMonadIO -> (Data.StateVar.$~!) #-}
+
+{-# COMPILE GHC HasUpdate[Ptr[A],A,A]        = \ aℓ a AgdaStorable -> AgdaHasUpdate #-}
+{-# COMPILE GHC HasUpdate[ForeignPtr[A],A,A] = \ aℓ a AgdaStorable -> AgdaHasUpdate #-}
+{-# COMPILE GHC HasUpdate[TVar[A],A,A]       = \ aℓ a -> AgdaHasUpdate #-}
+{-# COMPILE GHC HasUpdate[IORef[A],A,A]      = \ aℓ a -> AgdaHasUpdate #-}
+{-# COMPILE GHC HasUpdate[StateVar[A],A,A]   = \ aℓ a -> AgdaHasUpdate #-}
+
+{-# COMPILE GHC HasUpdate[T,A,B]⇒HasSetter[T,B] = \ tℓ t aℓ a bℓ b AgdaHasUpdate -> AgdaHasSetter #-}
