@@ -102,11 +102,11 @@ postulate
     hIsReadable : Handle → IO Bool
     hIsWritable : Handle → IO Bool
     hIsSeekable : Handle → IO Bool
-    
+
     hIsTerminalDevice : Handle → IO Bool
     hSetEcho          : Handle → Bool → IO (⊤ {lzero})
     hGetEcho          : Handle → IO Bool
-    
+
     hShow : Handle → IO (List Char)
 
     hWaitForInput : Handle → Int → IO Bool
@@ -116,7 +116,7 @@ postulate
     hLookAhead    : Handle → IO Char
     hGetContents  : Handle → IO (List Char)
     hGetContents' : Handle → IO (List Char)
-    
+
     hPutChar  : Handle → Char → IO (⊤ {lzero})
     hPutStr   : Handle → List Char → IO (⊤ {lzero})
     hPutStrLn : Handle → List Char → IO (⊤ {lzero})
@@ -152,7 +152,7 @@ postulate
     hSetEncoding   : Handle → TextEncoding → IO (⊤ {lzero})
     hGetEncoding   : Handle → IO (Maybe TextEncoding)
     mkTextEncoding : List Char → IO TextEncoding
-    
+
     utf8 utf8_bom               : TextEncoding
     utf16 utf16le utf16be       : TextEncoding
     utf32 utf32le utf32be       : TextEncoding

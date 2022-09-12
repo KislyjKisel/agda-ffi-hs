@@ -1,0 +1,3 @@
+name: ffi-hs-exceptions
+include: .
+depend: ffi-hs-base

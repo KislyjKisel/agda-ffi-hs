@@ -1,0 +1,3 @@
+name: ffi-hs-text
+include: .
+depend: ffi-hs-base
