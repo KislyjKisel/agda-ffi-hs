@@ -2,31 +2,37 @@
 
 module Ffi.Hs.Data.Typeable where
 
-open import Agda.Builtin.List using (List)
-open import Agda.Builtin.Maybe using (Maybe)
+open import Agda.Builtin.List                 using (List)
+open import Agda.Builtin.Maybe                using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Kind using (IsKind[Set])
--- open import Ffi.Hs.-base.Class using ()
-open import Ffi.Hs.Text.Show using (ShowS)
-open import Ffi.Hs.Type.Reflection as Reflect using ()
-open import Ffi.Hs.Data.Proxy using (Proxy; mkProxy)
-open import Ffi.Hs.Data.Type.Equality using (_:~:_)
-open import Ffi.Hs.Data.Tuple using (Tuple2)
-open import Ffi.Hs.GHC.Fingerprint.Type using (Fingerprint)
+open import Ffi.Hs.Data.Proxy                 using (Proxy; mkProxy)
+open import Ffi.Hs.Data.Tuple                 using (Tuple2)
+open import Ffi.Hs.GHC.Fingerprint.Type       using (Fingerprint)
+open import Ffi.Hs.Text.Show                  using (ShowS)
+open import Ffi.Hs.Type.Reflection            using ()
 
-open Reflect public
+open Ffi.Hs.Type.Reflection public
     using
-        ( Typeable ; TyCon ; tyConPackage
-        ; tyConModule ; tyConName ; rnfTyCon
-        )
+    ( Typeable ; TyCon ; tyConPackage
+    ; tyConModule ; tyConName ; rnfTyCon
+    )
     renaming
-        ( SomeTypeRep to TypeRep ; rnfSomeTypeRep to rnfTypeRep
-        ; someTypeRep to typeRep
-        )
+    ( SomeTypeRep to TypeRep ; rnfSomeTypeRep to rnfTypeRep
+    ; someTypeRep to typeRep
+    )
+
+open import Ffi.Hs.Type.Reflection.Unsafe public
+    using (tyConFingerprint)
+    renaming
+    ( someTypeRepFingerprint to typeRepFingerprint
+    )
+
+open import Ffi.Hs.Data.Type.Equality public
+    using (_:~:_; Refl; _:~~:_; HRefl)
 
 {-# FOREIGN GHC
 import qualified Data.Typeable
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class ()
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -49,11 +55,20 @@ postulate
     splitTyConApp      : TypeRep {aℓ} → (Tuple2 TyCon (List (TypeRep {aℓ})))
     typeRepArgs        : TypeRep {aℓ} → List (TypeRep {aℓ})
     typeRepTyCon       : TypeRep {aℓ} → TyCon
-    typeRepFingerprint : TypeRep {aℓ} → Fingerprint
-    tyConFingerprint   : TyCon → Fingerprint
 
+{-# COMPILE GHC cast  = \ aℓ a bℓ b   AgdaTypeable AgdaTypeable -> Data.Typeable.cast  #-}
+{-# COMPILE GHC eqT   = \ aℓ a b      AgdaTypeable AgdaTypeable -> Data.Typeable.eqT   #-}
+{-# COMPILE GHC gcast = \ aℓ a b fℓ f AgdaTypeable AgdaTypeable -> Data.Typeable.gcast #-}
+
+{-# COMPILE GHC gcast1 = \ aℓ bℓ t1 t2 fℓ f    AgdaTypeable AgdaTypeable -> Data.Typeable.gcast1 #-}
+{-# COMPILE GHC gcast2 = \ aℓ bℓ cℓ t1 t2 fℓ f AgdaTypeable AgdaTypeable -> Data.Typeable.gcast2 #-}
+
+{-# COMPILE GHC showsTypeRep       = \ aℓ    -> Data.Typeable.showsTypeRep       #-}
+{-# COMPILE GHC mkFunTy            = \ aℓ bℓ -> Data.Typeable.mkFunTy            #-}
+{-# COMPILE GHC funResultTy        = \ aℓ bℓ -> Data.Typeable.funResultTy        #-}
+{-# COMPILE GHC splitTyConApp      = \ aℓ    -> Data.Typeable.splitTyConApp      #-}
+{-# COMPILE GHC typeRepArgs        = \ aℓ    -> Data.Typeable.typeRepArgs        #-}
+{-# COMPILE GHC typeRepTyCon       = \ aℓ    -> Data.Typeable.typeRepTyCon       #-}
 
 typeOf :  ⦃ Typeable {lsuc aℓ} A ⦄ → A → TypeRep {lsuc aℓ}
-typeOf {A = A} _ = Reflect.someTypeRep {proxy = Proxy} (mkProxy {A = A})
-
-
+typeOf {A = A} _ = typeRep {proxy = Proxy} (mkProxy {A = A})

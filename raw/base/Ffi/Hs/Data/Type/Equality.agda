@@ -7,6 +7,9 @@ open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 open import Ffi.Hs.Data.Bool   using (`Bool)
 
+open Ffi.Hs.-base.Class public
+    using (TestEquality)
+
 {-# FOREIGN GHC
 import qualified Data.Type.Equality
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
