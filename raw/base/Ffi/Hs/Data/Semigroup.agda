@@ -3,7 +3,7 @@
 module Ffi.Hs.Data.Semigroup where
 
 open import Agda.Primitive
-open import Ffi.Hs.-base.Class         using (Integral)
+open import Ffi.Hs.-base.Class
 open import Ffi.Hs.Data.List.NonEmpty  using (NonEmpty)
 open import Ffi.Hs.Data.Monoid         using (Monoid; Endo)
 
@@ -12,9 +12,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Data.Semigroup
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaSemigroup, AgdaIntegral, AgdaMonoid
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -85,3 +83,43 @@ postulate
 
 {-# COMPILE GHC diff   = \ aℓ a AgdaSemigroup -> Data.Semigroup.diff   #-}
 {-# COMPILE GHC cycle1 = \ aℓ a AgdaSemigroup -> Data.Semigroup.cycle1 #-}
+
+record Arg (A : Set aℓ) (B : Set bℓ) : Set (aℓ ⊔ bℓ) where
+    constructor mkArg
+    field
+        a : A
+        b : B
+
+{-# FOREIGN GHC type AgdaArg aℓ bℓ = Data.Semigroup.Arg #-}
+{-# COMPILE GHC Arg = data(2) AgdaArg (Data.Semigroup.Arg) #-}
+
+postulate
+    Bifoldable[Arg]     : Bifoldable {aℓ} {bℓ} Arg
+    Bifunctor[Arg]      : Bifunctor {aℓ} {bℓ} Arg
+    Bitraversable[Arg]  : Bitraversable {aℓ} {bℓ} Arg
+    Foldable[Arg[A]]    : Foldable {bℓ} (Arg A)
+    Traversable[Arg[A]] : Traversable {bℓ} (Arg A)
+    Functor[Arg[A]]     : Functor (Arg {aℓ} {aℓ} A)
+    Data[Arg[A,B]]      : ⦃ Data A ⦄ → ⦃ Data B ⦄ → Data (Arg A B)
+    Read[Arg[A,B]]      : ⦃ Read A ⦄ → ⦃ Read B ⦄ → Read (Arg A B)
+    Show[Arg[A,B]]      : ⦃ Show A ⦄ → ⦃ Show B ⦄ → Show (Arg A B)
+    Eq[Arg[A,B]]        : ⦃ Eq A ⦄ → Eq (Arg A B)
+    Ord[Arg[A,B]]       : ⦃ Ord A ⦄ → Ord (Arg A B)
+
+{-# COMPILE GHC Bifoldable[Arg]     = \ aℓ bℓ                       -> AgdaBifoldable    #-}
+{-# COMPILE GHC Bifunctor[Arg]      = \ aℓ bℓ                       -> AgdaBifunctor     #-}
+{-# COMPILE GHC Bitraversable[Arg]  = \ aℓ bℓ                       -> AgdaBitraversable #-}
+{-# COMPILE GHC Foldable[Arg[A]]    = \ bℓ aℓ a                     -> AgdaFoldable      #-}
+{-# COMPILE GHC Traversable[Arg[A]] = \ bℓ aℓ a                     -> AgdaTraversable   #-}
+{-# COMPILE GHC Functor[Arg[A]]     = \ aℓ a                        -> AgdaFunctor       #-}
+{-# COMPILE GHC Data[Arg[A,B]]      = \ aℓ a bℓ b AgdaData AgdaData -> AgdaData          #-}
+{-# COMPILE GHC Read[Arg[A,B]]      = \ aℓ a bℓ b AgdaRead AgdaRead -> AgdaRead          #-}
+{-# COMPILE GHC Show[Arg[A,B]]      = \ aℓ a bℓ b AgdaShow AgdaShow -> AgdaShow          #-}
+{-# COMPILE GHC Eq[Arg[A,B]]        = \ aℓ a bℓ b AgdaEq            -> AgdaEq            #-}
+{-# COMPILE GHC Ord[Arg[A,B]]       = \ aℓ a bℓ b AgdaOrd           -> AgdaOrd           #-}
+
+ArgMin : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
+ArgMin A B = Min (Arg A B)
+
+ArgMax : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
+ArgMax A B = Max (Arg A B)

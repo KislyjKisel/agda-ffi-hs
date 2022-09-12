@@ -52,7 +52,6 @@ postulate
     typeRepFingerprint : TypeRep {aℓ} → Fingerprint
     tyConFingerprint   : TyCon → Fingerprint
 
-{-# COMPILE GHC  =  #-}
 
 typeOf :  ⦃ Typeable {lsuc aℓ} A ⦄ → A → TypeRep {lsuc aℓ}
 typeOf {A = A} _ = Reflect.someTypeRep {proxy = Proxy} (mkProxy {A = A})

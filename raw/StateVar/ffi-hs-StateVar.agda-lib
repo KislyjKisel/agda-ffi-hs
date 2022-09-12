@@ -1,2 +1,3 @@
 name: ffi-hs-StateVar
 include: .
+depend: ffi-hs-base, ffi-hs-stm
