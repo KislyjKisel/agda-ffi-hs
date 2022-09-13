@@ -10,12 +10,7 @@ open import Ffi.Hs.Data.Tuple  using (Tuple2)
 
 {-# FOREIGN GHC
 import qualified Data.Either
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaFunctor, AgdaApplicative, AgdaMonad, AgdaData
-    , AgdaMonadFix, AgdaFoldable, AgdaTraversable
-    , AgdaBifunctor, AgdaBifoldable, AgdaBitraversable
-    , AgdaSemigroup, AgdaRead, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

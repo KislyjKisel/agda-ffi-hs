@@ -8,9 +8,7 @@ open import Ffi.Hs.Data.Int    using (Int)
 
 {-# FOREIGN GHC
 import qualified Data.Unique
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 postulate

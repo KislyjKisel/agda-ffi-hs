@@ -10,7 +10,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Control.Monad.Fix
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class(AgdaMonad, AgdaMonadFix)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

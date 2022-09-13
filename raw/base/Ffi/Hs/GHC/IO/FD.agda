@@ -21,7 +21,7 @@ open import Ffi.Hs.System.Posix.Types using (CDev; CIno)
 
 {-# FOREIGN GHC
 import qualified GHC.IO.FD
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class   (AgdaShow)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 import MAlonzo.Code.Ffi.Hs.GHC.IO.Device     (AgdaRawIO, AgdaIODevice)
 import MAlonzo.Code.Ffi.Hs.GHC.IO.BufferedIO (AgdaBufferedIO)
 #-}

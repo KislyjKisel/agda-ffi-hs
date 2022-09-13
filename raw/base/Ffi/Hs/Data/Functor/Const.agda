@@ -5,6 +5,8 @@ module Ffi.Hs.Data.Functor.Const where
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Functor.Const
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -40,7 +42,8 @@ postulate
     Traversable[Const[A]]   : Traversable {bℓ} (Const A)
     Applicative[Const[A]]   : ⦃ Monoid A ⦄ → Applicative (Const A)
     Functor[Const[A]]       : Functor (Const A)
-    Data[Const[A,B]]        : ⦃ Data A ⦄ → ⦃ Typeable B ⦄ → Data (Const A B)
+    -- todo: Data instance - Typeable kind
+    -- Data[Const[A,B]]        : ⦃ Data A ⦄ → ⦃ Typeable B ⦄ → Data (Const A B)
     IsString[Const[A,B]]    : ⦃ IsString A ⦄   → IsString (Const A B)
     Storable[Const[A,B]]    : ⦃ Storable A ⦄   → Storable (Const A B)
     Monoid[Const[A,B]]      : ⦃ Monoid A ⦄     → Monoid (Const A B)
@@ -78,7 +81,7 @@ postulate
 {-# COMPILE GHC Traversable[Const[A]]   = \ bℓ aℓ a                         -> AgdaTraversable   #-}
 {-# COMPILE GHC Applicative[Const[A]]   = \ aℓ a AgdaMonoid                 -> AgdaApplicative   #-}
 {-# COMPILE GHC Functor[Const[A]]       = \ aℓ a                            -> AgdaFunctor       #-}
-{-# COMPILE GHC Data[Const[A,B]]        = \ aℓ a bℓ b AgdaData AgdaTypeable -> AgdaData          #-}
+-- {-# COMPILE GHC Data[Const[A,B]]        = \ aℓ a bℓ b AgdaData AgdaTypeable -> AgdaData          #-}
 {-# COMPILE GHC IsString[Const[A,B]]    = \ aℓ a bℓ b AgdaIsString          -> AgdaIsString      #-}
 {-# COMPILE GHC Storable[Const[A,B]]    = \ aℓ a bℓ b AgdaStorable          -> AgdaStorable      #-}
 {-# COMPILE GHC Monoid[Const[A,B]]      = \ aℓ a bℓ b AgdaMonoid            -> AgdaMonoid        #-}

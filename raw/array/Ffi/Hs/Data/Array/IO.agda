@@ -16,6 +16,8 @@ open import Ffi.Hs.System.IO         using (Handle; IO)
 
 open import Ffi.Hs.Data.Array.MArray public
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Array.IO
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

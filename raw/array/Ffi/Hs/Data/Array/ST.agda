@@ -18,6 +18,8 @@ open import Ffi.Hs.Foreign.StablePtr     using (StablePtr)
 
 open import Ffi.Hs.Data.Array.MArray public
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Array.ST
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

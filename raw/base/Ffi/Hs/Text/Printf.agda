@@ -19,7 +19,7 @@ open import Ffi.Hs.Text.Show       using (ShowS)
 
 {-# FOREIGN GHC
 import qualified Text.Printf
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaIntegral, AgdaRealFloat, AgdaBounded)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

@@ -9,6 +9,6 @@ postulate
 
 {-# FOREIGN GHC
 import Text.Show.Functions
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaShow)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 {-# COMPILE GHC Show[A⟶B] = \ aℓ bℓ a b -> AgdaShow #-}

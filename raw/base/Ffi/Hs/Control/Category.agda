@@ -31,7 +31,7 @@ f >>> g = g ∘ f
 postulate
     Category[⟶] : Category {aℓ} {bℓ} (\ a b → (a → b))
 
-{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaCategory) #-}
+{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries #-}
 {-# FOREIGN GHC import qualified Control.Category as AgdaHsConCat #-}
 {-# COMPILE GHC id  = \ aℓ a rℓ cat AgdaCategory ->  AgdaHsConCat.id  #-}
 {-# COMPILE GHC _∘_ = \ aℓ cat a b c AgdaCategory -> (AgdaHsConCat..) #-}

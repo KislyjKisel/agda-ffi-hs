@@ -11,10 +11,7 @@ open import Ffi.Hs.Data.Tuple       using (Tuple2)
 
 {-# FOREIGN GHC
 import qualified Control.Arrow
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaArrow, AgdaArrowZero, AgdaArrowPlus
-    , AgdaArrowChoice, AgdaArrowApply, AgdaArrowLoop
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 open Ffi.Hs.-base.Class public

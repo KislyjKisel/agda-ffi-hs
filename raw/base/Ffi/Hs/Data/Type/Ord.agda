@@ -10,7 +10,7 @@ open import Ffi.Hs.Data.Type.Equality using (_~_)
 
 {-# FOREIGN GHC
 import qualified Data.Type.Ord
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaEq, AgdaShow)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

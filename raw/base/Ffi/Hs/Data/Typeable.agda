@@ -30,6 +30,8 @@ open import Ffi.Hs.Type.Reflection.Unsafe public
 open import Ffi.Hs.Data.Type.Equality public
     using (_:~:_; Refl; _:~~:_; HRefl)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Typeable
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

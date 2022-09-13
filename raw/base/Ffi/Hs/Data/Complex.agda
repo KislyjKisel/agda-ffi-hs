@@ -8,13 +8,7 @@ open import Ffi.Hs.Data.Tuple  using (Tuple2)
 
 {-# FOREIGN GHC
 import qualified Data.Complex
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaEq, AgdaShow, AgdaRead, AgdaRealFloat
-    , AgdaFloating, AgdaNum, AgdaFractional
-    , AgdaData, AgdaStorable, AgdaMonad, AgdaMonadFix
-    , AgdaMonadZip, AgdaApplicative, AgdaFunctor
-    , AgdaFoldable, AgdaTraversable
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -45,8 +39,8 @@ postulate
     Num[Complex[A]]        : ⦃ RealFloat A ⦄ → Num (Complex A)
     Read[Complex[A]]       : ⦃ Read A ⦄ → Read (Complex A)
     Fractional[Complex[A]] : ⦃ RealFloat A ⦄ → Fractional (Complex A)
-    Show[Complex[A]]       : ⦃ Show A ⦄ → (Complex A)
-    Eq[Complex[A]]         : ⦃ Eq A ⦄ → (Complex A)
+    Show[Complex[A]]       : ⦃ Show A ⦄ → Show (Complex A)
+    Eq[Complex[A]]         : ⦃ Eq A ⦄ → Eq (Complex A)
 
 {-# COMPILE GHC MonadFix[Complex]    = \ aℓ -> AgdaMonadFix    #-}
 {-# COMPILE GHC MonadZip[Complex]    = \ aℓ -> AgdaMonadZip    #-}

@@ -30,7 +30,7 @@ postulate
 
 {-# FOREIGN GHC
 import qualified Foreign.Storable
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaStorable)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 {-# COMPILE GHC sizeOf      = \ aℓ a      AgdaStorable -> Foreign.Storable.sizeOf      #-}
 {-# COMPILE GHC alignment   = \ aℓ a      AgdaStorable -> Foreign.Storable.alignment   #-}

@@ -10,10 +10,10 @@ open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.-base.Class using (RealFloat; Floating; Ord)
 
 open import Agda.Builtin.Float public
-    using (Float)
+    using () renaming (Float to Double)
 
 open import Ffi.Hs.GHC.Exts public
-    using (Double)
+    using (Float)
 
 private
     variable
@@ -46,3 +46,5 @@ postulate
     isNegativeZero : ⦃ RealFloat A ⦄ → A → Bool
     isIEEE         : ⦃ RealFloat A ⦄ → A → Bool
     atan2          : ⦃ RealFloat A ⦄ → A → A → A
+
+-- todo: compile, postulate all defs from GHC.Float

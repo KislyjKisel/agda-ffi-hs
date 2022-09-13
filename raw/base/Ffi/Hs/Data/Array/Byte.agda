@@ -10,10 +10,7 @@ open import Ffi.Hs.GHC.IsList  using (IsList)
 {-# FOREIGN GHC
 import qualified Data.Array.Byte
 import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaEq, AgdaOrd, AgdaShow
-    , AgdaSemigroup, AgdaMonoid, AgdaTypeable
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

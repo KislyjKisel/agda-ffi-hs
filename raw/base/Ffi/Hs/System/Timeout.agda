@@ -10,9 +10,7 @@ open import Ffi.Hs.Data.Int    using (Int)
 
 {-# FOREIGN GHC
 import qualified System.Timeout
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaException, AgdaShow, AgdaEq
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

@@ -11,17 +11,11 @@ open import Ffi.Hs.Data.Tuple  using (Tuple2)
 open Ffi.Hs.-base.Class public
     using (Ord)
 
+{-# FOREIGN GHC {-# LANGUAGE DataKinds #-} #-}
 {-# FOREIGN GHC
 import qualified Data.Ord
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Kind (AgdaIsKind)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaStorable, AgdaMonoid, AgdaSemigroup
-    , AgdaBounded, AgdaEnum, AgdaIx, AgdaRead, AgdaShow
-    , AgdaEq, AgdaOrd, AgdaFiniteBits, AgdaBits, AgdaFloating
-    , AgdaRealFloat, AgdaNum, AgdaFractional, AgdaReal
-    , AgdaRealFrac, AgdaFunctor, AgdaApplicative, AgdaFoldable
-    , AgdaTraversable, AgdaMonad, AgdaMonadFix, AgdaMonadZip
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Kind (AgdaIsKind(AgdaIsKind))
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -33,7 +27,11 @@ private
 data Ordering : Set where
     LT EQ GT : Ordering
 
-{-# COMPILE GHC Ordering = data Data.Ord.Ordering (LT | EQ | GT) #-}
+{-# COMPILE GHC Ordering = data Data.Ord.Ordering
+    ( Data.Ord.LT
+    | Data.Ord.EQ
+    | Data.Ord.GT
+    ) #-}
 
 postulate
     Data[Ordering]      : Data Ordering
@@ -82,8 +80,8 @@ postulate
 {-# COMPILE GHC min     = \ aℓ a AgdaOrd -> Data.Ord.min     #-}
 {-# COMPILE GHC max     = \ aℓ a AgdaOrd -> Data.Ord.max     #-}
 
-{-# COMPILE GHC comparing = \ aℓ a b AgdaOrd -> Data.Ord.comparing #-}
-{-# COMPILE GHC clamp     = \ aℓ a   AgdaOrd -> Data.Ord.clamp     #-}
+{-# COMPILE GHC comparing = \ aℓ bℓ a b AgdaOrd -> Data.Ord.comparing #-}
+{-# COMPILE GHC clamp     = \ aℓ a AgdaOrd      -> Data.Ord.clamp     #-}
 
 postulate
     Ord[A]⇒Eq[A] : ⦃ Ord A ⦄ → Eq A
@@ -132,7 +130,7 @@ postulate
     Eq[Down[A]]          : ⦃ Eq A ⦄ → Eq (Down A)
     Ord[Down[A]]         : ⦃ Ord A ⦄ → Ord (Down A)
 
-{-# FOREIGN GHC type AgdaDown aℓ = Data.Ord.Data #-}
+{-# FOREIGN GHC type AgdaDown aℓ = Data.Ord.Down #-}
 {-# COMPILE GHC Down = type(1) AgdaDown #-}
 {-# COMPILE GHC mkDown    = \ aℓ a         -> Data.Ord.Down    #-}
 {-# COMPILE GHC getDown   = \ aℓ a         -> Data.Ord.getDown #-}

@@ -32,7 +32,7 @@ postulate
 
 {-# FOREIGN GHC
 import qualified Text.Show
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaShow)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 {-# COMPILE GHC showsPrec = \ aℓ a AgdaShow -> Text.Show.showsPrec #-}

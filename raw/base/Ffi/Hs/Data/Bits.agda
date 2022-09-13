@@ -13,11 +13,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Data.Bits
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaBits, AgdaFiniteBits, AgdaNum, AgdaIntegral
-    , AgdaMonoid, AgdaSemigroup, AgdaBounded, AgdaEnum
-    , AgdaRead, AgdaShow, AgdaEq
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

@@ -10,6 +10,8 @@ open import Ffi.Hs.-base.Unit  using (⊤)
 
 open import Ffi.Hs.Control.Exception.Base public
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.Exception
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

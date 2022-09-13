@@ -13,7 +13,7 @@ open Ffi.Hs.Type.Reflection public
 {-# FOREIGN GHC
 import qualified Data.Dynamic
 import MAlonzo.Code.Ffi.Hs.Type.Reflection (AgdaTypeRep)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaException, AgdaShow)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

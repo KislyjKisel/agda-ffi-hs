@@ -7,9 +7,7 @@ open import Ffi.Hs.Data.Word   using (Word64)
 
 {-# FOREIGN GHC
 import qualified GHC.Fingerprint.Type
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaStorable, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 data Fingerprint : Set where

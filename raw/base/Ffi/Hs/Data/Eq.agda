@@ -10,7 +10,7 @@ open import Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Data.Eq
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaEq)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

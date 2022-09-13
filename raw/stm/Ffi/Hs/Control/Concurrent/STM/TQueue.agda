@@ -11,6 +11,8 @@ open import Ffi.Hs.-base.Class       using (Eq)
 open import Ffi.Hs.-base.Unit        using (⊤)
 open import Ffi.Hs.Control.Monad.STM using (STM)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.Concurrent.STM.TQueue
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

@@ -11,11 +11,7 @@ open import Ffi.Hs.Data.Word   using (Word)
 
 {-# FOREIGN GHC
 import qualified Foreign.Ptr
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaStorable, AgdaShow, AgdaEq, AgdaOrd
-    , AgdaBits, AgdaFiniteBits, AgdaBounded, AgdaEnum
-    , AgdaIx, AgdaNum, AgdaRead, AgdaIntegral, AgdaReal
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -78,7 +74,7 @@ postulate
 {-# COMPILE GHC wordPtrToPtr = \ aℓ a -> Foreign.Ptr.wordPtrToPtr #-}
 
 postulate
-    Data[Ptr[A]]     : Data (Ptr A)
+    Data[Ptr[A]]     : ⦃ Data A ⦄ → Data (Ptr A)
     Storable[Ptr[A]] : Storable (Ptr A)
     Show[Ptr[A]]     : Show (Ptr A)
     Eq[Ptr[A]]       : Eq (Ptr A)
@@ -119,11 +115,11 @@ postulate
     Eq[WordPtr]         : Eq WordPtr
     Ord[WordPtr]        : Ord WordPtr
 
-{-# COMPILE GHC Data[Ptr[A]]     = \ aℓ a -> AgdaData     #-}
-{-# COMPILE GHC Storable[Ptr[A]] = \ aℓ a -> AgdaStorable #-}
-{-# COMPILE GHC Show[Ptr[A]]     = \ aℓ a -> AgdaShow     #-}
-{-# COMPILE GHC Eq[Ptr[A]]       = \ aℓ a -> AgdaEq       #-}
-{-# COMPILE GHC Ord[Ptr[A]]      = \ aℓ a -> AgdaOrd      #-}
+{-# COMPILE GHC Data[Ptr[A]]     = \ aℓ a AgdaData -> AgdaData     #-}
+{-# COMPILE GHC Storable[Ptr[A]] = \ aℓ a          -> AgdaStorable #-}
+{-# COMPILE GHC Show[Ptr[A]]     = \ aℓ a          -> AgdaShow     #-}
+{-# COMPILE GHC Eq[Ptr[A]]       = \ aℓ a          -> AgdaEq       #-}
+{-# COMPILE GHC Ord[Ptr[A]]      = \ aℓ a          -> AgdaOrd      #-}
 
 {-# COMPILE GHC Storable[FunPtr[A]] = \ aℓ a -> AgdaStorable #-}
 {-# COMPILE GHC Show[FunPtr[A]]     = \ aℓ a -> AgdaShow     #-}

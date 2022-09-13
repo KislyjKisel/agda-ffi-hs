@@ -6,6 +6,8 @@ open import Ffi.Hs.-base.Class using (Monad)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Unit using (⊤)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.DeepSeq
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -59,7 +61,7 @@ module _ where
 {-# COMPILE GHC liftRnf = \ aℓ bℓ f a AgdaNFData1            -> Control.DeepSeq.liftRnf #-}
 {-# COMPILE GHC rnf1    = \ aℓ bℓ f a AgdaNFData1 AgdaNFData -> Control.DeepSeq.rnf1    #-}
 
-{-# FOREIGN GHC data AgdaNFData2 aℓ bℓ f = Control.DeepSeq.NFData2 f => AgdaNFData2 #-}
+{-# FOREIGN GHC data AgdaNFData2 aℓ bℓ cℓ f = Control.DeepSeq.NFData2 f => AgdaNFData2 #-}
 {-# COMPILE GHC NFData2 = type(0) AgdaNFData2 #-}
 
 {-# COMPILE GHC liftRnf2 = \ aℓ bℓ cℓ f a b AgdaNFData2                       -> Control.DeepSeq.liftRnf2 #-}
@@ -300,9 +302,9 @@ postulate
 {-# COMPILE GHC NFData[Tuple3[A,B,C]]     = \ aℓ a bℓ b cℓ c AgdaNFData AgdaNFData AgdaNFData                                 -> AgdaNFData #-}
 {-# COMPILE GHC NFData[Tuple4[A,B,C,D]]   = \ aℓ a bℓ b cℓ c dℓ d AgdaNFData AgdaNFData AgdaNFData AgdaNFData                 -> AgdaNFData #-}
 {-# COMPILE GHC NFData[Tuple5[A,B,C,D,E]] = \ aℓ a bℓ b cℓ c dℓ d eℓ e AgdaNFData AgdaNFData AgdaNFData AgdaNFData AgdaNFData -> AgdaNFData #-}
-{-# COMPILE GHC NFData[Const[A,B]]        = \ aℓ a AgdaNFData                                                                 -> AgdaNFData #-}
-{-# COMPILE GHC NFData[A:~:B]             = \ aℓ a bℓ b                                                                       -> AgdaNFData #-}
-{-# COMPILE GHC NFData[A:~~:B]            = \ aℓ a bℓ b                                                                       -> AgdaNFData #-}
+{-# COMPILE GHC NFData[Const[A,B]]        = \ aℓ a bℓ b AgdaNFData                                                            -> AgdaNFData #-}
+{-# COMPILE GHC NFData[A:~:B]             = \ aℓ a b                                                                          -> AgdaNFData #-}
+{-# COMPILE GHC NFData[A:~~:B]            = \ aℓ a b                                                                          -> AgdaNFData #-}
 {-# COMPILE GHC NFData[FProduct]          = \ aℓ fℓ f gℓ g a AgdaNFData1 AgdaNFData1 AgdaNFData                               -> AgdaNFData #-}
 {-# COMPILE GHC NFData[FSum]              = \ aℓ fℓ f gℓ g a AgdaNFData1 AgdaNFData1 AgdaNFData                               -> AgdaNFData #-}
 {-# COMPILE GHC NFData[Compose]           = \ gℓ fℓ f aℓ g a AgdaNFData1 AgdaNFData1 AgdaNFData                               -> AgdaNFData #-}
@@ -332,7 +334,7 @@ postulate
     NFData1[Either[A]]     : ⦃ NFData A ⦄ → NFData1 (Either {bℓ = bℓ} A)
     NFData1[Array[A]]      : ⦃ NFData A ⦄ → NFData1 (Array {eℓ = bℓ} A)
     NFData1[Fixed]         : NFData1 {aℓ} Fixed
-    NFData1[Arg[A]]        : NFData1 (Arg {bℓ = bℓ} A)
+    NFData1[Arg[A]]        : ⦃ NFData A ⦄ → NFData1 (Arg {bℓ = bℓ} A)
     NFData1[Proxy]         : NFData1 {aℓ} Proxy
     NFData1[STRef[S]]      : ∀{S} → NFData1 {aℓ} (STRef S)
     NFData1[Const[A]]      : ⦃ NFData A ⦄ → NFData1 (Const {bℓ = bℓ} A)
@@ -395,7 +397,7 @@ postulate
     NFData2[Tuple5] : ⦃ NFData A ⦄ → ⦃ NFData B ⦄ → ⦃ NFData C ⦄ → NFData2 {dℓ} {eℓ} (Tuple5 A B C)
     NFData2[Const]  : NFData2 {aℓ} {bℓ} Const
     NFData2[:~:]    : NFData2 {aℓ} _:~:_
-    NFData2[:~~:]   : NFData2 (λ A → _:~~:_ {K₁ = Set (lsuc aℓ)} A {K₂ = Set (lsuc aℓ)})
+    -- todo: NFData2[:~~:]   : NFData2 (λ A → _:~~:_ {K₁ = Set (lsuc aℓ)} A {K₂ = Set (lsuc aℓ)})
 
 {-# COMPILE GHC NFData2[Either] = \ aℓ bℓ                                                 -> AgdaNFData2 #-}
 {-# COMPILE GHC NFData2[Array]  = \ aℓ bℓ                                                 -> AgdaNFData2 #-}
@@ -407,4 +409,4 @@ postulate
 {-# COMPILE GHC NFData2[Tuple5] = \ aℓ bℓ cℓ dℓ eℓ a b c AgdaNFData AgdaNFData AgdaNFData -> AgdaNFData2 #-}
 {-# COMPILE GHC NFData2[Const]  = \ aℓ bℓ                                                 -> AgdaNFData2 #-}
 {-# COMPILE GHC NFData2[:~:]    = \ aℓ                                                    -> AgdaNFData2 #-}
-{-# COMPILE GHC NFData2[:~~:]   = \ aℓ                                                    -> AgdaNFData2 #-}
+-- {-# COMPILE GHC NFData2[:~~:]   = \ aℓ                                                    -> AgdaNFData2 #-}

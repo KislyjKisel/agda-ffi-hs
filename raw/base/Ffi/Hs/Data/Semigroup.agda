@@ -10,6 +10,8 @@ open import Ffi.Hs.Data.Monoid         using (Monoid; Endo)
 open Ffi.Hs.-base.Class public
     using (Semigroup)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Semigroup
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -52,7 +54,7 @@ postulate
     diff   : ⦃ Semigroup A ⦄ → A → Endo A
     cycle1 : ⦃ Semigroup A ⦄ → A → A
 
-{-# COMPILE GHC _<>_    = \ aℓ a AgdaSemigroup                   -> Data.Semigroup._<>_    #-}
+{-# COMPILE GHC _<>_    = \ aℓ a AgdaSemigroup                   -> (Data.Semigroup.<>)    #-}
 {-# COMPILE GHC sconcat = \ aℓ a AgdaSemigroup                   -> Data.Semigroup.sconcat #-}
 {-# COMPILE GHC stimes  = \ aℓ a bℓ b AgdaSemigroup AgdaIntegral -> Data.Semigroup.stimes  #-}
 
@@ -61,24 +63,26 @@ postulate
 {-# COMPILE GHC stimesIdempotentMonoid = \ bℓ b aℓ a AgdaIntegral AgdaMonoid -> Data.Semigroup.stimesIdempotentMonoid #-}
 {-# COMPILE GHC mtimesDefault          = \ bℓ b aℓ a AgdaIntegral AgdaMonoid -> Data.Semigroup.mtimesDefault          #-}
 
+-- todo: Data.Semigroup non-opaque newtypes
+
 {-# FOREIGN GHC type AgdaMin aℓ = Data.Semigroup.Min #-}
 {-# COMPILE GHC Min = type(1) AgdaMin #-}
-{-# COMPILE GHC mkMin  = \ aℓ a -> Data.Semigroup.mkMin  #-}
+{-# COMPILE GHC mkMin  = \ aℓ a -> Data.Semigroup.Min  #-}
 {-# COMPILE GHC getMin = \ aℓ a -> Data.Semigroup.getMin #-}
 
 {-# FOREIGN GHC type AgdaMax aℓ = Data.Semigroup.Max #-}
 {-# COMPILE GHC Max = type(1) AgdaMax #-}
-{-# COMPILE GHC mkMax  = \ aℓ a -> Data.Semigroup.mkMax  #-}
+{-# COMPILE GHC mkMax  = \ aℓ a -> Data.Semigroup.Max  #-}
 {-# COMPILE GHC getMax = \ aℓ a -> Data.Semigroup.getMax #-}
 
 {-# FOREIGN GHC type AgdaFirst aℓ = Data.Semigroup.First #-}
 {-# COMPILE GHC First = type(1) AgdaFirst #-}
-{-# COMPILE GHC mkFirst  = \ aℓ a -> Data.Semigroup.mkFirst  #-}
+{-# COMPILE GHC mkFirst  = \ aℓ a -> Data.Semigroup.First  #-}
 {-# COMPILE GHC getFirst = \ aℓ a -> Data.Semigroup.getFirst #-}
 
 {-# FOREIGN GHC type AgdaLast aℓ = Data.Semigroup.Last #-}
 {-# COMPILE GHC Last = type(1) AgdaLast #-}
-{-# COMPILE GHC mkLast  = \ aℓ a -> Data.Semigroup.mkLast  #-}
+{-# COMPILE GHC mkLast  = \ aℓ a -> Data.Semigroup.Last  #-}
 {-# COMPILE GHC getLast = \ aℓ a -> Data.Semigroup.getLast #-}
 
 {-# COMPILE GHC diff   = \ aℓ a AgdaSemigroup -> Data.Semigroup.diff   #-}

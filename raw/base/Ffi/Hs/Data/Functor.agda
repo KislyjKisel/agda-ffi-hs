@@ -10,7 +10,7 @@ open import Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Data.Functor
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaFunctor)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

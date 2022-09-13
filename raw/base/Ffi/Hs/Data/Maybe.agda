@@ -15,13 +15,7 @@ open import Agda.Builtin.Maybe public
 {-# FOREIGN GHC
 import qualified Data.Maybe
 import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaMonadFail, AgdaMonadFix, AgdaMonadZip
-    , AgdaFoldable, AgdaTraversable, AgdaMonad
-    , AgdaApplicative, AgdaFunctor, AgdaAlternative
-    , AgdaMonadPlus, AgdaData, AgdaMonoid, AgdaSemigroup
-    , AgdaRead, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

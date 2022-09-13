@@ -6,12 +6,7 @@ open import Ffi.Hs.-base.Class
 
 {-# FOREIGN GHC
 import qualified Foreign.C.Types
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaStorable, AgdaBits, AgdaFiniteBits, AgdaBounded
-    , AgdaEnum, AgdaIx, AgdaNum, AgdaRead, AgdaIntegral
-    , AgdaReal, AgdaShow, AgdaEq, AgdaOrd, AgdaFloating
-    , AgdaRealFloat, AgdaRealFrac
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 postulate
@@ -629,26 +624,26 @@ postulate
 
 {-# COMPILE GHC Storable[CFloat]   = AgdaStorable   #-}
 {-# COMPILE GHC Enum[CFloat]       = AgdaEnum       #-}
-{-# COMPILE GHC Floating[CFloat]   = AgdaBits       #-}
-{-# COMPILE GHC RealFloat[CFloat]  = AgdaFiniteBits #-}
+{-# COMPILE GHC Floating[CFloat]   = AgdaFloating   #-}
+{-# COMPILE GHC RealFloat[CFloat]  = AgdaRealFloat  #-}
 {-# COMPILE GHC Num[CFloat]        = AgdaNum        #-}
 {-# COMPILE GHC Read[CFloat]       = AgdaRead       #-}
-{-# COMPILE GHC Fractional[CFloat] = AgdaBounded    #-}
+{-# COMPILE GHC Fractional[CFloat] = AgdaFractional #-}
 {-# COMPILE GHC Real[CFloat]       = AgdaReal       #-}
-{-# COMPILE GHC RealFrac[CFloat]   = AgdaIx         #-}
+{-# COMPILE GHC RealFrac[CFloat]   = AgdaRealFrac   #-}
 {-# COMPILE GHC Show[CFloat]       = AgdaShow       #-}
 {-# COMPILE GHC Eq[CFloat]         = AgdaEq         #-}
 {-# COMPILE GHC Ord[CFloat]        = AgdaOrd        #-}
 
 {-# COMPILE GHC Storable[CDouble]   = AgdaStorable   #-}
 {-# COMPILE GHC Enum[CDouble]       = AgdaEnum       #-}
-{-# COMPILE GHC Floating[CDouble]   = AgdaBits       #-}
-{-# COMPILE GHC RealFloat[CDouble]  = AgdaFiniteBits #-}
+{-# COMPILE GHC Floating[CDouble]   = AgdaFloating   #-}
+{-# COMPILE GHC RealFloat[CDouble]  = AgdaRealFloat  #-}
 {-# COMPILE GHC Num[CDouble]        = AgdaNum        #-}
 {-# COMPILE GHC Read[CDouble]       = AgdaRead       #-}
-{-# COMPILE GHC Fractional[CDouble] = AgdaBounded    #-}
+{-# COMPILE GHC Fractional[CDouble] = AgdaFractional #-}
 {-# COMPILE GHC Real[CDouble]       = AgdaReal       #-}
-{-# COMPILE GHC RealFrac[CDouble]   = AgdaIx         #-}
+{-# COMPILE GHC RealFrac[CDouble]   = AgdaRealFrac   #-}
 {-# COMPILE GHC Show[CDouble]       = AgdaShow       #-}
 {-# COMPILE GHC Eq[CDouble]         = AgdaEq         #-}
 {-# COMPILE GHC Ord[CDouble]        = AgdaOrd        #-}

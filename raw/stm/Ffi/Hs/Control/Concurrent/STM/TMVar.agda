@@ -11,6 +11,8 @@ open import Ffi.Hs.-base.Unit        using (⊤)
 open import Ffi.Hs.Control.Monad.STM using (STM)
 open import Ffi.Hs.System.Mem.Weak   using (Weak)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.Concurrent.STM.TMVar
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

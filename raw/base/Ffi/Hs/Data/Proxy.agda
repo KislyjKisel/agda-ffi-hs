@@ -6,14 +6,11 @@ open import Ffi.Hs.-base.Class
 open import Ffi.Hs.-base.Kind  using (IsKind)
 open import Agda.Primitive
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Proxy
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaFoldable, AgdaTraversable, AgdaFunctor, AgdaContravariant,
-    , AgdaApplicative, AgdaAlternative, AgdaMonad, AgdaMonadPlus,
-    , AgdaSemigroup, AgdaMonoid, AgdaBounded, AgdaEnum, AgdaIx,
-    , AgdaRead, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

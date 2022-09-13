@@ -1,10 +1,12 @@
 {-# OPTIONS --without-K #-}
 
-module Ffi.Hs.-base.Num where
+module Ffi.Hs.GHC.Num where
 
 open import Agda.Builtin.Int   using (Int)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Class using (Num)
+
+open import Ffi.Hs.-base.Class public
+    using (Num)
 
 private
     variable
@@ -14,8 +16,8 @@ private
 Integer : Set
 Integer = Int
 
-infixl 6 _+_ _-_
 infixl 7 _*_
+infixl 6 _+_ _-_
 
 postulate
     _+_         : ⦃ Num A ⦄ → A → A → A

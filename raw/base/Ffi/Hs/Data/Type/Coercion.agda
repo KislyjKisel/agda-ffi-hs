@@ -12,10 +12,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Data.Type.Coercion
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaCoercible, AgdaData, AgdaCategory, AgdaTestCoercion
-    , AgdaBounded, AgdaEnum, AgdaRead, AgdaShow, AgdaEq, AgdaOrd,
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

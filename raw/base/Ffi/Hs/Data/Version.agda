@@ -11,10 +11,8 @@ open import Ffi.Hs.Text.ParserCombinators.ReadP using (ReadP)
 
 {-# FOREIGN GHC
 import qualified Data.Version
-import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaRead, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList(AgdaIsList))
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 record Version : Set where

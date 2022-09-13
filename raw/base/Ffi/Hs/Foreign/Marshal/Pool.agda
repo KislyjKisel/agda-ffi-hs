@@ -12,7 +12,7 @@ open import Ffi.Hs.Foreign.Ptr using (Ptr)
 
 {-# FOREIGN GHC
 import qualified Foreign.Marshal.Pool
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaStorable)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

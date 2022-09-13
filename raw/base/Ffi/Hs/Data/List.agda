@@ -22,13 +22,7 @@ open import Ffi.Hs.-base.Kind.List public
 {-# FOREIGN GHC
 import qualified Data.List
 import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaNum, AgdaIntegral, AgdaFunctor, AgdaRead, AgdaShow
-    , AgdaApplicative, AgdaAlternative, AgdaMonad, AgdaOrd
-    , AgdaMonadPlus, AgdaFoldable, AgdaTraversable
-    , AgdaSemigroup, AgdaMonoid, AgdaData, AgdaEq
-    , AgdaEq1, AgdaOrd1, AgdaRead1, AgdaShow1
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

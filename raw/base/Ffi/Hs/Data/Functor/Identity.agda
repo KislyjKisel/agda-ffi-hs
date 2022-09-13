@@ -7,14 +7,7 @@ open import Ffi.Hs.-base.Class
 
 {-# FOREIGN GHC
 import qualified Data.Functor.Identity
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaMonadFix, AgdaMonadZip, AgdaFoldable, AgdaTraversable
-    , AgdaApplicative, AgdaFiniteBits, AgdaMonad, AgdaFloating
-    , AgdaIsString, AgdaStorable, AgdaIntegral, AgdaSemigroup
-    , AgdaRealFrac, AgdaFunctor, AgdaBounded, AgdaEnum, AgdaData
-    , AgdaRealFloat, AgdaIx, AgdaNum, AgdaRead, AgdaFractional
-    , AgdaMonoid, AgdaReal, AgdaBits, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

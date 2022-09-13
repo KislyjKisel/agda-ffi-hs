@@ -11,7 +11,7 @@ open import Ffi.Hs.-base.Unit  using (⊤)
 
 {-# FOREIGN GHC
 import qualified Debug.Trace
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaShow, AgdaApplicative)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

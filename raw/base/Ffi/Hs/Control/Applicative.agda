@@ -16,7 +16,8 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Control.Applicative
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class(AgdaApplicative, AgdaAlternative, AgdaFunctor)
+import qualified Control.Monad
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -78,10 +79,10 @@ postulate
 {-# COMPILE GHC some  = \ ℓ f a AgdaAlternative -> Control.Applicative.some  #-}
 {-# COMPILE GHC many  = \ ℓ f a AgdaAlternative -> Control.Applicative.many  #-}
 
-{-# FOREIGN GHC type AgdaWrappedArrow aℓ bℓ = WrappedArrow #-}
+{-# FOREIGN GHC type AgdaWrappedArrow aℓ bℓ = Control.Applicative.WrappedArrow #-}
 {-# COMPILE GHC WrappedArrow = type(2) AgdaWrappedArrow    #-}
-{-# COMPILE GHC mkWrappedArrow = \ aℓ bℓ a b c -> Control.Applicative.WrappedArrow #-}
-{-# COMPILE GHC unwrapArrow    = \ aℓ bℓ a b c -> Control.Applicative.unwrapArrow  #-}
+{-# COMPILE GHC mkWrappedArrow = \ aℓ bℓ a b c -> Control.Applicative.WrapArrow   #-}
+{-# COMPILE GHC unwrapArrow    = \ aℓ bℓ a b c -> Control.Applicative.unwrapArrow #-}
 
 {-# FOREIGN GHC type AgdaZipList aℓ = Control.Applicative.ZipList #-}
 {-# COMPILE GHC ZipList = type(1) AgdaZipList                     #-}
@@ -93,11 +94,11 @@ postulate
 {-# COMPILE GHC liftA3   = \ ℓ f a b c d AgdaApplicative              -> Control.Applicative.liftA3   #-}
 {-# COMPILE GHC optional = \ ℓ f a       AgdaAlternative              -> Control.Applicative.optional #-}
 
-{-# COMPILE GHC filterM      = \ ℓ f a AgdaApplicative            -> Control.Monad.filterM      #-}
-{-# COMPILE GHC mapAndUnzipM = \ fℓ aℓ f a b c AgdaApplicative    -> Control.Monad.mapAndUnzipM #-}
+{-# COMPILE GHC filterM      = \ f a AgdaApplicative              -> Control.Monad.filterM      #-}
+{-# COMPILE GHC mapAndUnzipM = \ aℓ bℓ cℓ f a b c AgdaApplicative -> Control.Monad.mapAndUnzipM #-}
 {-# COMPILE GHC zipWithM     = \ fℓ aℓ bℓ f a b c AgdaApplicative -> Control.Monad.zipWithM     #-}
 {-# COMPILE GHC zipWithM_    = \ fℓ aℓ bℓ f a b c AgdaApplicative -> Control.Monad.zipWithM_    #-}
-{-# COMPILE GHC replicateM   = \ ℓ f a b AgdaApplicative          -> Control.Monad.replicateM   #-}
+{-# COMPILE GHC replicateM   = \ ℓ f a AgdaApplicative            -> Control.Monad.replicateM   #-}
 {-# COMPILE GHC replicateM_  = \ ℓ f a AgdaApplicative            -> Control.Monad.replicateM_  #-}
 
 {-# COMPILE GHC guard  = \ ℓ f AgdaAlternative -> Control.Monad.guard  #-}
@@ -108,10 +109,5 @@ postulate
     Applicative[F]⇒Functor[F]     : ⦃ Applicative F ⦄ → Functor F
     Alternative[F]⇒Applicative[F] : ⦃ Alternative F ⦄ → Applicative F
 
-{-# COMPILE GHC Applicative[F]⇒Functor[F]     = \ fℓ f AgdaApplicative -> AgdaFunctor #-}
-{-# COMPILE GHC Alternative[F]⇒Applicative[F] = \ fℓ f AgdaAlternative -> AgdaFunctor #-}
-
-module Instanced where
-    instance
-        inst:Applicative[F]⇒Functor[F] = Applicative[F]⇒Functor[F]
-        inst:Alternative[F]⇒Applicative[F] = Alternative[F]⇒Applicative[F]
+{-# COMPILE GHC Applicative[F]⇒Functor[F]     = \ fℓ f AgdaApplicative -> AgdaFunctor     #-}
+{-# COMPILE GHC Alternative[F]⇒Applicative[F] = \ fℓ f AgdaAlternative -> AgdaApplicative #-}

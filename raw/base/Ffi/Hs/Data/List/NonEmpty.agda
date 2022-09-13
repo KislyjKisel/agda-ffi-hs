@@ -16,13 +16,9 @@ open import Ffi.Hs.GHC.Stack    using (HasCallStack)
 
 {-# FOREIGN GHC
 import qualified Data.List.NonEmpty
-import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaMonadFix, AgdaMonadZip, AgdaFoldable, AgdaEq
-    , AgdaTraversable, AgdaApplicative, AgdaOrd
-    , AgdaAlternative, AgdaFunctor, AgdaMonad
-    , AgdaData, AgdaSemigroup, AgdaRead, AgdaShow
-    )
+import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList(AgdaIsList))
+import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack(AgdaHasCallStack))
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -120,7 +116,7 @@ postulate
     groupAllWith  : ⦃ Ord B ⦄ → (A → B) → List A → List (NonEmpty A)
     group1        : ⦃ Eq A ⦄ → NonEmpty A → NonEmpty (NonEmpty A)
     groupBy1      : (A → A → Bool) → NonEmpty A → NonEmpty (NonEmpty A)
-    groupWith1    : ⦃ Eq A ⦄ → (A → B) → NonEmpty A → NonEmpty (NonEmpty A)
+    groupWith1    : ⦃ Eq B ⦄ → (A → B) → NonEmpty A → NonEmpty (NonEmpty A)
     groupAllWith1 : ⦃ Ord B ⦄ → (A → B) → NonEmpty A → NonEmpty (NonEmpty A)
     nub           : ⦃ Eq A ⦄ → NonEmpty A → NonEmpty A
     nubBy         : (A → A → Bool) → NonEmpty A → NonEmpty A
@@ -190,4 +186,4 @@ postulate
 {-# COMPILE GHC fromList      = \ aℓ a                            -> Data.List.NonEmpty.fromList      #-}
 {-# COMPILE GHC toList        = \ aℓ a                            -> Data.List.NonEmpty.toList        #-}
 {-# COMPILE GHC nonEmpty      = \ aℓ a                            -> Data.List.NonEmpty.nonEmpty      #-}
-{-# COMPILE GHC xor           = \ aℓ a                            -> Data.List.NonEmpty.xor           #-}
+{-# COMPILE GHC xor           =                                      Data.List.NonEmpty.xor           #-}

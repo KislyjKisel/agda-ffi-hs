@@ -7,18 +7,15 @@ open import Ffi.Hs.-base.Class
 
 {-# FOREIGN GHC
 import qualified Data.Functor.Sum
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaFoldable, AgdaFunctor, AgdaTraversable, AgdaContravariant
-    , AgdaEq1, AgdaOrd1, AgdaRead1, AgdaShow1, AgdaTypeable
-    , AgdaEq, AgdaOrd, AgdaRead, AgdaShow, AgdaData
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
     variable
         aℓ fℓ gℓ : Level
         A : Set aℓ
-        F G : Set aℓ → Set aℓ
+        F : Set aℓ → Set fℓ
+        G : Set aℓ → Set gℓ
 
 data Sum (F : Set aℓ → Set fℓ) (G : Set aℓ → Set gℓ) (A : Set aℓ) : Set (aℓ ⊔ fℓ ⊔ gℓ) where
     InL : F A → Sum F G A
@@ -40,8 +37,9 @@ postulate
     Ord1[Sum[F,G]]          : ⦃ Ord1 F ⦄ → ⦃ Ord1 G ⦄ → Ord1 (Sum F G)
     Read1[Sum[F,G]]         : ⦃ Read1 F ⦄ → ⦃ Read1 G ⦄ → Read1 (Sum F G)
     Show1[Sum[F,G]]         : ⦃ Show1 F ⦄ → ⦃ Show1 G ⦄ → Show1 (Sum F G)
-    Data[Sum[F,G,A]] : ⦃ Typeable A ⦄ → ⦃ Typeable F ⦄ → ⦃ Typeable G ⦄ →
-                       ⦃ Data (F A) ⦄ → ⦃ Data (G A) ⦄ → Data (Sum F G A)
+    -- todo: Data instance - Typeable kind
+    -- Data[Sum[F,G,A]] : ⦃ Typeable A ⦄ → ⦃ Typeable F ⦄ → ⦃ Typeable G ⦄ →
+    --                   ⦃ Data (F A) ⦄ → ⦃ Data (G A) ⦄ → Data (Sum F G A)
 
 {-# COMPILE GHC Foldable[Sum[F,G]]      = \ aℓ fℓ f gℓ g AgdaFoldable AgdaFoldable       -> AgdaFoldable      #-}
 {-# COMPILE GHC Contravariant[Sum[F,G]] = \ aℓ f g AgdaContravariant AgdaContravariant   -> AgdaContravariant #-}
@@ -55,4 +53,4 @@ postulate
 {-# COMPILE GHC Ord1[Sum[F,G]]          = \ aℓ fℓ f gℓ g AgdaOrd1 AgdaOrd1               -> AgdaOrd1          #-}
 {-# COMPILE GHC Read1[Sum[F,G]]         = \ aℓ fℓ f gℓ g AgdaRead1 AgdaRead1             -> AgdaRead1         #-}
 {-# COMPILE GHC Show1[Sum[F,G]]         = \ aℓ fℓ f gℓ g AgdaShow1 AgdaShow1             -> AgdaShow1         #-}
-{-# COMPILE GHC Data[Sum[F,G,A]] = \ aℓ fℓ f gℓ g a AgdaTypeable AgdaTypeable AgdaTypeable AgdaData AgdaData -> AgdaData #-}
+-- {-# COMPILE GHC Data[Sum[F,G,A]] = \ aℓ fℓ f gℓ g a AgdaTypeable AgdaTypeable AgdaTypeable AgdaData AgdaData -> AgdaData #-}

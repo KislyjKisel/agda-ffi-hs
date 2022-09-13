@@ -18,11 +18,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Data.Functor.Classes
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaEq, AgdaOrd, AgdaRead, AgdaShow,
-    , AgdaEq1, AgdaOrd1, AgdaRead1, AgdaShow1
-    , AgdaEq2, AgdaOrd2, AgdaRead2, AgdaShow2
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

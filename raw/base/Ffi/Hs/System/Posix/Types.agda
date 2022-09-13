@@ -7,11 +7,7 @@ open import Ffi.Hs.Foreign.C.Types using (CSize; CClock; CTime; CLong)
 
 {-# FOREIGN GHC
 import qualified System.Posix.Types
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaStorable, AgdaBits, AgdaFiniteBits, AgdaBounded
-    , AgdaEnum, AgdaIx, AgdaNum, AgdaRead, AgdaIntegral
-    , AgdaReal, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 postulate
@@ -36,34 +32,34 @@ postulate
     CId       : Set
     CKey      : Set
     CTimer    : Set
-    CSockLen  : Set
+    CSocklen  : Set
     CNfds     : Set
     Fd        : Set
 
-{-# COMPILE GHC CDev      = System.Posix.Types.CDev      #-}
-{-# COMPILE GHC CIno      = System.Posix.Types.CIno      #-}
-{-# COMPILE GHC CMode     = System.Posix.Types.CMode     #-}
-{-# COMPILE GHC COff      = System.Posix.Types.COff      #-}
-{-# COMPILE GHC CPid      = System.Posix.Types.CPid      #-}
-{-# COMPILE GHC CSsize    = System.Posix.Types.CSsize    #-}
-{-# COMPILE GHC CGid      = System.Posix.Types.CGid      #-}
-{-# COMPILE GHC CNlink    = System.Posix.Types.CNlink    #-}
-{-# COMPILE GHC CUid      = System.Posix.Types.CUid      #-}
-{-# COMPILE GHC CCc       = System.Posix.Types.CCc       #-}
-{-# COMPILE GHC CSpeed    = System.Posix.Types.CSpeed    #-}
-{-# COMPILE GHC CTcflag   = System.Posix.Types.CTcflag   #-}
-{-# COMPILE GHC CRLim     = System.Posix.Types.CRLim     #-}
-{-# COMPILE GHC CBlkSize  = System.Posix.Types.CBlkSize  #-}
-{-# COMPILE GHC CBlkCnt   = System.Posix.Types.CBlkCnt   #-}
-{-# COMPILE GHC CClockId  = System.Posix.Types.CClockId  #-}
-{-# COMPILE GHC CFsBlkCnt = System.Posix.Types.CFsBlkCnt #-}
-{-# COMPILE GHC CFsFilCnt = System.Posix.Types.CFsFilCnt #-}
-{-# COMPILE GHC CId       = System.Posix.Types.CId       #-}
-{-# COMPILE GHC CKey      = System.Posix.Types.CKey      #-}
-{-# COMPILE GHC CTimer    = System.Posix.Types.CTimer    #-}
-{-# COMPILE GHC CSockLen  = System.Posix.Types.CSockLen  #-}
-{-# COMPILE GHC CNfds     = System.Posix.Types.CNfds     #-}
-{-# COMPILE GHC Fd        = System.Posix.Types.Fd        #-}
+{-# COMPILE GHC CDev      = type System.Posix.Types.CDev      #-}
+{-# COMPILE GHC CIno      = type System.Posix.Types.CIno      #-}
+{-# COMPILE GHC CMode     = type System.Posix.Types.CMode     #-}
+{-# COMPILE GHC COff      = type System.Posix.Types.COff      #-}
+{-# COMPILE GHC CPid      = type System.Posix.Types.CPid      #-}
+{-# COMPILE GHC CSsize    = type System.Posix.Types.CSsize    #-}
+{-# COMPILE GHC CGid      = type System.Posix.Types.CGid      #-}
+{-# COMPILE GHC CNlink    = type System.Posix.Types.CNlink    #-}
+{-# COMPILE GHC CUid      = type System.Posix.Types.CUid      #-}
+{-# COMPILE GHC CCc       = type System.Posix.Types.CCc       #-}
+{-# COMPILE GHC CSpeed    = type System.Posix.Types.CSpeed    #-}
+{-# COMPILE GHC CTcflag   = type System.Posix.Types.CTcflag   #-}
+{-# COMPILE GHC CRLim     = type System.Posix.Types.CRLim     #-}
+{-# COMPILE GHC CBlkSize  = type System.Posix.Types.CBlkSize  #-}
+{-# COMPILE GHC CBlkCnt   = type System.Posix.Types.CBlkCnt   #-}
+{-# COMPILE GHC CClockId  = type System.Posix.Types.CClockId  #-}
+{-# COMPILE GHC CFsBlkCnt = type System.Posix.Types.CFsBlkCnt #-}
+{-# COMPILE GHC CFsFilCnt = type System.Posix.Types.CFsFilCnt #-}
+{-# COMPILE GHC CId       = type System.Posix.Types.CId       #-}
+{-# COMPILE GHC CKey      = type System.Posix.Types.CKey      #-}
+{-# COMPILE GHC CTimer    = type System.Posix.Types.CTimer    #-}
+{-# COMPILE GHC CSocklen  = type System.Posix.Types.CSocklen  #-}
+{-# COMPILE GHC CNfds     = type System.Posix.Types.CNfds     #-}
+{-# COMPILE GHC Fd        = type System.Posix.Types.Fd        #-}
 
 LinkCount : Set
 LinkCount = CNlink
@@ -380,19 +376,19 @@ postulate
     Eq[CTimer]         : Eq CTimer
     Ord[CTimer]        : Ord CTimer
 
-    Storable[CSockLen]   : Storable CSockLen
-    Bits[CSockLen]       : Bits CSockLen
-    FiniteBits[CSockLen] : FiniteBits CSockLen
-    Bounded[CSockLen]    : Bounded CSockLen
-    Enum[CSockLen]       : Enum CSockLen
-    Ix[CSockLen]         : Ix CSockLen
-    Num[CSockLen]        : Num CSockLen
-    Read[CSockLen]       : Read CSockLen
-    Integral[CSockLen]   : Integral CSockLen
-    Real[CSockLen]       : Real CSockLen
-    Show[CSockLen]       : Show CSockLen
-    Eq[CSockLen]         : Eq CSockLen
-    Ord[CSockLen]        : Ord CSockLen
+    Storable[CSocklen]   : Storable CSocklen
+    Bits[CSocklen]       : Bits CSocklen
+    FiniteBits[CSocklen] : FiniteBits CSocklen
+    Bounded[CSocklen]    : Bounded CSocklen
+    Enum[CSocklen]       : Enum CSocklen
+    Ix[CSocklen]         : Ix CSocklen
+    Num[CSocklen]        : Num CSocklen
+    Read[CSocklen]       : Read CSocklen
+    Integral[CSocklen]   : Integral CSocklen
+    Real[CSocklen]       : Real CSocklen
+    Show[CSocklen]       : Show CSocklen
+    Eq[CSocklen]         : Eq CSocklen
+    Ord[CSocklen]        : Ord CSocklen
 
     Storable[CNfds]   : Storable CNfds
     Bits[CNfds]       : Bits CNfds
@@ -697,19 +693,19 @@ postulate
 {-# COMPILE GHC Eq[CTimer]       = AgdaEq       #-}
 {-# COMPILE GHC Ord[CTimer]      = AgdaOrd      #-}
 
-{-# COMPILE GHC Storable[CSockLen]   = AgdaStorable   #-}
-{-# COMPILE GHC Bits[CSockLen]       = AgdaBits       #-}
-{-# COMPILE GHC FiniteBits[CSockLen] = AgdaFiniteBits #-}
-{-# COMPILE GHC Bounded[CSockLen]    = AgdaBounded    #-}
-{-# COMPILE GHC Enum[CSockLen]       = AgdaEnum       #-}
-{-# COMPILE GHC Ix[CSockLen]         = AgdaIx         #-}
-{-# COMPILE GHC Num[CSockLen]        = AgdaNum        #-}
-{-# COMPILE GHC Read[CSockLen]       = AgdaRead       #-}
-{-# COMPILE GHC Integral[CSockLen]   = AgdaIntegral   #-}
-{-# COMPILE GHC Real[CSockLen]       = AgdaReal       #-}
-{-# COMPILE GHC Show[CSockLen]       = AgdaShow       #-}
-{-# COMPILE GHC Eq[CSockLen]         = AgdaEq         #-}
-{-# COMPILE GHC Ord[CSockLen]        = AgdaOrd        #-}
+{-# COMPILE GHC Storable[CSocklen]   = AgdaStorable   #-}
+{-# COMPILE GHC Bits[CSocklen]       = AgdaBits       #-}
+{-# COMPILE GHC FiniteBits[CSocklen] = AgdaFiniteBits #-}
+{-# COMPILE GHC Bounded[CSocklen]    = AgdaBounded    #-}
+{-# COMPILE GHC Enum[CSocklen]       = AgdaEnum       #-}
+{-# COMPILE GHC Ix[CSocklen]         = AgdaIx         #-}
+{-# COMPILE GHC Num[CSocklen]        = AgdaNum        #-}
+{-# COMPILE GHC Read[CSocklen]       = AgdaRead       #-}
+{-# COMPILE GHC Integral[CSocklen]   = AgdaIntegral   #-}
+{-# COMPILE GHC Real[CSocklen]       = AgdaReal       #-}
+{-# COMPILE GHC Show[CSocklen]       = AgdaShow       #-}
+{-# COMPILE GHC Eq[CSocklen]         = AgdaEq         #-}
+{-# COMPILE GHC Ord[CSocklen]        = AgdaOrd        #-}
 
 {-# COMPILE GHC Storable[CNfds]   = AgdaStorable   #-}
 {-# COMPILE GHC Bits[CNfds]       = AgdaBits       #-}

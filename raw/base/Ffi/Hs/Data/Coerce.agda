@@ -9,7 +9,7 @@ open import Ffi.Hs.GHC.Exts    using (TYPE; RuntimeRep; UnliftedType)
 {-# FOREIGN GHC
 import qualified Data.Coerce
 import MAlonzo.Code.Ffi.Hs.GHC.Exts (AgdaTYPE)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaCoercible)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

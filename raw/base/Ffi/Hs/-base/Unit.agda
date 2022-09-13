@@ -6,10 +6,7 @@ open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 
 {-# FOREIGN GHC
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaEq, AgdaOrd, AgdaEnum, AgdaBounded
-    , AgdaSemigroup, AgdaMonoid, AgdaShow, AgdaRead
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

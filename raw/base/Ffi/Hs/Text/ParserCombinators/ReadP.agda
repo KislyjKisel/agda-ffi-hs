@@ -13,10 +13,7 @@ open import Ffi.Hs.Data.Tuple  using (Tuple2)
 
 {-# FOREIGN GHC
 import qualified Text.ParserCombinators.ReadP as AgdaHsReadP
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaFunctor, AgdaApplicative, AgdaAlternative
-    , AgdaMonad, AgdaMonadFail, AgdaMonadPlus
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -106,8 +103,8 @@ postulate
 {-# COMPILE GHC chainr1    = \ aℓ a           -> AgdaHsReadP.chainr1    #-}
 {-# COMPILE GHC manyTill   = \ aℓ a bℓ b      -> AgdaHsReadP.manyTill   #-}
 
-{-# COMPILE GHC readP-to-S = \ aℓ a -> AgdaHsReadP.readP-to-S #-}
-{-# COMPILE GHC readS-to-P = \ aℓ a -> AgdaHsReadP.readS-to-P #-}
+{-# COMPILE GHC readP-to-S = \ aℓ a -> AgdaHsReadP.readP_to_S #-}
+{-# COMPILE GHC readS-to-P = \ aℓ a -> AgdaHsReadP.readS_to_P #-}
 
 postulate
     Functor[ReadP]     : Functor {aℓ} ReadP

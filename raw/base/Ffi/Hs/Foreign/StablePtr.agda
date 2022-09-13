@@ -10,9 +10,7 @@ open import Ffi.Hs.Foreign.Ptr using (Ptr)
 
 {-# FOREIGN GHC
 import qualified Foreign.StablePtr
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaEq, AgdaStorable
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

@@ -11,6 +11,8 @@ open import Ffi.Hs.Data.Tuple        using (Tuple2)
 
 open import Ffi.Hs.Data.Ix public
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Array.MArray
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

@@ -14,6 +14,8 @@ open import Ffi.Hs.Data.Array.Storable using (StorableArray)
 open import Ffi.Hs.Data.Tuple          using (Tuple2)
 open import Ffi.Hs.Foreign.ForeignPtr  using (ForeignPtr)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Array.Unsafe
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

@@ -16,10 +16,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified 
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaFoldable, AgdaMonoid, AgdaOrd, AgdaNum, AgdaEq
-    , AgdaMonad, AgdaApplicative, AgdaAlternative, AgdaMonadPlus
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

@@ -15,6 +15,8 @@ open import Ffi.Hs.Data.Tuple             using (Tuple2)
 open import Ffi.Hs.System.Mem.Weak        using (Weak)
 open import Ffi.Hs.System.Posix.Types     using (Fd)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.Concurrent
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -37,7 +39,7 @@ postulate
     forkOnWithUnmask        : Int → ((∀{aℓ}{A : Set aℓ} → IO A → IO A) → IO (⊤ {lzero})) → IO ThreadId
     getNumCapabilities      : IO Int
     setNumCapabilities      : Int → IO (⊤ {lzero})
-    threadCapacity          : ThreadId → IO (Tuple2 Int Bool)
+    threadCapability        : ThreadId → IO (Tuple2 Int Bool)
     yield                   : IO (⊤ {lzero})
     threadDelay             : Int → IO (⊤ {lzero})
     threadWaitRead          : Fd → IO (⊤ {lzero})
@@ -53,30 +55,30 @@ postulate
     mkWeakThreadId          : ThreadId → IO (Weak ThreadId)
 
 {-# COMPILE GHC ThreadId = type Control.Concurrent.ThreadId #-}
-{-# COMPILE GHC myThreadId              =                         Control.Concurrent.myThreadId                          #-}
-{-# COMPILE GHC forkIO                  = \ aℓ                 -> Control.Concurrent.forkIO                              #-}
-{-# COMPILE GHC forkIOWithUnmask        = \ f                  -> Control.Concurrent.forkIOWithUnmask (\ x -> f () () x) #-}
-{-# COMPILE GHC forkFinally             = \ aℓ a seℓ           -> Control.Concurrent.forkFinally                         #-}
-{-# COMPILE GHC killThread              =                         Control.Concurrent.killThread                          #-}
-{-# COMPILE GHC throwTo                 = \ aℓ a AgdaException -> Control.Concurrent.throwTo                             #-}
-{-# COMPILE GHC forkOn                  = \ aℓ                 -> Control.Concurrent.forkOn                              #-}
-{-# COMPILE GHC forkOnWithUnmask        = \ f                  -> Control.Concurrent.forkOnWithUnmask (\ x -> f () () x) #-}
-{-# COMPILE GHC getNumCapabilities      =                         Control.Concurrent.getNumCapabilities                  #-}
-{-# COMPILE GHC setNumCapabilities      =                         Control.Concurrent.setNumCapabilities                  #-}
-{-# COMPILE GHC threadCapacity          =                         Control.Concurrent.threadCapacity                      #-}
-{-# COMPILE GHC yield                   =                         Control.Concurrent.yield                               #-}
-{-# COMPILE GHC threadDelay             =                         Control.Concurrent.threadDelay                         #-}
-{-# COMPILE GHC threadWaitRead          =                         Control.Concurrent.threadWaitRead                      #-}
-{-# COMPILE GHC threadWaitWrite         =                         Control.Concurrent.threadWaitWrite                     #-}
-{-# COMPILE GHC threadWaitReadSTM       =                         Control.Concurrent.threadWaitReadSTM                   #-}
-{-# COMPILE GHC threadWaitWriteSTM      =                         Control.Concurrent.threadWaitWriteSTM                  #-}
-{-# COMPILE GHC rtsSupportsBoundThreads =                         Control.Concurrent.rtsSupportsBoundThreads             #-}
-{-# COMPILE GHC forkOS                  =                         Control.Concurrent.forkOS                              #-}
-{-# COMPILE GHC forkOSWithUnmask        = \ f                  -> Control.Concurrent.forkOSWithUnmask (\ x -> f () () x) #-}
-{-# COMPILE GHC isCurrentThreadBound    =                         Control.Concurrent.isCurrentThreadBound                #-}
-{-# COMPILE GHC runInBoundThread        = \ aℓ a               -> Control.Concurrent.runInBoundThread                    #-}
-{-# COMPILE GHC runInUnboundThread      = \ aℓ a               -> Control.Concurrent.runInUnboundThread                  #-}
-{-# COMPILE GHC mkWeakThreadId          =                         Control.Concurrent.mkWeakThreadId                      #-}
+{-# COMPILE GHC myThreadId              =                         Control.Concurrent.myThreadId                                 #-}
+{-# COMPILE GHC forkIO                  = \ aℓ                 -> Control.Concurrent.forkIO                                     #-}
+{-# COMPILE GHC forkIOWithUnmask        = \ f                  -> Control.Concurrent.forkIOWithUnmask (\ g -> f (\ _ _ -> g))   #-}
+{-# COMPILE GHC forkFinally             = \ aℓ a seℓ           -> Control.Concurrent.forkFinally                                #-}
+{-# COMPILE GHC killThread              =                         Control.Concurrent.killThread                                 #-}
+{-# COMPILE GHC throwTo                 = \ aℓ a AgdaException -> Control.Concurrent.throwTo                                    #-}
+{-# COMPILE GHC forkOn                  = \ aℓ                 -> Control.Concurrent.forkOn                                     #-}
+{-# COMPILE GHC forkOnWithUnmask        = \ x f                -> Control.Concurrent.forkOnWithUnmask x (\ g -> f (\ _ _ -> g)) #-}
+{-# COMPILE GHC getNumCapabilities      =                         Control.Concurrent.getNumCapabilities                         #-}
+{-# COMPILE GHC setNumCapabilities      =                         Control.Concurrent.setNumCapabilities                         #-}
+{-# COMPILE GHC threadCapability        =                         Control.Concurrent.threadCapability                           #-}
+{-# COMPILE GHC yield                   =                         Control.Concurrent.yield                                      #-}
+{-# COMPILE GHC threadDelay             =                         Control.Concurrent.threadDelay                                #-}
+{-# COMPILE GHC threadWaitRead          =                         Control.Concurrent.threadWaitRead                             #-}
+{-# COMPILE GHC threadWaitWrite         =                         Control.Concurrent.threadWaitWrite                            #-}
+{-# COMPILE GHC threadWaitReadSTM       =                         Control.Concurrent.threadWaitReadSTM                          #-}
+{-# COMPILE GHC threadWaitWriteSTM      =                         Control.Concurrent.threadWaitWriteSTM                         #-}
+{-# COMPILE GHC rtsSupportsBoundThreads =                         Control.Concurrent.rtsSupportsBoundThreads                    #-}
+{-# COMPILE GHC forkOS                  =                         Control.Concurrent.forkOS                                     #-}
+{-# COMPILE GHC forkOSWithUnmask        = \ f                  -> Control.Concurrent.forkOSWithUnmask (\ g -> f (\ _ _ -> g))   #-}
+{-# COMPILE GHC isCurrentThreadBound    =                         Control.Concurrent.isCurrentThreadBound                       #-}
+{-# COMPILE GHC runInBoundThread        = \ aℓ a               -> Control.Concurrent.runInBoundThread                           #-}
+{-# COMPILE GHC runInUnboundThread      = \ aℓ a               -> Control.Concurrent.runInUnboundThread                         #-}
+{-# COMPILE GHC mkWeakThreadId          =                         Control.Concurrent.mkWeakThreadId                             #-}
 
 postulate
     Show[ThreadId] : Show ThreadId

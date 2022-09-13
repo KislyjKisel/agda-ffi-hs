@@ -12,6 +12,8 @@ open import Ffi.Hs.Data.Int          using (Int)
 open import Ffi.Hs.Data.Tuple        using (Tuple2)
 open import Ffi.Hs.System.Mem.Weak   using (Weak)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.Concurrent.STM.TVar
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

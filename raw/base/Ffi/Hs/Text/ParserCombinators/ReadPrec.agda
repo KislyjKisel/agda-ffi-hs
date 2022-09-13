@@ -11,10 +11,7 @@ open import Ffi.Hs.Text.ParserCombinators.ReadP using (ReadP; ReadS)
 
 {-# FOREIGN GHC
 import qualified Text.ParserCombinators.ReadPrec as AgdaHsReadPrec
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaFunctor, AgdaApplicative, AgdaAlternative
-    , AgdaMonad, AgdaMonadFail, AgdaMonadPlus
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

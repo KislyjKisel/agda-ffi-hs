@@ -7,11 +7,7 @@ open import Ffi.Hs.-base.Class
 
 {-# FOREIGN GHC
 import qualified Data.Tuple
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaMonoid, AgdaSemigroup
-    , AgdaShow, AgdaRead, AgdaEq, AgdaOrd
-    , AgdaBounded, AgdaEnum, AgdaIx
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

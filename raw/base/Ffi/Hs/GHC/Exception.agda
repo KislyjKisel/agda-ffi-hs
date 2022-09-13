@@ -19,8 +19,7 @@ open import Ffi.Hs.GHC.Stack public
 
 {-# FOREIGN GHC
 import qualified GHC.Exception
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    (AgdaShow, AgdaEq, AgdaOrd, AgdaException)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

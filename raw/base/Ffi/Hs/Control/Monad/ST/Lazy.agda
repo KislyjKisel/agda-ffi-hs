@@ -10,8 +10,7 @@ open import Ffi.Hs.Control.Monad.ST as Strict using ()
 
 {-# FOREIGN GHC
 import qualified Control.Monad.ST.Lazy
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    (AgdaFunctor, AgdaApplicative, AgdaMonad, AgdaMonadFix)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

@@ -10,11 +10,7 @@ open import Ffi.Hs.GHC.Real public
 
 {-# FOREIGN GHC
 import qualified Data.Ratio
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaIntegral, AgdaStorable, AgdaEnum
-    , AgdaNum, AgdaRead, AgdaFractional, AgdaReal
-    , AgdaRealFrac, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

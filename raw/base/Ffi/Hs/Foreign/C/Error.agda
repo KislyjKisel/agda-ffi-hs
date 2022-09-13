@@ -17,9 +17,7 @@ open import Ffi.Hs.System.IO.Error using (IOError)
 
 {-# FOREIGN GHC
 import qualified Foreign.C.Error
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaEq, AgdaNum
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

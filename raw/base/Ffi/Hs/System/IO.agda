@@ -26,11 +26,7 @@ open import Ffi.Hs.GHC.IO.Device public
 
 {-# FOREIGN GHC
 import qualified System.IO
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaRead, AgdaShow, AgdaEq, AgdaOrd, AgdaApplicative
-    , AgdaFunctor, AgdaMonad, AgdaMonadFail, AgdaMonadFix, AgdaMonadIO
-    , AgdaAlternative, AgdaMonadPlus, AgdaSemigroup, AgdaMonoid
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -84,7 +80,7 @@ postulate
 
     hFileSize    : Handle → IO Integer
     hSetFileSize : Handle → Integer → IO (⊤ {lzero})
-    hIsEOF : Handle → IO (⊤ {lzero})
+    hIsEOF : Handle → IO Bool
     isEOF  : IO Bool
 
     hSetBuffering : Handle → BufferMode → IO (⊤ {lzero})
@@ -188,7 +184,7 @@ postulate
 {-# COMPILE GHC hGetBuffering = System.IO.hGetBuffering #-}
 {-# COMPILE GHC hFlush        = System.IO.hFlush        #-}
 
-{-# COMPILE GHC HandlePosn = System.IO.HandlePosn #-}
+{-# COMPILE GHC HandlePosn = type System.IO.HandlePosn #-}
 {-# COMPILE GHC hGetPosn   = System.IO.hGetPosn   #-}
 {-# COMPILE GHC hSetPosn   = System.IO.hSetPosn   #-}
 {-# COMPILE GHC hSeek      = System.IO.hSeek      #-}
@@ -245,7 +241,7 @@ postulate
 {-# COMPILE GHC openTempFileWithDefaultPermissions       = System.IO.openTempFileWithDefaultPermissions       #-}
 {-# COMPILE GHC openBinaryTempFileWithDefaultPermissions = System.IO.openBinaryTempFileWithDefaultPermissions #-}
 
-{-# COMPILE GHC TextEncoding   = type TextEncoding        #-}
+{-# COMPILE GHC TextEncoding = type System.IO.TextEncoding #-}
 {-# COMPILE GHC hSetEncoding   = System.IO.hSetEncoding   #-}
 {-# COMPILE GHC hGetEncoding   = System.IO.hGetEncoding   #-}
 {-# COMPILE GHC mkTextEncoding = System.IO.mkTextEncoding #-}

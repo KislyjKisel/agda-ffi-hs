@@ -40,5 +40,5 @@ postulate
 postulate
     Eq[Chan[A]] : Eq (Chan A)
 
-{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaEq) #-}
+{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries #-}
 {-# COMPILE GHC Eq[Chan[A]] = \ aℓ a -> AgdaEq #-}

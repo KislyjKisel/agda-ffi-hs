@@ -11,14 +11,11 @@ open import Ffi.Hs.-base.Class
 open Ffi.Hs.-base.Class public
     using (Monoid)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Monoid
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaMonoid, AgdaSemigroup, AgdaEq, AgdaOrd, AgdaRead, AgdaShow
-    , AgdaFoldable, AgdaTraversable, AgdaMonadFail, AgdaMonadFix
-    , AgdaMonadZip, AgdaMonad, AgdaFunctor, AgdaApplicative, AgdaData
-    , AgdaAlternative, AgdaTypeable, AgdaEnum, AgdaBounded
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -71,55 +68,57 @@ postulate
     mkAp  : F A → Ap F A
     getAp : Ap F A → F A
 
+-- todo: Monoid newtypes - non opaque
+
 {-# COMPILE GHC mempty  = \ aℓ a AgdaMonoid -> Data.Monoid.mempty  #-}
 {-# COMPILE GHC mconcat = \ aℓ a AgdaMonoid -> Data.Monoid.mconcat #-}
 
 {-# FOREIGN GHC type AgdaDual aℓ = Data.Monoid.Dual #-}
 {-# COMPILE GHC Dual = type(1) AgdaDual #-}
-{-# COMPILE GHC mkDual  = \ aℓ a -> Data.Monoid.mkDual  #-}
+{-# COMPILE GHC mkDual  = \ aℓ a -> Data.Monoid.Dual    #-}
 {-# COMPILE GHC getDual = \ aℓ a -> Data.Monoid.getDual #-}
 
 {-# FOREIGN GHC type AgdaEndo aℓ = Data.Monoid.Endo #-}
 {-# COMPILE GHC Endo = type(1) AgdaEndo #-}
-{-# COMPILE GHC mkEndo  = \ aℓ a -> Data.Monoid.mkEndo  #-}
+{-# COMPILE GHC mkEndo  = \ aℓ a -> Data.Monoid.Endo    #-}
 {-# COMPILE GHC appEndo = \ aℓ a -> Data.Monoid.appEndo #-}
 
 {-# COMPILE GHC All = type Data.Monoid.All #-}
-{-# COMPILE GHC mkAll  = \ aℓ a -> Data.Monoid.mkAll  #-}
-{-# COMPILE GHC getAll = \ aℓ a -> Data.Monoid.getAll #-}
+{-# COMPILE GHC mkAll  = Data.Monoid.All    #-}
+{-# COMPILE GHC getAll = Data.Monoid.getAll #-}
 
 {-# COMPILE GHC Any = type Data.Monoid.Any #-}
-{-# COMPILE GHC mkAny  = \ aℓ a -> Data.Monoid.mkAny  #-}
-{-# COMPILE GHC getAny = \ aℓ a -> Data.Monoid.getAny #-}
+{-# COMPILE GHC mkAny  = Data.Monoid.Any    #-}
+{-# COMPILE GHC getAny = Data.Monoid.getAny #-}
 
 {-# FOREIGN GHC type AgdaSum aℓ = Data.Monoid.Sum #-}
 {-# COMPILE GHC Sum = type(1) AgdaSum #-}
-{-# COMPILE GHC mkSum  = \ aℓ a -> Data.Monoid.mkSum  #-}
+{-# COMPILE GHC mkSum  = \ aℓ a -> Data.Monoid.Sum    #-}
 {-# COMPILE GHC getSum = \ aℓ a -> Data.Monoid.getSum #-}
 
 {-# FOREIGN GHC type AgdaProduct aℓ = Data.Monoid.Product #-}
 {-# COMPILE GHC Product = type(1) AgdaProduct #-}
-{-# COMPILE GHC mkProduct  = \ aℓ a -> Data.Monoid.mkProduct  #-}
+{-# COMPILE GHC mkProduct  = \ aℓ a -> Data.Monoid.Product    #-}
 {-# COMPILE GHC getProduct = \ aℓ a -> Data.Monoid.getProduct #-}
 
 {-# FOREIGN GHC type AgdaFirst aℓ = Data.Monoid.First #-}
 {-# COMPILE GHC First = type(1) AgdaFirst #-}
-{-# COMPILE GHC mkFirst  = \ aℓ a -> Data.Monoid.mkFirst  #-}
+{-# COMPILE GHC mkFirst  = \ aℓ a -> Data.Monoid.First    #-}
 {-# COMPILE GHC getFirst = \ aℓ a -> Data.Monoid.getFirst #-}
 
 {-# FOREIGN GHC type AgdaLast aℓ = Data.Monoid.Last #-}
 {-# COMPILE GHC Last = type(1) AgdaLast #-}
-{-# COMPILE GHC mkLast  = \ aℓ a -> Data.Monoid.mkLast  #-}
+{-# COMPILE GHC mkLast  = \ aℓ a -> Data.Monoid.Last    #-}
 {-# COMPILE GHC getLast = \ aℓ a -> Data.Monoid.getLast #-}
 
 {-# FOREIGN GHC type AgdaAlt fℓ = Data.Monoid.Alt #-}
 {-# COMPILE GHC Alt = type(1) AgdaAlt #-}
-{-# COMPILE GHC mkAlt  = \ fℓ f a -> Data.Monoid.mkAlt  #-}
+{-# COMPILE GHC mkAlt  = \ fℓ f a -> Data.Monoid.Alt    #-}
 {-# COMPILE GHC getAlt = \ fℓ f a -> Data.Monoid.getAlt #-}
 
 {-# FOREIGN GHC type AgdaAp fℓ = Data.Monoid.Ap #-}
 {-# COMPILE GHC Ap = type(1) AgdaAp #-}
-{-# COMPILE GHC mkAp  = \ fℓ f a -> Data.Monoid.mkAp  #-}
+{-# COMPILE GHC mkAp  = \ fℓ f a -> Data.Monoid.Ap    #-}
 {-# COMPILE GHC getAp = \ fℓ f a -> Data.Monoid.getAp #-}
 
 postulate
@@ -168,8 +167,8 @@ postulate
     Functor[Sum]     : Functor {aℓ} Sum
     Monad[Sum]       : Monad {aℓ} Sum
     Data[Sum[A]]      : ⦃ Data A ⦄ → Data (Sum A)
-    Monoid[Sum[A]]    : ⦃ Monoid A ⦄ → Monoid (Sum A)
-    Semigroup[Sum[A]] : ⦃ Semigroup A ⦄ → Semigroup (Sum A)
+    Monoid[Sum[A]]    : ⦃ Num A ⦄ → Monoid (Sum A)
+    Semigroup[Sum[A]] : ⦃ Num A ⦄ → Semigroup (Sum A)
     Bounded[Sum[A]]   : ⦃ Bounded A ⦄ → Bounded (Sum A)
     Read[Sum[A]]      : ⦃ Read A ⦄ → Read (Sum A)
     Show[Sum[A]]      : ⦃ Show A ⦄ → Show (Sum A)
@@ -184,8 +183,8 @@ postulate
     Functor[Product]     : Functor {aℓ} Product
     Monad[Product]       : Monad {aℓ} Product
     Data[Product[A]]      : ⦃ Data A ⦄ → Data (Product A)
-    Monoid[Product[A]]    : ⦃ Monoid A ⦄ → Monoid (Product A)
-    Semigroup[Product[A]] : ⦃ Semigroup A ⦄ → Semigroup (Product A)
+    Monoid[Product[A]]    : ⦃ Num A ⦄ → Monoid (Product A)
+    Semigroup[Product[A]] : ⦃ Num A ⦄ → Semigroup (Product A)
     Bounded[Product[A]]   : ⦃ Bounded A ⦄ → Bounded (Product A)
     Read[Product[A]]      : ⦃ Read A ⦄ → Read (Product A)
     Show[Product[A]]      : ⦃ Show A ⦄ → Show (Product A)
@@ -202,7 +201,6 @@ postulate
     Data[First[A]]      : ⦃ Data A ⦄ → Data (First A)
     Monoid[First[A]]    : ⦃ Monoid A ⦄ → Monoid (First A)
     Semigroup[First[A]] : ⦃ Semigroup A ⦄ → Semigroup (First A)
-    Bounded[First[A]]   : ⦃ Bounded A ⦄ → Bounded (First A)
     Read[First[A]]      : ⦃ Read A ⦄ → Read (First A)
     Show[First[A]]      : ⦃ Show A ⦄ → Show (First A)
     Eq[First[A]]        : ⦃ Eq A ⦄ → Eq (First A)
@@ -218,7 +216,6 @@ postulate
     Data[Last[A]]      : ⦃ Data A ⦄ → Data (Last A)
     Monoid[Last[A]]    : ⦃ Monoid A ⦄ → Monoid (Last A)
     Semigroup[Last[A]] : ⦃ Semigroup A ⦄ → Semigroup (Last A)
-    Bounded[Last[A]]   : ⦃ Bounded A ⦄ → Bounded (Last A)
     Read[Last[A]]      : ⦃ Read A ⦄ → Read (Last A)
     Show[Last[A]]      : ⦃ Show A ⦄ → Show (Last A)
     Eq[Last[A]]        : ⦃ Eq A ⦄ → Eq (Last A)
@@ -246,7 +243,6 @@ postulate
 
     MonadFail[Ap[F]]   : ⦃ MonadFail F ⦄ → MonadFail (Ap F)
     MonadFix[Ap[F]]    : ⦃ MonadFix F ⦄ → MonadFix (Ap F)
-    MonadZip[Ap[F]]    : ⦃ MonadZip F ⦄ → MonadZip (Ap F)
     Foldable[Ap[F]]    : ⦃ Foldable F ⦄ → Foldable (Ap F)
     Traversable[Ap[F]] : ⦃ Traversable F ⦄ → Traversable (Ap F)
     Alternative[Ap[F]] : ⦃ Alternative F ⦄ → Alternative (Ap F)
@@ -310,8 +306,8 @@ postulate
 {-# COMPILE GHC Functor[Sum]      = \ aℓ -> AgdaFunctor     #-}
 {-# COMPILE GHC Monad[Sum]        = \ aℓ -> AgdaMonad       #-}
 {-# COMPILE GHC Data[Sum[A]]      = \ aℓ a AgdaData      -> AgdaData      #-}
-{-# COMPILE GHC Monoid[Sum[A]]    = \ aℓ a AgdaMonoid    -> AgdaMonoid    #-}
-{-# COMPILE GHC Semigroup[Sum[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup #-}
+{-# COMPILE GHC Monoid[Sum[A]]    = \ aℓ a AgdaNum       -> AgdaMonoid    #-}
+{-# COMPILE GHC Semigroup[Sum[A]] = \ aℓ a AgdaNum       -> AgdaSemigroup #-}
 {-# COMPILE GHC Bounded[Sum[A]]   = \ aℓ a AgdaBounded   -> AgdaBounded   #-}
 {-# COMPILE GHC Read[Sum[A]]      = \ aℓ a AgdaRead      -> AgdaRead      #-}
 {-# COMPILE GHC Show[Sum[A]]      = \ aℓ a AgdaShow      -> AgdaShow      #-}
@@ -326,8 +322,8 @@ postulate
 {-# COMPILE GHC Functor[Product]      = \ aℓ -> AgdaFunctor     #-}
 {-# COMPILE GHC Monad[Product]        = \ aℓ -> AgdaMonad       #-}
 {-# COMPILE GHC Data[Product[A]]      = \ aℓ a AgdaData      -> AgdaData      #-}
-{-# COMPILE GHC Monoid[Product[A]]    = \ aℓ a AgdaMonoid    -> AgdaMonoid    #-}
-{-# COMPILE GHC Semigroup[Product[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup #-}
+{-# COMPILE GHC Monoid[Product[A]]    = \ aℓ a AgdaNum       -> AgdaMonoid    #-}
+{-# COMPILE GHC Semigroup[Product[A]] = \ aℓ a AgdaNum       -> AgdaSemigroup #-}
 {-# COMPILE GHC Bounded[Product[A]]   = \ aℓ a AgdaBounded   -> AgdaBounded   #-}
 {-# COMPILE GHC Read[Product[A]]      = \ aℓ a AgdaRead      -> AgdaRead      #-}
 {-# COMPILE GHC Show[Product[A]]      = \ aℓ a AgdaShow      -> AgdaShow      #-}
@@ -344,7 +340,6 @@ postulate
 {-# COMPILE GHC Data[First[A]]      = \ aℓ a AgdaData      -> AgdaData      #-}
 {-# COMPILE GHC Monoid[First[A]]    = \ aℓ a AgdaMonoid    -> AgdaMonoid    #-}
 {-# COMPILE GHC Semigroup[First[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup #-}
-{-# COMPILE GHC Bounded[First[A]]   = \ aℓ a AgdaBounded   -> AgdaBounded   #-}
 {-# COMPILE GHC Read[First[A]]      = \ aℓ a AgdaRead      -> AgdaRead      #-}
 {-# COMPILE GHC Show[First[A]]      = \ aℓ a AgdaShow      -> AgdaShow      #-}
 {-# COMPILE GHC Eq[First[A]]        = \ aℓ a AgdaEq        -> AgdaEq        #-}
@@ -360,7 +355,6 @@ postulate
 {-# COMPILE GHC Data[Last[A]]      = \ aℓ a AgdaData      -> AgdaData      #-}
 {-# COMPILE GHC Monoid[Last[A]]    = \ aℓ a AgdaMonoid    -> AgdaMonoid    #-}
 {-# COMPILE GHC Semigroup[Last[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup #-}
-{-# COMPILE GHC Bounded[Last[A]]   = \ aℓ a AgdaBounded   -> AgdaBounded   #-}
 {-# COMPILE GHC Read[Last[A]]      = \ aℓ a AgdaRead      -> AgdaRead      #-}
 {-# COMPILE GHC Show[Last[A]]      = \ aℓ a AgdaShow      -> AgdaShow      #-}
 {-# COMPILE GHC Eq[Last[A]]        = \ aℓ a AgdaEq        -> AgdaEq        #-}
@@ -388,7 +382,6 @@ postulate
 
 {-# COMPILE GHC MonadFail[Ap[F]]   = \ fℓ f AgdaMonadFail   -> AgdaMonadFail   #-}
 {-# COMPILE GHC MonadFix[Ap[F]]    = \ fℓ f AgdaMonadFix    -> AgdaMonadFix    #-}
-{-# COMPILE GHC MonadZip[Ap[F]]    = \ fℓ f AgdaMonadZip    -> AgdaMonadZip    #-}
 {-# COMPILE GHC Foldable[Ap[F]]    = \ fℓ f AgdaFoldable    -> AgdaFoldable    #-}
 {-# COMPILE GHC Traversable[Ap[F]] = \ fℓ f AgdaTraversable -> AgdaTraversable #-}
 {-# COMPILE GHC Alternative[Ap[F]] = \ fℓ f AgdaAlternative -> AgdaAlternative #-}

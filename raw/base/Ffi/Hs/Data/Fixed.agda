@@ -14,11 +14,7 @@ open import Ffi.Hs.Data.Tuple using (Tuple2)
 
 {-# FOREIGN GHC
 import qualified Data.Fixed
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaReal, AgdaIntegral, AgdaFractional
-    , AgdaRealFrac, AgdaNum, AgdaEnum
-    , AgdaRead, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

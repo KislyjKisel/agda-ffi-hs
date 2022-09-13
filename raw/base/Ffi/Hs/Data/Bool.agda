@@ -12,10 +12,7 @@ open import Agda.Builtin.Bool public
 {-# FOREIGN GHC
 import qualified Data.Bool
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Kind (AgdaIsKind)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaStorable, AgdaBits, AgdaFiniteBits, AgdaBounded
-    , AgdaEnum, AgdaIx, AgdaRead, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 infixr 6 _&&_

@@ -7,10 +7,7 @@ open import Ffi.Hs.-base.Class
 
 {-# FOREIGN GHC
 import qualified Data.Void
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaSemigroup, AgdaException, AgdaIx, AgdaRead
-    , AgdaShow, AgdaEq, AgdaOrd, AgdaFunctor
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -29,7 +26,7 @@ absurd ()
 postulate
     vacuous : ⦃ Functor F ⦄ → F Void → F A
 
-{-# COMPILE GHC vacuous = \ fℓ f a AgdaFunctor -> Data.Void.vacuous #-}
+{-# COMPILE GHC vacuous = \ f a AgdaFunctor -> Data.Void.vacuous #-}
 
 postulate
     Semigroup[Void] : Semigroup Void

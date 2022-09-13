@@ -9,11 +9,7 @@ open import Ffi.Hs.GHC.Exts public
 
 {-# FOREIGN GHC
 import qualified Data.Int
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaStorable, AgdaBits, AgdaFiniteBits, AgdaBounded
-    , AgdaEnum, AgdaIx, AgdaNum, AgdaRead, AgdaIntegral, AgdaReal
-    , AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 postulate

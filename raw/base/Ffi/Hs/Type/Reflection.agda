@@ -16,7 +16,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Type.Reflection
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaTypeable)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -44,8 +44,12 @@ type AgdaTypeRep kℓ k = Type.Reflection.TypeRep
 {-# COMPILE GHC Eq[TypeRep[A]]        = \ kℓ k a -> AgdaEq           #-}
 {-# COMPILE GHC Ord[TypeRep[A]]       = \ kℓ k a -> AgdaOrd          #-}
 
-data SomeTypeRep {kℓ} : Set (lsuc (lsuc kℓ)) where
-    mkSomeTypeRep : {K : Set (lsuc kℓ)} {A : K} → TypeRep A → SomeTypeRep
+-- todo: separate versions for types and kinds? (can't mix?: Sets are translated as units)
+-- mb types work better as sets, kinds - with ⦃IsKind⦄ (iskindortype?)
+
+-- only for types - otherwise ∀K→(A : K)→... - A is not erased (K mb ≠ Set) 
+data SomeTypeRep {kℓ} : Set (lsuc kℓ) where
+    mkSomeTypeRep : {A : Set kℓ} → TypeRep A → SomeTypeRep
 
 {-# FOREIGN GHC
 type AgdaSomeTypeRep kℓ = Type.Reflection.SomeTypeRep
@@ -72,7 +76,7 @@ postulate
     Eq[TyCon]   : Eq TyCon
     Ord[TyCon]  : Ord TyCon
 
-{-# COMPILE GHC TyCon = Type.Reflection.TyCon #-}
+{-# COMPILE GHC TyCon = type Type.Reflection.TyCon #-}
 {-# COMPILE GHC tyConPackage = Type.Reflection.tyConPackage #-}
 {-# COMPILE GHC tyConModule  = Type.Reflection.tyConModule  #-}
 {-# COMPILE GHC tyConName    = Type.Reflection.tyConName    #-}
@@ -89,25 +93,25 @@ postulate
     typeRepTyCon : {A : K} → TypeRep A → TyCon
     rnfTypeRep   : {A : K} → TypeRep A → ⊤ {lzero}
     eqTypeRep    : {K₁ K₂ : Set (lsuc aℓ)} {A : K₁} {B : K₂} → TypeRep A → TypeRep B → Maybe (A :~~: B)
-    typeRepKind  : {A : K} → TypeRep A → TypeRep K 
+    -- todo: (A : K -> K is translated as xA :: k -> xK) typeRepKind : {A : K} → TypeRep A → TypeRep K
     splitApps    : {A : K} → TypeRep A → Tuple2 TyCon (List {lsuc (lsuc bℓ)} SomeTypeRep)
 
-    someTypeRep      : {A : K} {proxy : K → Set bℓ} → ⦃ Typeable A ⦄ → proxy A → SomeTypeRep {kℓ}
+    someTypeRep      : {K : Set (lsuc kℓ)} {A : K} {proxy : K → Set bℓ} → ⦃ Typeable A ⦄ → proxy A → SomeTypeRep {kℓ}
     someTypeRepTyCon : SomeTypeRep {kℓ} → TyCon
     rnfSomeTypeRep   : SomeTypeRep {kℓ} → ⊤ {lzero}
 
 {-# COMPILE GHC typeRep      = \ kℓ k a AgdaTypeable -> Type.Reflection.typeRep #-}
-{-# COMPILE GHC withTypeable = \ kℓ k a x f -> Type.Reflection.withTypeable x (f AgdaTypeable) #-}
+{-# COMPILE GHC withTypeable = \ kℓ k bℓ b a x f -> Type.Reflection.withTypeable x (f AgdaTypeable) #-}
 
 {-# COMPILE GHC typeRepTyCon = \ kℓ k a       -> Type.Reflection.typeRepTyCon #-}
 {-# COMPILE GHC rnfTypeRep   = \ kℓ k a       -> Type.Reflection.rnfTypeRep   #-}
 {-# COMPILE GHC eqTypeRep    = \ aℓ k1 k2 a b -> Type.Reflection.eqTypeRep    #-}
-{-# COMPILE GHC typeRepKind  = \ kℓ k a       -> Type.Reflection.typeRepKind  #-}
+-- {-# COMPILE GHC typeRepKind  = \ kℓ k a       -> Type.Reflection.typeRepKind  #-}
 {-# COMPILE GHC splitApps    = \ kℓ k a bℓ    -> Type.Reflection.splitApps    #-}
 
-{-# COMPILE GHC someTypeRep      = \ kℓ k a proxy AgdaTypeable -> Type.Reflection.someTypeRep      #-}
-{-# COMPILE GHC someTypeRepTyCon = \ kℓ                        -> Type.Reflection.someTypeRepTyCon #-}
-{-# COMPILE GHC rnfSomeTypeRep   = \ kℓ                        -> Type.Reflection.rnfSomeTypeRep   #-}
+{-# COMPILE GHC someTypeRep      = \ kℓ k a bℓ proxy AgdaTypeable -> Type.Reflection.someTypeRep      #-}
+{-# COMPILE GHC someTypeRepTyCon = \ kℓ                           -> Type.Reflection.someTypeRepTyCon #-}
+{-# COMPILE GHC rnfSomeTypeRep   = \ kℓ                           -> Type.Reflection.rnfSomeTypeRep   #-}
 
 typeOf : ⦃ Typeable A ⦄ → A → TypeRep A
 typeOf _ = typeRep

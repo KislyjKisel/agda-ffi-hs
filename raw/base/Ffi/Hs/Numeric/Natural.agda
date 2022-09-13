@@ -4,6 +4,8 @@ module Ffi.Hs.Numeric.Natural where
 
 open import Ffi.Hs.-base.Class
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Numeric.Natural
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

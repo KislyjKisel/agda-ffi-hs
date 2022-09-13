@@ -10,6 +10,8 @@ open import Ffi.Hs.Data.Ord    using (Ordering)
 open import Ffi.Hs.-base.Class public
     using (Contravariant)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Functor.Contravariant
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

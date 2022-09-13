@@ -15,10 +15,8 @@ open import Ffi.Hs.GHC.IsList       using (IsList)
 
 {-# FOREIGN GHC
 import qualified GHC.Stack
-import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaEq, AgdaShow
-    )
+import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList(AgdaIsList))
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -80,7 +78,8 @@ postulate
 {-# COMPILE GHC IsList[CallStack] = AgdaIsList #-}
 {-# COMPILE GHC Show[CallStack]   = AgdaShow   #-}
 
-{-# FOREIGN GHC AgdaHasCallStack = HasCallStack => AgdaHasCallStack #-}
+{-# FOREIGN GHC data AgdaHasCallStack = GHC.Stack.HasCallStack => AgdaHasCallStack #-}
+{-# COMPILE GHC HasCallStack = type AgdaHasCallStack #-}
 
 {-# COMPILE GHC callStack = \ AgdaHasCallStack -> GHC.Stack.callStack #-}
 {-# COMPILE GHC emptyCallStack      = GHC.Stack.emptyCallStack   #-}

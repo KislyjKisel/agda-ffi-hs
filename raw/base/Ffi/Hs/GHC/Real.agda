@@ -13,11 +13,7 @@ open import Ffi.Hs.Text.Show   using (Show; ShowS)
 
 {-# FOREIGN GHC
 import qualified GHC.Real
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaNum, AgdaOrd, AgdaReal, AgdaIntegral
-    , AgdaFractional, AgdaRealFrac, AgdaEnum
-    , AgdaBounded, AgdaShow
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -29,11 +25,20 @@ private
 data Ratio (A : Set aℓ) : Set aℓ where
     _:%_ : A → A → Ratio A
 
+{-# FOREIGN GHC type AgdaRatio aℓ = GHC.Real.Ratio #-}
+{-# COMPILE GHC Ratio = data(1) AgdaRatio ((GHC.Real.:%)) #-}
+
 Rational : Set
 Rational = Ratio Integer
 
 data FractionalExponentBase : Set where
-    Base2 Base10 : FractionalExponentBase
+    Base2  : FractionalExponentBase
+    Base10 : FractionalExponentBase
+
+{-# COMPILE GHC FractionalExponentBase = data GHC.Real.FractionalExponentBase
+    ( GHC.Real.Base2
+    | GHC.Real.Base10
+    ) #-}
 
 infixl 7 _%_ _/_
 infixr 8 _^_ _^^_
@@ -138,11 +143,11 @@ postulate
 {-# COMPILE GHC recip        = \ aℓ a AgdaFractional -> GHC.Real.recip        #-}
 {-# COMPILE GHC fromRational = \ aℓ a AgdaFractional -> GHC.Real.fromRational #-}
 
-{-# COMPILE GHC properFraction = \ aℓ a bℓ b AgdaReal AgdaIntegral -> GHC.Real.properFraction #-}
-{-# COMPILE GHC truncate       = \ aℓ a bℓ b AgdaReal AgdaIntegral -> GHC.Real.truncate       #-}
-{-# COMPILE GHC round          = \ aℓ a bℓ b AgdaReal AgdaIntegral -> GHC.Real.round          #-}
-{-# COMPILE GHC ceiling        = \ aℓ a bℓ b AgdaReal AgdaIntegral -> GHC.Real.ceiling        #-}
-{-# COMPILE GHC floor          = \ aℓ a bℓ b AgdaReal AgdaIntegral -> GHC.Real.floor          #-}
+{-# COMPILE GHC properFraction = \ aℓ a bℓ b AgdaRealFrac AgdaIntegral -> GHC.Real.properFraction #-}
+{-# COMPILE GHC truncate       = \ aℓ a bℓ b AgdaRealFrac AgdaIntegral -> GHC.Real.truncate       #-}
+{-# COMPILE GHC round          = \ aℓ a bℓ b AgdaRealFrac AgdaIntegral -> GHC.Real.round          #-}
+{-# COMPILE GHC ceiling        = \ aℓ a bℓ b AgdaRealFrac AgdaIntegral -> GHC.Real.ceiling        #-}
+{-# COMPILE GHC floor          = \ aℓ a bℓ b AgdaRealFrac AgdaIntegral -> GHC.Real.floor          #-}
 
 {-# COMPILE GHC numericEnumFrom       = \ aℓ a AgdaFractional         -> GHC.Real.numericEnumFrom       #-}
 {-# COMPILE GHC numericEnumFromThen   = \ aℓ a AgdaFractional         -> GHC.Real.numericEnumFromThen   #-}
@@ -153,8 +158,8 @@ postulate
 {-# COMPILE GHC realToFrac   = \ aℓ a bℓ b AgdaReal AgdaFractional -> GHC.Real.realToFrac #-}
 
 {-# COMPILE GHC showSigned = \ aℓ a AgdaReal     -> GHC.Real.showSigned #-}
-{-# COMPILE GHC even       = \ aℓ a AgdaIntegral -> GHC.Real.showSigned #-}
-{-# COMPILE GHC odd        = \ aℓ a AgdaIntegral -> GHC.Real.showSigned #-}
+{-# COMPILE GHC even       = \ aℓ a AgdaIntegral -> GHC.Real.even       #-}
+{-# COMPILE GHC odd        = \ aℓ a AgdaIntegral -> GHC.Real.odd        #-}
 
 {-# COMPILE GHC _^_     = \ aℓ a bℓ b AgdaNum AgdaIntegral        -> (GHC.Real.^)     #-}
 {-# COMPILE GHC _^^_    = \ aℓ a bℓ b AgdaFractional AgdaIntegral -> (GHC.Real.^)     #-}

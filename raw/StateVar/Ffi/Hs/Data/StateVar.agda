@@ -12,6 +12,8 @@ open import Ffi.Hs.Data.IORef                  using (IORef)
 open import Ffi.Hs.Foreign.ForeignPtr          using (ForeignPtr)
 open import Ffi.Hs.Foreign.Ptr                 using (Ptr)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.StateVar
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

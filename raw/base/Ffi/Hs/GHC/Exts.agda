@@ -4,16 +4,25 @@ module Ffi.Hs.GHC.Exts where
 
 open import Agda.Builtin.Bool      using (Bool)
 open import Agda.Builtin.Char      using (Char)
-open import Agda.Builtin.Float     using (Float)
+open import Agda.Builtin.Float     using () renaming (Float to Double)
 open import Agda.Builtin.IO        using (IO)
 open import Agda.Builtin.List      using (List; []; _∷_)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Kind      using (IsKind)
 open import Ffi.Hs.-base.Kind.List using (`List; `[]; lift`List)
 
-{-# FOREIGN GHC {-# LANGUAGE KindSignatures, PolyKinds, DataKinds #-} #-}
+{-# FOREIGN GHC
+{-# LANGUAGE KindSignatures #-}
+{-# LANGUAGE PolyKinds      #-}
+{-# LANGUAGE DataKinds      #-}
+{-# LANGUAGE MagicHash      #-}
+{-# LANGUAGE UnboxedTuples  #-}
+#-}
+
 {-# FOREIGN GHC
 import qualified GHC.Exts
+import qualified GHC.Int
+import qualified GHC.Word
 #-}
 
 private
@@ -238,7 +247,7 @@ LiftedType = TYPE `LiftedRep
 postulate
     RealWorld : Set
 
-{-# COMPILE GHC RealWorld = GHC.Exts.RealWorld #-}
+{-# COMPILE GHC RealWorld = type GHC.Exts.RealWorld #-}
 
 postulate
     Addr# Void# Char# Double# Float# : Set
@@ -252,7 +261,7 @@ postulate
 -- todo Proxy#, rep insts, Vec types, primops, seq : A → B → B
 
 {-# COMPILE GHC Addr#   = type GHC.Exts.Addr#   #-}
-{-# COMPILE GHC Void#   = type GHC.Exts.Void#   #-}
+{-# COMPILE GHC Void#   = type (# #)            #-}
 {-# COMPILE GHC Char#   = type GHC.Exts.Char#   #-}
 {-# COMPILE GHC Double# = type GHC.Exts.Double# #-}
 {-# COMPILE GHC Float#  = type GHC.Exts.Float#  #-}
@@ -275,19 +284,44 @@ postulate
 {-# COMPILE GHC Word32# = type GHC.Exts.Word32# #-}
 {-# COMPILE GHC Word64# = type GHC.Exts.Word64# #-}
 
-{-# COMPILE GHC Array#             = type GHC.Exts.Array#             #-}
-{-# COMPILE GHC Weak#              = type GHC.Exts.Weak#              #-}
-{-# COMPILE GHC MutableByteArray#  = type GHC.Exts.MutableByteArray#  #-}
-{-# COMPILE GHC StablePtr#         = type GHC.Exts.StablePtr#         #-}
-{-# COMPILE GHC StableName#        = type GHC.Exts.StableName#        #-}
-{-# COMPILE GHC MutableArrayArray# = type GHC.Exts.MutableArrayArray# #-}
-{-# COMPILE GHC SmallArray#        = type GHC.Exts.SmallArray#        #-}
-{-# COMPILE GHC TVar#              = type GHC.Exts.TVar#              #-}
-{-# COMPILE GHC MVar#              = type GHC.Exts.MVar#              #-}
-{-# COMPILE GHC IOPort#            = type GHC.Exts.Word64#            #-}
-{-# COMPILE GHC MutVar#            = type GHC.Exts.MutVar#            #-}
-{-# COMPILE GHC SmallMutableArray# = type GHC.Exts.SmallMutableArray# #-}
-{-# COMPILE GHC MutableArray#      = type GHC.Exts.MutableArray#      #-}
+{-# FOREIGN GHC type AgdaArray# aℓ = GHC.Exts.Array# #-}
+{-# COMPILE GHC Array# = type(1) AgdaArray# #-}
+
+{-# FOREIGN GHC type AgdaWeak# aℓ = GHC.Exts.Weak# #-}
+{-# COMPILE GHC Weak# = type(1) AgdaWeak# #-}
+
+{-# FOREIGN GHC type AgdaMutableByteArray# aℓ = GHC.Exts.MutableByteArray# #-}
+{-# COMPILE GHC MutableByteArray# = type(1) AgdaMutableByteArray# #-}
+
+{-# FOREIGN GHC type AgdaStablePtr# aℓ = GHC.Exts.StablePtr# #-}
+{-# COMPILE GHC StablePtr# = type(1) AgdaStablePtr# #-}
+
+{-# FOREIGN GHC type AgdaStableName# aℓ = GHC.Exts.StableName# #-}
+{-# COMPILE GHC StableName# = type(1) AgdaStableName# #-}
+
+{-# FOREIGN GHC type AgdaMutableArrayArray# aℓ = GHC.Exts.MutableArrayArray# #-}
+{-# COMPILE GHC MutableArrayArray# = type(1) AgdaMutableArrayArray# #-}
+
+{-# FOREIGN GHC type AgdaSmallArray# aℓ = GHC.Exts.SmallArray# #-}
+{-# COMPILE GHC SmallArray# = type(1) AgdaSmallArray# #-}
+
+{-# FOREIGN GHC type AgdaTVar# aℓ bℓ = GHC.Exts.TVar# #-}
+{-# COMPILE GHC TVar# = type(2) AgdaTVar# #-}
+
+{-# FOREIGN GHC type AgdaMVar# aℓ bℓ = GHC.Exts.MVar# #-}
+{-# COMPILE GHC MVar# = type(2) AgdaMVar# #-}
+
+{-# FOREIGN GHC type AgdaIOPort# aℓ bℓ = GHC.Exts.IOPort# #-}
+{-# COMPILE GHC IOPort# = type(2) AgdaIOPort# #-}
+
+{-# FOREIGN GHC type AgdaMutVar# aℓ bℓ = GHC.Exts.MutVar# #-}
+{-# COMPILE GHC MutVar# = type(2) AgdaMutVar# #-}
+
+{-# FOREIGN GHC type AgdaSmallMutableArray# aℓ bℓ = GHC.Exts.SmallMutableArray# #-}
+{-# COMPILE GHC SmallMutableArray# = type(2) AgdaSmallMutableArray# #-}
+
+{-# FOREIGN GHC type AgdaMutableArray# aℓ bℓ = GHC.Exts.MutableArray# #-}
+{-# COMPILE GHC MutableArray# = type(2) AgdaMutableArray# #-}
 
 data Word : Set where
     W# : Word# → Word
@@ -305,10 +339,10 @@ data Word64 : Set where
     W64# : Word64# → Word64
 
 {-# COMPILE GHC Word   = data GHC.Exts.Word   (GHC.Exts.W#)   #-}
-{-# COMPILE GHC Word8  = data GHC.Exts.Word8  (GHC.Exts.W8#)  #-}
-{-# COMPILE GHC Word16 = data GHC.Exts.Word16 (GHC.Exts.W16#) #-}
-{-# COMPILE GHC Word32 = data GHC.Exts.Word32 (GHC.Exts.W32#) #-}
-{-# COMPILE GHC Word64 = data GHC.Exts.Word64 (GHC.Exts.W64#) #-}
+{-# COMPILE GHC Word8  = data GHC.Word.Word8  (GHC.Word.W8#)  #-}
+{-# COMPILE GHC Word16 = data GHC.Word.Word16 (GHC.Word.W16#) #-}
+{-# COMPILE GHC Word32 = data GHC.Word.Word32 (GHC.Word.W32#) #-}
+{-# COMPILE GHC Word64 = data GHC.Word.Word64 (GHC.Word.W64#) #-}
 
 data Int : Set where
     I# : Int# → Int
@@ -326,24 +360,26 @@ data Int64 : Set where
     I64# : Int64# → Int64
 
 {-# COMPILE GHC Int   = data GHC.Exts.Int   (GHC.Exts.I#)   #-}
-{-# COMPILE GHC Int8  = data GHC.Exts.Int8  (GHC.Exts.I8#)  #-}
-{-# COMPILE GHC Int16 = data GHC.Exts.Int16 (GHC.Exts.I16#) #-}
-{-# COMPILE GHC Int32 = data GHC.Exts.Int32 (GHC.Exts.I32#) #-}
-{-# COMPILE GHC Int64 = data GHC.Exts.Int64 (GHC.Exts.I64#) #-}
+{-# COMPILE GHC Int8  = data GHC.Int.Int8  (GHC.Int.I8#)  #-}
+{-# COMPILE GHC Int16 = data GHC.Int.Int16 (GHC.Int.I16#) #-}
+{-# COMPILE GHC Int32 = data GHC.Int.Int32 (GHC.Int.I32#) #-}
+{-# COMPILE GHC Int64 = data GHC.Int.Int64 (GHC.Int.I64#) #-}
 
-data Double : Set where
-    D# : Double# → Double
+-- todo: move ints to GHC.Int, words to GHC.Word
 
-{-# COMPILE GHC Double = data GHC.Exts.Double (GHC.Exts.D#) #-}
+data Float : Set where
+    F# : Float# → Float
+
+{-# COMPILE GHC Float = data GHC.Exts.Float (GHC.Exts.F#) #-}
 
 postulate
-    F# : Float# → Float
-    unF# : Float → Float#
+    D# : Double# → Double
+    unD# : Double → Double#
     C# : Char# → Char
     unC# : Char → Char#
 
-{-# COMPILE GHC F#   = GHC.Exts.F#            #-}
-{-# COMPILE GHC unF# = \ (GHC.Exts.F# x) -> x #-}
+{-# COMPILE GHC D#   = GHC.Exts.D#            #-}
+{-# COMPILE GHC unD# = \ (GHC.Exts.D# x) -> x #-}
 {-# COMPILE GHC C#   = GHC.Exts.C#            #-}
 {-# COMPILE GHC unC# = \ (GHC.Exts.C# x) -> x #-}
 

@@ -9,10 +9,7 @@ open import Ffi.Hs.GHC.Exts    using (RealWorld)
 
 {-# FOREIGN GHC
 import qualified Control.Monad.ST
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaShow, AgdaFunctor, AgdaApplicative, AgdaMonad
-    , AgdaMonadFix, AgdaSemigroup, AgdaMonoid
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -27,8 +24,8 @@ postulate
     fixST  : (A → ST S A) → ST S A
     stToIO : ST RealWorld A → IO A
 
-{-# FOREIGN GHC type AgdaST sℓ aℓ = Control.Monad.ST.ST #-}
-{-# COMPILE GHC ST = type(2) AgdaST #-}
+{-# FOREIGN GHC type AgdaST aℓ = Control.Monad.ST.ST #-}
+{-# COMPILE GHC ST = type(1) AgdaST #-}
 {-# COMPILE GHC runST  = \ aℓ a f -> Control.Monad.ST.runST (f ()) #-}
 {-# COMPILE GHC fixST  = \ aℓ a s -> Control.Monad.ST.fixST        #-}
 {-# COMPILE GHC stToIO = \ aℓ a   -> Control.Monad.ST.stToIO       #-}

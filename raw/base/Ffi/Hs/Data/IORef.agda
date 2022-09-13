@@ -21,7 +21,7 @@ postulate
     IORef : Set aℓ → Set aℓ
     newIORef           : A → IO (IORef A)
     readIORef          : IORef A → IO A
-    writeIORef         : IORef A → A → IO A
+    writeIORef         : IORef A → A → IO (⊤ {lzero})
     modifyIORef        : IORef A → (A → A) → IO (⊤ {lzero})
     modifyIORef'       : IORef A → (A → A) → IO (⊤ {lzero})
     atomicModifyIORef  : IORef A → (A → Tuple2 A B) → IO B

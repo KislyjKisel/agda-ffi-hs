@@ -15,7 +15,7 @@ open import Ffi.Hs.Control.Monad.Fail public
 
 {-# FOREIGN GHC
 import qualified Control.Monad
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class(AgdaApplicative, AgdaAlternative, AgdaMonad, AgdaMonadPlus)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

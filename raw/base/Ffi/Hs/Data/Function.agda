@@ -7,8 +7,7 @@ open import Ffi.Hs.-base.Class using (Functor; Applicative; Monad)
 
 {-# FOREIGN GHC
 import qualified Data.Function
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaFunctor, AgdaApplicative, AgdaMonad )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

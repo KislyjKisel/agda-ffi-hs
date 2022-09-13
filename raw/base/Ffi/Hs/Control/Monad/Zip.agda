@@ -11,7 +11,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified Control.Monad.Zip
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class(AgdaMonad, AgdaMonadZip)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

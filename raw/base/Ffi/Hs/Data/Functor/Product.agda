@@ -5,6 +5,8 @@ module Ffi.Hs.Data.Functor.Product where
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Data.Functor.Product
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -14,7 +16,8 @@ private
     variable
         aℓ fℓ gℓ : Level
         A : Set aℓ
-        F G : Set aℓ → Set aℓ
+        F : Set aℓ → Set fℓ
+        G : Set aℓ → Set gℓ
 
 data Product (F : Set aℓ → Set fℓ) (G : Set aℓ → Set gℓ) (A : Set aℓ) : Set (aℓ ⊔ fℓ ⊔ gℓ) where
     Pair : F A → G A → Product F G A
@@ -37,7 +40,8 @@ postulate
     Functor[Product[F,G]]       : ⦃ Functor F ⦄ → ⦃ Functor G ⦄ → Functor (Product F G)
     Monad[Product[F,G]]         : ⦃ Monad F ⦄ → ⦃ Monad G ⦄ → Monad (Product F G)
     MonadPlus[Product[F,G]]     : ⦃ MonadPlus F ⦄ → ⦃ MonadPlus G ⦄ → MonadPlus (Product F G)
-    Data[Product[F,G,A]]        : ⦃ Typeable A ⦄ → ⦃ Typeable F ⦄ → ⦃ Typeable G ⦄ → ⦃ Data (F A) ⦄ → ⦃ Data (G A) ⦄ → Data (Product F G A)
+    -- todo: Data instance - Typeable kind
+    -- Data[Product[F,G,A]]        : ⦃ Typeable A ⦄ → ⦃ Typeable F ⦄ → ⦃ Typeable G ⦄ → ⦃ Data (F A) ⦄ → ⦃ Data (G A) ⦄ → Data (Product F G A)
     Monoid[Product[F,G,A]]      : ⦃ Monoid (F A) ⦄ → ⦃ Monoid (G A) ⦄ → Monoid (Product F G A)
     Semigroup[Product[F,G,A]]   : ⦃ Semigroup (F A) ⦄ → ⦃ Semigroup (G A) ⦄ → Semigroup (Product F G A)
     Read[Product[F,G,A]]        : ⦃ Read1 F ⦄ → ⦃ Read1 G ⦄ → ⦃ Read A ⦄ → Read (Product F G A)
@@ -45,25 +49,25 @@ postulate
     Eq[Product[F,G,A]]          : ⦃ Eq1 F ⦄ → ⦃ Eq1 G ⦄ → ⦃ Eq A ⦄ → Eq (Product F G A)
     Ord[Product[F,G,A]]         : ⦃ Ord1 F ⦄ → ⦃ Ord1 G ⦄ → ⦃ Ord A ⦄ → Ord (Product F G A)
 
-{-# COMPILE GHC MonadFix[Product[F,G]]      = \ fℓ f gℓ g AgdaMonadFix AgdaMonadFix           -> AgdaMonadFix      #-}
-{-# COMPILE GHC MonadZip[Product[F,G]]      = \ fℓ f gℓ g AgdaMonadZip AgdaMonadZip           -> AgdaMonadZip      #-}
+{-# COMPILE GHC MonadFix[Product[F,G]]      = \ aℓ f g AgdaMonadFix AgdaMonadFix              -> AgdaMonadFix      #-}
+{-# COMPILE GHC MonadZip[Product[F,G]]      = \ aℓ f g AgdaMonadZip AgdaMonadZip              -> AgdaMonadZip      #-}
 {-# COMPILE GHC Foldable[Product[F,G]]      = \ aℓ fℓ f gℓ g AgdaFoldable AgdaFoldable        -> AgdaFoldable      #-}
 {-# COMPILE GHC Eq1[Product[F,G]]           = \ aℓ fℓ f gℓ g AgdaEq1 AgdaEq1                  -> AgdaEq1           #-}
 {-# COMPILE GHC Ord1[Product[F,G]]          = \ aℓ fℓ f gℓ g AgdaOrd1 AgdaOrd1                -> AgdaOrd1          #-}
 {-# COMPILE GHC Read1[Product[F,G]]         = \ aℓ fℓ f gℓ g AgdaRead1 AgdaRead1              -> AgdaRead1         #-}
 {-# COMPILE GHC Show1[Product[F,G]]         = \ aℓ fℓ f gℓ g AgdaShow1 AgdaShow1              -> AgdaShow1         #-}
-{-# COMPILE GHC Contravariant[Product[F,G]] = \ fℓ f gℓ g AgdaContravariant AgdaContravariant -> AgdaContravariant #-}
+{-# COMPILE GHC Contravariant[Product[F,G]] = \ aℓ f g AgdaContravariant AgdaContravariant    -> AgdaContravariant #-}
 {-# COMPILE GHC Traversable[Product[F,G]]   = \ aℓ fℓ f gℓ g AgdaTraversable AgdaTraversable  -> AgdaTraversable   #-}
-{-# COMPILE GHC Alternative[Product[F,G]]   = \ fℓ f gℓ g AgdaAlternative AgdaAlternative     -> AgdaAlternative   #-}
-{-# COMPILE GHC Applicative[Product[F,G]]   = \ fℓ f gℓ g AgdaApplicative AgdaApplicative     -> AgdaApplicative   #-}
-{-# COMPILE GHC Functor[Product[F,G]]       = \ fℓ f gℓ g AgdaFunctor AgdaFunctor             -> AgdaFunctor       #-}
-{-# COMPILE GHC Monad[Product[F,G]]         = \ fℓ f gℓ g AgdaMonad AgdaMonad                 -> AgdaMonad         #-}
-{-# COMPILE GHC MonadPlus[Product[F,G]]     = \ fℓ f gℓ g AgdaMonadPlus AgdaMonadPlus         -> AgdaMonadPlus     #-}
+{-# COMPILE GHC Alternative[Product[F,G]]   = \ aℓ f g AgdaAlternative AgdaAlternative        -> AgdaAlternative   #-}
+{-# COMPILE GHC Applicative[Product[F,G]]   = \ aℓ f g AgdaApplicative AgdaApplicative        -> AgdaApplicative   #-}
+{-# COMPILE GHC Functor[Product[F,G]]       = \ aℓ f g AgdaFunctor AgdaFunctor                -> AgdaFunctor       #-}
+{-# COMPILE GHC Monad[Product[F,G]]         = \ aℓ f g AgdaMonad AgdaMonad                    -> AgdaMonad         #-}
+{-# COMPILE GHC MonadPlus[Product[F,G]]     = \ aℓ f g AgdaMonadPlus AgdaMonadPlus            -> AgdaMonadPlus     #-}
 {-# COMPILE GHC Monoid[Product[F,G,A]]      = \ aℓ fℓ f gℓ g a AgdaMonoid AgdaMonoid          -> AgdaMonoid        #-}
 {-# COMPILE GHC Semigroup[Product[F,G,A]]   = \ aℓ fℓ f gℓ g a AgdaSemigroup AgdaSemigroup    -> AgdaSemigroup     #-}
 {-# COMPILE GHC Read[Product[F,G,A]]        = \ aℓ fℓ f gℓ g a AgdaRead1 AgdaRead1 AgdaRead   -> AgdaRead          #-}
 {-# COMPILE GHC Show[Product[F,G,A]]        = \ aℓ fℓ f gℓ g a AgdaShow1 AgdaShow1 AgdaShow   -> AgdaShow          #-}
 {-# COMPILE GHC Eq[Product[F,G,A]]          = \ aℓ fℓ f gℓ g a AgdaEq1 AgdaEq1 AgdaEq         -> AgdaEq            #-}
 {-# COMPILE GHC Ord[Product[F,G,A]]         = \ aℓ fℓ f gℓ g a AgdaOrd1 AgdaOrd1 AgdaOrd      -> AgdaOrd           #-}
-{-# COMPILE GHC Data[Product[F,G,A]] =
-    \ aℓ a fℓ f gℓ g AgdaTypeable AgdaTypeable AgdaTypeable AgdaData AgdaData -> AgdaData #-}
+-- {-# COMPILE GHC Data[Product[F,G,A]] =
+--     \ aℓ a fℓ f gℓ g AgdaTypeable AgdaTypeable AgdaTypeable AgdaData AgdaData -> AgdaData #-}

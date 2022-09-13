@@ -14,10 +14,7 @@ open import Agda.Builtin.Char public
 
 {-# FOREIGN GHC
 import qualified Data.Char
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaData, AgdaStorable, AgdaBounded, AgdaEnum
-    , AgdaIx, AgdaRead, AgdaShow, AgdaEq, AgdaOrd
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 postulate

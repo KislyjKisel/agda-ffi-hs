@@ -7,6 +7,8 @@ open import Ffi.Hs.-base.Class       using (Eq; Ix)
 open import Ffi.Hs.Control.Monad.STM using (STM)
 open import Ffi.Hs.Data.Array.MArray using (MArray)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.Concurrent.STM.TArray
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

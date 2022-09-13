@@ -15,10 +15,7 @@ open import Ffi.Hs.Foreign.Ptr using (Ptr)
 
 {-# FOREIGN GHC
 import qualified GHC.IO.Device
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaRead, AgdaShow, AgdaEq
-    , AgdaOrd, AgdaEnum, AgdaIx
-    )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -59,7 +56,11 @@ data SeekMode : Set where
     RelativeSeek : SeekMode
     SeekFromEnd  : SeekMode
 
-{-# COMPILE GHC SeekMode = data System.IO.SeekMode (System.IO.AbsoluteSeek | System.IO.RelativeSeek | System.IO.SeekFromEnd) #-}
+{-# COMPILE GHC SeekMode = data GHC.IO.Device.SeekMode
+    ( GHC.IO.Device.AbsoluteSeek
+    | GHC.IO.Device.RelativeSeek
+    | GHC.IO.Device.SeekFromEnd
+    ) #-}
 
 postulate
     Enum[SeekMode] : Enum SeekMode

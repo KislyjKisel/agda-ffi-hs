@@ -3,7 +3,9 @@
 module Ffi.Hs.Control.Exception.Base where
 
 open import Agda.Builtin.Bool  using (Bool)
+open import Agda.Builtin.Char  using (Char)
 open import Agda.Builtin.IO    using (IO)
+open import Agda.Builtin.List  using (List)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Eq; Show; Exception)
@@ -45,6 +47,9 @@ open import Ffi.Hs.GHC.IO.Exception public
 open import Ffi.Hs.Control.Concurrent public
     using (throwTo)
 
+
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.Exception.Base
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -80,7 +85,7 @@ postulate
 {-# COMPILE GHC Exception[NestedAtomically] = AgdaException #-}
 
 data NoMethodError : Set where
-    mkNoMethodError : NoMethodError
+    mkNoMethodError : List Char → NoMethodError
 
 {-# COMPILE GHC NoMethodError = data Control.Exception.Base.NoMethodError (Control.Exception.Base.NoMethodError) #-}
 
@@ -92,7 +97,7 @@ postulate
 {-# COMPILE GHC Exception[NoMethodError] = AgdaException #-}
 
 data PatternMatchFail : Set where
-    mkPatternMatchFail : PatternMatchFail
+    mkPatternMatchFail : List Char → PatternMatchFail
 
 {-# COMPILE GHC PatternMatchFail = data Control.Exception.Base.PatternMatchFail (Control.Exception.Base.PatternMatchFail) #-}
 
@@ -104,7 +109,7 @@ postulate
 {-# COMPILE GHC Exception[PatternMatchFail] = AgdaException #-}
 
 data RecConError : Set where
-    mkRecConError : RecConError
+    mkRecConError : List Char → RecConError
 
 {-# COMPILE GHC RecConError = data Control.Exception.Base.RecConError (Control.Exception.Base.RecConError) #-}
 
@@ -116,7 +121,7 @@ postulate
 {-# COMPILE GHC Exception[RecConError] = AgdaException #-}
 
 data RecSelError : Set where
-    mkRecSelError : RecSelError
+    mkRecSelError : List Char → RecSelError
 
 {-# COMPILE GHC RecSelError = data Control.Exception.Base.RecSelError (Control.Exception.Base.RecSelError) #-}
 
@@ -128,7 +133,7 @@ postulate
 {-# COMPILE GHC Exception[RecSelError] = AgdaException #-}
 
 data RecUpdError : Set where
-    mkRecUpdError : RecUpdError
+    mkRecUpdError : List Char → RecUpdError
 
 {-# COMPILE GHC RecUpdError = data Control.Exception.Base.RecUpdError (Control.Exception.Base.RecUpdError) #-}
 
@@ -140,7 +145,7 @@ postulate
 {-# COMPILE GHC Exception[RecUpdError] = AgdaException #-}
 
 data TypeError : Set where
-    mkTypeError : TypeError
+    mkTypeError : List Char → TypeError
 
 {-# COMPILE GHC TypeError = data Control.Exception.Base.TypeError (Control.Exception.Base.TypeError) #-}
 
@@ -200,8 +205,9 @@ postulate
     nonExhaustiveGuardsError : Addr# → A
     patError                 : Addr# → A
     noMethodBindingError     : Addr# → A
-    absentError              : Addr# → A
-    absentSumFieldError      : A
+    -- todo: GHC.Prim.Panic??
+    -- absentError              : Addr# → A
+    -- absentSumFieldError      : A
     typeError                : Addr# → A
     nonTermination           : SomeException {seℓ}
     nestedAtomically         : SomeException {seℓ}
@@ -216,15 +222,15 @@ postulate
 {-# COMPILE GHC onException          = \ aℓ a bℓ b                                      -> Control.Exception.Base.onException                   #-}
 {-# COMPILE GHC evaluate             = \ aℓ a                                           -> Control.Exception.Base.evaluate                      #-}
 {-# COMPILE GHC mapException         = \ e1ℓ e1 e2ℓ e2 aℓ a AgdaException AgdaException -> Control.Exception.Base.mapException                  #-}
-{-# COMPILE GHC mask                 = \ bℓ b f                                         -> Control.Exception.Base.mask (f () ())                #-}
 {-# COMPILE GHC mask-                = \ aℓ a                                           -> Control.Exception.Base.mask_                         #-}
-{-# COMPILE GHC uninterruptibleMask  = \ bℓ b f                                         -> Control.Exception.Base.uninterruptibleMask (f () ()) #-}
 {-# COMPILE GHC uninterruptibleMask- = \ aℓ a                                           -> Control.Exception.Base.uninterruptibleMask_          #-}
 {-# COMPILE GHC assert               = \ aℓ a                                           -> Control.Exception.Base.assert                        #-}
 {-# COMPILE GHC bracket              = \ aℓ a bℓ b cℓ c                                 -> Control.Exception.Base.bracket                       #-}
 {-# COMPILE GHC bracket-             = \ aℓ a bℓ b cℓ c                                 -> Control.Exception.Base.bracket_                      #-}
 {-# COMPILE GHC bracketOnError       = \ aℓ a bℓ b cℓ c                                 -> Control.Exception.Base.bracketOnError                #-}
 {-# COMPILE GHC finally              = \ aℓ a bℓ b                                      -> Control.Exception.Base.finally                       #-}
+{-# COMPILE GHC mask                 = \ bℓ b f -> Control.Exception.Base.mask (\ g -> f (\ _ _ -> g)) #-}
+{-# COMPILE GHC uninterruptibleMask  = \ bℓ b f -> Control.Exception.Base.uninterruptibleMask (\ g -> f (\ _ _ -> g)) #-}
 
 {-# COMPILE GHC recSelError              = \ aℓ a -> Control.Exception.Base.recSelError              #-}
 {-# COMPILE GHC recConError              = \ aℓ a -> Control.Exception.Base.recConError              #-}
@@ -232,8 +238,8 @@ postulate
 {-# COMPILE GHC nonExhaustiveGuardsError = \ aℓ a -> Control.Exception.Base.nonExhaustiveGuardsError #-}
 {-# COMPILE GHC patError                 = \ aℓ a -> Control.Exception.Base.patError                 #-}
 {-# COMPILE GHC noMethodBindingError     = \ aℓ a -> Control.Exception.Base.noMethodBindingError     #-}
-{-# COMPILE GHC absentError              = \ aℓ a -> Control.Exception.Base.absentError              #-}
-{-# COMPILE GHC absentSumFieldError      = \ aℓ a -> Control.Exception.Base.absentSumFieldError      #-}
+-- {-# COMPILE GHC absentError              = \ aℓ a -> Control.Exception.Base.absentError              #-}
+-- {-# COMPILE GHC absentSumFieldError      = \ aℓ a -> Control.Exception.Base.absentSumFieldError      #-}
 {-# COMPILE GHC typeError                = \ aℓ a -> Control.Exception.Base.typeError                #-}
 {-# COMPILE GHC nonTermination           = \ seℓ  -> Control.Exception.Base.nonTermination           #-}
 {-# COMPILE GHC nestedAtomically         = \ seℓ  -> Control.Exception.Base.nestedAtomically         #-}

@@ -14,8 +14,7 @@ open Ffi.Hs.-base.Class public
 
 {-# FOREIGN GHC
 import qualified GHC.Enum
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaShow, AgdaBounded, AgdaEnum )
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private

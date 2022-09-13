@@ -61,5 +61,5 @@ postulate
 postulate
     Eq[MVar[A]] : Eq (MVar A)
 
-{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaEq) #-}
+{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries #-}
 {-# COMPILE GHC Eq[MVar[A]] = \ aℓ a -> AgdaEq #-}

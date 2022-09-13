@@ -12,6 +12,8 @@ open import Ffi.Hs.Control.Exception.Base using (Exception)
 open import Ffi.Hs.-base.STM public
     using (STM)
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified Control.Monad.STM
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

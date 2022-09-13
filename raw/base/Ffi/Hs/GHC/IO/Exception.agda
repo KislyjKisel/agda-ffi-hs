@@ -16,10 +16,8 @@ open import Ffi.Hs.System.IO          using (IO; Handle)
 
 {-# FOREIGN GHC
 import qualified GHC.IO.Exception
-import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack)
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class
-    ( AgdaShow, AgdaRead, AgdaEq, AgdaOrd, AgdaException
-    )
+import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack(AgdaHasCallStack))
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
@@ -125,21 +123,30 @@ postulate
 {-# COMPILE GHC cannotCompactPinned   = \ seℓ -> GHC.IO.Exception.cannotCompactPinned   #-}
 {-# COMPILE GHC cannotCompactMutable  = \ seℓ -> GHC.IO.Exception.cannotCompactMutable  #-}
 
-data SomeAsyncException {sℓ} : Set (lsuc sℓ) where
-    mkSomeAsyncException : {A : Set sℓ} → ⦃ Exception A ⦄ → A → SomeAsyncException 
+-- instance isn't erased
+-- data SomeAsyncException {sℓ} : Set (lsuc sℓ) where
+--     mkSomeAsyncException : {A : Set sℓ} → ⦃ Exception A ⦄ → A → SomeAsyncException 
 
-{-# FOREIGN GHC type AgdaSomeAsyncException sℓ = GHC.Exception.Type.SomeAsyncException #-}
-{-# COMPILE GHC SomeAsyncException = data(1) AgdaSomeAsyncException (GHC.Exception.Type.SomeAsyncException) #-}
+-- {-# FOREIGN GHC type AgdaSomeAsyncException sℓ = GHC.IO.Exception.SomeAsyncException #-}
+-- {-# COMPILE GHC SomeAsyncException = data(1) AgdaSomeAsyncException (GHC.IO.Exception.SomeAsyncException) #-}
 
-postulate    
+postulate
+    SomeAsyncException : Set (lsuc seℓ)
+    mkSomeAsyncException : {A : Set seℓ} → ⦃ Exception A ⦄ → A → SomeAsyncException {seℓ}
+
     Exception[SomeAsyncException] : Exception {lsuc seℓ} SomeAsyncException
     Show[SomeAsyncException]      : Show {lsuc seℓ} SomeAsyncException
 
     asyncExceptionToException   : ⦃ Exception A ⦄ → A → SomeException {seℓ}
     asyncExceptionFromException : ⦃ Exception A ⦄ → SomeException {seℓ} → Maybe A
 
-{-# COMPILE GHC Exception[SomeAsyncException] = AgdaException #-}
-{-# COMPILE GHC Show[SomeAsyncException]      = AgdaShow      #-}
+{-# FOREIGN GHC type AgdaSomeAsyncException seℓ = GHC.IO.Exception.SomeAsyncException #-}
+{-# COMPILE GHC SomeAsyncException = type(1) AgdaSomeAsyncException #-}
+
+{-# COMPILE GHC mkSomeAsyncException = \ seℓ a AgdaException -> GHC.IO.Exception.SomeAsyncException #-}
+
+{-# COMPILE GHC Exception[SomeAsyncException] = \ seℓ -> AgdaException #-}
+{-# COMPILE GHC Show[SomeAsyncException]      = \ seℓ -> AgdaShow      #-}
 
 {-# COMPILE GHC asyncExceptionToException   = \ aℓ a seℓ AgdaException -> GHC.IO.Exception.asyncExceptionToException   #-}
 {-# COMPILE GHC asyncExceptionFromException = \ aℓ a seℓ AgdaException -> GHC.IO.Exception.asyncExceptionFromException #-}
@@ -199,9 +206,9 @@ data ExitCode : Set where
     ExitSuccess : ExitCode
     ExitFailure : Int → ExitCode
 
-{-# COMPILE GHC ExitCode = data System.Exit.ExitCode
-    ( System.Exit.ExitSuccess
-    | System.Exit.ExitFailure
+{-# COMPILE GHC ExitCode = data GHC.IO.Exception.ExitCode
+    ( GHC.IO.Exception.ExitSuccess
+    | GHC.IO.Exception.ExitFailure
     ) #-}
 
 postulate
@@ -253,7 +260,7 @@ data IOErrorType : Set where
     Interrupted            : IOErrorType
 
 {-# COMPILE GHC IOErrorType = data GHC.IO.Exception.IOErrorType
-    ( AlreadyExists
+    ( GHC.IO.Exception.AlreadyExists
     | GHC.IO.Exception.NoSuchThing
     | GHC.IO.Exception.ResourceBusy
     | GHC.IO.Exception.ResourceExhausted
@@ -278,8 +285,8 @@ postulate
     Show[IOErrorType] : Show IOErrorType
     Eq[IOErrorType]   : Eq IOErrorType
 
-{-# COMPILE GHC Show[IOErrorType] = AgdaException #-}
-{-# COMPILE GHC Eq[IOErrorType]   = AgdaEq        #-}
+{-# COMPILE GHC Show[IOErrorType] = AgdaShow #-}
+{-# COMPILE GHC Eq[IOErrorType]   = AgdaEq   #-}
 
 record IOException : Set where
     constructor mkIOError
@@ -317,7 +324,7 @@ postulate
     unsupportedOperation : IOError
     untangle             : Addr# → List Char → List Char
 
-{-# COMPILE GHC userError            =                       GHC.IO.Exception.userError            #-}
-{-# COMPILE GHC assertError          = \ AgdaHasCallStack -> GHC.IO.Exception.assertError          #-}
-{-# COMPILE GHC unsupportedOperation =                       GHC.IO.Exception.unsupportedOperation #-}
-{-# COMPILE GHC untangle             =                       GHC.IO.Exception.untangle             #-}
+{-# COMPILE GHC userError            =                            GHC.IO.Exception.userError            #-}
+{-# COMPILE GHC assertError          = \ aℓ a AgdaHasCallStack -> GHC.IO.Exception.assertError          #-}
+{-# COMPILE GHC unsupportedOperation =                            GHC.IO.Exception.unsupportedOperation #-}
+{-# COMPILE GHC untangle             =                            GHC.IO.Exception.untangle             #-}

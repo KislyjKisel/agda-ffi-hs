@@ -11,7 +11,7 @@ open import Ffi.Hs.Data.Tuple   using (Tuple3; Tuple4)
 
 {-# FOREIGN GHC
 import qualified System.Console.GetOpt
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaFunctor)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
