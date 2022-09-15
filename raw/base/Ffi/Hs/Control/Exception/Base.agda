@@ -120,6 +120,8 @@ postulate
 {-# COMPILE GHC Show[RecConError]      = AgdaShow      #-}
 {-# COMPILE GHC Exception[RecConError] = AgdaException #-}
 
+-- throw (mkRecSelError (primStringToList (primStringAppend "No match in record selector " (primShowQName (quote RECORDSELECTOR)))))
+
 data RecSelError : Set where
     mkRecSelError : List Char → RecSelError
 

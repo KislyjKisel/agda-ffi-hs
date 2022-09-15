@@ -1,0 +1,3 @@
+name: ffi-hs-sdl2
+include: .
+depend: ffi-hs-base, ffi-hs-StateVar

@@ -136,5 +136,4 @@ postulate
 {-# COMPILE GHC Eq[A:~~:B]          = \ aℓ a b             -> AgdaEq           #-}
 {-# COMPILE GHC Ord[A:~~:B]         = \ aℓ a b             -> AgdaOrd          #-}
 {-# COMPILE GHC Data[A:~~:B] =
-    \ aℓ k1 k2 a b AgdaTypeable AgdaTypeable AgdaTypeable AgdaTypeable AgdaTypeHEq -> AgdaData
-#-}
+    \ aℓ k1 k2 a b AgdaTypeable AgdaTypeable AgdaTypeable AgdaTypeable AgdaTypeHEq -> AgdaData #-}

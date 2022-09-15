@@ -114,16 +114,16 @@ data GeneralCategory : Set where
     NotAssigned          : GeneralCategory
 
 {-# COMPILE GHC GeneralCategory = data Data.Char.GeneralCategory
-    ( UppercaseLetter      | LowercaseLetter | TitlecaseLetter
-    | ModifierLetter       | OtherLetter     | NonSpacingMark
-    | SpacingCombiningMark | EnclosingMark   | DecimalNumber
-    | LetterNumber         | OtherNumber     | ConnectorPunctuation
-    | DashPunctuation      | OpenPunctuation | ClosePunctuation
-    | InitialQuote         | FinalQuote      | OtherPunctuation
-    | MathSymbol           | CurrencySymbol  | ModifierSymbol
-    | OtherSymbol          | Space           | LineSeparator
-    | ParagraphSeparator   | Control         | Format
-    | Surrogate            | PrivateUse      | NotAssigned
+    ( Data.Char.UppercaseLetter      | Data.Char.LowercaseLetter | Data.Char.TitlecaseLetter
+    | Data.Char.ModifierLetter       | Data.Char.OtherLetter     | Data.Char.NonSpacingMark
+    | Data.Char.SpacingCombiningMark | Data.Char.EnclosingMark   | Data.Char.DecimalNumber
+    | Data.Char.LetterNumber         | Data.Char.OtherNumber     | Data.Char.ConnectorPunctuation
+    | Data.Char.DashPunctuation      | Data.Char.OpenPunctuation | Data.Char.ClosePunctuation
+    | Data.Char.InitialQuote         | Data.Char.FinalQuote      | Data.Char.OtherPunctuation
+    | Data.Char.MathSymbol           | Data.Char.CurrencySymbol  | Data.Char.ModifierSymbol
+    | Data.Char.OtherSymbol          | Data.Char.Space           | Data.Char.LineSeparator
+    | Data.Char.ParagraphSeparator   | Data.Char.Control         | Data.Char.Format
+    | Data.Char.Surrogate            | Data.Char.PrivateUse      | Data.Char.NotAssigned
     )
 #-}
 

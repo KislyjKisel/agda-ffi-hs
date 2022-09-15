@@ -91,7 +91,7 @@ postulate
 {-# COMPILE GHC throwErrnoIfRetryMayBlock  = \ aℓ a bℓ b -> Foreign.C.Error.throwErrnoIfRetryMayBlock  #-}
 {-# COMPILE GHC throwErrnoIfRetryMayBlock- = \ aℓ a bℓ b -> Foreign.C.Error.throwErrnoIfRetryMayBlock_ #-}
 
-{-# COMPILE GHC throwErrnoIfMinus1RetryMayBlock      =
+{-# COMPILE GHC throwErrnoIfMinus1RetryMayBlock =
     \ aℓ a bℓ b AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1RetryMayBlock  #-}
 {-# COMPILE GHC throwErrnoIfMinus1RetryMayBlock- =
     \ aℓ a bℓ b AgdaEq AgdaNum -> Foreign.C.Error.throwErrnoIfMinus1RetryMayBlock_ #-}

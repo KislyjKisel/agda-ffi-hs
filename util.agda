@@ -14,6 +14,8 @@
 -- # *([\w'$<>\|]+) +: .*
 -- #{-# COMPILE GHC $1 = MODULE.$1 #-}
 
+import Ffi.Hs.-base.Dictionaries
+
 {-# FOREIGN GHC
 import qualified 
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries

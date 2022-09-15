@@ -88,8 +88,8 @@ postulate
 {-# COMPILE GHC rotateR       = \ aℓ a AgdaBits -> Data.Bits.rotateR       #-}
 {-# COMPILE GHC popCount      = \ aℓ a AgdaBits -> Data.Bits.popCount      #-}
 
-{-# COMPILE GHC finiteBitSize = \ aℓ a AgdaFiniteBits -> Data.Bits.finiteBitSize #-}
-{-# COMPILE GHC countLeadingZeros = \ aℓ a AgdaFiniteBits -> Data.Bits.countLeadingZeros #-}
+{-# COMPILE GHC finiteBitSize      = \ aℓ a AgdaFiniteBits -> Data.Bits.finiteBitSize      #-}
+{-# COMPILE GHC countLeadingZeros  = \ aℓ a AgdaFiniteBits -> Data.Bits.countLeadingZeros  #-}
 {-# COMPILE GHC countTrailingZeros = \ aℓ a AgdaFiniteBits -> Data.Bits.countTrailingZeros #-}
 
 {-# COMPILE GHC bitDefault      = \ aℓ a AgdaBits AgdaNum -> Data.Bits.bitDefault      #-}
@@ -97,8 +97,7 @@ postulate
 {-# COMPILE GHC popCountDefault = \ aℓ a AgdaBits AgdaNum -> Data.Bits.popCountDefault #-}
 {-# COMPILE GHC oneBits         = \ aℓ a AgdaFiniteBits   -> Data.Bits.oneBits         #-}
 {-# COMPILE GHC toIntegralSized =
-    \ aℓ a bℓ b AgdaIntegral AgdaIntegral AgdaBits AgdaBits -> Data.Bits.toIntegralSized
-#-}
+    \ aℓ a bℓ b AgdaIntegral AgdaIntegral AgdaBits AgdaBits -> Data.Bits.toIntegralSized #-}
 
 {-# COMPILE GHC _∙^∙_  = \ aℓ a AgdaBits -> (Data.Bits..^.) #-}
 {-# COMPILE GHC _∙>>∙_ = \ aℓ a AgdaBits -> (Data.Bits..>>.) #-}
