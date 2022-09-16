@@ -14,9 +14,10 @@ private
         aℓ : Level
         A : Set aℓ
 
+-- todo: extracting `Item` type for concrete `IsList` impls
 postulate
     IsList   : Set aℓ → Set aℓ
-    Item     : (A : Set aℓ) → ⦃ IsList A ⦄ → Set
+    Item     : (A : Set aℓ) → ⦃ IsList A ⦄ → Set aℓ
     fromList : ⦃ _ : IsList A ⦄ → List (Item A) → A
     toList   : ⦃ _ : IsList A ⦄ → A → List (Item A)
 

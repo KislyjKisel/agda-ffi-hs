@@ -258,7 +258,10 @@ postulate
     StableName# MutableArrayArray# SmallArray# : Set aℓ → Set aℓ
     TVar# MVar# IOPort# MutVar# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
     SmallMutableArray# MutableArray# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
+    State# : Set aℓ → Set aℓ
 -- todo Proxy#, rep insts, Vec types, primops, seq : A → B → B
+
+    Tuple2# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
 
 {-# COMPILE GHC Addr#   = type GHC.Exts.Addr#   #-}
 {-# COMPILE GHC Void#   = type (# #)            #-}
@@ -322,6 +325,12 @@ postulate
 
 {-# FOREIGN GHC type AgdaMutableArray# aℓ bℓ = GHC.Exts.MutableArray# #-}
 {-# COMPILE GHC MutableArray# = type(2) AgdaMutableArray# #-}
+
+{-# FOREIGN GHC type AgdaState# aℓ = GHC.Exts.State# #-}
+{-# COMPILE GHC State# = type(1) AgdaState# #-}
+
+{-# FOREIGN GHC type AgdaTuple2# aℓ bℓ = (# , #) #-}
+{-# COMPILE GHC Tuple2# = type(2) AgdaTuple2# #-}
 
 data Word : Set where
     W# : Word# → Word

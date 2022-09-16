@@ -14,6 +14,14 @@
 -- # *([\w'$<>\|]+) +: .*
 -- #{-# COMPILE GHC $1 = MODULE.$1 #-}
 
+-- * lowercase variables ==> uppercase variables
+-- #(?<=(?:^|\s|\())([a-zA-Z])(?=(?:$|[\s\),]))
+-- #\U$1
+
+-- * paired class constraints ==> two consequent instance args
+-- #\((\w+) (\w), (\w+) (\w)\) =>
+-- #⦃ $1 $2 ⦄ -> ⦃ $3 $4 ⦄ ->
+
 import Ffi.Hs.-base.Dictionaries
 
 {-# FOREIGN GHC

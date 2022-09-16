@@ -1,0 +1,3 @@
+name: ffi-hs-vector
+include: .
+depend: ffi-hs-base, ffi-hs-deepseq, ffi-hs-primitive

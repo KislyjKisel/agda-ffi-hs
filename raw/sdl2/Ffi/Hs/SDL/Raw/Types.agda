@@ -688,17 +688,17 @@ postulate
 VkGetInstanceProcAddrFunc : ∀{aℓ ℓ} → Set (aℓ ⊔ ℓ)
 VkGetInstanceProcAddrFunc {aℓ} {ℓ} = VkInstance {aℓ} → CString → IO (FunPtr (⊤ {ℓ}))
 
-AudioCallback : ∀{aℓ ℓ} → Set (aℓ ⊔ ℓ)
-AudioCallback {aℓ} {ℓ} = FunPtr (Ptr (⊤ {aℓ}) → Ptr Word8 → CInt → IO (⊤ {ℓ}))
+AudioCallback : ∀{aℓ} → Set aℓ
+AudioCallback {aℓ} = FunPtr (Ptr (⊤ {aℓ}) → Ptr Word8 → CInt → IO (⊤ {lzero}))
 
 EventFilter : ∀{aℓ bℓ cℓ dℓ} → Set (aℓ ⊔ bℓ ⊔ cℓ ⊔ dℓ)
 EventFilter {aℓ} {bℓ} {cℓ} {dℓ} = FunPtr (Ptr (⊤ {aℓ}) → Ptr (Event {bℓ} {cℓ} {dℓ}) → IO CInt)
 
-HintCallback : ∀{aℓ ℓ} → Set (aℓ ⊔ ℓ)
-HintCallback {aℓ} {ℓ} = FunPtr (Ptr (⊤ {aℓ}) → CString → CString → CString → IO (⊤ {ℓ}))
+HintCallback : ∀{aℓ} → Set aℓ
+HintCallback {aℓ} = FunPtr (Ptr (⊤ {aℓ}) → CString → CString → CString → IO (⊤ {lzero}))
 
-LogOutputFunction : ∀{aℓ ℓ} → Set (aℓ ⊔ ℓ)
-LogOutputFunction {aℓ} {ℓ} = FunPtr (Ptr (⊤ {aℓ}) → CInt → LogPriority → CString → IO (⊤ {ℓ}))
+LogOutputFunction : ∀{aℓ} → Set aℓ
+LogOutputFunction {aℓ} = FunPtr (Ptr (⊤ {aℓ}) → CInt → LogPriority → CString → IO (⊤ {lzero}))
 
 ThreadFunction : ∀{aℓ} → Set aℓ
 ThreadFunction {aℓ} = FunPtr (Ptr (⊤ {aℓ}) → IO CInt)
@@ -707,23 +707,23 @@ TimerCallback : ∀{aℓ} → Set aℓ
 TimerCallback {aℓ} = FunPtr (Word32 → Ptr (⊤ {aℓ}) → IO Word32)
 
 postulate
-    mkAudioCallback     : (Ptr (⊤ {aℓ}) → Ptr Word8 → CInt → IO (⊤ {ℓ})) → IO (AudioCallback {aℓ} {ℓ})
+    mkAudioCallback     : (Ptr (⊤ {aℓ}) → Ptr Word8 → CInt → IO (⊤ {lzero})) → IO (AudioCallback {aℓ})
     mkEventFilter       : (Ptr (⊤ {aℓ}) → Ptr (Event {bℓ} {cℓ} {dℓ}) → IO CInt) → IO (EventFilter {aℓ} {bℓ} {cℓ} {dℓ})
-    mkHintCallback      : (Ptr (⊤ {aℓ}) → CString → CString → CString → IO (⊤ {ℓ})) → IO (HintCallback {aℓ} {ℓ})
-    mkLogOutputFunction : (Ptr (⊤ {aℓ}) → CInt → LogPriority → CString → IO (⊤ {ℓ})) → IO (LogOutputFunction {aℓ} {ℓ})
+    mkHintCallback      : (Ptr (⊤ {aℓ}) → CString → CString → CString → IO (⊤ {lzero})) → IO (HintCallback {aℓ})
+    mkLogOutputFunction : (Ptr (⊤ {aℓ}) → CInt → LogPriority → CString → IO (⊤ {lzero})) → IO (LogOutputFunction {aℓ})
     mkThreadFunction    : (Ptr (⊤ {aℓ}) → IO CInt) → IO (ThreadFunction {aℓ})
     mkTimerCallback     : (Word32 → Ptr (⊤ {aℓ}) → IO Word32) → IO (TimerCallback {aℓ})
 
-{-# COMPILE GHC mkAudioCallback     = \ aℓ ℓ        -> SDL.Raw.Types.mkAudioCallback     #-}
+{-# COMPILE GHC mkAudioCallback     = \ aℓ          -> SDL.Raw.Types.mkAudioCallback     #-}
 {-# COMPILE GHC mkEventFilter       = \ aℓ bℓ cℓ dℓ -> SDL.Raw.Types.mkEventFilter       #-}
-{-# COMPILE GHC mkHintCallback      = \ aℓ ℓ        -> SDL.Raw.Types.mkHintCallback      #-}
-{-# COMPILE GHC mkLogOutputFunction = \ aℓ ℓ        -> SDL.Raw.Types.mkLogOutputFunction #-}
+{-# COMPILE GHC mkHintCallback      = \ aℓ          -> SDL.Raw.Types.mkHintCallback      #-}
+{-# COMPILE GHC mkLogOutputFunction = \ aℓ          -> SDL.Raw.Types.mkLogOutputFunction #-}
 {-# COMPILE GHC mkThreadFunction    = \ aℓ          -> SDL.Raw.Types.mkThreadFunction    #-}
 {-# COMPILE GHC mkTimerCallback     = \ aℓ          -> SDL.Raw.Types.mkTimerCallback     #-}
 
 -- Data Structures
 
-record AudioSpec {aℓ} {ℓ} : Set (aℓ ⊔ ℓ) where
+record AudioSpec {aℓ} : Set aℓ where
     constructor mkAudioSpec
     field
         audioSpecFreq     : CInt
@@ -732,17 +732,17 @@ record AudioSpec {aℓ} {ℓ} : Set (aℓ ⊔ ℓ) where
         audioSpecSilence  : Word8
         audioSpecSamples  : Word16
         audioSpecSize     : Word32
-        audioSpecCallback : AudioCallback {aℓ} {ℓ} -- first arg to audio callback is userdata, thus same level
+        audioSpecCallback : AudioCallback {aℓ} -- same level userdata (?)
         audioSpecUserdata : Ptr (⊤ {aℓ})
 
 {-# FOREIGN GHC type AgdaAudioSpec aℓ ℓ = SDL.Raw.Types.AudioSpec #-}
 {-# COMPILE GHC AudioSpec = data AgdaAudioSpec (SDL.Raw.Types.AudioSpec) #-}
 
 postulate
-    Eq[AudioSpec]       : Eq (AudioSpec {aℓ} {ℓ})
-    Show[AudioSpec]     : Show (AudioSpec {aℓ} {ℓ})
-    Storable[AudioSpec] : Storable (AudioSpec {aℓ} {ℓ})
+    Eq[AudioSpec]       : Eq (AudioSpec {aℓ})
+    Show[AudioSpec]     : Show (AudioSpec {aℓ})
+    Storable[AudioSpec] : Storable (AudioSpec {aℓ})
 
-{-# COMPILE GHC Eq[AudioSpec]       = \ aℓ ℓ -> AgdaEq       #-}
-{-# COMPILE GHC Show[AudioSpec]     = \ aℓ ℓ -> AgdaShow     #-}
-{-# COMPILE GHC Storable[AudioSpec] = \ aℓ ℓ -> AgdaStorable #-}
+{-# COMPILE GHC Eq[AudioSpec]       = \ aℓ -> AgdaEq       #-}
+{-# COMPILE GHC Show[AudioSpec]     = \ aℓ -> AgdaShow     #-}
+{-# COMPILE GHC Storable[AudioSpec] = \ aℓ -> AgdaStorable #-}
