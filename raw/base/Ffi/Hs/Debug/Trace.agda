@@ -28,17 +28,17 @@ postulate
     traceShowId : ⦃ Show A ⦄ → A → A
     traceStack  : List Char → A → A
     traceIO     : List Char → IO (⊤ {lzero})
-    traceM      : ⦃ Applicative F ⦄ → List Char → F (⊤ {lzero})
-    traceShowM  : ⦃ Show A ⦄ → ⦃ Applicative F ⦄ → A → F (⊤ {lzero})
+    traceM      : ⦃ Applicative F ⦄ → List Char → F ⊤
+    traceShowM  : ⦃ Show A ⦄ → ⦃ Applicative F ⦄ → A → F ⊤
 
-{-# COMPILE GHC trace       = \ aℓ a                            -> Debug.Trace.trace       #-}
-{-# COMPILE GHC traceId     =                                      Debug.Trace.traceId     #-}
-{-# COMPILE GHC traceShow   = \ aℓ a bℓ b AgdaShow              -> Debug.Trace.traceShow   #-}
-{-# COMPILE GHC traceShowId = \ aℓ a AgdaShow                   -> Debug.Trace.traceShowId #-}
-{-# COMPILE GHC traceStack  = \ aℓ a                            -> Debug.Trace.traceStack  #-}
-{-# COMPILE GHC traceIO     =                                      Debug.Trace.traceIO     #-}
-{-# COMPILE GHC traceM      = \ fℓ f AgdaApplicative            -> Debug.Trace.traceM      #-}
-{-# COMPILE GHC traceShowM  = \ aℓ a f AgdaShow AgdaApplicative -> Debug.Trace.traceShowM  #-}
+{-# COMPILE GHC trace       = \ aℓ a                               -> Debug.Trace.trace       #-}
+{-# COMPILE GHC traceId     =                                         Debug.Trace.traceId     #-}
+{-# COMPILE GHC traceShow   = \ aℓ a bℓ b AgdaShow                 -> Debug.Trace.traceShow   #-}
+{-# COMPILE GHC traceShowId = \ aℓ a AgdaShow                      -> Debug.Trace.traceShowId #-}
+{-# COMPILE GHC traceStack  = \ aℓ a                               -> Debug.Trace.traceStack  #-}
+{-# COMPILE GHC traceIO     =                                         Debug.Trace.traceIO     #-}
+{-# COMPILE GHC traceM      = \ fℓ f AgdaApplicative               -> Debug.Trace.traceM      #-}
+{-# COMPILE GHC traceShowM  = \ aℓ a fℓ f AgdaShow AgdaApplicative -> Debug.Trace.traceShowM  #-}
 
 postulate
     traceEvent    : List Char → A → A

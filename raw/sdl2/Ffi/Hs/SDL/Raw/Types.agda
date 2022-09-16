@@ -14,12 +14,18 @@ open import Ffi.Hs.Foreign.C.Types  using (CInt; CChar; CUInt; CULong; CSize; CF
 open import Ffi.Hs.Foreign.Ptr      using (Ptr; FunPtr)
 open import Ffi.Hs.SDL.Raw.Enum     using (Scancode; Keycode; LogPriority)
 
+import Ffi.Hs.-base.Dictionaries
+
+{-# FOREIGN GHC
+import qualified SDL.Raw.Types
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+#-}
+
 private
     variable
         aℓ bℓ cℓ dℓ ℓ : Level
 
 -- todo: unify some levels
--- todo: compile pragmas
 
 -- Common Types
 
@@ -108,10 +114,17 @@ record Atomic : Set where
     field
         atomicValue : CInt
 
+{-# COMPILE GHC Atomic = data SDL.Raw.Types.Atomic (SDL.Raw.Types.Atomic) #-}
+
 postulate
     Eq[Atomic]       : Eq Atomic
     Show[Atomic]     : Show Atomic
     Storable[Atomic] : Storable Atomic
+
+{-# COMPILE GHC Eq[Atomic]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Atomic]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[Atomic] = AgdaStorable #-}
+
 
 record AudioCVT : Set where
     constructor mkAudioCVT
@@ -126,10 +139,17 @@ record AudioCVT : Set where
         audioCVTLenMult   : CInt
         audioCVTLenRatio  : CDouble
 
+{-# COMPILE GHC AudioCVT = data SDL.Raw.Types.AudioCVT (SDL.Raw.Types.AudioCVT) #-}
+
 postulate
     Eq[AudioCVT]       : Eq AudioCVT
     Show[AudioCVT]     : Show AudioCVT
     Storable[AudioCVT] : Storable AudioCVT
+
+{-# COMPILE GHC Eq[AudioCVT]       = AgdaEq       #-}
+{-# COMPILE GHC Show[AudioCVT]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[AudioCVT] = AgdaStorable #-}
+
 
 record Color : Set where
     constructor mkColor
@@ -139,10 +159,17 @@ record Color : Set where
         colorB : Word8
         colorA : Word8
 
+{-# COMPILE GHC Color = data SDL.Raw.Types.Color (SDL.Raw.Types.Color) #-}
+
 postulate
     Eq[Color]       : Eq Color
     Show[Color]     : Show Color
     Storable[Color] : Storable Color
+
+{-# COMPILE GHC Eq[Color]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Color]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[Color] = AgdaStorable #-}
+
 
 record DisplayMode {aℓ} : Set aℓ where
     constructor mkDisplayMode
@@ -153,10 +180,17 @@ record DisplayMode {aℓ} : Set aℓ where
         displayModeRefreshRate : CInt
         displayModeDriverData  : Ptr (⊤ {aℓ})
 
+{-# COMPILE GHC DisplayMode = data SDL.Raw.Types.DisplayMode (SDL.Raw.Types.DisplayMode) #-}
+
 postulate
     Eq[DisplayMode]       : Eq (DisplayMode {aℓ})
     Show[DisplayMode]     : Show (DisplayMode {aℓ})
     Storable[DisplayMode] : Storable (DisplayMode {aℓ})
+
+{-# COMPILE GHC Eq[DisplayMode]       = \ aℓ -> AgdaEq       #-}
+{-# COMPILE GHC Show[DisplayMode]     = \ aℓ -> AgdaShow     #-}
+{-# COMPILE GHC Storable[DisplayMode] = \ aℓ -> AgdaStorable #-}
+
 
 record Keysym : Set where
     constructor mkKeysym
@@ -165,10 +199,16 @@ record Keysym : Set where
         keysymKeycode  : Keycode
         keysymMod      : Word16
 
+{-# COMPILE GHC Keysym = data SDL.Raw.Types.Keysym (SDL.Raw.Types.Keysym) #-}
+
 postulate
     Eq[Keysym]       : Eq Keysym
     Show[Keysym]     : Show Keysym
     Storable[Keysym] : Storable Keysym
+
+{-# COMPILE GHC Eq[Keysym]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Keysym]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[Keysym] = AgdaStorable #-}
 
 
 -- todo: getters (postulate + compile or in agda, using recselerror)
@@ -200,9 +240,41 @@ data Event {aℓ bℓ cℓ} : Set (aℓ ⊔ bℓ ⊔ cℓ) where
     ClipboardUpdateEvent  : Word32 → Word32 → Event
     UnknownEvent          : Word32 → Word32 → Event
 
+{-# COMPILE GHC Event = data SDL.Raw.Types.Event
+    ( SDL.Raw.Types.WindowEvent
+    | SDL.Raw.Types.KeyboardEvent
+    | SDL.Raw.Types.TextEditingEvent
+    | SDL.Raw.Types.TextInputEvent
+    | SDL.Raw.Types.KeymapChangedEvent
+    | SDL.Raw.Types.MouseMotionEvent
+    | SDL.Raw.Types.MouseButtonEvent
+    | SDL.Raw.Types.MouseWheelEvent
+    | SDL.Raw.Types.JoyAxisEvent
+    | SDL.Raw.Types.JoyBallEvent
+    | SDL.Raw.Types.JoyHatEvent
+    | SDL.Raw.Types.JoyButtonEvent
+    | SDL.Raw.Types.JoyDeviceEvent
+    | SDL.Raw.Types.ControllerAxisEvent
+    | SDL.Raw.Types.ControllerButtonEvent
+    | SDL.Raw.Types.ControllerDeviceEvent
+    | SDL.Raw.Types.AudioDeviceEvent
+    | SDL.Raw.Types.QuitEvent
+    | SDL.Raw.Types.UserEvent
+    | SDL.Raw.Types.SysWMEvent
+    | SDL.Raw.Types.TouchFingerEvent
+    | SDL.Raw.Types.MultiGestureEvent
+    | SDL.Raw.Types.DollarGestureEvent
+    | SDL.Raw.Types.DropEvent
+    | SDL.Raw.Types.ClipboardUpdateEvent
+    | SDL.Raw.Types.UnknownEvent
+    ) #-}
+
 postulate
     Eq[Event]   : Eq (Event {aℓ} {bℓ} {cℓ})
     Show[Event] : Show (Event {aℓ} {bℓ} {cℓ})
+
+{-# COMPILE GHC Eq[Event]       = \ aℓ bℓ cℓ -> AgdaEq       #-}
+{-# COMPILE GHC Show[Event]     = \ aℓ bℓ cℓ -> AgdaShow     #-}
 
 eventType : Event {aℓ} {bℓ} {cℓ} → Word32
 eventType (WindowEvent x _ _ _ _ _)            = x
@@ -260,6 +332,7 @@ eventTimestamp (DropEvent _ x _)                    = x
 eventTimestamp (ClipboardUpdateEvent _ x)           = x
 eventTimestamp (UnknownEvent _ x)                   = x
 
+
 record Finger : Set where
     constructor mkFinger
     field
@@ -268,9 +341,15 @@ record Finger : Set where
         fingerY        : CFloat
         fingerPressure : CFloat
 
+{-# COMPILE GHC Finger = data SDL.Raw.Types.Finger (SDL.Raw.Types.Finger) #-}
+
 postulate
     Eq[Finger]   : Eq Finger
     Show[Finger] : Show Finger
+
+{-# COMPILE GHC Eq[Finger]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Finger]     = AgdaShow     #-}
+
 
 -- todo: getters
 data GameControllerButtonBind : Set where
@@ -284,6 +363,11 @@ postulate
     Show[GameControllerButtonBind]     : Show GameControllerButtonBind
     Storable[GameControllerButtonBind] : Storable GameControllerButtonBind
 
+{-# COMPILE GHC Eq[GameControllerButtonBind]       = AgdaEq       #-}
+{-# COMPILE GHC Show[GameControllerButtonBind]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[GameControllerButtonBind] = AgdaStorable #-}
+
+
 record HapticDirection : Set where
     constructor mkHapticDirection
     field
@@ -292,10 +376,17 @@ record HapticDirection : Set where
         hapticDirectionY    : Int32
         hapticDirectionZ    : Int32
 
+{-# COMPILE GHC HapticDirection = data SDL.Raw.Types.HapticDirection (SDL.Raw.Types.HapticDirection) #-}
+
 postulate
     Eq[HapticDirection]       : Eq HapticDirection
     Show[HapticDirection]     : Show HapticDirection
     Storable[HapticDirection] : Storable HapticDirection
+
+{-# COMPILE GHC Eq[HapticDirection]       = AgdaEq       #-}
+{-# COMPILE GHC Show[HapticDirection]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[HapticDirection] = AgdaStorable #-}
+
 
 -- todo: getters
 data HapticEffect : Set where
@@ -319,15 +410,27 @@ postulate
     Show[HapticEffect]     : Show HapticEffect
     Storable[HapticEffect] : Storable HapticEffect
 
+{-# COMPILE GHC Eq[HapticEffect]       = AgdaEq       #-}
+{-# COMPILE GHC Show[HapticEffect]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[HapticEffect] = AgdaStorable #-}
+
+
 record JoystickGUID : Set where
     constructor mkJoystickGUID
     field
         joystickGUID : List Word8
 
+{-# COMPILE GHC JoystickGUID = data SDL.Raw.Types.JoystickGUID (SDL.Raw.Types.JoystickGUID) #-}
+
 postulate
     Eq[JoystickGUID]       : Eq JoystickGUID
     Show[JoystickGUID]     : Show JoystickGUID
     Storable[JoystickGUID] : Storable JoystickGUID
+
+{-# COMPILE GHC Eq[JoystickGUID]       = AgdaEq       #-}
+{-# COMPILE GHC Show[JoystickGUID]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[JoystickGUID] = AgdaStorable #-}
+
 
 record MessageBoxButtonData : Set where
     constructor mkMessageBoxButtonData
@@ -336,10 +439,17 @@ record MessageBoxButtonData : Set where
         messageBoxButtonButtonID  : CInt
         messageBoxButtonText      : CString
 
+{-# COMPILE GHC MessageBoxButtonData = data SDL.Raw.Types.MessageBoxButtonData (SDL.Raw.Types.MessageBoxButtonData) #-}
+
 postulate
     Eq[MessageBoxButtonData]       : Eq MessageBoxButtonData
     Show[MessageBoxButtonData]     : Show MessageBoxButtonData
     Storable[MessageBoxButtonData] : Storable MessageBoxButtonData
+
+{-# COMPILE GHC Eq[MessageBoxButtonData]       = AgdaEq       #-}
+{-# COMPILE GHC Show[MessageBoxButtonData]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[MessageBoxButtonData] = AgdaStorable #-}
+
 
 record MessageBoxColor : Set where
     constructor mkMessageBoxColor
@@ -348,10 +458,17 @@ record MessageBoxColor : Set where
         messageBoxColorG : Word8
         messageBoxColorB : Word8
 
+{-# COMPILE GHC MessageBoxColor = data SDL.Raw.Types.MessageBoxColor (SDL.Raw.Types.MessageBoxColor) #-}
+
 postulate
     Eq[MessageBoxColor]       : Eq MessageBoxColor
     Show[MessageBoxColor]     : Show MessageBoxColor
     Storable[MessageBoxColor] : Storable MessageBoxColor
+
+{-# COMPILE GHC Eq[MessageBoxColor]       = AgdaEq       #-}
+{-# COMPILE GHC Show[MessageBoxColor]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[MessageBoxColor] = AgdaStorable #-}
+
 
 record MessageBoxColorScheme : Set where
     constructor mkMessageBoxColorScheme
@@ -362,10 +479,17 @@ record MessageBoxColorScheme : Set where
         messageBoxColorSchemeColorButtonBackground : MessageBoxColor
         messageBoxColorSchemeColorButtonSelected   : MessageBoxColor
 
+{-# COMPILE GHC MessageBoxColorScheme = data SDL.Raw.Types.MessageBoxColorScheme (SDL.Raw.Types.MessageBoxColorScheme) #-}
+
 postulate
     Eq[MessageBoxColorScheme]       : Eq MessageBoxColorScheme
     Show[MessageBoxColorScheme]     : Show MessageBoxColorScheme
     Storable[MessageBoxColorScheme] : Storable MessageBoxColorScheme
+
+{-# COMPILE GHC Eq[MessageBoxColorScheme]       = AgdaEq       #-}
+{-# COMPILE GHC Show[MessageBoxColorScheme]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[MessageBoxColorScheme] = AgdaStorable #-}
+
 
 record MessageBoxData : Set where
     constructor mkMessageBoxData
@@ -378,10 +502,17 @@ record MessageBoxData : Set where
         messageBoxDataButtons     : Ptr MessageBoxButtonData
         messageBoxDataColorScheme : Ptr MessageBoxColorScheme
 
+{-# COMPILE GHC MessageBoxData = data SDL.Raw.Types.MessageBoxData (SDL.Raw.Types.MessageBoxData) #-}
+
 postulate
     Eq[MessageBoxData]       : Eq MessageBoxData
     Show[MessageBoxData]     : Show MessageBoxData
     Storable[MessageBoxData] : Storable MessageBoxData
+
+{-# COMPILE GHC Eq[MessageBoxData]       = AgdaEq       #-}
+{-# COMPILE GHC Show[MessageBoxData]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[MessageBoxData] = AgdaStorable #-}
+
 
 record Palette : Set where
     constructor mkPalette
@@ -389,10 +520,17 @@ record Palette : Set where
         paletteNColors : CInt
         paletteColors  : Ptr Color
 
+{-# COMPILE GHC Palette = data SDL.Raw.Types.Palette (SDL.Raw.Types.Palette) #-}
+
 postulate
     Eq[Palette]       : Eq Palette
     Show[Palette]     : Show Palette
     Storable[Palette] : Storable Palette
+
+{-# COMPILE GHC Eq[Palette]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Palette]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[Palette] = AgdaStorable #-}
+
 
 record PixelFormat : Set where
     constructor mkPixelFormat
@@ -406,10 +544,17 @@ record PixelFormat : Set where
         pixelFormatBMask         : Word32
         pixelFormatAMask         : Word32
 
+{-# COMPILE GHC PixelFormat = data SDL.Raw.Types.PixelFormat (SDL.Raw.Types.PixelFormat) #-}
+
 postulate
     Eq[PixelFormat]       : Eq PixelFormat
     Show[PixelFormat]     : Show PixelFormat
     Storable[PixelFormat] : Storable PixelFormat
+
+{-# COMPILE GHC Eq[PixelFormat]       = AgdaEq       #-}
+{-# COMPILE GHC Show[PixelFormat]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[PixelFormat] = AgdaStorable #-}
+
 
 record Point : Set where
     constructor mkPoint
@@ -417,10 +562,17 @@ record Point : Set where
         pointX : CInt
         pointY : CInt
 
+{-# COMPILE GHC Point = data SDL.Raw.Types.Point (SDL.Raw.Types.Point) #-}
+
 postulate
     Eq[Point]       : Eq Point
     Show[Point]     : Show Point
     Storable[Point] : Storable Point
+
+{-# COMPILE GHC Eq[Point]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Point]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[Point] = AgdaStorable #-}
+
 
 record Rect : Set where
     constructor mkRect
@@ -430,10 +582,17 @@ record Rect : Set where
         rectW : CInt
         rectH : CInt
 
+{-# COMPILE GHC Rect = data SDL.Raw.Types.Rect (SDL.Raw.Types.Rect) #-}
+
 postulate
     Eq[Rect]       : Eq Rect
     Show[Rect]     : Show Rect
     Storable[Rect] : Storable Rect
+
+{-# COMPILE GHC Eq[Rect]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Rect]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[Rect] = AgdaStorable #-}
+
 
 record RendererInfo : Set where
     constructor mkRendererInfo
@@ -445,10 +604,17 @@ record RendererInfo : Set where
         rendererInfoMaxTextureWidth   : CInt
         rendererInfoMaxTextureHeight  : CInt
 
+{-# COMPILE GHC RendererInfo = data SDL.Raw.Types.RendererInfo (SDL.Raw.Types.RendererInfo) #-}
+
 postulate
     Eq[RendererInfo]       : Eq RendererInfo
     Show[RendererInfo]     : Show RendererInfo
     Storable[RendererInfo] : Storable RendererInfo
+
+{-# COMPILE GHC Eq[RendererInfo]       = AgdaEq       #-}
+{-# COMPILE GHC Show[RendererInfo]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[RendererInfo] = AgdaStorable #-}
+
 
 {-# NO_POSITIVITY_CHECK #-}
 record RWops {ℓ} : Set ℓ where
@@ -461,10 +627,18 @@ record RWops {ℓ} : Set ℓ where
         rwopsClose : FunPtr (Ptr (RWops {ℓ}) → IO CInt)
         rwopsType  : Word32
 
+{-# FOREIGN GHC type AgdaRWops ℓ = SDL.Raw.Types.RWops #-}
+{-# COMPILE GHC RWops = data AgdaRWops (SDL.Raw.Types.RWops) #-}
+
 postulate
     Eq[RWops]       : Eq (RWops {ℓ})
     Show[RWops]     : Show (RWops {ℓ})
     Storable[RWops] : Storable (RWops {ℓ})
+
+{-# COMPILE GHC Eq[RWops]       = \ ℓ -> AgdaEq       #-}
+{-# COMPILE GHC Show[RWops]     = \ ℓ -> AgdaShow     #-}
+{-# COMPILE GHC Storable[RWops] = \ ℓ -> AgdaStorable #-}
+
 
 record Surface {aℓ bℓ} : Set (aℓ ⊔ bℓ) where
     constructor mkSurface
@@ -477,10 +651,18 @@ record Surface {aℓ bℓ} : Set (aℓ ⊔ bℓ) where
         surfaceClipRect : Rect
         surfaceRefcount : CInt
 
+{-# FOREIGN GHC type AgdaSurface aℓ bℓ = SDL.Raw.Types.Surface  #-}
+{-# COMPILE GHC Surface = data AgdaSurface (SDL.Raw.Types.Surface) #-}
+
 postulate
     Eq[Surface]       : Eq (Surface {aℓ} {bℓ})
     Show[Surface]     : Show (Surface {aℓ} {bℓ})
     Storable[Surface] : Storable (Surface {aℓ} {bℓ})
+
+{-# COMPILE GHC Eq[Surface]       = \ aℓ bℓ -> AgdaEq       #-}
+{-# COMPILE GHC Show[Surface]     = \ aℓ bℓ -> AgdaShow     #-}
+{-# COMPILE GHC Storable[Surface] = \ aℓ bℓ -> AgdaStorable #-}
+
 
 record Version : Set where
     constructor mkVersion
@@ -489,10 +671,17 @@ record Version : Set where
         versionMinor : Word8
         versionPatch : Word8
 
+{-# COMPILE GHC Version = data SDL.Raw.Types.Version (SDL.Raw.Types.Version) #-}
+
 postulate
     Eq[Version]       : Eq Version
     Show[Version]     : Show Version
     Storable[Version] : Storable Version
+
+{-# COMPILE GHC Eq[Version]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Version]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[Version] = AgdaStorable #-}
+
 
 -- Function Types
 
@@ -525,6 +714,13 @@ postulate
     mkThreadFunction    : (Ptr (⊤ {aℓ}) → IO CInt) → IO (ThreadFunction {aℓ})
     mkTimerCallback     : (Word32 → Ptr (⊤ {aℓ}) → IO Word32) → IO (TimerCallback {aℓ})
 
+{-# COMPILE GHC mkAudioCallback     = \ aℓ ℓ        -> SDL.Raw.Types.mkAudioCallback     #-}
+{-# COMPILE GHC mkEventFilter       = \ aℓ bℓ cℓ dℓ -> SDL.Raw.Types.mkEventFilter       #-}
+{-# COMPILE GHC mkHintCallback      = \ aℓ ℓ        -> SDL.Raw.Types.mkHintCallback      #-}
+{-# COMPILE GHC mkLogOutputFunction = \ aℓ ℓ        -> SDL.Raw.Types.mkLogOutputFunction #-}
+{-# COMPILE GHC mkThreadFunction    = \ aℓ          -> SDL.Raw.Types.mkThreadFunction    #-}
+{-# COMPILE GHC mkTimerCallback     = \ aℓ          -> SDL.Raw.Types.mkTimerCallback     #-}
+
 -- Data Structures
 
 record AudioSpec {aℓ} {ℓ} : Set (aℓ ⊔ ℓ) where
@@ -539,7 +735,14 @@ record AudioSpec {aℓ} {ℓ} : Set (aℓ ⊔ ℓ) where
         audioSpecCallback : AudioCallback {aℓ} {ℓ} -- first arg to audio callback is userdata, thus same level
         audioSpecUserdata : Ptr (⊤ {aℓ})
 
+{-# FOREIGN GHC type AgdaAudioSpec aℓ ℓ = SDL.Raw.Types.AudioSpec #-}
+{-# COMPILE GHC AudioSpec = data AgdaAudioSpec (SDL.Raw.Types.AudioSpec) #-}
+
 postulate
     Eq[AudioSpec]       : Eq (AudioSpec {aℓ} {ℓ})
     Show[AudioSpec]     : Show (AudioSpec {aℓ} {ℓ})
     Storable[AudioSpec] : Storable (AudioSpec {aℓ} {ℓ})
+
+{-# COMPILE GHC Eq[AudioSpec]       = \ aℓ ℓ -> AgdaEq       #-}
+{-# COMPILE GHC Show[AudioSpec]     = \ aℓ ℓ -> AgdaShow     #-}
+{-# COMPILE GHC Storable[AudioSpec] = \ aℓ ℓ -> AgdaStorable #-}
