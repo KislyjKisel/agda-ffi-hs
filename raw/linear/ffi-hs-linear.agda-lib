@@ -1,0 +1,3 @@
+name: ffi-hs-linear
+include: .
+depend: ffi-hs-base

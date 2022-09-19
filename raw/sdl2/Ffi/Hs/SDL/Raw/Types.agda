@@ -21,12 +21,6 @@ import qualified SDL.Raw.Types
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
-private
-    variable
-        aℓ bℓ cℓ dℓ ℓ : Level
-
--- todo: unify some levels
-
 -- Common Types
 
 AudioDeviceID : Set
@@ -35,56 +29,56 @@ AudioDeviceID = Word32
 AudioFormat : Set
 AudioFormat = Word16
 
-Cond : ∀{aℓ} → Set aℓ
-Cond {aℓ} = Ptr (⊤ {aℓ})
+Cond : Set
+Cond = Ptr (⊤ {lzero})
 
-Cursor : ∀{aℓ} → Set aℓ
-Cursor {aℓ} = Ptr (⊤ {aℓ})
+Cursor : Set
+Cursor = Ptr (⊤ {lzero})
 
 FingerID : Set
 FingerID = Int64
 
-GameController : ∀{aℓ} → Set aℓ
-GameController {aℓ} = Ptr (⊤ {aℓ})
+GameController : Set
+GameController = Ptr (⊤ {lzero})
 
 GestureID : Set
 GestureID = Int64
 
-GLContext : ∀{aℓ} → Set aℓ
-GLContext {aℓ} = Ptr (⊤ {aℓ})
+GLContext : Set
+GLContext = Ptr (⊤ {lzero})
 
-Haptic : ∀{aℓ} → Set aℓ
-Haptic {aℓ} = Ptr (⊤ {aℓ})
+Haptic : Set
+Haptic = Ptr (⊤ {lzero})
 
-Joystick : ∀{aℓ} → Set aℓ
-Joystick {aℓ} = Ptr (⊤ {aℓ})
+Joystick : Set
+Joystick = Ptr (⊤ {lzero})
 
 JoystickID : Set
 JoystickID = Int32
 
-Mutex : ∀{aℓ} → Set aℓ
-Mutex {aℓ} = Ptr (⊤ {aℓ})
+Mutex : Set
+Mutex = Ptr (⊤ {lzero})
 
-Renderer : ∀{aℓ} → Set aℓ
-Renderer {aℓ} = Ptr (⊤ {aℓ})
+Renderer : Set
+Renderer = Ptr (⊤ {lzero})
 
-Sem : ∀{aℓ} → Set aℓ
-Sem {aℓ} = Ptr (⊤ {aℓ})
+Sem : Set
+Sem = Ptr (⊤ {lzero})
 
 SpinLock : Set
 SpinLock = CInt
 
-SysWMinfo : ∀{aℓ} → Set aℓ
-SysWMinfo {aℓ} = Ptr (⊤ {aℓ})
+SysWMinfo : Set
+SysWMinfo = Ptr (⊤ {lzero})
 
-SysWMmsg : ∀{aℓ} → Set aℓ
-SysWMmsg {aℓ} = Ptr (⊤ {aℓ})
+SysWMmsg : Set
+SysWMmsg = Ptr (⊤ {lzero})
 
-Texture : ∀{aℓ} → Set aℓ
-Texture {aℓ} = Ptr (⊤ {aℓ})
+Texture : Set
+Texture = Ptr (⊤ {lzero})
 
-Thread : ∀{aℓ} → Set aℓ
-Thread {aℓ} = Ptr (⊤ {aℓ})
+Thread : Set
+Thread = Ptr (⊤ {lzero})
 
 ThreadID : Set
 ThreadID = CULong
@@ -98,14 +92,14 @@ TLSID = CUInt
 TouchID : Set
 TouchID = Int64
 
-VkInstance : ∀{aℓ} → Set aℓ
-VkInstance {aℓ} = Ptr (⊤ {aℓ})
+VkInstance : Set
+VkInstance = Ptr (⊤ {lzero})
 
 VkSurfaceKHR : Set
 VkSurfaceKHR = Word64
 
-Window : ∀{aℓ} → Set aℓ
-Window {aℓ} = Ptr (⊤ {aℓ})
+Window : Set
+Window = Ptr (⊤ {lzero})
 
 -- Data Structures
 
@@ -171,25 +165,25 @@ postulate
 {-# COMPILE GHC Storable[Color] = AgdaStorable #-}
 
 
-record DisplayMode {aℓ} : Set aℓ where
+record DisplayMode : Set where
     constructor mkDisplayMode
     field
         displayModeFormat      : Word32
         displayModeW           : CInt
         displayModeH           : CInt
         displayModeRefreshRate : CInt
-        displayModeDriverData  : Ptr (⊤ {aℓ})
+        displayModeDriverData  : Ptr (⊤ {lzero})
 
 {-# COMPILE GHC DisplayMode = data SDL.Raw.Types.DisplayMode (SDL.Raw.Types.DisplayMode) #-}
 
 postulate
-    Eq[DisplayMode]       : Eq (DisplayMode {aℓ})
-    Show[DisplayMode]     : Show (DisplayMode {aℓ})
-    Storable[DisplayMode] : Storable (DisplayMode {aℓ})
+    Eq[DisplayMode]       : Eq DisplayMode
+    Show[DisplayMode]     : Show DisplayMode
+    Storable[DisplayMode] : Storable DisplayMode
 
-{-# COMPILE GHC Eq[DisplayMode]       = \ aℓ -> AgdaEq       #-}
-{-# COMPILE GHC Show[DisplayMode]     = \ aℓ -> AgdaShow     #-}
-{-# COMPILE GHC Storable[DisplayMode] = \ aℓ -> AgdaStorable #-}
+{-# COMPILE GHC Eq[DisplayMode]       = AgdaEq       #-}
+{-# COMPILE GHC Show[DisplayMode]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[DisplayMode] = AgdaStorable #-}
 
 
 record Keysym : Set where
@@ -212,7 +206,7 @@ postulate
 
 
 -- todo: getters (postulate + compile or in agda, using recselerror)
-data Event {aℓ bℓ cℓ} : Set (aℓ ⊔ bℓ ⊔ cℓ) where
+data Event : Set where
     WindowEvent           : Word32 → Word32 → Word32 → Word8 → Int32 → Int32 → Event
     KeyboardEvent         : Word32 → Word32 → Word32 → Word8 → Word8 → Keysym → Event
     TextEditingEvent      : Word32 → Word32 → Word32 → List CChar → Int32 → Int32 → Event
@@ -231,8 +225,8 @@ data Event {aℓ bℓ cℓ} : Set (aℓ ⊔ bℓ ⊔ cℓ) where
     ControllerDeviceEvent : Word32 → Word32 → Int32 → Event
     AudioDeviceEvent      : Word32 → Word32 → Word32 → Word8 → Event
     QuitEvent             : Word32 → Word32 → Event
-    UserEvent             : Word32 → Word32 → Word32 → Int32 → Ptr (⊤ {aℓ}) → Ptr (⊤ {bℓ}) → Event
-    SysWMEvent            : Word32 → Word32 → SysWMmsg {cℓ} → Event
+    UserEvent             : Word32 → Word32 → Word32 → Int32 → Ptr (⊤ {lzero}) → Ptr (⊤ {lzero}) → Event
+    SysWMEvent            : Word32 → Word32 → SysWMmsg → Event
     TouchFingerEvent      : Word32 → Word32 → TouchID → FingerID → CFloat → CFloat → CFloat → CFloat → CFloat → Event
     MultiGestureEvent     : Word32 → Word32 → TouchID → CFloat → CFloat → CFloat → CFloat → Word16 → Event
     DollarGestureEvent    : Word32 → Word32 → TouchID → GestureID → Word32 → CFloat → CFloat → CFloat → Event
@@ -270,13 +264,13 @@ data Event {aℓ bℓ cℓ} : Set (aℓ ⊔ bℓ ⊔ cℓ) where
     ) #-}
 
 postulate
-    Eq[Event]   : Eq (Event {aℓ} {bℓ} {cℓ})
-    Show[Event] : Show (Event {aℓ} {bℓ} {cℓ})
+    Eq[Event]   : Eq Event
+    Show[Event] : Show Event
 
-{-# COMPILE GHC Eq[Event]       = \ aℓ bℓ cℓ -> AgdaEq       #-}
-{-# COMPILE GHC Show[Event]     = \ aℓ bℓ cℓ -> AgdaShow     #-}
+{-# COMPILE GHC Eq[Event]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Event]     = AgdaShow     #-}
 
-eventType : Event {aℓ} {bℓ} {cℓ} → Word32
+eventType : Event → Word32
 eventType (WindowEvent x _ _ _ _ _)            = x
 eventType (KeyboardEvent x _ _ _ _ _)          = x
 eventType (TextEditingEvent x _ _ _ _ _)       = x
@@ -304,7 +298,7 @@ eventType (DropEvent x _ _)                    = x
 eventType (ClipboardUpdateEvent x _)           = x
 eventType (UnknownEvent x _)                   = x
 
-eventTimestamp : Event {aℓ} {bℓ} {cℓ} → Word32
+eventTimestamp : Event → Word32
 eventTimestamp (WindowEvent _ x _ _ _ _)            = x
 eventTimestamp (KeyboardEvent _ x _ _ _ _)          = x
 eventTimestamp (TextEditingEvent _ x _ _ _ _)       = x
@@ -347,8 +341,8 @@ postulate
     Eq[Finger]   : Eq Finger
     Show[Finger] : Show Finger
 
-{-# COMPILE GHC Eq[Finger]       = AgdaEq       #-}
-{-# COMPILE GHC Show[Finger]     = AgdaShow     #-}
+{-# COMPILE GHC Eq[Finger]   = AgdaEq   #-}
+{-# COMPILE GHC Show[Finger] = AgdaShow #-}
 
 
 -- todo: getters
@@ -617,51 +611,49 @@ postulate
 
 
 {-# NO_POSITIVITY_CHECK #-}
-record RWops {ℓ} : Set ℓ where
+record RWops : Set where
     constructor mkRWops
     field
-        rwopsSize  : FunPtr (Ptr (RWops {ℓ}) → IO Int64)
-        rwopsSeek  : FunPtr (Ptr (RWops {ℓ}) → Int64 → CInt → IO Int64)
-        rwopsRead  : FunPtr (Ptr (RWops {ℓ}) → Ptr (⊤ {ℓ}) → CSize → CSize → IO CSize)
-        rwopsWrite : FunPtr (Ptr (RWops {ℓ}) → Ptr (⊤ {ℓ}) → CSize → CSize → IO CSize)
-        rwopsClose : FunPtr (Ptr (RWops {ℓ}) → IO CInt)
+        rwopsSize  : FunPtr (Ptr RWops → IO Int64)
+        rwopsSeek  : FunPtr (Ptr RWops → Int64 → CInt → IO Int64)
+        rwopsRead  : FunPtr (Ptr RWops → Ptr (⊤ {lzero}) → CSize → CSize → IO CSize)
+        rwopsWrite : FunPtr (Ptr RWops → Ptr (⊤ {lzero}) → CSize → CSize → IO CSize)
+        rwopsClose : FunPtr (Ptr RWops → IO CInt)
         rwopsType  : Word32
 
-{-# FOREIGN GHC type AgdaRWops ℓ = SDL.Raw.Types.RWops #-}
-{-# COMPILE GHC RWops = data AgdaRWops (SDL.Raw.Types.RWops) #-}
+{-# COMPILE GHC RWops = data SDL.Raw.Types.RWops (SDL.Raw.Types.RWops) #-}
 
 postulate
-    Eq[RWops]       : Eq (RWops {ℓ})
-    Show[RWops]     : Show (RWops {ℓ})
-    Storable[RWops] : Storable (RWops {ℓ})
+    Eq[RWops]       : Eq RWops
+    Show[RWops]     : Show RWops
+    Storable[RWops] : Storable RWops
 
-{-# COMPILE GHC Eq[RWops]       = \ ℓ -> AgdaEq       #-}
-{-# COMPILE GHC Show[RWops]     = \ ℓ -> AgdaShow     #-}
-{-# COMPILE GHC Storable[RWops] = \ ℓ -> AgdaStorable #-}
+{-# COMPILE GHC Eq[RWops]       = AgdaEq       #-}
+{-# COMPILE GHC Show[RWops]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[RWops] = AgdaStorable #-}
 
 
-record Surface {aℓ bℓ} : Set (aℓ ⊔ bℓ) where
+record Surface : Set where
     constructor mkSurface
     field
         surfaceFormat   : Ptr PixelFormat
         surfaceW        : CInt
         surfaceH        : CInt
-        surfacePixels   : Ptr (⊤ {aℓ})
-        surfaceUserdata : Ptr (⊤ {bℓ})
+        surfacePixels   : Ptr (⊤ {lzero})
+        surfaceUserdata : Ptr (⊤ {lzero})
         surfaceClipRect : Rect
         surfaceRefcount : CInt
 
-{-# FOREIGN GHC type AgdaSurface aℓ bℓ = SDL.Raw.Types.Surface  #-}
-{-# COMPILE GHC Surface = data AgdaSurface (SDL.Raw.Types.Surface) #-}
+{-# COMPILE GHC Surface = data SDL.Raw.Types.Surface (SDL.Raw.Types.Surface) #-}
 
 postulate
-    Eq[Surface]       : Eq (Surface {aℓ} {bℓ})
-    Show[Surface]     : Show (Surface {aℓ} {bℓ})
-    Storable[Surface] : Storable (Surface {aℓ} {bℓ})
+    Eq[Surface]       : Eq Surface
+    Show[Surface]     : Show Surface
+    Storable[Surface] : Storable Surface
 
-{-# COMPILE GHC Eq[Surface]       = \ aℓ bℓ -> AgdaEq       #-}
-{-# COMPILE GHC Show[Surface]     = \ aℓ bℓ -> AgdaShow     #-}
-{-# COMPILE GHC Storable[Surface] = \ aℓ bℓ -> AgdaStorable #-}
+{-# COMPILE GHC Eq[Surface]       = AgdaEq       #-}
+{-# COMPILE GHC Show[Surface]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[Surface] = AgdaStorable #-}
 
 
 record Version : Set where
@@ -685,45 +677,45 @@ postulate
 
 -- Function Types
 
-VkGetInstanceProcAddrFunc : ∀{aℓ ℓ} → Set (aℓ ⊔ ℓ)
-VkGetInstanceProcAddrFunc {aℓ} {ℓ} = VkInstance {aℓ} → CString → IO (FunPtr (⊤ {ℓ}))
+VkGetInstanceProcAddrFunc : Set
+VkGetInstanceProcAddrFunc = VkInstance → CString → IO (FunPtr (⊤ {lzero}))
 
-AudioCallback : ∀{aℓ} → Set aℓ
-AudioCallback {aℓ} = FunPtr (Ptr (⊤ {aℓ}) → Ptr Word8 → CInt → IO (⊤ {lzero}))
+AudioCallback : Set
+AudioCallback = FunPtr (Ptr (⊤ {lzero}) → Ptr Word8 → CInt → IO (⊤ {lzero}))
 
-EventFilter : ∀{aℓ bℓ cℓ dℓ} → Set (aℓ ⊔ bℓ ⊔ cℓ ⊔ dℓ)
-EventFilter {aℓ} {bℓ} {cℓ} {dℓ} = FunPtr (Ptr (⊤ {aℓ}) → Ptr (Event {bℓ} {cℓ} {dℓ}) → IO CInt)
+EventFilter : Set
+EventFilter = FunPtr (Ptr (⊤ {lzero}) → Ptr Event → IO CInt)
 
-HintCallback : ∀{aℓ} → Set aℓ
-HintCallback {aℓ} = FunPtr (Ptr (⊤ {aℓ}) → CString → CString → CString → IO (⊤ {lzero}))
+HintCallback : Set
+HintCallback = FunPtr (Ptr (⊤ {lzero}) → CString → CString → CString → IO (⊤ {lzero}))
 
-LogOutputFunction : ∀{aℓ} → Set aℓ
-LogOutputFunction {aℓ} = FunPtr (Ptr (⊤ {aℓ}) → CInt → LogPriority → CString → IO (⊤ {lzero}))
+LogOutputFunction : Set
+LogOutputFunction = FunPtr (Ptr (⊤ {lzero}) → CInt → LogPriority → CString → IO (⊤ {lzero}))
 
-ThreadFunction : ∀{aℓ} → Set aℓ
-ThreadFunction {aℓ} = FunPtr (Ptr (⊤ {aℓ}) → IO CInt)
+ThreadFunction : Set
+ThreadFunction = FunPtr (Ptr (⊤ {lzero}) → IO CInt)
 
-TimerCallback : ∀{aℓ} → Set aℓ
-TimerCallback {aℓ} = FunPtr (Word32 → Ptr (⊤ {aℓ}) → IO Word32)
+TimerCallback : Set
+TimerCallback = FunPtr (Word32 → Ptr (⊤ {lzero}) → IO Word32)
 
 postulate
-    mkAudioCallback     : (Ptr (⊤ {aℓ}) → Ptr Word8 → CInt → IO (⊤ {lzero})) → IO (AudioCallback {aℓ})
-    mkEventFilter       : (Ptr (⊤ {aℓ}) → Ptr (Event {bℓ} {cℓ} {dℓ}) → IO CInt) → IO (EventFilter {aℓ} {bℓ} {cℓ} {dℓ})
-    mkHintCallback      : (Ptr (⊤ {aℓ}) → CString → CString → CString → IO (⊤ {lzero})) → IO (HintCallback {aℓ})
-    mkLogOutputFunction : (Ptr (⊤ {aℓ}) → CInt → LogPriority → CString → IO (⊤ {lzero})) → IO (LogOutputFunction {aℓ})
-    mkThreadFunction    : (Ptr (⊤ {aℓ}) → IO CInt) → IO (ThreadFunction {aℓ})
-    mkTimerCallback     : (Word32 → Ptr (⊤ {aℓ}) → IO Word32) → IO (TimerCallback {aℓ})
+    mkAudioCallback     : (Ptr (⊤ {lzero}) → Ptr Word8 → CInt → IO (⊤ {lzero})) → IO AudioCallback
+    mkEventFilter       : (Ptr (⊤ {lzero}) → Ptr Event → IO CInt) → IO EventFilter
+    mkHintCallback      : (Ptr (⊤ {lzero}) → CString → CString → CString → IO (⊤ {lzero})) → IO HintCallback
+    mkLogOutputFunction : (Ptr (⊤ {lzero}) → CInt → LogPriority → CString → IO (⊤ {lzero})) → IO LogOutputFunction
+    mkThreadFunction    : (Ptr (⊤ {lzero}) → IO CInt) → IO ThreadFunction
+    mkTimerCallback     : (Word32 → Ptr (⊤ {lzero}) → IO Word32) → IO TimerCallback
 
-{-# COMPILE GHC mkAudioCallback     = \ aℓ          -> SDL.Raw.Types.mkAudioCallback     #-}
-{-# COMPILE GHC mkEventFilter       = \ aℓ bℓ cℓ dℓ -> SDL.Raw.Types.mkEventFilter       #-}
-{-# COMPILE GHC mkHintCallback      = \ aℓ          -> SDL.Raw.Types.mkHintCallback      #-}
-{-# COMPILE GHC mkLogOutputFunction = \ aℓ          -> SDL.Raw.Types.mkLogOutputFunction #-}
-{-# COMPILE GHC mkThreadFunction    = \ aℓ          -> SDL.Raw.Types.mkThreadFunction    #-}
-{-# COMPILE GHC mkTimerCallback     = \ aℓ          -> SDL.Raw.Types.mkTimerCallback     #-}
+{-# COMPILE GHC mkAudioCallback     = SDL.Raw.Types.mkAudioCallback     #-}
+{-# COMPILE GHC mkEventFilter       = SDL.Raw.Types.mkEventFilter       #-}
+{-# COMPILE GHC mkHintCallback      = SDL.Raw.Types.mkHintCallback      #-}
+{-# COMPILE GHC mkLogOutputFunction = SDL.Raw.Types.mkLogOutputFunction #-}
+{-# COMPILE GHC mkThreadFunction    = SDL.Raw.Types.mkThreadFunction    #-}
+{-# COMPILE GHC mkTimerCallback     = SDL.Raw.Types.mkTimerCallback     #-}
 
 -- Data Structures
 
-record AudioSpec {aℓ} : Set aℓ where
+record AudioSpec : Set where
     constructor mkAudioSpec
     field
         audioSpecFreq     : CInt
@@ -732,17 +724,16 @@ record AudioSpec {aℓ} : Set aℓ where
         audioSpecSilence  : Word8
         audioSpecSamples  : Word16
         audioSpecSize     : Word32
-        audioSpecCallback : AudioCallback {aℓ} -- same level userdata (?)
-        audioSpecUserdata : Ptr (⊤ {aℓ})
+        audioSpecCallback : AudioCallback
+        audioSpecUserdata : Ptr (⊤ {lzero})
 
-{-# FOREIGN GHC type AgdaAudioSpec aℓ ℓ = SDL.Raw.Types.AudioSpec #-}
-{-# COMPILE GHC AudioSpec = data AgdaAudioSpec (SDL.Raw.Types.AudioSpec) #-}
+{-# COMPILE GHC AudioSpec = data SDL.Raw.Types.AudioSpec (SDL.Raw.Types.AudioSpec) #-}
 
 postulate
-    Eq[AudioSpec]       : Eq (AudioSpec {aℓ})
-    Show[AudioSpec]     : Show (AudioSpec {aℓ})
-    Storable[AudioSpec] : Storable (AudioSpec {aℓ})
+    Eq[AudioSpec]       : Eq AudioSpec
+    Show[AudioSpec]     : Show AudioSpec
+    Storable[AudioSpec] : Storable AudioSpec
 
-{-# COMPILE GHC Eq[AudioSpec]       = \ aℓ -> AgdaEq       #-}
-{-# COMPILE GHC Show[AudioSpec]     = \ aℓ -> AgdaShow     #-}
-{-# COMPILE GHC Storable[AudioSpec] = \ aℓ -> AgdaStorable #-}
+{-# COMPILE GHC Eq[AudioSpec]       = AgdaEq       #-}
+{-# COMPILE GHC Show[AudioSpec]     = AgdaShow     #-}
+{-# COMPILE GHC Storable[AudioSpec] = AgdaStorable #-}

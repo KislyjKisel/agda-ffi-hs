@@ -55,7 +55,7 @@ postulate
     RealFrac   : Set aℓ → Set aℓ
     Floating   : Set aℓ → Set aℓ
     RealFloat  : Set aℓ → Set aℓ
-    
+
     Bits       : Set aℓ → Set aℓ
     FiniteBits : Set aℓ → Set aℓ
 
@@ -85,7 +85,7 @@ postulate
     MonadFix      : (Set aℓ → Set aℓ) → Set aℓ
     MonadZip      : (Set aℓ → Set aℓ) → Set aℓ
     MonadIO       : (Set aℓ → Set aℓ) → Set aℓ
-    
+
     Category    : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Arrow       : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     ArrowZero   : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
@@ -93,11 +93,11 @@ postulate
     ArrowApply  : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     ArrowPlus   : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     ArrowLoop   : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
-    
+
     Bifunctor     : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Bifoldable    : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Bitraversable : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
-    
+
     Storable  : Set aℓ → Set aℓ
     Exception : Set aℓ → Set aℓ
 

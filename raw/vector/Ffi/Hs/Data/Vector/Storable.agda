@@ -24,6 +24,9 @@ open import Ffi.Hs.GHC.IsList              using (IsList)
 open Ffi.Hs.-base.Class public
     using (Storable)
 
+open import Ffi.Hs.Data.Vector.Storable.Mutable public
+    using (MVector)
+
 {-# FOREIGN GHC
 import qualified Data.Vector.Storable
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -65,19 +68,6 @@ postulate
 {-# COMPILE GHC Semigroup[Vector[A]] = \ aℓ a AgdaStorable          -> AgdaSemigroup #-}
 {-# COMPILE GHC Monoid[Vector[A]]    = \ aℓ a AgdaStorable          -> AgdaMonoid    #-}
 {-# COMPILE GHC NFData[Vector[A]]    = \ aℓ a                       -> AgdaNFData    #-}
-
-data MVector (S : Set) (A : Set aℓ) : Set aℓ where
-    mkMVector : Int → ForeignPtr A → MVector S A
-
-{-# FOREIGN GHC type AgdaMVector aℓ = Data.Vector.Storable.MVector #-}
-{-# COMPILE GHC MVector = data(1) AgdaMVector (Data.Vector.Storable.MVector) #-}
-
-postulate
-    NFData1[MVector[S]]  : NFData1 (MVector {aℓ} S)
-    NFData[MVector[S,A]] : NFData (MVector S A)
-
-{-# COMPILE GHC NFData1[MVector[S]]  = \ aℓ s   -> AgdaNFData1 #-}
-{-# COMPILE GHC NFData[MVector[S,A]] = \ s aℓ a -> AgdaNFData  #-}
 
 infixr 5 _++_
 

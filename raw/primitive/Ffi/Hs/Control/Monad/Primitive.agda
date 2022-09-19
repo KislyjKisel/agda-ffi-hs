@@ -25,7 +25,7 @@ private
 postulate
     PrimMonad : (Set aℓ → Set aℓ) → Set aℓ
 
-    PrimState : (M : Set aℓ → Set aℓ) → ⦃ PrimMonad M ⦄ → Set aℓ
+    PrimState : (M : Set aℓ → Set aℓ) → ⦃ PrimMonad M ⦄ → Set
 
     primitiv  : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → Tuple2# (State# (PrimState M)) A) → M A
     primitiv- : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → State# (PrimState M)) → M ⊤

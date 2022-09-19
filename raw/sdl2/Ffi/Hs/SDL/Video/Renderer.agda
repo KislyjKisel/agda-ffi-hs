@@ -2,14 +2,27 @@
 
 module Ffi.Hs.SDL.Video.Renderer where
 
-open import Agda.Builtin.Maybe using (Maybe)
-open import Agda.Builtin.Bool using (Bool)
-open import Ffi.Hs.-base.Class
+open import Agda.Builtin.Bool                   using (Bool)
+open import Agda.Builtin.Char                   using (Char)
+open import Agda.Builtin.List                   using (List)
+open import Agda.Builtin.Maybe                  using (Maybe)
+open import Agda.Builtin.String                 using () renaming (String to Text)
 open import Agda.Primitive
-open import Ffi.Hs.SDL.Vect using (V2; Point)
-open import Ffi.Hs.-base.Unit using (⊤)
-open import Ffi.Hs.Foreign.C.Types using (CInt; CDouble)
+open import Ffi.Hs.-base.Class
+open import Ffi.Hs.-base.Unit                   using (⊤)
+open import Ffi.Hs.Data.ByteString              using (ByteString)
+open import Ffi.Hs.Data.StateVar                using (StateVar)
+open import Ffi.Hs.Data.Tuple                   using (Tuple2)
+open import Ffi.Hs.Data.Vector.Storable         using (Vector)
+open import Ffi.Hs.Data.Vector.Storable.Mutable using (IOVector)
+open import Ffi.Hs.Data.Word                    using (Word8; Word32)
+open import Ffi.Hs.Foreign.C.Types              using (CInt; CFloat; CDouble)
+open import Ffi.Hs.Foreign.Ptr                  using (Ptr)
+open import Ffi.Hs.SDL.Internal.Types           using (Window)
+open import Ffi.Hs.SDL.Raw.Types as Raw         using ()
+open import Ffi.Hs.SDL.Vect                     using (V2; V3; V4; Point)
 
+-- todo: compile
 
 private
     variable
@@ -64,7 +77,7 @@ data Rectangle (A : Set aℓ) : Set aℓ where
     mkRectangle : Point V2 A → V2 A → Rectangle A
 
 postulate
-    Functor[Rectangle]     : Functor Rectangle
+    Functor[Rectangle]     : Functor {aℓ} Rectangle
     Eq[Rectangle[A]]       : ⦃ Eq A ⦄ → Eq (Rectangle A)
     Ord[Rectangle[A]]      : ⦃ Ord A ⦄ → Ord (Rectangle A)
     Read[Rectangle[A]]     : ⦃ Read A ⦄ → Read (Rectangle A)
@@ -99,13 +112,13 @@ data BlendMode : Set where
     BlendMod        : BlendMode
 
 postulate
-    Bounded[PixelFormat] : Bounded PixelFormat
-    Enum[PixelFormat]    : Enum PixelFormat
-    Eq[PixelFormat]      : Eq PixelFormat
-    Data[PixelFormat]    : Data PixelFormat
-    Ord[PixelFormat]     : Ord PixelFormat
-    Read[PixelFormat]    : Read PixelFormat
-    Show[PixelFormat]    : Show PixelFormat
+    Bounded[BlendMode] : Bounded BlendMode
+    Enum[BlendMode]    : Enum BlendMode
+    Eq[BlendMode]      : Eq BlendMode
+    Data[BlendMode]    : Data BlendMode
+    Ord[BlendMode]     : Ord BlendMode
+    Read[BlendMode]    : Read BlendMode
+    Show[BlendMode]    : Show BlendMode
 
 
 postulate
@@ -119,39 +132,11 @@ postulate
     renderTargetSupported : ⦃ MonadIO M ⦄ → Renderer → M Bool
 
 
-data Surface : Set where
-    mkSurface : Ptr Raw.Surface → Maybe (IOVector Word8) → Surface
+data SurfacePixelFormat : Set where
+    mkSurfacePixelFormat : Ptr Raw.PixelFormat → SurfacePixelFormat
 
 postulate
-    updateWindowSurface : ⦃ MonadIO M ⦄ → Window → M ⊤
-    surfaceBlit         : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → Surface → Maybe (Point V2 CInt) → M (Maybe (Rectangle CInt))
-    surfaceBlitScaled   : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → Surface → Maybe (Rectangle CInt) → M ⊤
-    surfaceFillRect     : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → V4 Word8 → M ⊤
-    surfaceFillRects    : ⦃ MonadIO M ⦄ → Surface → Vector (Rectangle CInt) → V4 Word8 → M ⊤
-
-    convertSurface       : ⦃ MonadIO M ⦄ → Surface → SurfacePixelFormat → M Surface
-    createRGBSurface     : ⦃ MonadIO M ⦄ → V2 CInt → PixelFormat → M Surface
-    createRGBSurfaceFrom : ⦃ MonadIO M ⦄ → IOVector Word8 → V2 CInt → CInt → PixelFormat → M Surface
-    freeSurface          : ⦃ MonadIO M ⦄ → Surface → M ⊤
-    getWindowSurface     : ⦃ MonadIO M ⦄ → Window → M Surface
-    loadBMP              : ⦃ MonadIO M ⦄ → FilePath → M Surface
-
-    surfaceColorKey   : Surface → StateVar (Maybe (V4 Word8))
-    surfaceBlendMode  : Surface → StateVar BlendMode
-    surfaceDimensions : ⦃ MonadIO M ⦄ → Surface → M (V2 CInt)
-    surfaceFormat     : ⦃ MonadIO M ⦄ → Surface → M SurfacePixelFormat
-    surfacePixels     : ⦃ MonadIO M ⦄ → Surface → M (Ptr ⊤)
-
-    lookSurface   : ⦃ MonadIO M ⦄ → Surface → M ⊤
-    unlockSurface : ⦃ MonadIO M ⦄ → Surface → M ⊤
-
-postulate
-    Palette : Set
-    Eq[Palette] : Eq Palette
-
-    paletteNColors : ⦃ MonadIO M ⦄ → Palette → M CInt
-    paletteColors  : ⦃ MonadIO M ⦄ → Palette → M (Maybe (Vector (V4 Word8)))
-    paletteColor   : ⦃ MonadIO M ⦄ → Palette → CInt → M (Maybe (V4 Word8))
+    Eq[SurfacePixelFormat] : Eq SurfacePixelFormat
 
 
 data PixelFormat : Set where
@@ -199,14 +184,47 @@ postulate
     Read[PixelFormat] : Read PixelFormat
     Show[PixelFormat] : Show PixelFormat
 
-data SurfacePixelFormat : Set where
-    mkSurfacePixelFormat : Ptr Raw.PixelFormat → SurfacePixelFormat
+
+data Surface : Set where
+    mkSurface : Ptr Raw.Surface → Maybe (IOVector Word8) → Surface
 
 postulate
+    updateWindowSurface : ⦃ MonadIO M ⦄ → Window → M ⊤
+    surfaceBlit         : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → Surface → Maybe (Point V2 CInt) → M (Maybe (Rectangle CInt))
+    surfaceBlitScaled   : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → Surface → Maybe (Rectangle CInt) → M ⊤
+    surfaceFillRect     : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → V4 Word8 → M ⊤
+    surfaceFillRects    : ⦃ MonadIO M ⦄ → Surface → Vector (Rectangle CInt) → V4 Word8 → M ⊤
+
+    convertSurface       : ⦃ MonadIO M ⦄ → Surface → SurfacePixelFormat → M Surface
+    createRGBSurface     : ⦃ MonadIO M ⦄ → V2 CInt → PixelFormat → M Surface
+    createRGBSurfaceFrom : ⦃ MonadIO M ⦄ → IOVector Word8 → V2 CInt → CInt → PixelFormat → M Surface
+    freeSurface          : ⦃ MonadIO M ⦄ → Surface → M ⊤
+    getWindowSurface     : ⦃ MonadIO M ⦄ → Window → M Surface
+    loadBMP              : ⦃ MonadIO M ⦄ → List Char → M Surface
+
+    surfaceColorKey   : Surface → StateVar (Maybe (V4 Word8))
+    surfaceBlendMode  : Surface → StateVar BlendMode
+    surfaceDimensions : ⦃ MonadIO M ⦄ → Surface → M (V2 CInt)
+    surfaceFormat     : ⦃ MonadIO M ⦄ → Surface → M SurfacePixelFormat
+    surfacePixels     : ⦃ MonadIO M ⦄ → Surface → M (Ptr ⊤)
+
+    lookSurface   : ⦃ MonadIO M ⦄ → Surface → M ⊤
+    unlockSurface : ⦃ MonadIO M ⦄ → Surface → M ⊤
+
+
+postulate
+    Palette : Set
+    Eq[Palette] : Eq Palette
+
+    paletteNColors : ⦃ MonadIO M ⦄ → Palette → M CInt
+    paletteColors  : ⦃ MonadIO M ⦄ → Palette → M (Maybe (Vector (V4 Word8)))
+    paletteColor   : ⦃ MonadIO M ⦄ → Palette → CInt → M (Maybe (V4 Word8))
+
     formatPalette      : ⦃ MonadIO M ⦄ → SurfacePixelFormat → M (Maybe Palette)
     setPaletteColors   : ⦃ MonadIO M ⦄ → Palette → Vector (V4 Word8) → CInt → M ⊤
     pixelFormatToMasks : ⦃ MonadIO M ⦄ → PixelFormat → M (Tuple2 CInt (V4 Word32))
     masksToPixelFormat : ⦃ MonadIO M ⦄ → CInt → V4 Word32 → M PixelFormat
+
 
 data TextureAccess : Set where
     TextureAccessStatic    : TextureAccess
@@ -272,3 +290,4 @@ postulate
 
     getRendererInfo     : ⦃ MonadIO M ⦄ → Renderer → M RendererInfo
     getRenderDriverInfo : ⦃ MonadIO M ⦄ → M (List RendererInfo)
+ 

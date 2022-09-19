@@ -8,5 +8,6 @@ open import Agda.Primitive
 
 postulate
     V2 : ∀{aℓ} → Set aℓ → Set aℓ
+    V3 : ∀{aℓ} → Set aℓ → Set aℓ
     V4 : ∀{aℓ} → Set aℓ → Set aℓ
     Point : ∀{aℓ bℓ} → (Set aℓ → Set bℓ) → Set aℓ → Set (aℓ ⊔ bℓ)
