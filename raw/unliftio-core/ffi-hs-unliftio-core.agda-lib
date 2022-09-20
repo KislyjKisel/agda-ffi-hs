@@ -1,0 +1,3 @@
+name: ffi-hs-unliftio-core
+include: .
+depend: ffi-hs-base
