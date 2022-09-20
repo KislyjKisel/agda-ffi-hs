@@ -3,7 +3,7 @@
 module Ffi.Hs.Data.Functor where
 
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit using (⊤)
+open import Ffi.Hs.-base.Unit using (⊤; ⊤′)
 
 open import Ffi.Hs.-base.Class public
     using (Functor)
@@ -29,7 +29,7 @@ postulate
     _$>_    : ⦃ Functor F ⦄ → F A → B → F B
     _<$>_   : ⦃ Functor F ⦄ → (A → B) → F A → F B
     _<&>_   : ⦃ Functor F ⦄ → F A → (A → B) → F B
-    void    : ⦃ Functor F ⦄ → F A → F ⊤
+    void    : ⦃ Functor F ⦄ → F A → F ⊤′
 
 {-# COMPILE GHC fmap  = \ fℓ f a b AgdaFunctor -> Data.Functor.fmap  #-}
 {-# COMPILE GHC _<$_  = \ fℓ f a b AgdaFunctor -> (Data.Functor.<$)  #-}

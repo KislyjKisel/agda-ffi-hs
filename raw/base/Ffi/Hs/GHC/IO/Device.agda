@@ -8,7 +8,7 @@ open import Agda.Builtin.IO    using (IO)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Eq; Ord; Read; Show; Enum; Ix)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Word   using (Word8; Word64)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
@@ -27,7 +27,7 @@ postulate
     RawIO : Set aℓ → Set aℓ
     read             : ⦃ RawIO A ⦄ → A → Ptr Word8 → Word64 → Int → IO Int
     readNonBlocking  : ⦃ RawIO A ⦄ → A → Ptr Word8 → Word64 → Int → IO (Maybe Int)
-    write            : ⦃ RawIO A ⦄ → A → Ptr Word8 → Word64 → Int → IO (⊤ {lzero})
+    write            : ⦃ RawIO A ⦄ → A → Ptr Word8 → Word64 → Int → IO ⊤
     writeNonBlocking : ⦃ RawIO A ⦄ → A → Ptr Word8 → Word64 → Int → IO Int
 
 {-# FOREIGN GHC data AgdaRawIO aℓ a = GHC.IO.Device.RawIO a => AgdaRawIO #-}
@@ -80,16 +80,16 @@ postulate
 postulate
     IODevice : Set aℓ → Set aℓ
     ready      : ⦃ IODevice A ⦄ → A → Bool → Int → IO Bool
-    close      : ⦃ IODevice A ⦄ → A → IO (⊤ {lzero})
+    close      : ⦃ IODevice A ⦄ → A → IO ⊤
     isTerminal : ⦃ IODevice A ⦄ → A → IO Bool
     isSeekable : ⦃ IODevice A ⦄ → A → IO Bool
     seek       : ⦃ IODevice A ⦄ → A → SeekMode → Integer → IO Integer
     tell       : ⦃ IODevice A ⦄ → A → IO Integer
     getSize    : ⦃ IODevice A ⦄ → A → IO Integer
-    setSize    : ⦃ IODevice A ⦄ → A → Integer → IO (⊤ {lzero})
-    setEcho    : ⦃ IODevice A ⦄ → A → Bool → IO (⊤ {lzero})
+    setSize    : ⦃ IODevice A ⦄ → A → Integer → IO ⊤
+    setEcho    : ⦃ IODevice A ⦄ → A → Bool → IO ⊤
     getEcho    : ⦃ IODevice A ⦄ → A → IO Bool
-    setRaw     : ⦃ IODevice A ⦄ → A → Bool → IO (⊤ {lzero})
+    setRaw     : ⦃ IODevice A ⦄ → A → Bool → IO ⊤
     devType    : ⦃ IODevice A ⦄ → A → IO IODeviceType
     dup        : ⦃ IODevice A ⦄ → A → IO A
     dup2       : ⦃ IODevice A ⦄ → A → A → IO A

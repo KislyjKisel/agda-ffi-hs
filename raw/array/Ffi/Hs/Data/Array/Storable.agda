@@ -5,7 +5,7 @@ module Ffi.Hs.Data.Array.Storable where
 open import Agda.Builtin.IO    using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Storable)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
 
 open import Ffi.Hs.Data.Array.MArray public
@@ -31,7 +31,7 @@ postulate
     MArray[StorableArray,E,IO] : ⦃ Storable E ⦄ → MArray StorableArray E IO
 
     withStorableArray  : StorableArray I E → (Ptr E → IO A) → IO A
-    touchStorableArray : StorableArray I E → IO (⊤ {lzero})
+    touchStorableArray : StorableArray I E → IO ⊤
 
 {-# FOREIGN GHC type AgdaStorableArray aℓ = Data.Array.StorableArray.StorableArray #-}
 {-# COMPILE GHC StorableArray = type(1) AgdaStorableArray #-}

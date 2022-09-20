@@ -10,7 +10,7 @@ open import Agda.Builtin.Maybe     using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class     using (Integral; Bounded; RealFloat)
 open import Ffi.Hs.-base.Float     using (Float; Double)
-open import Ffi.Hs.-base.Unit      using (⊤)
+open import Ffi.Hs.-base.Unit      using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int        using (Int; Int8; Int16; Int32; Int64)
 open import Ffi.Hs.Data.Word       using (Word; Word8; Word16; Word32; Word64)
 open import Ffi.Hs.Numeric.Natural using (Natural)
@@ -131,11 +131,11 @@ postulate
 postulate
     IsChar[Char] : IsChar Char
 
-    PrintfType[IO[⊤]]      : PrintfType (IO (⊤ {aℓ}))
+    PrintfType[IO[⊤]]      : PrintfType (IO (⊤′ {aℓ}))
     PrintfType[List[Char]] : PrintfType (List Char)
     PrintfType[A⟶B]        : ⦃ PrintfArg A ⦄ → ⦃ PrintfType B ⦄ → PrintfType (A → B)
     
-    HPrintfType[IO[⊤]] : HPrintfType (IO (⊤ {aℓ}))
+    HPrintfType[IO[⊤]] : HPrintfType (IO (⊤′ {aℓ}))
     HPrintfType[A⟶B]   : ⦃ PrintfArg A ⦄ → ⦃ HPrintfType B ⦄ → HPrintfType (A → B)
     
     PrintfArg[Int]        : PrintfArg Int

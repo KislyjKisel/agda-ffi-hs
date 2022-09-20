@@ -9,7 +9,7 @@ open import Agda.Builtin.Maybe  using (Maybe)
 open import Agda.Builtin.List   using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Tuple  using (Tuple2)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
@@ -72,25 +72,25 @@ postulate
 
     withFile   : FilePath → IOMode → (Handle → IO A) → IO A
     openFile   : FilePath → IOMode → IO Handle
-    hClose     : Handle → IO (⊤ {lzero})
+    hClose     : Handle → IO ⊤
     readFile   : FilePath → IO (List Char)
     readFile'  : FilePath → IO (List Char)
-    writeFile  : FilePath → List Char → IO (⊤ {lzero})
-    appendFile : FilePath → List Char → IO (⊤ {lzero})
+    writeFile  : FilePath → List Char → IO ⊤
+    appendFile : FilePath → List Char → IO ⊤
 
     hFileSize    : Handle → IO Integer
-    hSetFileSize : Handle → Integer → IO (⊤ {lzero})
+    hSetFileSize : Handle → Integer → IO ⊤
     hIsEOF : Handle → IO Bool
     isEOF  : IO Bool
 
-    hSetBuffering : Handle → BufferMode → IO (⊤ {lzero})
+    hSetBuffering : Handle → BufferMode → IO ⊤
     hGetBuffering : Handle → IO BufferMode
-    hFlush        : Handle → IO (⊤ {lzero})
+    hFlush        : Handle → IO ⊤
 
     HandlePosn : Set
     hGetPosn : Handle → IO HandlePosn
-    hSetPosn : HandlePosn → IO (⊤ {lzero})
-    hSeek    : Handle → SeekMode → Integer → IO (⊤ {lzero})
+    hSetPosn : HandlePosn → IO ⊤
+    hSeek    : Handle → SeekMode → Integer → IO ⊤
     hTell    : Handle → IO Integer
 
     hIsOpen     : Handle → IO Bool
@@ -100,7 +100,7 @@ postulate
     hIsSeekable : Handle → IO Bool
 
     hIsTerminalDevice : Handle → IO Bool
-    hSetEcho          : Handle → Bool → IO (⊤ {lzero})
+    hSetEcho          : Handle → Bool → IO ⊤
     hGetEcho          : Handle → IO Bool
 
     hShow : Handle → IO (List Char)
@@ -113,16 +113,16 @@ postulate
     hGetContents  : Handle → IO (List Char)
     hGetContents' : Handle → IO (List Char)
 
-    hPutChar  : Handle → Char → IO (⊤ {lzero})
-    hPutStr   : Handle → List Char → IO (⊤ {lzero})
-    hPutStrLn : Handle → List Char → IO (⊤ {lzero})
-    hPrint    : ⦃ Show A ⦄ → Handle → A → IO (⊤ {lzero})
+    hPutChar  : Handle → Char → IO ⊤
+    hPutStr   : Handle → List Char → IO ⊤
+    hPutStrLn : Handle → List Char → IO ⊤
+    hPrint    : ⦃ Show A ⦄ → Handle → A → IO ⊤
 
-    interact     : (List Char → List Char) → IO (⊤ {lzero})
-    putChar      : Char → IO (⊤ {lzero})
-    putStr       : List Char → IO (⊤ {lzero})
-    putStrLn     : List Char → IO (⊤ {lzero})
-    print        : ⦃ Show A ⦄ → A → IO (⊤ {lzero})
+    interact     : (List Char → List Char) → IO ⊤
+    putChar      : Char → IO ⊤
+    putStr       : List Char → IO ⊤
+    putStrLn     : List Char → IO ⊤
+    print        : ⦃ Show A ⦄ → A → IO ⊤
     getChar      : IO Char
     getLine      : IO (List Char)
     getContents  : IO (List Char)
@@ -132,8 +132,8 @@ postulate
 
     withBinaryFile : FilePath → IOMode → (Handle → IO A) → IO A
     openBinaryFile : FilePath → IOMode → IO Handle
-    hSetBinaryMode : Handle → Bool → IO (⊤ {lzero})
-    hPutBuf : Handle → Ptr A → Int → IO (⊤ {lzero})
+    hSetBinaryMode : Handle → Bool → IO ⊤
+    hPutBuf : Handle → Ptr A → Int → IO ⊤
     hGetBuf : Handle → Ptr A → Int → IO Int
     hGetBufSome : Handle → Ptr A → Int → IO Int
     hPutBufNonBlocking : Handle → Ptr A → Int → IO Int
@@ -145,7 +145,7 @@ postulate
     openBinaryTempFileWithDefaultPermissions : FilePath → List Char → IO (Tuple2 FilePath Handle)
 
     TextEncoding   : Set
-    hSetEncoding   : Handle → TextEncoding → IO (⊤ {lzero})
+    hSetEncoding   : Handle → TextEncoding → IO ⊤
     hGetEncoding   : Handle → IO (Maybe TextEncoding)
     mkTextEncoding : List Char → IO TextEncoding
 
@@ -154,7 +154,7 @@ postulate
     utf32 utf32le utf32be       : TextEncoding
     latin1 localeEncoding char8 : TextEncoding
 
-    hSetNewlineMode      : Handle → NewlineMode → IO (⊤ {lzero})
+    hSetNewlineMode      : Handle → NewlineMode → IO ⊤
     nativeNewline        : Newline
     noNewlineTranslation : NewlineMode
     universalNewlineMode : NewlineMode

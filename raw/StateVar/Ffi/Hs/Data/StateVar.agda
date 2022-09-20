@@ -5,7 +5,7 @@ module Ffi.Hs.Data.StateVar where
 open import Agda.Builtin.IO                    using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class                 using (MonadIO; Storable; Contravariant)
-open import Ffi.Hs.-base.Unit                  using (⊤)
+open import Ffi.Hs.-base.Unit                  using (⊤; ⊤′)
 open import Ffi.Hs.Control.Concurrent.STM.TVar using (TVar)
 open import Ffi.Hs.Control.Monad.STM           using (STM)
 open import Ffi.Hs.Data.IORef                  using (IORef)
@@ -27,13 +27,13 @@ private
         M : Set aℓ → Set aℓ
 
 data StateVar (A : Set aℓ) : Set aℓ where
-    mkStateVar : IO A → (A → IO (⊤ {lzero})) → StateVar A
+    mkStateVar : IO A → (A → IO ⊤) → StateVar A
 
 {-# FOREIGN GHC type AgdaStateVar aℓ = Data.StateVar.StateVar #-}
 {-# COMPILE GHC StateVar = data(1) AgdaStateVar (Data.StateVar.StateVar) #-}
 
 postulate
-    makeStateVar : IO A → (A → IO (⊤ {lzero})) → StateVar A
+    makeStateVar : IO A → (A → IO ⊤) → StateVar A
     mapStateVar  : (B → A) → (A → B) → StateVar A → StateVar B
 
 {-# COMPILE GHC makeStateVar = \ aℓ a      -> Data.StateVar.makeStateVar #-}
@@ -71,7 +71,7 @@ makeGettableStateVar : IO A → GettableStateVar A
 makeGettableStateVar x = x
 
 data SettableStateVar (A : Set aℓ) : Set aℓ where
-    mkSettableStateVar : (A → IO (⊤ {lzero})) → SettableStateVar A
+    mkSettableStateVar : (A → IO ⊤) → SettableStateVar A
 
 {-# FOREIGN GHC type AgdaSettableStateVar aℓ = Data.StateVar.SettableStateVar #-}
 {-# COMPILE GHC SettableStateVar = data(1) AgdaSettableStateVar (Data.StateVar.SettableStateVar) #-}
@@ -80,8 +80,8 @@ infixr 2 _$=_ _$=!_
 
 postulate
     HasSetter : Set tℓ → Set aℓ → Set (tℓ ⊔ aℓ)
-    _$=_ : ⦃ HasSetter T A ⦄ → ⦃ MonadIO M ⦄ → T → A → M ⊤
-    _$=!_ : ⦃ HasSetter T A ⦄ → ⦃ MonadIO M ⦄ → T → A → M ⊤
+    _$=_ : ⦃ HasSetter T A ⦄ → ⦃ MonadIO M ⦄ → T → A → M ⊤′
+    _$=!_ : ⦃ HasSetter T A ⦄ → ⦃ MonadIO M ⦄ → T → A → M ⊤′
 
     HasSetter[Ptr[A],A]              : ⦃ Storable A ⦄ → HasSetter (Ptr A) A
     HasSetter[ForeignPtr[A],A]       : ⦃ Storable A ⦄ → HasSetter (ForeignPtr A) A
@@ -91,7 +91,7 @@ postulate
     HasSetter[StateVar[A],A]         : HasSetter (StateVar A) A
 
     Contravariant[SettableStateVar] : Contravariant {aℓ} SettableStateVar
-    makeSettableStateVar : (A → IO (⊤ {lzero})) → SettableStateVar A
+    makeSettableStateVar : (A → IO ⊤) → SettableStateVar A
 
 {-# FOREIGN GHC data AgdaHasSetter tℓ aℓ t a = Data.StateVar.HasSetter t a => AgdaHasSetter #-}
 {-# COMPILE GHC HasSetter = type(0) AgdaHasSetter #-}
@@ -113,8 +113,8 @@ infixr 2 _$~_ _$~!_
 
 postulate
     HasUpdate : Set tℓ → Set aℓ → Set bℓ → Set (tℓ ⊔ aℓ ⊔ bℓ)
-    _$~_  : ⦃ HasUpdate T A B ⦄ → ⦃ MonadIO M ⦄ → T → (A → B) → M ⊤
-    _$~!_ : ⦃ HasUpdate T A B ⦄ → ⦃ MonadIO M ⦄ → T → (A → B) → M ⊤
+    _$~_  : ⦃ HasUpdate T A B ⦄ → ⦃ MonadIO M ⦄ → T → (A → B) → M ⊤′
+    _$~!_ : ⦃ HasUpdate T A B ⦄ → ⦃ MonadIO M ⦄ → T → (A → B) → M ⊤′
 
     HasUpdate[Ptr[A],A,A]        : ⦃ Storable A ⦄ → HasUpdate (Ptr A) A A
     HasUpdate[ForeignPtr[A],A,A] : ⦃ Storable A ⦄ → HasUpdate (ForeignPtr A) A A

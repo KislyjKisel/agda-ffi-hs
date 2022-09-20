@@ -8,7 +8,7 @@ open import Agda.Builtin.List        using (List)
 open import Agda.Builtin.Maybe       using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class       using (Eq)
-open import Ffi.Hs.-base.Unit        using (⊤)
+open import Ffi.Hs.-base.Unit        using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.STM using (STM)
 
 import Ffi.Hs.-base.Dictionaries
@@ -34,8 +34,8 @@ postulate
     flushTQueue   : TQueue A → STM (List A)
     peekTQueue    : TQueue A → STM A
     tryPeekTQueue : TQueue A → STM (Maybe A)
-    writeTQueue   : TQueue A → A → STM (⊤ {lzero})
-    unGetTQueue   : TQueue A → A → STM (⊤ {lzero})
+    writeTQueue   : TQueue A → A → STM ⊤
+    unGetTQueue   : TQueue A → A → STM ⊤
     isEmptyTQueue : TQueue A → STM Bool
 
 {-# FOREIGN GHC type AgdaTQueue aℓ = Control.Concurrent.STM.TQueue.TQueue #-}

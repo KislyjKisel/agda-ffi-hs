@@ -5,7 +5,7 @@ module Ffi.Hs.Foreign.ForeignPtr where
 open import Agda.Builtin.IO    using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Foreign.Ptr using (Ptr; FunPtr)
 
@@ -36,21 +36,21 @@ postulate
 {-# COMPILE GHC Ord[ForeignPtr[A]]  = \ aℓ a          -> AgdaOrd  #-}
 
 FinalizerPtr : ∀{ℓ} → Set aℓ → Set (aℓ ⊔ ℓ)
-FinalizerPtr {ℓ = ℓ} A = FunPtr (Ptr A → IO (⊤ {ℓ}))
+FinalizerPtr {ℓ = ℓ} A = FunPtr (Ptr A → IO (⊤′ {ℓ}))
 
 FinalizerEnvPtr : ∀{ℓ} → Set eℓ → Set aℓ → Set (eℓ ⊔ aℓ ⊔ ℓ)
-FinalizerEnvPtr {ℓ = ℓ} Env A = FunPtr (Ptr Env → Ptr A → IO (⊤ {ℓ}))
+FinalizerEnvPtr {ℓ = ℓ} Env A = FunPtr (Ptr Env → Ptr A → IO (⊤′ {ℓ}))
 
 postulate
     newForeignPtr             : ∀{ℓ} → FinalizerPtr {ℓ = ℓ} A → Ptr A → IO (ForeignPtr A)
     newForeignPtr_            : Ptr A → IO (ForeignPtr A)
-    addForeignPtrFinalizer    : ∀{ℓ} → FinalizerPtr {ℓ = ℓ} A → ForeignPtr A → IO (⊤ {lzero})
+    addForeignPtrFinalizer    : ∀{ℓ} → FinalizerPtr {ℓ = ℓ} A → ForeignPtr A → IO ⊤
     newForeignPtrEnv          : ∀{ℓ} {Env : Set eℓ} → FinalizerEnvPtr {ℓ = ℓ} Env A → Ptr Env → Ptr A → IO (ForeignPtr A)
-    addForeignPtrFinalizerEnv : ∀{ℓ} {Env : Set eℓ} → FinalizerEnvPtr {ℓ = ℓ} Env A → Ptr Env → ForeignPtr A → IO (⊤ {lzero}) 
+    addForeignPtrFinalizerEnv : ∀{ℓ} {Env : Set eℓ} → FinalizerEnvPtr {ℓ = ℓ} Env A → Ptr Env → ForeignPtr A → IO ⊤ 
     withForeignPtr            : ForeignPtr A → (Ptr A → IO B) → IO B
-    finalizeForeignPtr        : ForeignPtr A → IO (⊤ {lzero})
+    finalizeForeignPtr        : ForeignPtr A → IO ⊤
 
-    touchForeignPtr : ForeignPtr A → IO (⊤ {lzero})
+    touchForeignPtr : ForeignPtr A → IO ⊤
     castForeignPtr  : ForeignPtr A → ForeignPtr B
     plusForeignPtr  : ForeignPtr A → Int → ForeignPtr B
 

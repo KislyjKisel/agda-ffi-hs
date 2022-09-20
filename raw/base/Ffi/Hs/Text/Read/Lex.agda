@@ -10,7 +10,7 @@ open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Read; Show; Num)
 open import Ffi.Hs.-base.Real  using (Rational)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Eq     using (Eq)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Tuple  using (Tuple2)
@@ -54,7 +54,7 @@ data Lexeme : Set where
 
 postulate
     lex          : ReadP Lexeme
-    expect       : Lexeme → ReadP (⊤ {lzero})
+    expect       : Lexeme → ReadP ⊤
     hsLex        : ReadP (List Char)
     lexChar      : ReadP Char
     isSymbolChar : Char → Bool

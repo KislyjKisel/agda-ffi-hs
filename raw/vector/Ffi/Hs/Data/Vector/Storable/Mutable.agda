@@ -7,7 +7,7 @@ open import Agda.Builtin.IO                using (IO)
 open import Agda.Builtin.Maybe             using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class             using (Storable; Ord; Coercible)
-open import Ffi.Hs.-base.Unit              using (⊤)
+open import Ffi.Hs.-base.Unit              using (⊤; ⊤′)
 open import Ffi.Hs.Control.DeepSeq         using (NFData; NFData1)
 open import Ffi.Hs.Control.Monad.Primitive using (PrimMonad; PrimState)
 open import Ffi.Hs.Data.Int                using (Int)
@@ -74,24 +74,24 @@ postulate
     clone                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → M (MVector (PrimState M) A)
     grow                  : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → M (MVector (PrimState M) A)
     unsafeGrow            : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → M (MVector (PrimState M) A)
-    clear                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → M ⊤
+    clear                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → M ⊤′
     read                  : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → M A
     readMaybe             : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → M (Maybe A)
-    write                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → A → M ⊤
-    modify                : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → A) → Int → M ⊤
-    modifyM               : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → M A) → Int → M ⊤
-    swap                  : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → Int → M ⊤
+    write                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → A → M ⊤′
+    modify                : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → A) → Int → M ⊤′
+    modifyM               : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → M A) → Int → M ⊤′
+    swap                  : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → Int → M ⊤′
     exchange              : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → A → M A
     unsafeRead            : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → M A
-    unsafeWrite           : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → A → M ⊤
-    unsafeModify          : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → A) → Int → M ⊤
-    unsafeModifyM         : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → M A) → Int → M ⊤
-    unsafeSwap            : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → Int → M ⊤
+    unsafeWrite           : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → A → M ⊤′
+    unsafeModify          : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → A) → Int → M ⊤′
+    unsafeModifyM         : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → M A) → Int → M ⊤′
+    unsafeSwap            : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → Int → M ⊤′
     unsafeExchange        : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → Int → A → M A
-    mapM-                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (A → M B) → MVector (PrimState M) A → M ⊤
-    imapM-                : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (Int → A → M B) → MVector (PrimState M) A → M ⊤
-    forM-                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → M B) → M ⊤
-    iforM-                : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (Int → A → M B) → M ⊤
+    mapM-                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (A → M B) → MVector (PrimState M) A → M ⊤′
+    imapM-                : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (Int → A → M B) → MVector (PrimState M) A → M ⊤′
+    forM-                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (A → M B) → M ⊤′
+    iforM-                : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → (Int → A → M B) → M ⊤′
     foldl                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (B → A → B) → B → MVector (PrimState M) A → M B
     foldl'                : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (B → A → B) → B → MVector (PrimState M) A → M B
     foldM                 : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (B → A → M B) → B → MVector (PrimState M) A → M B
@@ -109,11 +109,11 @@ postulate
     ifoldrM               : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (Int → A → B → M B) → B → MVector (PrimState M) A → M B
     ifoldrM'              : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → (Int → A → B → M B) → B → MVector (PrimState M) A → M B
     nextPermutation       : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → ⦃ Ord A ⦄ → MVector (PrimState M) A → M Bool
-    set                   : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → A → M ⊤
-    copy                  : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → MVector (PrimState M) A → M ⊤
-    move                  : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → MVector (PrimState M) A → M ⊤
-    unsafeCopy            : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → MVector (PrimState M) A → M ⊤
-    unsafeMove            : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → MVector (PrimState M) A → M ⊤
+    set                   : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → A → M ⊤′
+    copy                  : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → MVector (PrimState M) A → M ⊤′
+    move                  : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → MVector (PrimState M) A → M ⊤′
+    unsafeCopy            : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → MVector (PrimState M) A → M ⊤′
+    unsafeMove            : ⦃ _ : PrimMonad M ⦄ → ⦃ Storable A ⦄ → MVector (PrimState M) A → MVector (PrimState M) A → M ⊤′
     unsafeCast            : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → MVector S A → MVector S B
     unsafeCoerceMVector   : ⦃ Coercible A B ⦄ → MVector S A → MVector S B
     unsafeFromForeignPtr  : ⦃ Storable A ⦄ → ForeignPtr A → Int → Int → MVector S A

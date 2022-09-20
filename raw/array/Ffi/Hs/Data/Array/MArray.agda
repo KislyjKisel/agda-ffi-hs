@@ -5,7 +5,7 @@ module Ffi.Hs.Data.Array.MArray where
 open import Agda.Builtin.List        using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class       using (Monad)
-open import Ffi.Hs.-base.Unit        using (⊤)
+open import Ffi.Hs.-base.Unit        using (⊤; ⊤′)
 open import Ffi.Hs.Data.Array.IArray using (IArray)
 open import Ffi.Hs.Data.Tuple        using (Tuple2)
 
@@ -36,7 +36,7 @@ postulate
     newListArray : ⦃ MArray A E M ⦄ → ⦃ Ix I ⦄ → Tuple2 I I → List E → M (A I E)
 
     readArray  : ⦃ MArray A E M ⦄ → ⦃ Ix I ⦄ → A I E → I → M E
-    writeArray : ⦃ MArray A E M ⦄ → ⦃ Ix I ⦄ → A I E → I → E → M ⊤
+    writeArray : ⦃ MArray A E M ⦄ → ⦃ Ix I ⦄ → A I E → I → E → M ⊤′
 
     mapArray   : ⦃ MArray A E' M ⦄ → ⦃ MArray A E M ⦄ → ⦃ Ix I ⦄ → (E' → E) → A I E' → M (A I E)
     mapIndices : ⦃ MArray A E M ⦄ → ⦃ Ix I ⦄ → ⦃ Ix J ⦄ → Tuple2 I I → (I → J) → A J E → M (A I E)

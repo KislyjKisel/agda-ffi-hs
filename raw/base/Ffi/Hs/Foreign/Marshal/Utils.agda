@@ -8,7 +8,7 @@ open import Agda.Builtin.List  using (List)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Storable; Num; Eq)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Word   using (Word8)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
@@ -36,9 +36,9 @@ postulate
 
     withMany : (A → (B → C) → C) → List A → (List B → C) → C
 
-    copyBytes : Ptr A → Ptr A → Int → IO (⊤ {lzero})
-    moveBytes : Ptr A → Ptr A → Int → IO (⊤ {lzero})
-    fillBytes : Ptr A → Word8 → Int → IO (⊤ {lzero})
+    copyBytes : Ptr A → Ptr A → Int → IO ⊤
+    moveBytes : Ptr A → Ptr A → Int → IO ⊤
+    fillBytes : Ptr A → Word8 → Int → IO ⊤
 
 {-# COMPILE GHC with' = \ aℓ a bℓ b AgdaStorable -> Foreign.Marshal.Utils.with #-}
 {-# COMPILE GHC new   = \ aℓ a      AgdaStorable -> Foreign.Marshal.Utils.new  #-}

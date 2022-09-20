@@ -9,7 +9,7 @@ open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 open import Ffi.Hs.-base.Float                  using (Float)
 open import Ffi.Hs.-base.Level                  using (Liftℓ)
-open import Ffi.Hs.-base.Unit                   using (⊤)
+open import Ffi.Hs.-base.Unit                   using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int                     using (Int8; Int16; Int32)
 open import Ffi.Hs.Data.Tuple                   using (Tuple2)
 open import Ffi.Hs.Data.Vector.Storable         using (Vector)
@@ -175,7 +175,7 @@ record OpenDeviceSpec : Set₁ where
         openDeviceFormat : Changeable (AudioFormat SampleType)
         openDeviceChannels : Changeable Channels
         openDeviceSamples : Word16
-        openDeviceCallback : ∀{ActualSampleType : Set} → AudioFormat ActualSampleType → IOVector ActualSampleType → IO (⊤ {lzero})
+        openDeviceCallback : ∀{ActualSampleType : Set} → AudioFormat ActualSampleType → IOVector ActualSampleType → IO ⊤
         openDeviceUsage : AudioDeviceUsage
         openDeviceName : Maybe Text
 
@@ -275,16 +275,16 @@ record AudioSpec : Set₁ where
         audioSpecSilence  : Word8
         audioSpecSamples  : Word16
         audioSpecSize     : Word32
-        audioSpecCallback : AudioFormat SampleType → IOVector SampleType → IO (⊤ {lzero})
+        audioSpecCallback : AudioFormat SampleType → IOVector SampleType → IO ⊤
 
 {-# COMPILE GHC AudioSpec = data SDL.Audio.AudioSpec (SDL.Audio.AudioSpec) #-}
 
 
 postulate
     openAudioDevice             : ⦃ MonadIO M ⦄ → OpenDeviceSpec → M (Liftℓ _ (Tuple2 AudioDevice AudioSpec))
-    closeAudioDevice            : ⦃ MonadIO M ⦄ → AudioDevice → M ⊤
-    setAudioDeviceLocked        : ⦃ MonadIO M ⦄ → AudioDevice → LockState → M ⊤
-    setAudioDevicePlaybackState : ⦃ MonadIO M ⦄ → AudioDevice → PlaybackState → M ⊤
+    closeAudioDevice            : ⦃ MonadIO M ⦄ → AudioDevice → M ⊤′
+    setAudioDeviceLocked        : ⦃ MonadIO M ⦄ → AudioDevice → LockState → M ⊤′
+    setAudioDevicePlaybackState : ⦃ MonadIO M ⦄ → AudioDevice → PlaybackState → M ⊤′
     audioDeviceStatus           : ⦃ MonadIO M ⦄ → AudioDevice → M (Liftℓ _ AudioDeviceStatus)
     getAudioDeviceNames         : ⦃ MonadIO M ⦄ → AudioDeviceUsage → M (Liftℓ _ (Maybe (Vector Text)))
 
@@ -305,7 +305,7 @@ postulate
     getAudioDrivers    : ⦃ MonadIO M ⦄ → M (Liftℓ _ (Vector AudioDriver))
     currentAudioDriver : ⦃ MonadIO M ⦄ → M (Liftℓ _ (Maybe Text))
 
-    audioInit : ⦃ MonadIO M ⦄ → AudioDriver → M ⊤
+    audioInit : ⦃ MonadIO M ⦄ → AudioDriver → M ⊤′
 
 {-# COMPILE GHC AudioDriver = type SDL.Audio.AudioDriver #-}
 {-# COMPILE GHC Eq[AudioDriver]   = AgdaEq   #-}

@@ -4,7 +4,7 @@ module Ffi.Hs.Data.IORef where
 
 open import Agda.Builtin.IO        using (IO)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit      using (⊤)
+open import Ffi.Hs.-base.Unit      using (⊤; ⊤′)
 open import Ffi.Hs.Data.Tuple      using (Tuple2)
 open import Ffi.Hs.System.Mem.Weak using (Weak)
 
@@ -21,13 +21,13 @@ postulate
     IORef : Set aℓ → Set aℓ
     newIORef           : A → IO (IORef A)
     readIORef          : IORef A → IO A
-    writeIORef         : IORef A → A → IO (⊤ {lzero})
-    modifyIORef        : IORef A → (A → A) → IO (⊤ {lzero})
-    modifyIORef'       : IORef A → (A → A) → IO (⊤ {lzero})
+    writeIORef         : IORef A → A → IO ⊤
+    modifyIORef        : IORef A → (A → A) → IO ⊤
+    modifyIORef'       : IORef A → (A → A) → IO ⊤
     atomicModifyIORef  : IORef A → (A → Tuple2 A B) → IO B
     atomicModifyIORef' : IORef A → (A → Tuple2 A B) → IO B
-    atomicWriteIORef   : IORef A → A → IO (⊤ {lzero})
-    mkWeakIORef        : IORef A → IO (⊤ {ℓ}) → IO (Weak (IORef A))
+    atomicWriteIORef   : IORef A → A → IO ⊤
+    mkWeakIORef        : IORef A → IO (⊤′ {ℓ}) → IO (Weak (IORef A))
 
 {-# FOREIGN GHC type AgdaIORef aℓ = Data.IORef.IORef #-}
 {-# COMPILE GHC IORef = type(1) AgdaIORef #-}

@@ -5,7 +5,7 @@ module Ffi.Hs.System.Mem.Weak where
 open import Agda.Builtin.IO    using (IO)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Tuple  using (Tuple2)
 
 {-# FOREIGN GHC
@@ -19,12 +19,12 @@ private
 
 postulate
     Weak         : Set aℓ → Set aℓ
-    mkWeak       : K → V → (Maybe (IO (⊤ {ℓ}))) → IO (Weak V)
+    mkWeak       : K → V → (Maybe (IO (⊤′ {ℓ}))) → IO (Weak V)
     deRefWeak    : Weak V → IO (Maybe V)
-    finalize     : Weak V → IO (⊤ {lzero})
-    mkWeakPtr    : K → Maybe (IO (⊤ {ℓ})) → IO (Weak K)
-    addFinalizer : K → IO (⊤ {ℓ}) → IO (⊤ {ℓ})
-    mkWeakPair   : K → V → Maybe (IO (⊤ {ℓ})) → IO (Weak (Tuple2 K V))
+    finalize     : Weak V → IO ⊤
+    mkWeakPtr    : K → Maybe (IO (⊤′ {ℓ})) → IO (Weak K)
+    addFinalizer : K → IO (⊤′ {ℓ}) → IO (⊤′ {ℓ})
+    mkWeakPair   : K → V → Maybe (IO (⊤′ {ℓ})) → IO (Weak (Tuple2 K V))
 
 {-# FOREIGN GHC type AgdaWeak aℓ = System.Mem.Weak.Weak #-}
 {-# COMPILE GHC Weak = type(1) AgdaWeak #-}

@@ -4,7 +4,7 @@ module Ffi.Hs.Control.Arrow where
 
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit       using (⊤)
+open import Ffi.Hs.-base.Unit       using (⊤; ⊤′)
 open import Ffi.Hs.Control.Category using (id; _>>>_; _<<<_)
 open import Ffi.Hs.Data.Either      using (Either)
 open import Ffi.Hs.Data.Tuple       using (Tuple2)
@@ -67,7 +67,7 @@ postulate
 {-# COMPILE GHC loop      = \ aℓ cℓ cat a b c      AgdaArrowLoop   -> Control.Arrow.loop       #-}
 
 data ArrowMonad (Cat : Set aℓ → Set bℓ → Set cℓ) (B : Set bℓ) : Set (aℓ ⊔ bℓ ⊔ cℓ) where
-    mkArrowMonad : Cat ⊤ B → ArrowMonad Cat B
+    mkArrowMonad : Cat ⊤′ B → ArrowMonad Cat B
 
 {-# FOREIGN GHC type AgdaArrowMonad aℓ bℓ cℓ = Control.Arrow.ArrowMonad #-}
 {-# COMPILE GHC ArrowMonad = data(3) AgdaArrowMonad (Control.Arrow.ArrowMonad) #-}

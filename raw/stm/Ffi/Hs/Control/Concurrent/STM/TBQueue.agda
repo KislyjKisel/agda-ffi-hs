@@ -8,7 +8,7 @@ open import Agda.Builtin.List        using (List)
 open import Agda.Builtin.Maybe       using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class       using (Eq)
-open import Ffi.Hs.-base.Unit        using (⊤)
+open import Ffi.Hs.-base.Unit        using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.STM using (STM)
 open import Ffi.Hs.Numeric.Natural   using (Natural)
 
@@ -35,8 +35,8 @@ postulate
     flushTBQueue   : TBQueue A → STM (List A)
     peekTBQueue    : TBQueue A → STM A
     tryPeekTBQueue : TBQueue A → STM (Maybe A)
-    writeTBQueue   : TBQueue A → A → STM (⊤ {lzero})
-    unGetTBQueue   : TBQueue A → A → STM (⊤ {lzero})
+    writeTBQueue   : TBQueue A → A → STM ⊤
+    unGetTBQueue   : TBQueue A → A → STM ⊤
     lengthTBQueue  : TBQueue A → STM Natural
     isEmptyTBQueue : TBQueue A → STM Bool
     isFullTBQueue  : TBQueue A → STM Bool

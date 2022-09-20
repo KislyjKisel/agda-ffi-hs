@@ -7,7 +7,7 @@ open import Agda.Builtin.IO        using (IO)
 open import Agda.Builtin.Maybe     using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class     using (Eq)
-open import Ffi.Hs.-base.Unit      using (⊤)
+open import Ffi.Hs.-base.Unit      using (⊤; ⊤′)
 open import Ffi.Hs.Data.Tuple      using (Tuple2)
 open import Ffi.Hs.System.Mem.Weak using (Weak)
 
@@ -23,7 +23,7 @@ postulate
     newEmptyMVar     : IO (MVar A)
     newMVar          : A → IO (MVar A)
     takeMVar         : MVar A → IO A
-    putMVar          : MVar A → A → IO (⊤ {lzero})
+    putMVar          : MVar A → A → IO ⊤
     readMVar         : MVar A → IO A
     swapMVar         : MVar A → A → IO A
     tryTakeMVar      : MVar A → IO (Maybe A)
@@ -34,7 +34,7 @@ postulate
     modifyMVar       : MVar A → (A → IO (Tuple2 A B)) → IO B
     modifyMVarMasked : MVar A → (A → IO (Tuple2 A B)) → IO B
     tryReadMVar      : MVar A → IO (Maybe A)
-    mkWeakMVar       : MVar A → IO (⊤ {bℓ}) → IO (Weak (MVar A))
+    mkWeakMVar       : MVar A → IO (⊤′ {bℓ}) → IO (Weak (MVar A))
 
 
 {-# FOREIGN GHC import qualified Control.Concurrent.MVar #-}

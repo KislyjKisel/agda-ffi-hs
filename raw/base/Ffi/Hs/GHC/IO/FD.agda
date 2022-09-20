@@ -8,7 +8,7 @@ open import Agda.Builtin.List         using (List)
 open import Agda.Builtin.Maybe        using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class        using (Show)
-open import Ffi.Hs.-base.Unit         using (⊤)
+open import Ffi.Hs.-base.Unit         using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int           using (Int)
 open import Ffi.Hs.Data.Tuple         using (Tuple2; Tuple3)
 open import Ffi.Hs.Data.Word          using (Word8)
@@ -47,7 +47,7 @@ postulate
            Bool → Bool → IO (Tuple2 FD IODeviceType)
 
     openFile                : FilePath → IOMode → Bool → IO (Tuple2 FD IODeviceType)
-    release                 : FD → IO (⊤ {lzero})
+    release                 : FD → IO ⊤
     setNonBlockingMode      : FD → Bool → IO FD
     readRawBufferPtr        : List Char → FD → Ptr Word8 → Int → CSize → IO Int
     readRawBufferPtrNoBlock : List Char → FD → Ptr Word8 → Int → CSize → IO Int

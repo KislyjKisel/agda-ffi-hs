@@ -9,7 +9,7 @@ open import Agda.Builtin.Maybe             using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 open import Ffi.Hs.-base.Level             using (Liftℓ)
-open import Ffi.Hs.-base.Unit              using (⊤)
+open import Ffi.Hs.-base.Unit              using (⊤; ⊤′)
 open import Ffi.Hs.Control.DeepSeq         using (NFData; NFData1)
 open import Ffi.Hs.Control.Monad.Primitive using (PrimMonad; PrimState)
 open import Ffi.Hs.Control.Monad.ST        using (ST)
@@ -138,18 +138,18 @@ postulate
     reverse               : ⦃ Storable A ⦄ → Vector A → Vector A
     backpermute           : ⦃ Storable A ⦄ → Vector A → Vector Int → Vector A
     unsafeBackpermute     : ⦃ Storable A ⦄ → Vector A → Vector Int → Vector A
-    modify                : ⦃ Storable A ⦄ → (∀{S} → MVector S A → ST S (⊤ {lzero})) → Vector A → Vector A
+    modify                : ⦃ Storable A ⦄ → (∀{S} → MVector S A → ST S ⊤) → Vector A → Vector A
     map                   : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (A → B) → Vector A → Vector B
     imap                  : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (Int → A → B) → Vector A → Vector B
     concatMap             : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (A → Vector B) → Vector A → Vector B
     mapM                  : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (A → M B) → Vector A → M (Vector B)
     imapM                 : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (Int → A → M B) → Vector A → M (Vector B)
-    mapM-                 : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → M B) → Vector A → M ⊤
-    imapM-                : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (Int → A → M B) → Vector A → M ⊤
+    mapM-                 : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → M B) → Vector A → M ⊤′
+    imapM-                : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (Int → A → M B) → Vector A → M ⊤′
     forM                  : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → Vector A → (A → M B) → M (Vector B)
-    forM-                 : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → Vector A → (A → M B) → M ⊤
+    forM-                 : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → Vector A → (A → M B) → M ⊤′
     iforM                 : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → Vector A → (Int → A → M B) → M (Vector B)
-    iforM-                : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → Vector A → (Int → A → M B) → M ⊤
+    iforM-                : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → Vector A → (Int → A → M B) → M ⊤′
     zipWith               : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → ⦃ Storable C ⦄ → (A → B → C) → Vector A → Vector B → Vector C
     zipWith3              : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → ⦃ Storable C ⦄ → ⦃ Storable D ⦄ → (A → B → C → D) → Vector A → Vector B → Vector C → Vector D
     zipWith4              : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → ⦃ Storable C ⦄ → ⦃ Storable D ⦄ → ⦃ Storable E ⦄ → (A → B → C → D → E) → Vector A → Vector B → Vector C → Vector D → Vector E
@@ -162,8 +162,8 @@ postulate
     izipWith6             : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → ⦃ Storable C ⦄ → ⦃ Storable D ⦄ → ⦃ Storable E ⦄ → ⦃ Storable F ⦄ → ⦃ Storable G ⦄ → (Int → A → B → C → D → E → F → G) → Vector A → Vector B → Vector C → Vector D → Vector E → Vector F → Vector G
     zipWithM              : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → ⦃ Storable C ⦄ → (A → B → M C) → Vector A → Vector B → M (Vector C)
     izipWithM             : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → ⦃ Storable C ⦄ → (Int → A → B → M C) → Vector A → Vector B → M (Vector C)
-    zipWithM-             : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (A → B → M C) → Vector A → Vector B → M ⊤
-    izipWithM-            : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (Int → A → B → M C) → Vector A → Vector B → M ⊤
+    zipWithM-             : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (A → B → M C) → Vector A → Vector B → M ⊤′
+    izipWithM-            : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (Int → A → B → M C) → Vector A → Vector B → M ⊤′
     filter                : ⦃ Storable A ⦄ → (A → Bool) → Vector A → Vector A
     ifilter               : ⦃ Storable A ⦄ → (Int → A → Bool) → Vector A → Vector A
     filterM               : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → M (Liftℓ _ Bool)) → Vector A → M (Vector A)
@@ -224,12 +224,12 @@ postulate
     ifoldM'               : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → Int → B → M A) → A → Vector B → M A
     fold1M                : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → A → M A) → Vector A → M A
     fold1M'               : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → A → M A) → Vector A → M A
-    foldM-                : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → B → M A) → A → Vector B → M ⊤
-    ifoldM-               : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → Int → B → M A) → A → Vector B → M ⊤
-    foldM'-               : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → B → M A) → A → Vector B → M ⊤
-    ifoldM'-              : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → Int → B → M A) → A → Vector B → M ⊤
-    fold1M-               : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → A → M A) → Vector A → M ⊤
-    fold1M'-              : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → A → M A) → Vector A → M ⊤
+    foldM-                : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → B → M A) → A → Vector B → M ⊤′
+    ifoldM-               : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → Int → B → M A) → A → Vector B → M ⊤′
+    foldM'-               : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → B → M A) → A → Vector B → M ⊤′
+    ifoldM'-              : ⦃ Monad M ⦄ → ⦃ Storable B ⦄ → (A → Int → B → M A) → A → Vector B → M ⊤′
+    fold1M-               : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → A → M A) → Vector A → M ⊤′
+    fold1M'-              : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → (A → A → M A) → Vector A → M ⊤′
     prescanl              : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (A → B → A) → A → Vector B → Vector A
     prescanl'             : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (A → B → A) → A → Vector B → Vector A
     postscanl             : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → (A → B → A) → A → Vector B → Vector A
@@ -260,10 +260,10 @@ postulate
     unsafeCoerceVector    : ⦃ Coercible A B ⦄ → Vector A → Vector B
     freeze                : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → M (Vector A)
     thaw                  : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → Vector A → M (MVector (PrimState M) A)
-    copy                  : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → Vector A → M ⊤
+    copy                  : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → Vector A → M ⊤′
     unsafeFreeze          : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → M (Vector A)
     unsafeThaw            : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → Vector A → M (MVector (PrimState M) A)
-    unsafeCopy            : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → Vector A → M ⊤
+    unsafeCopy            : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → Vector A → M ⊤′
     unsafeFromForeignPtr  : ⦃ Storable A ⦄ → ForeignPtr A → Int → Int → Vector A
     unsafeFromForeignPtr0 : ForeignPtr A → Int → Vector A
     unsafeToForeignPtr    : Vector A → Tuple3 (ForeignPtr A) Int Int

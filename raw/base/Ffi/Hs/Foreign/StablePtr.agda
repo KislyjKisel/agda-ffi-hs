@@ -5,7 +5,7 @@ module Ffi.Hs.Foreign.StablePtr where
 open import Agda.Builtin.IO    using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Eq; Storable)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
 
 {-# FOREIGN GHC
@@ -26,7 +26,7 @@ postulate
 
     newStablePtr       : A → IO (StablePtr A)
     deRefStablePtr     : StablePtr A → IO A
-    freeStablePtr      : StablePtr A → IO (⊤ {lzero})
+    freeStablePtr      : StablePtr A → IO ⊤
     castStablePtrToPtr : StablePtr A → Ptr A
     castPtrToStablePtr : Ptr A → StablePtr A
 

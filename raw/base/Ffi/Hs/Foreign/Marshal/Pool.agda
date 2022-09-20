@@ -6,7 +6,7 @@ open import Agda.Builtin.IO    using (IO)
 open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Storable)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
 
@@ -23,7 +23,7 @@ private
 postulate
     Pool     : Set
     newPool  : IO Pool
-    freePool : Pool → IO (⊤ {lzero})
+    freePool : Pool → IO ⊤
     withPool : (Pool → IO A) → IO A
 
     pooledMalloc        : ⦃ Storable A ⦄ → Pool → IO (Ptr A)

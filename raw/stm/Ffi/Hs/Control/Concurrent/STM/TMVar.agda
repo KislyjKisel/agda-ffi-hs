@@ -7,7 +7,7 @@ open import Agda.Builtin.IO          using (IO)
 open import Agda.Builtin.Maybe       using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class       using (Eq)
-open import Ffi.Hs.-base.Unit        using (⊤)
+open import Ffi.Hs.-base.Unit        using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.STM using (STM)
 open import Ffi.Hs.System.Mem.Weak   using (Weak)
 
@@ -32,15 +32,15 @@ postulate
     newTMVarIO      : A → IO (TMVar A)
     newEmptyTMVarIO : IO (TMVar A)
     takeTMVar       : TMVar A → STM A
-    putTMVar        : TMVar A → A → STM (⊤ {lzero})
+    putTMVar        : TMVar A → A → STM ⊤
     readTMVar       : TMVar A → STM A
-    writeTMVar      : TMVar A → A → STM (⊤ {lzero})
+    writeTMVar      : TMVar A → A → STM ⊤
     tryReadTMVar    : TMVar A → STM (Maybe A)
     swapTMVar       : TMVar A → A → STM A
     tryTakeTMVar    : TMVar A → STM (Maybe A)
     tryPutTMVar     : TMVar A → A → STM Bool
     isEmptyTMVar    : TMVar A → STM Bool
-    mkWeakTMVar     : TMVar A → IO (⊤ {ℓ}) → IO (Weak (TMVar A))
+    mkWeakTMVar     : TMVar A → IO (⊤′ {ℓ}) → IO (Weak (TMVar A))
 
 {-# FOREIGN GHC type AgdaTMVar aℓ = Control.Concurrent.STM.TMVar.TMVar #-}
 {-# COMPILE GHC TMVar = type(1) AgdaTMVar #-}

@@ -4,7 +4,7 @@ module Ffi.Hs.Data.Vector.Generic.Mutable.Base where
 
 open import Agda.Builtin.Bool       using (Bool)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit       using (⊤)
+open import Ffi.Hs.-base.Unit       using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.ST using (ST)
 open import Ffi.Hs.Data.Int         using (Int)
 
@@ -25,14 +25,14 @@ postulate
     basicUnsafeSlice     : ⦃ MVector V A ⦄ → Int → Int → V S A → V S A
     basicOverlaps        : ⦃ MVector V A ⦄ → V S A → V S A → Bool
     basicUnsafeNew       : ⦃ MVector V A ⦄ → Int → ST S (V S A)
-    basicInitialize      : ⦃ MVector V A ⦄ → V S A → ST S (⊤ {lzero})
+    basicInitialize      : ⦃ MVector V A ⦄ → V S A → ST S ⊤
     basicUnsafeReplicate : ⦃ MVector V A ⦄ → Int → A → ST S (V S A)
     basicUnsafeRead      : ⦃ MVector V A ⦄ → V S A → Int → ST S A
-    basicUnsafeWrite     : ⦃ MVector V A ⦄ → V S A → Int → A → ST S (⊤ {lzero})
-    basicClear           : ⦃ MVector V A ⦄ → V S A → ST S (⊤ {lzero})
-    basicSet             : ⦃ MVector V A ⦄ → V S A → A → ST S (⊤ {lzero})
-    basicUnsafeCopy      : ⦃ MVector V A ⦄ → V S A → V S A → ST S (⊤ {lzero})
-    basicUnsafeMove      : ⦃ MVector V A ⦄ → V S A → V S A → ST S (⊤ {lzero})
+    basicUnsafeWrite     : ⦃ MVector V A ⦄ → V S A → Int → A → ST S ⊤
+    basicClear           : ⦃ MVector V A ⦄ → V S A → ST S ⊤
+    basicSet             : ⦃ MVector V A ⦄ → V S A → A → ST S ⊤
+    basicUnsafeCopy      : ⦃ MVector V A ⦄ → V S A → V S A → ST S ⊤
+    basicUnsafeMove      : ⦃ MVector V A ⦄ → V S A → V S A → ST S ⊤
     basicUnsafeGrow      : ⦃ MVector V A ⦄ → V S A → Int → ST S (V S A)
 
 {-# FOREIGN GHC data AgdaMVector aℓ v a = Data.Vector.Generic.Mutable.Base.MVector v a => AgdaMVector #-}

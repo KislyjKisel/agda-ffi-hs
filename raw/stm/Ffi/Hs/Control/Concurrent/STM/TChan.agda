@@ -7,7 +7,7 @@ open import Agda.Builtin.IO          using (IO)
 open import Agda.Builtin.Maybe       using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class       using (Eq)
-open import Ffi.Hs.-base.Unit        using (⊤)
+open import Ffi.Hs.-base.Unit        using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.STM using (STM)
 
 import Ffi.Hs.-base.Dictionaries
@@ -36,8 +36,8 @@ postulate
     tryReadTChan        : TChan A → STM (Maybe A)
     peekTChan           : TChan A → STM A
     tryPeekTChan        : TChan A → STM (Maybe A)
-    writeTChan          : TChan A → A → STM (⊤ {lzero})
-    unGetTChan          : TChan A → A → STM (⊤ {lzero})
+    writeTChan          : TChan A → A → STM ⊤
+    unGetTChan          : TChan A → A → STM ⊤
     isEmptyTChan        : TChan A → STM Bool
 
 {-# FOREIGN GHC type AgdaTChan aℓ = Control.Concurrent.STM.TChan.TChan #-}

@@ -7,7 +7,7 @@ open import Agda.Builtin.Char         using (Char)
 open import Agda.Builtin.Int          using () renaming (Int to Integer)
 open import Agda.Builtin.List         using (List)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit         using (⊤)
+open import Ffi.Hs.-base.Unit         using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int           using (Int)
 open import Ffi.Hs.Data.Tuple         using (Tuple3)
 open import Ffi.Hs.Data.Word          using (Word8)
@@ -31,7 +31,7 @@ CFilePath : Set
 CFilePath = CString
 
 postulate
-    puts : List Char → IO (⊤ {lzero})
+    puts : List Char → IO ⊤
     
     CFLock     : Set
     CGroup     : Set
@@ -57,14 +57,14 @@ postulate
     newFilePath           : List Char → IO CString
     peekFilePath          : CString → IO (List Char)
     peekFilePathLen       : CStringLen → IO (List Char)
-    setEcho               : FD → Bool → IO (⊤ {lzero})
+    setEcho               : FD → Bool → IO ⊤
     getEcho               : FD → IO Bool
     setCooked             : FD → Bool → IO Bool
     tcSetAttr             : FD → (Ptr CTermios → IO A) → IO A
     get-saved-termios     : CInt → IO (Ptr CTermios)
-    set-saved-termios     : CInt → Ptr CTermios → IO (⊤ {lzero})
-    setNonBlockingFD      : FD → Bool → IO (⊤ {lzero})
-    setCloseOnExec        : FD → IO (⊤ {lzero})
+    set-saved-termios     : CInt → Ptr CTermios → IO ⊤
+    setNonBlockingFD      : FD → Bool → IO ⊤
+    setCloseOnExec        : FD → IO ⊤
     c-open                : CFilePath → CInt → CMode → IO CInt
     c-interruptible-open  : CFilePath → CInt → CMode → IO CInt
     c-interruptible-open- : CFilePath → CInt → CMode → IO CInt
@@ -154,7 +154,7 @@ postulate
     sizeof-sigset-t : Int
 
     c-lflag      : Ptr CTermios → IO CTcflag
-    poke-c-lflag : Ptr CTermios → CTcflag → IO (⊤ {lzero})
+    poke-c-lflag : Ptr CTermios → CTcflag → IO ⊤
     ptr-c-cc     : Ptr CTermios → IO (Ptr Word8)
     s-issock     : CMode → Bool
     c-s-issock   : CMode → CInt

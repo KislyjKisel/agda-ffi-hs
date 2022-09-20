@@ -8,7 +8,7 @@ open import Agda.Builtin.Maybe        using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class        using (MonadIO)
 open import Ffi.Hs.-base.Level        using (Liftℓ)
-open import Ffi.Hs.-base.Unit         using (⊤)
+open import Ffi.Hs.-base.Unit         using (⊤; ⊤′)
 open import Ffi.Hs.Foreign.C.String   using (CString)
 open import Ffi.Hs.Foreign.C.Types    using (CInt)
 open import Ffi.Hs.SDL.Internal.Types using (Window)
@@ -33,8 +33,8 @@ private
 
 
 postulate
-    vkLoadLibrary              : ⦃ MonadIO M ⦄ → Maybe (List Char) → M ⊤
-    vkUnloadLibrary            : ⦃ MonadIO M ⦄ → M ⊤
+    vkLoadLibrary              : ⦃ MonadIO M ⦄ → Maybe (List Char) → M ⊤′
+    vkUnloadLibrary            : ⦃ MonadIO M ⦄ → M ⊤′
     vkGetVkGetInstanceProcAddr : ⦃ MonadIO M ⦄ → M (Liftℓ _ VkGetInstanceProcAddrFunc)
     vkGetInstanceExtensions    : ⦃ MonadIO M ⦄ → Window → M (Liftℓ _ (List CString))
     vkCreateSurface            : ⦃ MonadIO M ⦄ → Window → VkInstance → M (Liftℓ _ VkSurfaceKHR)

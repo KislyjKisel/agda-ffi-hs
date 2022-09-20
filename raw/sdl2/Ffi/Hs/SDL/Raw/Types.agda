@@ -6,7 +6,7 @@ open import Agda.Builtin.IO         using (IO)
 open import Agda.Builtin.List       using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class      using (Eq; Show; Storable)
-open import Ffi.Hs.-base.Unit       using (⊤)
+open import Ffi.Hs.-base.Unit       using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int         using (Int16; Int32; Int64)
 open import Ffi.Hs.Data.Word        using (Word8; Word16; Word32; Word64)
 open import Ffi.Hs.Foreign.C.String using (CString)
@@ -30,55 +30,55 @@ AudioFormat : Set
 AudioFormat = Word16
 
 Cond : Set
-Cond = Ptr (⊤ {lzero})
+Cond = Ptr ⊤
 
 Cursor : Set
-Cursor = Ptr (⊤ {lzero})
+Cursor = Ptr ⊤
 
 FingerID : Set
 FingerID = Int64
 
 GameController : Set
-GameController = Ptr (⊤ {lzero})
+GameController = Ptr ⊤
 
 GestureID : Set
 GestureID = Int64
 
 GLContext : Set
-GLContext = Ptr (⊤ {lzero})
+GLContext = Ptr ⊤
 
 Haptic : Set
-Haptic = Ptr (⊤ {lzero})
+Haptic = Ptr ⊤
 
 Joystick : Set
-Joystick = Ptr (⊤ {lzero})
+Joystick = Ptr ⊤
 
 JoystickID : Set
 JoystickID = Int32
 
 Mutex : Set
-Mutex = Ptr (⊤ {lzero})
+Mutex = Ptr ⊤
 
 Renderer : Set
-Renderer = Ptr (⊤ {lzero})
+Renderer = Ptr ⊤
 
 Sem : Set
-Sem = Ptr (⊤ {lzero})
+Sem = Ptr ⊤
 
 SpinLock : Set
 SpinLock = CInt
 
 SysWMinfo : Set
-SysWMinfo = Ptr (⊤ {lzero})
+SysWMinfo = Ptr ⊤
 
 SysWMmsg : Set
-SysWMmsg = Ptr (⊤ {lzero})
+SysWMmsg = Ptr ⊤
 
 Texture : Set
-Texture = Ptr (⊤ {lzero})
+Texture = Ptr ⊤
 
 Thread : Set
-Thread = Ptr (⊤ {lzero})
+Thread = Ptr ⊤
 
 ThreadID : Set
 ThreadID = CULong
@@ -93,13 +93,13 @@ TouchID : Set
 TouchID = Int64
 
 VkInstance : Set
-VkInstance = Ptr (⊤ {lzero})
+VkInstance = Ptr ⊤
 
 VkSurfaceKHR : Set
 VkSurfaceKHR = Word64
 
 Window : Set
-Window = Ptr (⊤ {lzero})
+Window = Ptr ⊤
 
 -- Data Structures
 
@@ -172,7 +172,7 @@ record DisplayMode : Set where
         displayModeW           : CInt
         displayModeH           : CInt
         displayModeRefreshRate : CInt
-        displayModeDriverData  : Ptr (⊤ {lzero})
+        displayModeDriverData  : Ptr ⊤
 
 {-# COMPILE GHC DisplayMode = data SDL.Raw.Types.DisplayMode (SDL.Raw.Types.DisplayMode) #-}
 
@@ -225,7 +225,7 @@ data Event : Set where
     ControllerDeviceEvent : Word32 → Word32 → Int32 → Event
     AudioDeviceEvent      : Word32 → Word32 → Word32 → Word8 → Event
     QuitEvent             : Word32 → Word32 → Event
-    UserEvent             : Word32 → Word32 → Word32 → Int32 → Ptr (⊤ {lzero}) → Ptr (⊤ {lzero}) → Event
+    UserEvent             : Word32 → Word32 → Word32 → Int32 → Ptr ⊤ → Ptr ⊤ → Event
     SysWMEvent            : Word32 → Word32 → SysWMmsg → Event
     TouchFingerEvent      : Word32 → Word32 → TouchID → FingerID → CFloat → CFloat → CFloat → CFloat → CFloat → Event
     MultiGestureEvent     : Word32 → Word32 → TouchID → CFloat → CFloat → CFloat → CFloat → Word16 → Event
@@ -616,8 +616,8 @@ record RWops : Set where
     field
         rwopsSize  : FunPtr (Ptr RWops → IO Int64)
         rwopsSeek  : FunPtr (Ptr RWops → Int64 → CInt → IO Int64)
-        rwopsRead  : FunPtr (Ptr RWops → Ptr (⊤ {lzero}) → CSize → CSize → IO CSize)
-        rwopsWrite : FunPtr (Ptr RWops → Ptr (⊤ {lzero}) → CSize → CSize → IO CSize)
+        rwopsRead  : FunPtr (Ptr RWops → Ptr ⊤ → CSize → CSize → IO CSize)
+        rwopsWrite : FunPtr (Ptr RWops → Ptr ⊤ → CSize → CSize → IO CSize)
         rwopsClose : FunPtr (Ptr RWops → IO CInt)
         rwopsType  : Word32
 
@@ -639,8 +639,8 @@ record Surface : Set where
         surfaceFormat   : Ptr PixelFormat
         surfaceW        : CInt
         surfaceH        : CInt
-        surfacePixels   : Ptr (⊤ {lzero})
-        surfaceUserdata : Ptr (⊤ {lzero})
+        surfacePixels   : Ptr ⊤
+        surfaceUserdata : Ptr ⊤
         surfaceClipRect : Rect
         surfaceRefcount : CInt
 
@@ -678,33 +678,33 @@ postulate
 -- Function Types
 
 VkGetInstanceProcAddrFunc : Set
-VkGetInstanceProcAddrFunc = VkInstance → CString → IO (FunPtr (⊤ {lzero}))
+VkGetInstanceProcAddrFunc = VkInstance → CString → IO (FunPtr ⊤)
 
 AudioCallback : Set
-AudioCallback = FunPtr (Ptr (⊤ {lzero}) → Ptr Word8 → CInt → IO (⊤ {lzero}))
+AudioCallback = FunPtr (Ptr ⊤ → Ptr Word8 → CInt → IO ⊤)
 
 EventFilter : Set
-EventFilter = FunPtr (Ptr (⊤ {lzero}) → Ptr Event → IO CInt)
+EventFilter = FunPtr (Ptr ⊤ → Ptr Event → IO CInt)
 
 HintCallback : Set
-HintCallback = FunPtr (Ptr (⊤ {lzero}) → CString → CString → CString → IO (⊤ {lzero}))
+HintCallback = FunPtr (Ptr ⊤ → CString → CString → CString → IO ⊤)
 
 LogOutputFunction : Set
-LogOutputFunction = FunPtr (Ptr (⊤ {lzero}) → CInt → LogPriority → CString → IO (⊤ {lzero}))
+LogOutputFunction = FunPtr (Ptr ⊤ → CInt → LogPriority → CString → IO ⊤)
 
 ThreadFunction : Set
-ThreadFunction = FunPtr (Ptr (⊤ {lzero}) → IO CInt)
+ThreadFunction = FunPtr (Ptr ⊤ → IO CInt)
 
 TimerCallback : Set
-TimerCallback = FunPtr (Word32 → Ptr (⊤ {lzero}) → IO Word32)
+TimerCallback = FunPtr (Word32 → Ptr ⊤ → IO Word32)
 
 postulate
-    mkAudioCallback     : (Ptr (⊤ {lzero}) → Ptr Word8 → CInt → IO (⊤ {lzero})) → IO AudioCallback
-    mkEventFilter       : (Ptr (⊤ {lzero}) → Ptr Event → IO CInt) → IO EventFilter
-    mkHintCallback      : (Ptr (⊤ {lzero}) → CString → CString → CString → IO (⊤ {lzero})) → IO HintCallback
-    mkLogOutputFunction : (Ptr (⊤ {lzero}) → CInt → LogPriority → CString → IO (⊤ {lzero})) → IO LogOutputFunction
-    mkThreadFunction    : (Ptr (⊤ {lzero}) → IO CInt) → IO ThreadFunction
-    mkTimerCallback     : (Word32 → Ptr (⊤ {lzero}) → IO Word32) → IO TimerCallback
+    mkAudioCallback     : (Ptr ⊤ → Ptr Word8 → CInt → IO ⊤) → IO AudioCallback
+    mkEventFilter       : (Ptr ⊤ → Ptr Event → IO CInt) → IO EventFilter
+    mkHintCallback      : (Ptr ⊤ → CString → CString → CString → IO ⊤) → IO HintCallback
+    mkLogOutputFunction : (Ptr ⊤ → CInt → LogPriority → CString → IO ⊤) → IO LogOutputFunction
+    mkThreadFunction    : (Ptr ⊤ → IO CInt) → IO ThreadFunction
+    mkTimerCallback     : (Word32 → Ptr ⊤ → IO Word32) → IO TimerCallback
 
 {-# COMPILE GHC mkAudioCallback     = SDL.Raw.Types.mkAudioCallback     #-}
 {-# COMPILE GHC mkEventFilter       = SDL.Raw.Types.mkEventFilter       #-}
@@ -725,7 +725,7 @@ record AudioSpec : Set where
         audioSpecSamples  : Word16
         audioSpecSize     : Word32
         audioSpecCallback : AudioCallback
-        audioSpecUserdata : Ptr (⊤ {lzero})
+        audioSpecUserdata : Ptr ⊤
 
 {-# COMPILE GHC AudioSpec = data SDL.Raw.Types.AudioSpec (SDL.Raw.Types.AudioSpec) #-}
 

@@ -11,7 +11,7 @@ open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 open import Ffi.Hs.-base.Float             using (Float)
 open import Ffi.Hs.-base.Level             using (Liftℓ)
-open import Ffi.Hs.-base.Unit              using (⊤)
+open import Ffi.Hs.-base.Unit              using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.IO.Unlift using (MonadUnliftIO)
 open import Ffi.Hs.Data.Int                using (Int; Int16)
 open import Ffi.Hs.Data.StateVar           using (HasGetter; HasSetter)
@@ -1929,9 +1929,9 @@ data Context : Set where
 
 postulate
     createContext     : ⦃ MonadIO M ⦄ → M (Liftℓ _ Context)
-    destroyContext    : ⦃ MonadIO M ⦄ → Context → M ⊤
+    destroyContext    : ⦃ MonadIO M ⦄ → Context → M ⊤′
     getCurrentContext : ⦃ MonadIO M ⦄ → M (Liftℓ _ Context)
-    setCurrentContext : ⦃ MonadIO M ⦄ → Context → M ⊤
+    setCurrentContext : ⦃ MonadIO M ⦄ → Context → M ⊤′
 
 {-# COMPILE GHC createContext     = \ mℓ m AgdaMonadIO -> DearImGui.createContext     #-}
 {-# COMPILE GHC destroyContext    = \ mℓ m AgdaMonadIO -> DearImGui.destroyContext    #-}
@@ -1942,16 +1942,16 @@ postulate
 -- Main
 
 data DrawData : Set where
-    mkDrawData : Ptr (⊤ {lzero}) → DrawData
+    mkDrawData : Ptr ⊤ → DrawData
 
 {-# COMPILE GHC DrawData = type DearImGui.DrawData #-}
 
 postulate
-    newFrame     : ⦃ MonadIO M ⦄ → M ⊤
-    endFrame     : ⦃ MonadIO M ⦄ → M ⊤
-    render       : ⦃ MonadIO M ⦄ → M ⊤
+    newFrame     : ⦃ MonadIO M ⦄ → M ⊤′
+    endFrame     : ⦃ MonadIO M ⦄ → M ⊤′
+    render       : ⦃ MonadIO M ⦄ → M ⊤′
     getDrawData  : ⦃ MonadIO M ⦄ → M (Liftℓ _ DrawData)
-    checkVersion : ⦃ MonadIO M ⦄ → M ⊤
+    checkVersion : ⦃ MonadIO M ⦄ → M ⊤′
 
 {-# COMPILE GHC newFrame     = \ mℓ m AgdaMonadIO -> DearImGui.newFrame     #-}
 {-# COMPILE GHC endFrame     = \ mℓ m AgdaMonadIO -> DearImGui.endFrame     #-}
@@ -1963,10 +1963,10 @@ postulate
 -- Demo, Debug, Information
 
 postulate
-    showDemoWindow    : ⦃ MonadIO M ⦄ → M ⊤
-    showMetricsWindow : ⦃ MonadIO M ⦄ → M ⊤
-    showAboutWindow   : ⦃ MonadIO M ⦄ → M ⊤
-    showUserGuide     : ⦃ MonadIO M ⦄ → M ⊤
+    showDemoWindow    : ⦃ MonadIO M ⦄ → M ⊤′
+    showMetricsWindow : ⦃ MonadIO M ⦄ → M ⊤′
+    showAboutWindow   : ⦃ MonadIO M ⦄ → M ⊤′
+    showUserGuide     : ⦃ MonadIO M ⦄ → M ⊤′
     getVersion        : ⦃ MonadIO M ⦄ → M (Liftℓ _ Text)
 
 {-# COMPILE GHC showDemoWindow    = \ mℓ m AgdaMonadIO -> DearImGui.showDemoWindow    #-}
@@ -1979,9 +1979,9 @@ postulate
 -- Styles
 
 postulate
-    styleColorsDark    : ⦃ MonadIO M ⦄ → M ⊤
-    styleColorsLight   : ⦃ MonadIO M ⦄ → M ⊤
-    styleColorsClassic : ⦃ MonadIO M ⦄ → M ⊤
+    styleColorsDark    : ⦃ MonadIO M ⦄ → M ⊤′
+    styleColorsLight   : ⦃ MonadIO M ⦄ → M ⊤′
+    styleColorsClassic : ⦃ MonadIO M ⦄ → M ⊤′
 
 {-# COMPILE GHC styleColorsDark    = \ mℓ m AgdaMonadIO -> DearImGui.styleColorsDark    #-}
 {-# COMPILE GHC styleColorsLight   = \ mℓ m AgdaMonadIO -> DearImGui.styleColorsLight   #-}
@@ -1992,11 +1992,11 @@ postulate
 
 postulate
     withWindow      : ⦃ MonadUnliftIO M ⦄ → Text → (Bool → M A) → M A
-    withWindowOpen  : ⦃ MonadUnliftIO M ⦄ → Text → M ⊤ → M ⊤
-    withFullscreen  : ⦃ MonadUnliftIO M ⦄ → M ⊤ → M ⊤
+    withWindowOpen  : ⦃ MonadUnliftIO M ⦄ → Text → M ⊤′ → M ⊤′
+    withFullscreen  : ⦃ MonadUnliftIO M ⦄ → M ⊤′ → M ⊤′
     fullscreenFlags : ImGuiWindowFlags
     begin           : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
-    end             : ⦃ MonadIO M ⦄ → M ⊤
+    end             : ⦃ MonadIO M ⦄ → M ⊤′
 
 {-# COMPILE GHC withWindow      = \ mℓ m a AgdaMonadUnliftIO -> DearImGui.withWindow      #-}
 {-# COMPILE GHC withWindowOpen  = \ mℓ m AgdaMonadUnliftIO   -> DearImGui.withWindowOpen  #-}
@@ -2024,13 +2024,13 @@ postulate
 -- Manipulation
 
 postulate
-    setNextWindowPos             : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → ImGuiCond → Maybe R → M ⊤
-    setNextWindowSize            : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → ImGuiCond → M ⊤
-    setNextWindowFullscreen      : ⦃ MonadIO M ⦄ → M ⊤
-    setNextWindowContentSize     : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → M ⊤
-    setNextWindowSizeConstraints : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → R → M ⊤
-    setNextWindowCollapsed       : ⦃ MonadIO M ⦄ → Bool → ImGuiCond → M ⊤
-    setNextWindowBgAlpha         : ⦃ MonadIO M ⦄ → Float → M ⊤
+    setNextWindowPos             : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → ImGuiCond → Maybe R → M ⊤′
+    setNextWindowSize            : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → ImGuiCond → M ⊤′
+    setNextWindowFullscreen      : ⦃ MonadIO M ⦄ → M ⊤′
+    setNextWindowContentSize     : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → M ⊤′
+    setNextWindowSizeConstraints : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → R → M ⊤′
+    setNextWindowCollapsed       : ⦃ MonadIO M ⦄ → Bool → ImGuiCond → M ⊤′
+    setNextWindowBgAlpha         : ⦃ MonadIO M ⦄ → Float → M ⊤′
 
 {-# COMPILE GHC setNextWindowPos             = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter -> DearImGui.setNextWindowPos             #-}
 {-# COMPILE GHC setNextWindowSize            = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter -> DearImGui.setNextWindowSize            #-}
@@ -2045,10 +2045,10 @@ postulate
 
 postulate
     withChild        : ⦃ MonadUnliftIO M ⦄ → Text → ImVec2 → Bool → ImGuiWindowFlags → (Bool → M A) → M A
-    withChildOpen    : ⦃ MonadUnliftIO M ⦄ → Text → ImVec2 → Bool → ImGuiWindowFlags → M ⊤ → M ⊤
+    withChildOpen    : ⦃ MonadUnliftIO M ⦄ → Text → ImVec2 → Bool → ImGuiWindowFlags → M ⊤′ → M ⊤′
     withChildContext : ⦃ MonadUnliftIO M ⦄ → Text → (Bool → M A) → M A
     beginChild       : ⦃ MonadIO M ⦄ → Text → ImVec2 → Bool → ImGuiWindowFlags → M (Liftℓ _ Bool)
-    endChild         : ⦃ MonadIO M ⦄ → M ⊤
+    endChild         : ⦃ MonadIO M ⦄ → M ⊤′
 
 {-# COMPILE GHC withChild        = \ mℓ m a AgdaMonadUnliftIO -> DearImGui.withChild        #-}
 {-# COMPILE GHC withChildOpen    = \ mℓ m AgdaMonadUnliftIO   -> DearImGui.withChildOpen    #-}
@@ -2063,14 +2063,14 @@ postulate
     Font : Set
 
     withStyleColor : ⦃ MonadUnliftIO M ⦄ → ⦃ HasGetter R ImVec4 ⦄ → ImGuiCol → R → M A → M A
-    pushStyleColor : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec4 ⦄ → ImGuiCol → R → M ⊤
-    popStyleColor  : ⦃ MonadIO M ⦄ → CInt → M ⊤
+    pushStyleColor : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec4 ⦄ → ImGuiCol → R → M ⊤′
+    popStyleColor  : ⦃ MonadIO M ⦄ → CInt → M ⊤′
     withStyleVar   : ⦃ MonadUnliftIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → ImGuiStyleVar → R → M A → M A
-    pushStyleVar   : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → ImGuiStyleVar → R → M ⊤
-    popStyleVar    : ⦃ MonadIO M ⦄ → Int → M ⊤
+    pushStyleVar   : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → ImGuiStyleVar → R → M ⊤′
+    popStyleVar    : ⦃ MonadIO M ⦄ → Int → M ⊤′
     withFont       : ⦃ MonadUnliftIO M ⦄ → Font → M A → M A
-    pushFont       : ⦃ MonadIO M ⦄ → Font → M ⊤
-    popFont        : ⦃ MonadIO M ⦄ → M ⊤
+    pushFont       : ⦃ MonadIO M ⦄ → Font → M ⊤′
+    popFont        : ⦃ MonadIO M ⦄ → M ⊤′
 
 {-# COMPILE GHC Font = type DearImGui.Font #-}
 
@@ -2088,23 +2088,23 @@ postulate
 -- Cursor/Layout
 
 postulate
-    separator               : ⦃ MonadIO M ⦄ → M ⊤
-    sameLine                : ⦃ MonadIO M ⦄ → M ⊤
-    newLine                 : ⦃ MonadIO M ⦄ → M ⊤
-    spacing                 : ⦃ MonadIO M ⦄ → M ⊤
-    dummy                   : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → M ⊤
+    separator               : ⦃ MonadIO M ⦄ → M ⊤′
+    sameLine                : ⦃ MonadIO M ⦄ → M ⊤′
+    newLine                 : ⦃ MonadIO M ⦄ → M ⊤′
+    spacing                 : ⦃ MonadIO M ⦄ → M ⊤′
+    dummy                   : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → M ⊤′
     withIndent              : ⦃ MonadUnliftIO M ⦄ → Float → M A → M A
-    indent                  : ⦃ MonadIO M ⦄ → Float → M ⊤
-    unindent                : ⦃ MonadIO M ⦄ → Float → M ⊤
-    setNextItemWidth        : ⦃ MonadIO M ⦄ → Float → M ⊤
+    indent                  : ⦃ MonadIO M ⦄ → Float → M ⊤′
+    unindent                : ⦃ MonadIO M ⦄ → Float → M ⊤′
+    setNextItemWidth        : ⦃ MonadIO M ⦄ → Float → M ⊤′
     withItemWidth           : ⦃ MonadUnliftIO M ⦄ → Float → M A → M A
-    pushItemWidth           : ⦃ MonadIO M ⦄ → Float → M ⊤
-    popItemWidth            : ⦃ MonadIO M ⦄ → M ⊤
+    pushItemWidth           : ⦃ MonadIO M ⦄ → Float → M ⊤′
+    popItemWidth            : ⦃ MonadIO M ⦄ → M ⊤′
     withGroup               : ⦃ MonadUnliftIO M ⦄ → M A → M A
-    beginGroup              : ⦃ MonadIO M ⦄ → M ⊤
-    endGroup                : ⦃ MonadIO M ⦄ → M ⊤
-    setCursorPos            : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → M ⊤
-    alignTextToFramePadding : ⦃ MonadIO M ⦄ → M ⊤
+    beginGroup              : ⦃ MonadIO M ⦄ → M ⊤′
+    endGroup                : ⦃ MonadIO M ⦄ → M ⊤′
+    setCursorPos            : ⦃ MonadIO M ⦄ → ⦃ HasGetter R ImVec2 ⦄ → R → M ⊤′
+    alignTextToFramePadding : ⦃ MonadIO M ⦄ → M ⊤′
 
 {-# COMPILE GHC separator               = \ mℓ m AgdaMonadIO                    -> DearImGui.separator               #-}
 {-# COMPILE GHC sameLine                = \ mℓ m AgdaMonadIO                    -> DearImGui.sameLine                #-}
@@ -2138,7 +2138,7 @@ postulate
     ToID[Ptr[A]]                 : ToID (Ptr A)
     ToID[Tuple2[Ptr[CChar],Int]] : ToID (Tuple2 (Ptr CChar) Int)
 
-    pushID : ⦃ ToID A ⦄ → ⦃ MonadIO M ⦄ → A → M ⊤
+    pushID : ⦃ ToID A ⦄ → ⦃ MonadIO M ⦄ → A → M ⊤′
     withID : ⦃ MonadUnliftIO M ⦄ → ⦃ ToID A ⦄ → A → M B → M B
 
 {-# FOREIGN GHC data AgdaToID aℓ a = DearImGui.ToID a => AgdaToID #-}
@@ -2235,28 +2235,28 @@ postulate
 postulate
 
     -- Text
-    text         : ⦃ MonadIO M ⦄ → Text → M ⊤
-    textColored  : ⦃ HasGetter R ImVec4 ⦄ → ⦃ MonadIO M ⦄ → R → Text → M ⊤
-    textDisabled : ⦃ MonadIO M ⦄ → Text → M ⊤
-    textWrapped  : ⦃ MonadIO M ⦄ → Text → M ⊤
-    labelText    : ⦃ MonadIO M ⦄ → Text → Text → M ⊤
-    bulletText   : ⦃ MonadIO M ⦄ → Text → M ⊤
+    text         : ⦃ MonadIO M ⦄ → Text → M ⊤′
+    textColored  : ⦃ HasGetter R ImVec4 ⦄ → ⦃ MonadIO M ⦄ → R → Text → M ⊤′
+    textDisabled : ⦃ MonadIO M ⦄ → Text → M ⊤′
+    textWrapped  : ⦃ MonadIO M ⦄ → Text → M ⊤′
+    labelText    : ⦃ MonadIO M ⦄ → Text → Text → M ⊤′
+    bulletText   : ⦃ MonadIO M ⦄ → Text → M ⊤′
 
     -- Main
     button          : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
     smallButton     : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
     invisibleButton : ⦃ MonadIO M ⦄ → Text → ImVec2 → ImGuiButtonFlags → M (Liftℓ _ Bool)
     arrowButton     : ⦃ MonadIO M ⦄ → Text → ImGuiDir → M (Liftℓ _ Bool)
-    image           : ⦃ MonadIO M ⦄ → Ptr (⊤ {lzero}) → Ptr ImVec2 → Ptr ImVec2 → Ptr ImVec2 → Ptr ImVec4 → Ptr ImVec4 → M ⊤
+    image           : ⦃ MonadIO M ⦄ → Ptr ⊤ → Ptr ImVec2 → Ptr ImVec2 → Ptr ImVec2 → Ptr ImVec4 → Ptr ImVec4 → M ⊤′
     checkbox        : ⦃ HasSetter R Bool ⦄ → ⦃ HasGetter R Bool ⦄ → ⦃ MonadIO M ⦄ → Text → R → M (Liftℓ _ Bool)
-    progressBar     : ⦃ MonadIO M ⦄ → Float → Maybe Text → M ⊤
-    bullet          : ⦃ MonadIO M ⦄ → M ⊤
+    progressBar     : ⦃ MonadIO M ⦄ → Float → Maybe Text → M ⊤′
+    bullet          : ⦃ MonadIO M ⦄ → M ⊤′
 
     -- Combo Box
     withCombo     : ⦃ MonadUnliftIO M ⦄ → Text → Text → (Bool → M A) → M A
-    withComboOpen : ⦃ MonadUnliftIO M ⦄ → Text → Text → M ⊤ → M ⊤
+    withComboOpen : ⦃ MonadUnliftIO M ⦄ → Text → Text → M ⊤′ → M ⊤′
     beginCombo    : ⦃ MonadIO M ⦄ → Text → Text → M (Liftℓ _ Bool)
-    endCombo      : ⦃ MonadIO M ⦄ → M ⊤
+    endCombo      : ⦃ MonadIO M ⦄ → M ⊤′
     combo         : ⦃ MonadIO M ⦄ → ⦃ HasGetter R Int ⦄ → ⦃ HasSetter R Int ⦄ → Text → R → List Text → M (Liftℓ _ Bool)
 
     -- Drag Sliders
@@ -2300,30 +2300,30 @@ postulate
 
     -- Tables
     withTable       : ⦃ MonadUnliftIO M ⦄ → TableOptions → Text → Int → (Bool → M A) → M A
-    withTableOpen   : ⦃ MonadUnliftIO M ⦄ → TableOptions → Text → Int → M ⊤ → M ⊤
+    withTableOpen   : ⦃ MonadUnliftIO M ⦄ → TableOptions → Text → Int → M ⊤′ → M ⊤′
     defTableOptions : TableOptions
     beginTable      : ⦃ MonadIO M ⦄ → TableOptions → Text → Int → M (Liftℓ _ Bool)
-    endTable        : ⦃ MonadIO M ⦄ → M ⊤
+    endTable        : ⦃ MonadIO M ⦄ → M ⊤′
 
     -- Setup
-    tableSetupColumn       : ⦃ MonadIO M ⦄ → Text → M ⊤
-    tableSetupColumnWith   : ⦃ MonadIO M ⦄ → TableColumnOptions → Text → M ⊤
+    tableSetupColumn       : ⦃ MonadIO M ⦄ → Text → M ⊤′
+    tableSetupColumnWith   : ⦃ MonadIO M ⦄ → TableColumnOptions → Text → M ⊤′
     defTableColumnOptions  : TableColumnOptions
-    tableHeadersRow        : ⦃ MonadIO M ⦄ → M ⊤
-    tableHeader            : ⦃ MonadIO M ⦄ → CString → M ⊤
-    tableSetupScrollFreeze : ⦃ MonadIO M ⦄ → Int → Int → M ⊤
+    tableHeadersRow        : ⦃ MonadIO M ⦄ → M ⊤′
+    tableHeader            : ⦃ MonadIO M ⦄ → CString → M ⊤′
+    tableSetupScrollFreeze : ⦃ MonadIO M ⦄ → Int → Int → M ⊤′
 
     -- Rows
-    tableNextRow       : ⦃ MonadIO M ⦄ → M ⊤
-    tableNextRowWith   : ⦃ MonadIO M ⦄ → TableRowOptions → M ⊤
+    tableNextRow       : ⦃ MonadIO M ⦄ → M ⊤′
+    tableNextRowWith   : ⦃ MonadIO M ⦄ → TableRowOptions → M ⊤′
     defTableRowOptions : TableRowOptions
 
     -- Columns
-    tableNextColumn     : ⦃ MonadIO M ⦄ → M ⊤ → M ⊤
+    tableNextColumn     : ⦃ MonadIO M ⦄ → M ⊤′ → M ⊤′
     tableSetColumnIndex : ⦃ MonadIO M ⦄ → Int → M (Liftℓ _ Bool)
 
     -- Sorting
-    withSortableTable : ⦃ MonadIO M ⦄ → (Bool → List TableSortingSpecs → M ⊤) → M ⊤
+    withSortableTable : ⦃ MonadIO M ⦄ → (Bool → List TableSortingSpecs → M ⊤) → M ⊤′
 
     -- Queries
     tableGetColumnCount   : ⦃ MonadIO M ⦄ → M (Liftℓ _ Int)
@@ -2331,13 +2331,13 @@ postulate
     tableGetRowIndex      : ⦃ MonadIO M ⦄ → M (Liftℓ _ Int)
     tableGetColumnName    : ⦃ MonadIO M ⦄ → Maybe Int → M (Liftℓ _ Text)
     tableGetColumnFlags   : ⦃ MonadIO M ⦄ → Maybe Int → M (Liftℓ _ ImGuiTableColumnFlags)
-    tableSetColumnEnabled : ⦃ MonadIO M ⦄ → Int → Bool → M ⊤
-    tableSetBgColor       : ⦃ MonadIO M ⦄ → ImGuiTableBgTarget → ImU32 → Maybe Int → M ⊤
+    tableSetColumnEnabled : ⦃ MonadIO M ⦄ → Int → Bool → M ⊤′
+    tableSetBgColor       : ⦃ MonadIO M ⦄ → ImGuiTableBgTarget → ImU32 → Maybe Int → M ⊤′
 
     -- Trees
     treeNode : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
-    treePush : ⦃ MonadIO M ⦄ → Text → M ⊤
-    treePop  : ⦃ MonadIO M ⦄ → M ⊤
+    treePush : ⦃ MonadIO M ⦄ → Text → M ⊤′
+    treePop  : ⦃ MonadIO M ⦄ → M ⊤′
 
     -- Selectables
     selectable           : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
@@ -2348,39 +2348,39 @@ postulate
     listBox : ⦃ MonadIO M ⦄ → ⦃ HasGetter R Int ⦄ → ⦃ HasSetter R Int ⦄ → Text → R → List Text → M (Liftℓ _ Bool)
 
     -- Data Plotting
-    plotHistogram : ⦃ MonadIO M ⦄ → Text → List CFloat → M ⊤
+    plotHistogram : ⦃ MonadIO M ⦄ → Text → List CFloat → M ⊤′
 
     -- Menus
     withMenuBar         : ⦃ MonadUnliftIO M ⦄ → (Bool → M A) → M A
-    withMenuBarOpen     : ⦃ MonadUnliftIO M ⦄ → M ⊤ → M ⊤
+    withMenuBarOpen     : ⦃ MonadUnliftIO M ⦄ → M ⊤′ → M ⊤′
     beginMenuBar        : ⦃ MonadIO M ⦄ → M (Liftℓ _ Bool)
-    endMenuBar          : ⦃ MonadIO M ⦄ → M ⊤
+    endMenuBar          : ⦃ MonadIO M ⦄ → M ⊤′
     withMainMenuBar     : ⦃ MonadUnliftIO M ⦄ → (Bool → M A) → M A
-    withMainMenuBarOpen : ⦃ MonadUnliftIO M ⦄ → M ⊤ → M ⊤
+    withMainMenuBarOpen : ⦃ MonadUnliftIO M ⦄ → M ⊤′ → M ⊤′
     beginMainMenuBar    : ⦃ MonadIO M ⦄ → M (Liftℓ _ Bool)
-    endMainMenuBar      : ⦃ MonadIO M ⦄ → M ⊤
+    endMainMenuBar      : ⦃ MonadIO M ⦄ → M ⊤′
     withMenu            : ⦃ MonadUnliftIO M ⦄ → Text → (Bool → M A) → M A
-    withMenuOpen        : ⦃ MonadUnliftIO M ⦄ → Text → M ⊤ → M ⊤
+    withMenuOpen        : ⦃ MonadUnliftIO M ⦄ → Text → M ⊤′ → M ⊤′
     beginMenu           : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
-    endMenu             : ⦃ MonadIO M ⦄ → M ⊤
+    endMenu             : ⦃ MonadIO M ⦄ → M ⊤′
     menuItem            : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
 
     -- Tabs, tab bar
     withTabBar       : ⦃ MonadUnliftIO M ⦄ → Text → ImGuiTabBarFlags → (Bool → M A) → M A
-    withTabBarOpen   : ⦃ MonadUnliftIO M ⦄ → Text → ImGuiTabBarFlags → M ⊤ → M ⊤
+    withTabBarOpen   : ⦃ MonadUnliftIO M ⦄ → Text → ImGuiTabBarFlags → M ⊤′ → M ⊤′
     beginTabBar      : ⦃ MonadIO M ⦄ → Text → ImGuiTabBarFlags → M (Liftℓ _ Bool)
-    endTabBar        : ⦃ MonadIO M ⦄ → M ⊤
+    endTabBar        : ⦃ MonadIO M ⦄ → M ⊤′
     withTabItem      : ⦃ MonadUnliftIO M ⦄ → ⦃ HasGetter R Bool ⦄ → ⦃ HasSetter R Bool ⦄ → Text → R → ImGuiTabBarFlags → (Bool → M A) → M A
-    withTabItemOpen  : ⦃ MonadUnliftIO M ⦄ → ⦃ HasGetter R Bool ⦄ → ⦃ HasSetter R Bool ⦄ → Text → R → ImGuiTabBarFlags → M ⊤ → M ⊤
+    withTabItemOpen  : ⦃ MonadUnliftIO M ⦄ → ⦃ HasGetter R Bool ⦄ → ⦃ HasSetter R Bool ⦄ → Text → R → ImGuiTabBarFlags → M ⊤′ → M ⊤′
     beginTabItem     : ⦃ MonadIO M ⦄ → ⦃ HasGetter R Bool ⦄ → ⦃ HasSetter R Bool ⦄ → Text → R → ImGuiTabBarFlags → M (Liftℓ _ Bool)
-    endTabItem       : ⦃ MonadIO M ⦄ → M ⊤
+    endTabItem       : ⦃ MonadIO M ⦄ → M ⊤′
     tabItemButton    : ⦃ MonadIO M ⦄ → Text → ImGuiTabItemFlags → M (Liftℓ _ Bool)
-    setTabItemClosed : ⦃ MonadIO M ⦄ → Text → M ⊤
+    setTabItemClosed : ⦃ MonadIO M ⦄ → Text → M ⊤′
 
     -- Tooltips
     withTooltip  : ⦃ MonadUnliftIO M ⦄ → M A → M A
-    beginTooltip : ⦃ MonadIO M ⦄ → M ⊤
-    endTooltip   : ⦃ MonadIO M ⦄ → M ⊤
+    beginTooltip : ⦃ MonadIO M ⦄ → M ⊤′
+    endTooltip   : ⦃ MonadIO M ⦄ → M ⊤′
 
 {-# COMPILE GHC text         = \ mℓ m AgdaMonadIO                    -> DearImGui.text         #-}
 {-# COMPILE GHC textColored  = \ mℓ m rℓ r AgdaHasGetter AgdaMonadIO -> DearImGui.textColored  #-}
@@ -2517,37 +2517,37 @@ postulate
 
     -- Generic
     withPopup     : ⦃ MonadUnliftIO M ⦄ → Text → (Bool → M A) → M A
-    withPopupOpen : ⦃ MonadUnliftIO M ⦄ → Text → M ⊤ → M ⊤
+    withPopupOpen : ⦃ MonadUnliftIO M ⦄ → Text → M ⊤′ → M ⊤′
     beginPopup    : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
-    endPopup      : ⦃ MonadIO M ⦄ → M ⊤
+    endPopup      : ⦃ MonadIO M ⦄ → M ⊤′
 
     -- Modal
     withPopupModal     : ⦃ MonadUnliftIO M ⦄ → Text → (Bool → M A) → M A
-    withPopupModalOpen : ⦃ MonadUnliftIO M ⦄ → Text → M ⊤ → M ⊤
+    withPopupModalOpen : ⦃ MonadUnliftIO M ⦄ → Text → M ⊤′ → M ⊤′
     beginPopupModal    : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
 
     -- Item context
-    itemContextPopup         : ⦃ MonadUnliftIO M ⦄ → M ⊤ → M ⊤
-    withPopupContextItemOpen : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → M ⊤ → M ⊤
+    itemContextPopup         : ⦃ MonadUnliftIO M ⦄ → M ⊤′ → M ⊤′
+    withPopupContextItemOpen : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → M ⊤′ → M ⊤′
     withPopupContextItem     : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → (Bool → M A) → M A
     beginPopupContextItem    : ⦃ MonadIO M ⦄ → Maybe Text → ImGuiPopupFlags → M (Liftℓ _ Bool)
 
     -- Window context
-    windowContextPopup         : ⦃ MonadUnliftIO M ⦄ → M ⊤ → M ⊤
-    withPopupContextWindowOpen : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → M ⊤ → M ⊤
+    windowContextPopup         : ⦃ MonadUnliftIO M ⦄ → M ⊤′ → M ⊤′
+    withPopupContextWindowOpen : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → M ⊤′ → M ⊤′
     withPopupContextWindow     : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → (Bool → M A) → M A
     beginPopupContextWindow    : ⦃ MonadIO M ⦄ → Maybe Text → ImGuiPopupFlags → M (Liftℓ _ Bool)
 
     -- Void context
-    voidContextPopup         : ⦃ MonadUnliftIO M ⦄ → M ⊤ → M ⊤
-    withPopupContextVoidOpen : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → M ⊤ → M ⊤
+    voidContextPopup         : ⦃ MonadUnliftIO M ⦄ → M ⊤′ → M ⊤′
+    withPopupContextVoidOpen : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → M ⊤′ → M ⊤′
     withPopupContextVoid     : ⦃ MonadUnliftIO M ⦄ → Maybe Text → ImGuiPopupFlags → (Bool → M A) → M A
     beginPopupContextVoid    : ⦃ MonadIO M ⦄ → Maybe Text → ImGuiPopupFlags → M (Liftℓ _ Bool)
 
     -- Manual
-    openPopup            : ⦃ MonadIO M ⦄ → Text → M ⊤
-    openPopupOnItemClick : ⦃ MonadIO M ⦄ → Text → ImGuiPopupFlags → M ⊤
-    closeCurrentPopup    : ⦃ MonadIO M ⦄ → M ⊤
+    openPopup            : ⦃ MonadIO M ⦄ → Text → M ⊤′
+    openPopupOnItemClick : ⦃ MonadIO M ⦄ → Text → ImGuiPopupFlags → M ⊤′
+    closeCurrentPopup    : ⦃ MonadIO M ⦄ → M ⊤′
 
     -- Queries
     isCurrentPopupOpen  : ⦃ MonadIO M ⦄ → Text → M (Liftℓ _ Bool)
@@ -2635,7 +2635,7 @@ module _ {T : Set aℓ → Set bℓ} where
     postulate
         itemCount : ⦃ ClipItems T A ⦄ → T A → Maybe Int
         clipItems : ⦃ ClipItems T A ⦄ → Int → Int → T A → T A
-        stepItems : ⦃ ClipItems T A ⦄ → ⦃ Monad M ⦄ → (A → M ⊤) → T A → M ⊤
+        stepItems : ⦃ ClipItems T A ⦄ → ⦃ Monad M ⦄ → (A → M ⊤) → T A → M ⊤′
 
 {-# COMPILE GHC itemCount = \ aℓ bℓ t a AgdaClipItems -> DearImGui.itemCount #-}
 {-# COMPILE GHC clipItems = \ aℓ bℓ t a AgdaClipItems -> DearImGui.clipItems #-}
@@ -2644,7 +2644,7 @@ module _ {T : Set aℓ → Set bℓ} where
 postulate
 
     -- ListClipper
-    withListClipper : {T : Set aℓ → Set bℓ} → ⦃ ClipItems T A ⦄ → ⦃ MonadUnliftIO M ⦄ → Maybe Float → T A → (A → M ⊤) → M ⊤
+    withListClipper : {T : Set aℓ → Set bℓ} → ⦃ ClipItems T A ⦄ → ⦃ MonadUnliftIO M ⦄ → Maybe Float → T A → (A → M ⊤) → M ⊤′
 
     -- Miscellaneous
     -- todo: (req raw DrawList) getBackgroundDrawList : ⦃ MonadIO M ⦄ → M (Liftℓ _ DrawList)

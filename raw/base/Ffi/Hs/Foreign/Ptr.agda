@@ -5,7 +5,7 @@ module Ffi.Hs.Foreign.Ptr where
 open import Agda.Builtin.IO    using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Word   using (Word)
 
@@ -43,7 +43,7 @@ postulate
     castFunPtr        : FunPtr A → FunPtr B
     castFunPtrToPtr   : FunPtr A → Ptr B
     castPtrToFunPtr   : Ptr A → FunPtr B
-    freeHaskellFunPtr : FunPtr A → IO (⊤ {lzero})
+    freeHaskellFunPtr : FunPtr A → IO ⊤
 
     ptrToIntPtr  : Ptr A → IntPtr
     intPtrToPtr  : IntPtr → Ptr A

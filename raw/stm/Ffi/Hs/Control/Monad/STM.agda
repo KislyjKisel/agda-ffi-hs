@@ -6,7 +6,7 @@ open import Agda.Builtin.Bool             using (Bool)
 open import Agda.Builtin.IO               using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit             using (⊤)
+open import Ffi.Hs.-base.Unit             using (⊤; ⊤′)
 open import Ffi.Hs.Control.Exception.Base using (Exception)
 
 open import Ffi.Hs.-base.STM public
@@ -28,7 +28,7 @@ postulate
     atomically : STM A → IO A
     retry      : STM A
     orElse     : STM A → STM A → STM A
-    check      : Bool → STM (⊤ {lzero})
+    check      : Bool → STM ⊤
     throwSTM   : ⦃ Exception E ⦄ → E → STM A
     catchSTM   : ⦃ Exception E ⦄ → STM A → (E → STM A) → STM A
 

@@ -25,7 +25,7 @@ postulate
     mult : ⦃ Algebra R M ⦄ → (M → M → R) → M → R
     unital : ⦃ Algebra R M ⦄ → R → M → R
 
-    Algebra[R,⊤] : ⦃ Num R ⦄ → Algebra R ⊤
+    Algebra[R,⊤] : ⦃ Num R ⦄ → Algebra R ⊤′
     Algebra[R,Void] : ⦃ Num R ⦄ → Algebra R Void
 
 -- todo...

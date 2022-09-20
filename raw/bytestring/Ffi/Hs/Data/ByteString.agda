@@ -6,7 +6,7 @@ open import Agda.Builtin.Bool       using (Bool)
 open import Agda.Builtin.List       using (List)
 open import Agda.Builtin.Maybe      using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit       using (⊤)
+open import Ffi.Hs.-base.Unit       using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int         using (Int)
 open import Ffi.Hs.Data.Tuple       using (Tuple2)
 open import Ffi.Hs.Data.Word        using (Word8)
@@ -156,12 +156,12 @@ postulate
 
     getLine     : IO ByteString
     getContents : IO ByteString
-    putStr      : ByteString → IO (⊤ {lzero})
-    interact    : (ByteString → ByteString) → IO (⊤ {lzero})
+    putStr      : ByteString → IO ⊤
+    interact    : (ByteString → ByteString) → IO ⊤
 
     readFile   : FilePath → IO ByteString
-    writeFile  : FilePath → ByteString → IO (⊤ {lzero})
-    appendFile : FilePath → ByteString → IO (⊤ {lzero})
+    writeFile  : FilePath → ByteString → IO ⊤
+    appendFile : FilePath → ByteString → IO ⊤
 
     hGetLine        : Handle → IO ByteString
     hGetContents    : Handle → IO ByteString
@@ -170,7 +170,7 @@ postulate
     hGetNonBlocking : Handle → Int → IO ByteString
     hPut            : Handle → ByteString → IO ByteString
     hPutNonBlocking : Handle → ByteString → IO ByteString
-    hPutStr         : Handle → ByteString → IO (⊤ {lzero})
+    hPutStr         : Handle → ByteString → IO ⊤
 
 {-# COMPILE GHC empty        = Data.ByteString.empty        #-}
 {-# COMPILE GHC singleton    = Data.ByteString.singleton    #-}

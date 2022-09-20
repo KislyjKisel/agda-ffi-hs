@@ -8,7 +8,7 @@ open import Agda.Builtin.IO    using (IO)
 open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Ord; Num)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
 
 {-# FOREIGN GHC
@@ -23,9 +23,9 @@ private
 
 postulate
     throwIf     : (A → Bool) → (A → List Char) → IO A → IO A
-    throwIf-    : (A → Bool) → (A → List Char) → IO A → IO (⊤ {lzero})
+    throwIf-    : (A → Bool) → (A → List Char) → IO A → IO ⊤
     throwIfNeg  : ⦃ Ord A ⦄ → ⦃ Num A ⦄ → (A → List Char) → IO A → IO A
-    throwIfNeg- : ⦃ Ord A ⦄ → ⦃ Num A ⦄ → (A → List Char) → IO A → IO (⊤ {lzero})
+    throwIfNeg- : ⦃ Ord A ⦄ → ⦃ Num A ⦄ → (A → List Char) → IO A → IO ⊤
     throwIfNull : List Char → IO (Ptr A) → IO (Ptr A)
 
 {-# COMPILE GHC throwIf     = \ aℓ a                 -> Foreign.Marshal.Error.throwIf     #-}

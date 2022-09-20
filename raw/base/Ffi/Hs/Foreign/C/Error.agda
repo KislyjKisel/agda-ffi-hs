@@ -9,7 +9,7 @@ open import Agda.Builtin.List      using (List)
 open import Agda.Builtin.Maybe     using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class     using (Eq; Num)
-open import Ffi.Hs.-base.Unit      using (⊤)
+open import Ffi.Hs.-base.Unit      using (⊤; ⊤′)
 open import Ffi.Hs.Foreign.C.Types using (CInt)
 open import Ffi.Hs.Foreign.Ptr     using (Ptr)
 open import Ffi.Hs.System.IO       using (Handle)
@@ -38,7 +38,7 @@ postulate
 postulate
     isValidErrno   : Errno → Bool
     getErrno       : IO Errno
-    resetErrno     : IO (⊤ {lzero})
+    resetErrno     : IO ⊤
     errnoToIOError : List Char → Errno → Maybe Handle → Maybe (List Char) → IOError
     throwErrno     : List Char → IO A
 
@@ -50,31 +50,31 @@ postulate
 
 postulate
     throwErrnoIf       : (A → Bool) → List Char → IO A → IO A
-    throwErrnoIf-      : (A → Bool) → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoIf-      : (A → Bool) → List Char → IO A → IO ⊤
     throwErrnoIfRetry  : (A → Bool) → List Char → IO A → IO A
-    throwErrnoIfRetry- : (A → Bool) → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoIfRetry- : (A → Bool) → List Char → IO A → IO ⊤
 
     throwErrnoIfMinus1       : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO A
-    throwErrnoIfMinus1-      : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoIfMinus1-      : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO ⊤
     throwErrnoIfMinus1Retry  : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO A
-    throwErrnoIfMinus1Retry- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoIfMinus1Retry- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO ⊤
 
     throwErrnoIfNull           : List Char → IO (Ptr A) → IO (Ptr A)
     throwErrnoIfNullRetry      : List Char → IO (Ptr A) → IO (Ptr A)
     throwErrnoIfRetryMayBlock  : (A → Bool) → List Char → IO A → IO B → IO A
-    throwErrnoIfRetryMayBlock- : (A → Bool) → List Char → IO A → IO B → IO (⊤ {lzero})
+    throwErrnoIfRetryMayBlock- : (A → Bool) → List Char → IO A → IO B → IO ⊤
 
     throwErrnoIfMinus1RetryMayBlock  : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO B → IO A
-    throwErrnoIfMinus1RetryMayBlock- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO B → IO (⊤ {lzero})
+    throwErrnoIfMinus1RetryMayBlock- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → IO A → IO B → IO ⊤
 
     throwErrnoIfNullRetryMayBlock : List Char → IO (Ptr A) → IO B → IO (Ptr A)
     throwErrnoPath                : List Char → List Char → IO A
     throwErrnoPathIf              : (A → Bool) → List Char → List Char → IO A → IO A
-    throwErrnoPathIf-             : (A → Bool) → List Char → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoPathIf-             : (A → Bool) → List Char → List Char → IO A → IO ⊤
     throwErrnoPathIfNull          : List Char → List Char → IO (Ptr A) → IO (Ptr A)
 
     throwErrnoPathIfMinus1  : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → List Char → IO A → IO A
-    throwErrnoPathIfMinus1- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → List Char → IO A → IO (⊤ {lzero})
+    throwErrnoPathIfMinus1- : ⦃ Eq A ⦄ → ⦃ Num A ⦄ → List Char → List Char → IO A → IO ⊤
 
 {-# COMPILE GHC throwErrnoIf       = \ aℓ a -> Foreign.C.Error.throwErrnoIf       #-}
 {-# COMPILE GHC throwErrnoIf-      = \ aℓ a -> Foreign.C.Error.throwErrnoIf_      #-}

@@ -6,7 +6,7 @@ open import Agda.Builtin.IO    using (IO)
 open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Eq)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 
 private
     variable
@@ -17,12 +17,12 @@ postulate
     Chan : Set aℓ → Set aℓ
 
     newChan   : IO (Chan A)
-    writeChan : Chan A → A → IO (⊤ {lzero})
+    writeChan : Chan A → A → IO ⊤
     readChan  : Chan A → IO A
     dupChan   : Chan A → IO (Chan A)
 
     getChanContents : Chan A → IO (List A)
-    writeList2Chan  : Chan A → List A → IO (⊤ {lzero})
+    writeList2Chan  : Chan A → List A → IO ⊤
 
 {-# FOREIGN GHC import qualified Control.Concurrent.Chan as AgdaHsChan #-}
 

@@ -8,7 +8,7 @@ open import Agda.Builtin.IO using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Monad)
 open import Ffi.Hs.GHC.Exts    using (State#; Tuple2#)
-open import Ffi.Hs.-base.Unit using (⊤)
+open import Ffi.Hs.-base.Unit using (⊤; ⊤′)
 
 {-# FOREIGN GHC
 import qualified Control.Monad.Primitive
@@ -28,7 +28,7 @@ postulate
     PrimState : (M : Set aℓ → Set aℓ) → ⦃ PrimMonad M ⦄ → Set
 
     primitiv  : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → Tuple2# (State# (PrimState M)) A) → M A
-    primitiv- : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → State# (PrimState M)) → M ⊤
+    primitiv- : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → State# (PrimState M)) → M ⊤′
 
     PrimMonad[M]⇒Monad[M] : ⦃ PrimMonad M ⦄ → Monad M
 

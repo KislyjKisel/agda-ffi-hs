@@ -6,7 +6,7 @@ open import Agda.Builtin.IO    using (IO)
 open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Storable; Eq)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
 
@@ -32,8 +32,8 @@ postulate
     
     peekArray  : ⦃ Storable A ⦄ → Int → Ptr A → IO (List A)
     peekArray0 : ⦃ Storable A ⦄ → ⦃ Eq A ⦄ → A → Ptr A → IO (List A)
-    pokeArray  : ⦃ Storable A ⦄ → Ptr A → List A → IO (⊤ {lzero})
-    pokeArray0 : ⦃ Storable A ⦄ → A → Ptr A → List A → IO (⊤ {lzero})
+    pokeArray  : ⦃ Storable A ⦄ → Ptr A → List A → IO ⊤
+    pokeArray0 : ⦃ Storable A ⦄ → A → Ptr A → List A → IO ⊤
 
     newArray      : ⦃ Storable A ⦄ → List A → IO (Ptr A)
     newArray0     : ⦃ Storable A ⦄ → A → List A → IO (Ptr A)
@@ -42,8 +42,8 @@ postulate
     withArrayLen  : ⦃ Storable A ⦄ → List A → (Int → Ptr A → IO B) → IO B
     withArrayLen0 : ⦃ Storable A ⦄ → A → List A → (Int → Ptr A → IO B) → IO B
 
-    copyArray    : ⦃ Storable A ⦄ → Ptr A → Ptr A → Int → IO (⊤ {lzero})
-    moveArray    : ⦃ Storable A ⦄ → Ptr A → Ptr A → Int → IO (⊤ {lzero})
+    copyArray    : ⦃ Storable A ⦄ → Ptr A → Ptr A → Int → IO ⊤
+    moveArray    : ⦃ Storable A ⦄ → Ptr A → Ptr A → Int → IO ⊤
     lengthArray0 : ⦃ Storable A ⦄ → ⦃ Eq A ⦄ → A → Ptr A → IO Int
     advancePtr   : ⦃ Storable A ⦄ → Ptr A → Int → Ptr A
 

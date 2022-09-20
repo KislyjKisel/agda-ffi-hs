@@ -5,7 +5,7 @@ module Ffi.Hs.Foreign.Marshal.Alloc where
 open import Agda.Builtin.IO           using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class        using (Storable)
-open import Ffi.Hs.-base.Unit         using (⊤)
+open import Ffi.Hs.-base.Unit         using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int           using (Int)
 open import Ffi.Hs.Foreign.ForeignPtr using (FinalizerPtr)
 open import Ffi.Hs.Foreign.Ptr        using (Ptr)
@@ -30,7 +30,7 @@ postulate
     callocBytes        : Int → IO (Ptr A)
     realloc            : ⦃ Storable B ⦄ → Ptr A → IO (Ptr B)
     reallocBytes       : Ptr A → Int → IO (Ptr A)
-    free               : Ptr A → IO (⊤ {lzero})
+    free               : Ptr A → IO ⊤
     finalizerFree      : FinalizerPtr {ℓ = aℓ} A
 
 {-# COMPILE GHC alloca             = \ aℓ a bℓ b AgdaStorable -> Foreign.Marshal.Alloc.alloca             #-}

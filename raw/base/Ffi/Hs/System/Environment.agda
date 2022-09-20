@@ -7,7 +7,7 @@ open import Agda.Builtin.IO    using (IO)
 open import Agda.Builtin.List  using (List)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Tuple  using (Tuple2)
 
 private
@@ -26,8 +26,8 @@ postulate
     getExecutablePath : IO (List Char)
     getEnv            : List Char → IO (List Char)
     lookupEnv         : List Char → IO (Maybe (List Char))
-    setEnv            : List Char → List Char → IO (⊤ {lzero})
-    unsetEnv          : List Char → IO (⊤ {lzero})
+    setEnv            : List Char → List Char → IO ⊤
+    unsetEnv          : List Char → IO ⊤
     withArgs          : List (List Char) → IO A → IO A
     withProgName      : List Char → IO A → IO A
     getEnvironment    : IO (List (Tuple2 (List Char) (List Char)))

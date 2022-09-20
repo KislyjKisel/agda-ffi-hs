@@ -3,7 +3,7 @@
 module Ffi.Hs.Data.STRef.Lazy where
 
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit            using (⊤)
+open import Ffi.Hs.-base.Unit            using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.ST.Lazy using (ST)
 
 {-# FOREIGN GHC
@@ -20,8 +20,8 @@ postulate
     STRef        : Set → Set aℓ → Set aℓ
     newSTRef     : A → ST S (STRef S A)
     readSTRef    : STRef S A → ST S A
-    writeSTRef   : STRef S A → A → ST S (⊤ {lzero})
-    modifySTRef  : STRef S A → (A → A) → ST S (⊤ {lzero})
+    writeSTRef   : STRef S A → A → ST S ⊤
+    modifySTRef  : STRef S A → (A → A) → ST S ⊤
 
 {-# FOREIGN GHC type AgdaSTRef aℓ = Data.STRef.STRef #-}
 {-# COMPILE GHC STRef = type(1) AgdaSTRef #-}

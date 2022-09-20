@@ -7,7 +7,7 @@ open import Agda.Builtin.Char  using (Char)
 open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Show; Applicative)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 
 {-# FOREIGN GHC
 import qualified Debug.Trace
@@ -27,9 +27,9 @@ postulate
     traceShow   : ⦃ Show A ⦄ → A → B → B
     traceShowId : ⦃ Show A ⦄ → A → A
     traceStack  : List Char → A → A
-    traceIO     : List Char → IO (⊤ {lzero})
-    traceM      : ⦃ Applicative F ⦄ → List Char → F ⊤
-    traceShowM  : ⦃ Show A ⦄ → ⦃ Applicative F ⦄ → A → F ⊤
+    traceIO     : List Char → IO ⊤
+    traceM      : ⦃ Applicative F ⦄ → List Char → F ⊤′
+    traceShowM  : ⦃ Show A ⦄ → ⦃ Applicative F ⦄ → A → F ⊤′
 
 {-# COMPILE GHC trace       = \ aℓ a                               -> Debug.Trace.trace       #-}
 {-# COMPILE GHC traceId     =                                         Debug.Trace.traceId     #-}
@@ -42,10 +42,10 @@ postulate
 
 postulate
     traceEvent    : List Char → A → A
-    traceEventIO  : List Char → IO (⊤ {lzero})
-    flushEventLog : IO (⊤ {lzero})
+    traceEventIO  : List Char → IO ⊤
+    flushEventLog : IO ⊤
     traceMarker   : List Char → A → A
-    traceMarkerIO : List Char → IO (⊤ {lzero})
+    traceMarkerIO : List Char → IO ⊤
 
 {-# COMPILE GHC traceEvent    = \ aℓ a -> Debug.Trace.traceEvent    #-}
 {-# COMPILE GHC traceEventIO  =           Debug.Trace.traceEventIO  #-}

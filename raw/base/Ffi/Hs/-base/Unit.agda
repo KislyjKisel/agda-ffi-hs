@@ -4,6 +4,10 @@ module Ffi.Hs.-base.Unit where
 
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
+open import Ffi.Hs.-base.Level
+
+open import Agda.Builtin.Unit public
+    using (⊤; tt)
 
 {-# FOREIGN GHC
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -13,24 +17,23 @@ private
     variable
         aℓ bℓ : Level
 
-record ⊤ {ℓ} : Set ℓ where
-    instance constructor tt
+⊤′ : Set aℓ
+⊤′ = Liftℓ _ ⊤
 
-{-# FOREIGN GHC type AgdaUnit ℓ = ()      #-}
-{-# COMPILE GHC ⊤ = data(1) AgdaUnit (()) #-}
+pattern tt′ = liftℓ tt
 
-cast : ⊤ {aℓ} → ⊤ {bℓ}
-cast _ = tt
+cast′ : ⊤′ {aℓ} → ⊤′ {bℓ}
+cast′ _ = tt′
 
 postulate
-    Eq[⊤]        : Eq {aℓ} ⊤
-    Ord[⊤]       : Ord {aℓ} ⊤
-    Enum[⊤]      : Enum {aℓ} ⊤
-    Bounded[⊤]   : Bounded {aℓ} ⊤
-    Semigroup[⊤] : Semigroup {aℓ} ⊤
-    Monoid[⊤]    : Monoid {aℓ} ⊤
-    Show[⊤]      : Show {aℓ} ⊤
-    Read[⊤]      : Read {aℓ} ⊤
+    Eq[⊤]        : Eq {aℓ} ⊤′
+    Ord[⊤]       : Ord {aℓ} ⊤′
+    Enum[⊤]      : Enum {aℓ} ⊤′
+    Bounded[⊤]   : Bounded {aℓ} ⊤′
+    Semigroup[⊤] : Semigroup {aℓ} ⊤′
+    Monoid[⊤]    : Monoid {aℓ} ⊤′
+    Show[⊤]      : Show {aℓ} ⊤′
+    Read[⊤]      : Read {aℓ} ⊤′
 
 {-# COMPILE GHC Eq[⊤]        = \ aℓ -> AgdaEq        #-}
 {-# COMPILE GHC Ord[⊤]       = \ aℓ -> AgdaOrd       #-}

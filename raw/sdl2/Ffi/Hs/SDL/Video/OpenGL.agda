@@ -4,7 +4,7 @@ module Ffi.Hs.SDL.Video.OpenGL where
 
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit             using (⊤)
+open import Ffi.Hs.-base.Unit             using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.IO.Class using (MonadIO)
 open import Ffi.Hs.Data.StateVar          using (StateVar)
 open import Ffi.Hs.Foreign.C.String       using (CString)
@@ -116,8 +116,8 @@ postulate
 postulate
     GLContext : Set
     glCreateContext : ⦃ MonadIO M ⦄ → Window → M GLContext
-    glMakeCurrent   : ⦃ MonadIO M ⦄ → Window → GLContext → M ⊤
-    glDeleteContext : ⦃ MonadIO M ⦄ → GLContext → M ⊤
+    glMakeCurrent   : ⦃ MonadIO M ⦄ → Window → GLContext → M ⊤′
+    glDeleteContext : ⦃ MonadIO M ⦄ → GLContext → M ⊤′
 
 {-# COMPILE GHC GLContext = type SDL.Video.OpenGL.GLContext #-}
 
@@ -156,7 +156,7 @@ postulate
 
 
 postulate
-    glSwapWindow : ⦃ MonadIO M ⦄ → Window → M ⊤
+    glSwapWindow : ⦃ MonadIO M ⦄ → Window → M ⊤′
     swapInterval : StateVar SwapInterval
 
 {-# COMPILE GHC glSwapWindow = \ mℓ m AgdaMonadIO -> SDL.Video.OpenGL.glSwapWindow #-}

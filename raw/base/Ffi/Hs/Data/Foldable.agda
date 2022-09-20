@@ -7,7 +7,7 @@ open import Agda.Builtin.List  using (List)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Ord    using (Ordering)
 
@@ -47,13 +47,13 @@ postulate
     product    : ⦃ Foldable F ⦄ → ⦃ Num A ⦄ → F A → A
     foldrM     : ⦃ Foldable F ⦄ → ⦃ Monad M ⦄ → (A → B → M B) → B → F A → M B
     foldlM     : ⦃ Foldable F ⦄ → ⦃ Monad M ⦄ → (B → A → M B) → B → F A → M B
-    traverse-  : ⦃ Foldable F ⦄ → ⦃ Applicative M ⦄ → (A → M B) → F A → M ⊤
-    for-       : ⦃ Foldable F ⦄ → ⦃ Applicative M ⦄ → F A → (A → M B) → M ⊤
-    sequenceA- : ⦃ Foldable F ⦄ → ⦃ Applicative M ⦄ → F (M A) → M ⊤
+    traverse-  : ⦃ Foldable F ⦄ → ⦃ Applicative M ⦄ → (A → M B) → F A → M ⊤′
+    for-       : ⦃ Foldable F ⦄ → ⦃ Applicative M ⦄ → F A → (A → M B) → M ⊤′
+    sequenceA- : ⦃ Foldable F ⦄ → ⦃ Applicative M ⦄ → F (M A) → M ⊤′
     asum       : ⦃ Foldable F ⦄ → ⦃ Alternative M ⦄ → F (M A) → M A
-    mapM-      : ⦃ Foldable F ⦄ → ⦃ Monad M ⦄ → (A → M B) → F A → M ⊤
-    forM-      : ⦃ Foldable F ⦄ → ⦃ Monad M ⦄ → F A → (A → M B) → M ⊤
-    sequence-  : ⦃ Foldable F ⦄ → ⦃ Monad M ⦄ → F (M A) → M ⊤
+    mapM-      : ⦃ Foldable F ⦄ → ⦃ Monad M ⦄ → (A → M B) → F A → M ⊤′
+    forM-      : ⦃ Foldable F ⦄ → ⦃ Monad M ⦄ → F A → (A → M B) → M ⊤′
+    sequence-  : ⦃ Foldable F ⦄ → ⦃ Monad M ⦄ → F (M A) → M ⊤′
     msum       : ⦃ Foldable F ⦄ → ⦃ MonadPlus M ⦄ → F (M A) → M A
     concat     : ⦃ Foldable F ⦄ → F (List A) → List A
     concatMap  : ⦃ Foldable F ⦄ → (A → List B) → F A → List B

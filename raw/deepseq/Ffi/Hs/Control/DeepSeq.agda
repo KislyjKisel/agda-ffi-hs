@@ -4,7 +4,7 @@ module Ffi.Hs.Control.DeepSeq where
 
 open import Ffi.Hs.-base.Class using (Monad)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit using (⊤)
+open import Ffi.Hs.-base.Unit using (⊤; ⊤′)
 
 import Ffi.Hs.-base.Dictionaries
 
@@ -24,12 +24,12 @@ infixr 0 _$!!_
 
 postulate
     NFData : Set aℓ → Set aℓ
-    rnf     : ⦃ NFData A ⦄ → A → ⊤ {lzero}
+    rnf     : ⦃ NFData A ⦄ → A → ⊤′ {lzero}
     deepseq : ⦃ NFData A ⦄ → A → B → B
     force   : ⦃ NFData A ⦄ → A → A
     _$!!_   : ⦃ NFData A ⦄ → (A → B) → A → B
     _<$!!>_ : ⦃ Monad M ⦄ → ⦃ NFData B ⦄ → (A → B) → M A → M B
-    rwhnf   : A → ⊤ {lzero}
+    rwhnf   : A → ⊤′ {lzero}
 
 {-# FOREIGN GHC data AgdaNFData aℓ a = Control.DeepSeq.NFData a => AgdaNFData #-}
 {-# COMPILE GHC NFData = type(0) AgdaNFData #-}
@@ -45,15 +45,15 @@ module _ where
     private variable F : Set aℓ → Set bℓ
     postulate
         NFData1 : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
-        liftRnf : ⦃ NFData1 F ⦄ → (A → ⊤ {lzero}) → F A → ⊤ {lzero}
-        rnf1    : ⦃ NFData1 F ⦄ → ⦃ NFData A ⦄ → F A → ⊤ {lzero}
+        liftRnf : ⦃ NFData1 F ⦄ → (A → ⊤′ {lzero}) → F A → ⊤′ {lzero}
+        rnf1    : ⦃ NFData1 F ⦄ → ⦃ NFData A ⦄ → F A → ⊤′ {lzero}
 
 module _ where
     private variable F : Set aℓ → Set bℓ → Set cℓ
     postulate
         NFData2 : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
-        liftRnf2 : ⦃ NFData2 F ⦄ → (A → ⊤ {lzero}) → (B → ⊤ {lzero}) → F A B → ⊤ {lzero}
-        rnf2     : ⦃ NFData2 F ⦄ → ⦃ NFData A ⦄ → ⦃ NFData B ⦄ → F A B → ⊤ {lzero}
+        liftRnf2 : ⦃ NFData2 F ⦄ → (A → ⊤′ {lzero}) → (B → ⊤′ {lzero}) → F A B → ⊤′ {lzero}
+        rnf2     : ⦃ NFData2 F ⦄ → ⦃ NFData A ⦄ → ⦃ NFData B ⦄ → F A B → ⊤′ {lzero}
 
 {-# FOREIGN GHC data AgdaNFData1 aℓ bℓ f = Control.DeepSeq.NFData1 f => AgdaNFData1 #-}
 {-# COMPILE GHC NFData1 = type(0) AgdaNFData1 #-}
@@ -131,7 +131,7 @@ postulate
     NFData[Word32]            : NFData Word32
     NFData[Word64]            : NFData Word64
     NFData[CallStack]         : NFData CallStack
-    NFData[⊤]                 : NFData (⊤ {aℓ})
+    NFData[⊤]                 : NFData (⊤′ {aℓ})
     NFData[TyCon]             : NFData TyCon
     NFData[Void]              : NFData Void
     NFData[Unique]            : NFData Unique

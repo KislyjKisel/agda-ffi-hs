@@ -6,7 +6,7 @@ open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (MonadIO)
 open import Ffi.Hs.-base.Level using (Liftℓ)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.SDL.Event   using (Event)
 
 {-# FOREIGN GHC
@@ -20,8 +20,8 @@ private
         M : Set mℓ → Set mℓ
 
 postulate
-    sdl2NewFrame        : ⦃ MonadIO M ⦄ → M ⊤
-    sdl2Shutdown        : ⦃ MonadIO M ⦄ → M ⊤
+    sdl2NewFrame        : ⦃ MonadIO M ⦄ → M ⊤′
+    sdl2Shutdown        : ⦃ MonadIO M ⦄ → M ⊤′
     pollEventWithImGui  : ⦃ MonadIO M ⦄ → M (Liftℓ _ (Maybe Event))
     pollEventsWithImGui : ⦃ MonadIO M ⦄ → M (Liftℓ _ (List Event))
 

@@ -4,7 +4,7 @@ module Ffi.Hs.Foreign.Storable where
 
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using ()
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Foreign.Ptr using (Ptr)
 open import Ffi.Hs.System.IO   using (IO)
@@ -22,11 +22,11 @@ postulate
     sizeOf      : ⦃ Storable A ⦄ → A → Int
     alignment   : ⦃ Storable A ⦄ → A → Int
     peekElemOff : ⦃ Storable A ⦄ → Ptr A → Int → IO A
-    pokeElemOff : ⦃ Storable A ⦄ → Ptr A → Int → A → IO (⊤ {lzero})
+    pokeElemOff : ⦃ Storable A ⦄ → Ptr A → Int → A → IO ⊤
     peekByteOff : ⦃ Storable A ⦄ → Ptr B → Int → IO A
-    pokeByteOff : ⦃ Storable A ⦄ → Ptr B → Int → A → IO (⊤ {lzero})
+    pokeByteOff : ⦃ Storable A ⦄ → Ptr B → Int → A → IO ⊤
     peek        : ⦃ Storable A ⦄ → Ptr A → IO A
-    poke        : ⦃ Storable A ⦄ → Ptr A → A → IO (⊤ {lzero})
+    poke        : ⦃ Storable A ⦄ → Ptr A → A → IO ⊤
 
 {-# FOREIGN GHC
 import qualified Foreign.Storable

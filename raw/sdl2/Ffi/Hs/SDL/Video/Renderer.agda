@@ -9,7 +9,7 @@ open import Agda.Builtin.Maybe                  using (Maybe)
 open import Agda.Builtin.String                 using () renaming (String to Text)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit                   using (⊤)
+open import Ffi.Hs.-base.Unit                   using (⊤; ⊤′)
 open import Ffi.Hs.Data.ByteString              using (ByteString)
 open import Ffi.Hs.Data.StateVar                using (StateVar)
 open import Ffi.Hs.Data.Tuple                   using (Tuple2)
@@ -91,18 +91,18 @@ postulate
 
 
 postulate
-    clear      : ⦃ MonadIO M ⦄ → Renderer → M ⊤
-    copy       : ⦃ MonadIO M ⦄ → Renderer → Texture → Maybe (Rectangle CInt) → Maybe (Rectangle CInt) → M ⊤
-    copyEx     : ⦃ MonadIO M ⦄ → Renderer → Texture → Maybe (Rectangle CInt) → Maybe (Rectangle CInt) → CDouble → Maybe (Point V2 CInt) → V2 Bool → M ⊤
-    drawLine   : ⦃ MonadIO M ⦄ → Renderer → Point V2 CInt → Point V2 CInt → M ⊤
-    drawLines  : ⦃ MonadIO M ⦄ → Renderer → Vector (Point V2 CInt) → M ⊤
-    drawPoint  : ⦃ MonadIO M ⦄ → Renderer → Point V2 CInt → M ⊤
-    drawPoints : ⦃ MonadIO M ⦄ → Renderer → Vector (Point V2 CInt) → M ⊤
-    drawRect   : ⦃ MonadIO M ⦄ → Renderer → Maybe (Rectangle CInt) → M ⊤
-    drawRects  : ⦃ MonadIO M ⦄ → Renderer → Vector (Rectangle CInt) → M ⊤
-    fillRect   : ⦃ MonadIO M ⦄ → Renderer → Maybe (Rectangle CInt) → M ⊤
-    fillRects  : ⦃ MonadIO M ⦄ → Renderer → Vector (Rectangle CInt) → M ⊤
-    present    : ⦃ MonadIO M ⦄ → Renderer → M ⊤
+    clear      : ⦃ MonadIO M ⦄ → Renderer → M ⊤′
+    copy       : ⦃ MonadIO M ⦄ → Renderer → Texture → Maybe (Rectangle CInt) → Maybe (Rectangle CInt) → M ⊤′
+    copyEx     : ⦃ MonadIO M ⦄ → Renderer → Texture → Maybe (Rectangle CInt) → Maybe (Rectangle CInt) → CDouble → Maybe (Point V2 CInt) → V2 Bool → M ⊤′
+    drawLine   : ⦃ MonadIO M ⦄ → Renderer → Point V2 CInt → Point V2 CInt → M ⊤′
+    drawLines  : ⦃ MonadIO M ⦄ → Renderer → Vector (Point V2 CInt) → M ⊤′
+    drawPoint  : ⦃ MonadIO M ⦄ → Renderer → Point V2 CInt → M ⊤′
+    drawPoints : ⦃ MonadIO M ⦄ → Renderer → Vector (Point V2 CInt) → M ⊤′
+    drawRect   : ⦃ MonadIO M ⦄ → Renderer → Maybe (Rectangle CInt) → M ⊤′
+    drawRects  : ⦃ MonadIO M ⦄ → Renderer → Vector (Rectangle CInt) → M ⊤′
+    fillRect   : ⦃ MonadIO M ⦄ → Renderer → Maybe (Rectangle CInt) → M ⊤′
+    fillRects  : ⦃ MonadIO M ⦄ → Renderer → Vector (Rectangle CInt) → M ⊤′
+    present    : ⦃ MonadIO M ⦄ → Renderer → M ⊤′
 
 
 data BlendMode : Set where
@@ -189,16 +189,16 @@ data Surface : Set where
     mkSurface : Ptr Raw.Surface → Maybe (IOVector Word8) → Surface
 
 postulate
-    updateWindowSurface : ⦃ MonadIO M ⦄ → Window → M ⊤
+    updateWindowSurface : ⦃ MonadIO M ⦄ → Window → M ⊤′
     surfaceBlit         : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → Surface → Maybe (Point V2 CInt) → M (Maybe (Rectangle CInt))
-    surfaceBlitScaled   : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → Surface → Maybe (Rectangle CInt) → M ⊤
-    surfaceFillRect     : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → V4 Word8 → M ⊤
-    surfaceFillRects    : ⦃ MonadIO M ⦄ → Surface → Vector (Rectangle CInt) → V4 Word8 → M ⊤
+    surfaceBlitScaled   : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → Surface → Maybe (Rectangle CInt) → M ⊤′
+    surfaceFillRect     : ⦃ MonadIO M ⦄ → Surface → Maybe (Rectangle CInt) → V4 Word8 → M ⊤′
+    surfaceFillRects    : ⦃ MonadIO M ⦄ → Surface → Vector (Rectangle CInt) → V4 Word8 → M ⊤′
 
     convertSurface       : ⦃ MonadIO M ⦄ → Surface → SurfacePixelFormat → M Surface
     createRGBSurface     : ⦃ MonadIO M ⦄ → V2 CInt → PixelFormat → M Surface
     createRGBSurfaceFrom : ⦃ MonadIO M ⦄ → IOVector Word8 → V2 CInt → CInt → PixelFormat → M Surface
-    freeSurface          : ⦃ MonadIO M ⦄ → Surface → M ⊤
+    freeSurface          : ⦃ MonadIO M ⦄ → Surface → M ⊤′
     getWindowSurface     : ⦃ MonadIO M ⦄ → Window → M Surface
     loadBMP              : ⦃ MonadIO M ⦄ → List Char → M Surface
 
@@ -208,8 +208,8 @@ postulate
     surfaceFormat     : ⦃ MonadIO M ⦄ → Surface → M SurfacePixelFormat
     surfacePixels     : ⦃ MonadIO M ⦄ → Surface → M (Ptr ⊤)
 
-    lookSurface   : ⦃ MonadIO M ⦄ → Surface → M ⊤
-    unlockSurface : ⦃ MonadIO M ⦄ → Surface → M ⊤
+    lookSurface   : ⦃ MonadIO M ⦄ → Surface → M ⊤′
+    unlockSurface : ⦃ MonadIO M ⦄ → Surface → M ⊤′
 
 
 postulate
@@ -221,7 +221,7 @@ postulate
     paletteColor   : ⦃ MonadIO M ⦄ → Palette → CInt → M (Maybe (V4 Word8))
 
     formatPalette      : ⦃ MonadIO M ⦄ → SurfacePixelFormat → M (Maybe Palette)
-    setPaletteColors   : ⦃ MonadIO M ⦄ → Palette → Vector (V4 Word8) → CInt → M ⊤
+    setPaletteColors   : ⦃ MonadIO M ⦄ → Palette → Vector (V4 Word8) → CInt → M ⊤′
     pixelFormatToMasks : ⦃ MonadIO M ⦄ → PixelFormat → M (Tuple2 CInt (V4 Word32))
     masksToPixelFormat : ⦃ MonadIO M ⦄ → CInt → V4 Word32 → M PixelFormat
 
@@ -259,16 +259,16 @@ postulate
 postulate
     createTexture            : ⦃ MonadIO M ⦄ → Renderer → PixelFormat → TextureAccess → V2 CInt → M Texture
     createTextureFromSurface : ⦃ MonadIO M ⦄ → Renderer → Surface → M Texture
-    updateTexture            : ⦃ MonadIO M ⦄ → Texture → Maybe (Rectangle CInt) → ByteString → CInt → M ⊤
-    destroyTexture           : ⦃ MonadIO M ⦄ → Texture → M ⊤
-    glBindTexture            : ⦃ MonadIO M ⦄ → Texture → M ⊤
-    glUnbindTexture          : ⦃ MonadIO M ⦄ → Texture → M ⊤
+    updateTexture            : ⦃ MonadIO M ⦄ → Texture → Maybe (Rectangle CInt) → ByteString → CInt → M ⊤′
+    destroyTexture           : ⦃ MonadIO M ⦄ → Texture → M ⊤′
+    glBindTexture            : ⦃ MonadIO M ⦄ → Texture → M ⊤′
+    glUnbindTexture          : ⦃ MonadIO M ⦄ → Texture → M ⊤′
 
     textureAlphaMod  : Texture → StateVar Word8
     textureBlendMode : Texture → StateVar Word8
     textureColorMod  : Texture → StateVar (V3 Word8)
     lockTexture      : ⦃ MonadIO M ⦄ → Texture → Maybe (Rectangle CInt) → M (Tuple2 (Ptr ⊤) CInt)
-    unlockTexture    : ⦃ MonadIO M ⦄ → Texture → M ⊤
+    unlockTexture    : ⦃ MonadIO M ⦄ → Texture → M ⊤′
     queryTexture     : ⦃ MonadIO M ⦄ → Texture → M TextureInfo
 
 

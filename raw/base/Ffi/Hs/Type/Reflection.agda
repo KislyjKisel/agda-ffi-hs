@@ -7,7 +7,7 @@ open import Agda.Builtin.List         using (List)
 open import Agda.Builtin.Maybe        using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class        using (Show; Eq; Ord; TestEquality)
-open import Ffi.Hs.-base.Unit         using (⊤)
+open import Ffi.Hs.-base.Unit         using (⊤; ⊤′)
 open import Ffi.Hs.Data.Tuple         using (Tuple2)
 open import Ffi.Hs.Data.Type.Equality using (_:~~:_)
 
@@ -70,7 +70,7 @@ postulate
     tyConPackage : TyCon → List Char
     tyConModule  : TyCon → List Char
     tyConName    : TyCon → List Char
-    rnfTyCon     : TyCon → ⊤ {lzero}
+    rnfTyCon     : TyCon → ⊤′ {lzero}
 
     Show[TyCon] : Show TyCon
     Eq[TyCon]   : Eq TyCon
@@ -91,14 +91,14 @@ postulate
     withTypeable : {A : K} → TypeRep A → (⦃ Typeable A ⦄ → B) → B
 
     typeRepTyCon : {A : K} → TypeRep A → TyCon
-    rnfTypeRep   : {A : K} → TypeRep A → ⊤ {lzero}
+    rnfTypeRep   : {A : K} → TypeRep A → ⊤′ {lzero}
     eqTypeRep    : {K₁ K₂ : Set (lsuc aℓ)} {A : K₁} {B : K₂} → TypeRep A → TypeRep B → Maybe (A :~~: B)
     -- todo: (A : K -> K is translated as xA :: k -> xK) typeRepKind : {A : K} → TypeRep A → TypeRep K
     splitApps    : {A : K} → TypeRep A → Tuple2 TyCon (List {lsuc (lsuc bℓ)} SomeTypeRep)
 
     someTypeRep      : {K : Set (lsuc kℓ)} {A : K} {proxy : K → Set bℓ} → ⦃ Typeable A ⦄ → proxy A → SomeTypeRep {kℓ}
     someTypeRepTyCon : SomeTypeRep {kℓ} → TyCon
-    rnfSomeTypeRep   : SomeTypeRep {kℓ} → ⊤ {lzero}
+    rnfSomeTypeRep   : SomeTypeRep {kℓ} → ⊤′ {lzero}
 
 {-# COMPILE GHC typeRep      = \ kℓ k a AgdaTypeable -> Type.Reflection.typeRep #-}
 {-# COMPILE GHC withTypeable = \ kℓ k bℓ b a x f -> Type.Reflection.withTypeable x (f AgdaTypeable) #-}
@@ -120,7 +120,7 @@ postulate
     Module : Set
     moduleName    : Module → List Char
     modulePackage : Module → List Char
-    rnfModule     : Module → ⊤ {lzero}
+    rnfModule     : Module → ⊤′ {lzero}
 
     Show[Module] : Show Module
     Eq[Module]   : Eq Module

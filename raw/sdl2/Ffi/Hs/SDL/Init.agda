@@ -4,7 +4,7 @@ module Ffi.Hs.SDL.Init where
 
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Tuple  using (Tuple3)
 
 import Ffi.Hs.-base.Dictionaries
@@ -58,9 +58,9 @@ postulate
 {-# COMPILE GHC Show[InitFlag]    = AgdaShow    #-}
 
 postulate
-    initialize    : ⦃ Foldable F ⦄ → ⦃ MonadIO M ⦄ → F InitFlag → M ⊤
-    initializeAll : ⦃ MonadIO M ⦄ → M ⊤
-    quit          : ⦃ MonadIO M ⦄ → M ⊤
+    initialize    : ⦃ Foldable F ⦄ → ⦃ MonadIO M ⦄ → F InitFlag → M ⊤′
+    initializeAll : ⦃ MonadIO M ⦄ → M ⊤′
+    quit          : ⦃ MonadIO M ⦄ → M ⊤′
     version       : ⦃ Integral A ⦄ → ⦃ MonadIO M ⦄ → M (Tuple3 A A A)
 
 {-# COMPILE GHC initialize    = \ bℓ f mℓ m -> SDL.Init.initialize    #-}

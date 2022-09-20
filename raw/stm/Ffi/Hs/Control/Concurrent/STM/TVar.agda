@@ -6,7 +6,7 @@ open import Agda.Builtin.Bool        using (Bool)
 open import Agda.Builtin.IO          using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class       using (Eq)
-open import Ffi.Hs.-base.Unit        using (⊤)
+open import Ffi.Hs.-base.Unit        using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.STM using (STM)
 open import Ffi.Hs.Data.Int          using (Int)
 open import Ffi.Hs.Data.Tuple        using (Tuple2)
@@ -33,12 +33,12 @@ postulate
     readTVar      : TVar A → STM A
     readTVarIO    : TVar A → IO A
     writeTVar     : TVar A → A → STM A
-    modifyTVar    : TVar A → (A → A) → STM (⊤ {lzero})
-    modifyTVar'   : TVar A → (A → A) → STM (⊤ {lzero})
+    modifyTVar    : TVar A → (A → A) → STM ⊤
+    modifyTVar'   : TVar A → (A → A) → STM ⊤
     stateTVar     : TVar S → (S → Tuple2 A S) → STM A
     swapTVar      : TVar A → A → STM A
     registerDelay : Int → IO (TVar Bool)
-    mkWeakTVar    : TVar A → IO (⊤ {ℓ}) → IO (Weak (TVar A))
+    mkWeakTVar    : TVar A → IO (⊤′ {ℓ}) → IO (Weak (TVar A))
 
 {-# FOREIGN GHC type AgdaTVar aℓ = Control.Concurrent.STM.TVar.TVar #-}
 {-# COMPILE GHC TVar = type(1) AgdaTVar #-}

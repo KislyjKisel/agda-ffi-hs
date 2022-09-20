@@ -7,7 +7,7 @@ open import Agda.Builtin.IO               using (IO)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class            using (Show; Eq; Exception; Ord)
 open import Ffi.Hs.-base.STM              using (STM)
-open import Ffi.Hs.-base.Unit             using (⊤)
+open import Ffi.Hs.-base.Unit             using (⊤; ⊤′)
 open import Ffi.Hs.GHC.Exception.Type     using (SomeException)
 open import Ffi.Hs.Data.Either            using (Either)
 open import Ffi.Hs.Data.Int               using (Int)
@@ -30,25 +30,25 @@ private
 postulate
     ThreadId                : Set
     myThreadId              : IO ThreadId
-    forkIO                  : IO (⊤ {aℓ}) → IO ThreadId
-    forkFinally             : IO A → (Either (SomeException {seℓ}) A → IO (⊤ {lzero})) → IO ThreadId
-    forkIOWithUnmask        : ((∀{aℓ}{A : Set aℓ} → IO A → IO A) → IO (⊤ {lzero})) → IO ThreadId
-    killThread              : ThreadId → IO (⊤ {lzero})
-    throwTo                 : ⦃ Exception A ⦄ → ThreadId → A → IO (⊤ {lzero})
-    forkOn                  : Int → IO (⊤ {aℓ}) → IO ThreadId
-    forkOnWithUnmask        : Int → ((∀{aℓ}{A : Set aℓ} → IO A → IO A) → IO (⊤ {lzero})) → IO ThreadId
+    forkIO                  : IO (⊤′ {aℓ}) → IO ThreadId
+    forkFinally             : IO A → (Either (SomeException {seℓ}) A → IO ⊤) → IO ThreadId
+    forkIOWithUnmask        : ((∀{aℓ}{A : Set aℓ} → IO A → IO A) → IO ⊤) → IO ThreadId
+    killThread              : ThreadId → IO ⊤
+    throwTo                 : ⦃ Exception A ⦄ → ThreadId → A → IO ⊤
+    forkOn                  : Int → IO (⊤′ {aℓ}) → IO ThreadId
+    forkOnWithUnmask        : Int → ((∀{aℓ}{A : Set aℓ} → IO A → IO A) → IO ⊤) → IO ThreadId
     getNumCapabilities      : IO Int
-    setNumCapabilities      : Int → IO (⊤ {lzero})
+    setNumCapabilities      : Int → IO ⊤
     threadCapability        : ThreadId → IO (Tuple2 Int Bool)
-    yield                   : IO (⊤ {lzero})
-    threadDelay             : Int → IO (⊤ {lzero})
-    threadWaitRead          : Fd → IO (⊤ {lzero})
-    threadWaitWrite         : Fd → IO (⊤ {lzero})
-    threadWaitReadSTM       : Fd → IO (Tuple2 (STM (⊤ {lzero})) (IO (⊤ {lzero})))
-    threadWaitWriteSTM      : Fd → IO (Tuple2 (STM (⊤ {lzero})) (IO (⊤ {lzero})))
+    yield                   : IO ⊤
+    threadDelay             : Int → IO ⊤
+    threadWaitRead          : Fd → IO ⊤
+    threadWaitWrite         : Fd → IO ⊤
+    threadWaitReadSTM       : Fd → IO (Tuple2 (STM ⊤) (IO ⊤))
+    threadWaitWriteSTM      : Fd → IO (Tuple2 (STM ⊤) (IO ⊤))
     rtsSupportsBoundThreads : Bool
-    forkOS                  : IO (⊤ {lzero}) → IO ThreadId
-    forkOSWithUnmask        : ((∀{aℓ}{A : Set aℓ} → IO A → IO A) → IO (⊤ {lzero})) → IO ThreadId
+    forkOS                  : IO ⊤ → IO ThreadId
+    forkOSWithUnmask        : ((∀{aℓ}{A : Set aℓ} → IO A → IO A) → IO ⊤) → IO ThreadId
     isCurrentThreadBound    : IO Bool
     runInBoundThread        : IO A → IO A
     runInUnboundThread      : IO A → IO A

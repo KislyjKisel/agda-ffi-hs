@@ -7,7 +7,7 @@ open import Agda.Builtin.Char  using (Char)
 open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Functor; Applicative; Alternative; Monad; MonadFail; MonadPlus)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Tuple  using (Tuple2)
 
@@ -36,22 +36,22 @@ postulate
     gather : ReadP A → ReadP (Tuple2 (List Char) A)
 
     pfail      : ReadP A
-    eof        : ∀{ℓ} → ReadP (⊤ {ℓ})
+    eof        : ∀{ℓ} → ReadP (⊤′ {ℓ})
     satisfy    : (Char → Bool) → ReadP Char
     char       : Char → ReadP Char
     string     : List Char → ReadP (List Char)
     munch      : (Char → Bool) → ReadP (List Char)
     munch1     : (Char → Bool) → ReadP (List Char)
-    skipSpaces : ReadP (⊤ {lzero})
+    skipSpaces : ReadP ⊤
     choice     : List (ReadP A) → ReadP A
     count      : Int → ReadP A → ReadP (List A)
     between    : ReadP A → ReadP B → ReadP C → ReadP C
     option     : A → ReadP A → ReadP A
-    optional   : ∀{ℓ} → ReadP A → ReadP (⊤ {ℓ})
+    optional   : ∀{ℓ} → ReadP A → ReadP (⊤′ {ℓ})
     many       : ReadP A → ReadP (List A)
     many1      : ReadP A → ReadP (List A)
-    skipMany   : ∀{ℓ} → ReadP A → ReadP (⊤ {ℓ})
-    skipMany1  : ∀{ℓ} → ReadP A → ReadP (⊤ {ℓ})
+    skipMany   : ∀{ℓ} → ReadP A → ReadP (⊤′ {ℓ})
+    skipMany1  : ∀{ℓ} → ReadP A → ReadP (⊤′ {ℓ})
     sepBy      : ReadP A → ReadP B → ReadP (List A)
     sepBy1     : ReadP A → ReadP B → ReadP (List A)
     endBy      : ReadP A → ReadP B → ReadP (List A)

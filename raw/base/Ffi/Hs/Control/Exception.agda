@@ -6,7 +6,7 @@ open import Agda.Builtin.IO    using (IO)
 open import Agda.Builtin.List  using (List)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Exception; Functor)
-open import Ffi.Hs.-base.Unit  using (⊤)
+open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 
 open import Ffi.Hs.Control.Exception.Base public
 
@@ -32,7 +32,7 @@ postulate
     Functor[Handler] : Functor (Handler {eℓ} {lsuc eℓ})
     catches        : IO A → List (Handler {eℓ} A) → IO A
     interruptible  : IO A → IO A
-    allowInterrupt : IO (⊤ {lzero})
+    allowInterrupt : IO ⊤
 
 {-# COMPILE GHC Functor[Handler] = \ eℓ -> AgdaFunctor #-}
 {-# COMPILE GHC catches        = \ aℓ a eℓ -> Control.Exception.catches        #-}
