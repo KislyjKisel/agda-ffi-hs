@@ -10,7 +10,7 @@ open import Ffi.Hs.Data.Bool   using (`Bool)
 open Ffi.Hs.-base.Class public
     using (TestEquality)
 
-{-# FOREIGN GHC {-# LANGUAGE GADTs #-} #-}
+{-# FOREIGN GHC {-# LANGUAGE GADTs, PolyKinds, KindSignatures, TypeOperators #-} #-}
 
 import Ffi.Hs.-base.Dictionaries
 
@@ -122,9 +122,9 @@ postulate
     Show[A:~~:B] : Show (A :~~: B)
     Eq[A:~~:B]   : Eq (A :~~: B)
     Ord[A:~~:B]  : Ord (A :~~: B)
-    Data[A:~~:B] : {K₁ K₂ : Set (lsuc aℓ)} {A : K₁} {B : K₂} →
-                 ⦃ Typeable K₁ ⦄ → ⦃ Typeable K₂ ⦄ → ⦃ Typeable A ⦄ → ⦃ Typeable B ⦄ →
-                 ⦃ A ~~ B ⦄ → Data (A :~~: B)
+    -- Data[A:~~:B] : {K₁ K₂ : Set (lsuc aℓ)} {A : K₁} {B : K₂} →
+    --              ⦃ Typeable K₁ ⦄ → ⦃ Typeable K₂ ⦄ → ⦃ Typeable A ⦄ → ⦃ Typeable B ⦄ →
+    --              ⦃ A ~~ B ⦄ → Data (A :~~: B)
 
 {-# COMPILE GHC TestEquality[A:~~:] = \ aℓ a -> AgdaTestEquality #-}
 
@@ -135,5 +135,5 @@ postulate
 {-# COMPILE GHC Show[A:~~:B]        = \ aℓ a b             -> AgdaShow         #-}
 {-# COMPILE GHC Eq[A:~~:B]          = \ aℓ a b             -> AgdaEq           #-}
 {-# COMPILE GHC Ord[A:~~:B]         = \ aℓ a b             -> AgdaOrd          #-}
-{-# COMPILE GHC Data[A:~~:B] =
-    \ aℓ k1 k2 a b AgdaTypeable AgdaTypeable AgdaTypeable AgdaTypeable AgdaTypeHEq -> AgdaData #-}
+-- {-# COMPILE GHC Data[A:~~:B] =
+--     \ aℓ k1 k2 a b AgdaTypeable AgdaTypeable AgdaTypeable AgdaTypeable AgdaTypeHEq -> AgdaData #-}

@@ -44,11 +44,12 @@ fix f = f (fix f)
 on : (B → B → C) → (A → B) → A → A → C
 on f g x y = f (g x) (g y)
 
-postulate
-    Functor[A⟶]     : {A : Set fℓ} → Functor     {fℓ} (λ b → (A → b))
-    Applicative[A⟶] : {A : Set fℓ} → Applicative {fℓ} (λ b → (A → b))
-    Monad[A⟶]       : {A : Set fℓ} → Monad       {fℓ} (λ b → (A → b))
+-- todo: (lambda term in compile pragma) Fn instances
+-- postulate
+--     Functor[A⟶]     : {A : Set fℓ} → Functor     {fℓ} (λ b → (A → b))
+--     Applicative[A⟶] : {A : Set fℓ} → Applicative {fℓ} (λ b → (A → b))
+--     Monad[A⟶]       : {A : Set fℓ} → Monad       {fℓ} (λ b → (A → b))
 
-{-# COMPILE GHC Functor[A⟶]     = \ fℓ a -> AgdaFunctor     #-}
-{-# COMPILE GHC Applicative[A⟶] = \ fℓ a -> AgdaApplicative #-}
-{-# COMPILE GHC Monad[A⟶]       = \ fℓ a -> AgdaMonad       #-}
+-- {-# COMPILE GHC Functor[A⟶]     = \ fℓ a -> AgdaFunctor     #-}
+-- {-# COMPILE GHC Applicative[A⟶] = \ fℓ a -> AgdaApplicative #-}
+-- {-# COMPILE GHC Monad[A⟶]       = \ fℓ a -> AgdaMonad       #-}

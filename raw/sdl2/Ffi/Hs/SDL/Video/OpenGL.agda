@@ -4,6 +4,7 @@ module Ffi.Hs.SDL.Video.OpenGL where
 
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
+open import Ffi.Hs.-base.Level            using (Liftℓ)
 open import Ffi.Hs.-base.Unit             using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.IO.Class using (MonadIO)
 open import Ffi.Hs.Data.StateVar          using (StateVar)
@@ -104,18 +105,18 @@ postulate
 postulate
     defaultOpenGL : OpenGLConfig
 
-    glGetDrawableSize : ⦃ MonadIO M ⦄ → Window → M (V2 CInt)
-    glGetProcAddress  : ⦃ MonadIO M ⦄ → CString → M (Ptr ⊤)
+    glGetDrawableSize : ⦃ MonadIO M ⦄ → Window → M (Liftℓ _ (V2 CInt))
+    glGetProcAddress  : ⦃ MonadIO M ⦄ → CString → M (Liftℓ _ (Ptr ⊤))
 
 {-# COMPILE GHC defaultOpenGL = SDL.Video.OpenGL.defaultOpenGL #-}
 
-{-# COMPILE GHC glGetDrawableSize = \ m AgdaMonadIO    -> SDL.Video.OpenGL.glGetDrawableSize #-}
+{-# COMPILE GHC glGetDrawableSize = \ mℓ m AgdaMonadIO -> SDL.Video.OpenGL.glGetDrawableSize #-}
 {-# COMPILE GHC glGetProcAddress  = \ mℓ m AgdaMonadIO -> SDL.Video.OpenGL.glGetProcAddress  #-}
 
 
 postulate
     GLContext : Set
-    glCreateContext : ⦃ MonadIO M ⦄ → Window → M GLContext
+    glCreateContext : ⦃ MonadIO M ⦄ → Window → M (Liftℓ _ GLContext)
     glMakeCurrent   : ⦃ MonadIO M ⦄ → Window → GLContext → M ⊤′
     glDeleteContext : ⦃ MonadIO M ⦄ → GLContext → M ⊤′
 

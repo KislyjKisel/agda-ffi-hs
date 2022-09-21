@@ -92,7 +92,7 @@ postulate
 
     typeRepTyCon : {A : K} → TypeRep A → TyCon
     rnfTypeRep   : {A : K} → TypeRep A → ⊤′ {lzero}
-    eqTypeRep    : {K₁ K₂ : Set (lsuc aℓ)} {A : K₁} {B : K₂} → TypeRep A → TypeRep B → Maybe (A :~~: B)
+    -- todo: (req kinds) eqTypeRep    : {K₁ K₂ : Set (lsuc aℓ)} {A : K₁} {B : K₂} → TypeRep A → TypeRep B → Maybe (A :~~: B)
     -- todo: (A : K -> K is translated as xA :: k -> xK) typeRepKind : {A : K} → TypeRep A → TypeRep K
     splitApps    : {A : K} → TypeRep A → Tuple2 TyCon (List {lsuc (lsuc bℓ)} SomeTypeRep)
 
@@ -105,7 +105,7 @@ postulate
 
 {-# COMPILE GHC typeRepTyCon = \ kℓ k a       -> Type.Reflection.typeRepTyCon #-}
 {-# COMPILE GHC rnfTypeRep   = \ kℓ k a       -> Type.Reflection.rnfTypeRep   #-}
-{-# COMPILE GHC eqTypeRep    = \ aℓ k1 k2 a b -> Type.Reflection.eqTypeRep    #-}
+-- {-# COMPILE GHC eqTypeRep    = \ aℓ k1 k2 a b -> Type.Reflection.eqTypeRep    #-}
 -- {-# COMPILE GHC typeRepKind  = \ kℓ k a       -> Type.Reflection.typeRepKind  #-}
 {-# COMPILE GHC splitApps    = \ kℓ k a bℓ    -> Type.Reflection.splitApps    #-}
 

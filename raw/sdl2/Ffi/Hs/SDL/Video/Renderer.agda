@@ -9,6 +9,7 @@ open import Agda.Builtin.Maybe                  using (Maybe)
 open import Agda.Builtin.String                 using () renaming (String to Text)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
+open import Ffi.Hs.-base.Level                  using (Liftℓ)
 open import Ffi.Hs.-base.Unit                   using (⊤; ⊤′)
 open import Ffi.Hs.Data.ByteString              using (ByteString)
 open import Ffi.Hs.Data.StateVar                using (StateVar)
@@ -106,7 +107,8 @@ postulate
 data Rectangle (A : Set aℓ) : Set aℓ where
     mkRectangle : Point V2 A → V2 A → Rectangle A
 
-{-# COMPILE GHC Rectangle = data SDL.Video.Renderer.Rectangle (SDL.Video.Renderer.Rectangle) #-}
+{-# FOREIGN GHC type AgdaRectangle aℓ = SDL.Video.Renderer.Rectangle #-}
+{-# COMPILE GHC Rectangle = data(1) AgdaRectangle (SDL.Video.Renderer.Rectangle) #-}
 
 postulate
     Functor[Rectangle]     : Functor {aℓ} Rectangle
@@ -116,12 +118,12 @@ postulate
     Show[Rectangle[A]]     : ⦃ Show A ⦄ → Show (Rectangle A)
     Storable[Rectangle[A]] : ⦃ Storable A ⦄ → Storable (Rectangle A)
 
-{-# COMPILE GHC Functor[Rectangle]     = AgdaFunctor  #-}
-{-# COMPILE GHC Eq[Rectangle[A]]       = AgdaEq       #-}
-{-# COMPILE GHC Ord[Rectangle[A]]      = AgdaOrd      #-}
-{-# COMPILE GHC Read[Rectangle[A]]     = AgdaRead     #-}
-{-# COMPILE GHC Show[Rectangle[A]]     = AgdaShow     #-}
-{-# COMPILE GHC Storable[Rectangle[A]] = AgdaStorable #-}
+{-# COMPILE GHC Functor[Rectangle]     = \ aℓ                -> AgdaFunctor  #-}
+{-# COMPILE GHC Eq[Rectangle[A]]       = \ aℓ a AgdaEq       -> AgdaEq       #-}
+{-# COMPILE GHC Ord[Rectangle[A]]      = \ aℓ a AgdaOrd      -> AgdaOrd      #-}
+{-# COMPILE GHC Read[Rectangle[A]]     = \ aℓ a AgdaRead     -> AgdaRead     #-}
+{-# COMPILE GHC Show[Rectangle[A]]     = \ aℓ a AgdaShow     -> AgdaShow     #-}
+{-# COMPILE GHC Storable[Rectangle[A]] = \ aℓ a AgdaStorable -> AgdaStorable #-}
 
 
 postulate
@@ -199,7 +201,7 @@ postulate
     rendererLogicalSize   : Renderer → StateVar (Maybe (V2 CInt))
     rendererScale         : Renderer → StateVar (V2 CFloat)
     rendererViewport      : Renderer → StateVar (Maybe (Rectangle CInt))
-    renderTargetSupported : ⦃ MonadIO M ⦄ → Renderer → M Bool
+    renderTargetSupported : ⦃ MonadIO M ⦄ → Renderer → M (Liftℓ _ Bool)
 
 {-# COMPILE GHC rendererDrawBlendMode =                       SDL.Video.Renderer.rendererDrawBlendMode #-}
 {-# COMPILE GHC rendererDrawColor     =                       SDL.Video.Renderer.rendererDrawColor     #-}
@@ -338,7 +340,7 @@ postulate
     surfaceFormat     : ⦃ MonadIO M ⦄ → Surface → M (Liftℓ _ SurfacePixelFormat)
     surfacePixels     : ⦃ MonadIO M ⦄ → Surface → M (Liftℓ _ (Ptr ⊤))
 
-    lookSurface   : ⦃ MonadIO M ⦄ → Surface → M ⊤′
+    lockSurface   : ⦃ MonadIO M ⦄ → Surface → M ⊤′
     unlockSurface : ⦃ MonadIO M ⦄ → Surface → M ⊤′
 
 {-# COMPILE GHC updateWindowSurface = \ mℓ m AgdaMonadIO -> SDL.Video.Renderer.updateWindowSurface #-}
@@ -360,7 +362,7 @@ postulate
 {-# COMPILE GHC surfaceFormat     = \ mℓ m AgdaMonadIO -> SDL.Video.Renderer.surfaceFormat     #-}
 {-# COMPILE GHC surfacePixels     = \ mℓ m AgdaMonadIO -> SDL.Video.Renderer.surfacePixels     #-}
 
-{-# COMPILE GHC lookSurface   = \ mℓ m AgdaMonadIO -> SDL.Video.Renderer.lookSurface   #-}
+{-# COMPILE GHC lockSurface   = \ mℓ m AgdaMonadIO -> SDL.Video.Renderer.lockSurface   #-}
 {-# COMPILE GHC unlockSurface = \ mℓ m AgdaMonadIO -> SDL.Video.Renderer.unlockSurface #-}
 
 
@@ -395,7 +397,7 @@ data TextureAccess : Set where
     TextureAccessStreaming : TextureAccess
     TextureAccessTarget    : TextureAccess
 
-{-# COMPILE GHC TextureAccess = type SDL.Video.Renderer.TextureAccess
+{-# COMPILE GHC TextureAccess = data SDL.Video.Renderer.TextureAccess
     ( SDL.Video.Renderer.TextureAccessStatic
     | SDL.Video.Renderer.TextureAccessStreaming
     | SDL.Video.Renderer.TextureAccessTarget
@@ -450,7 +452,7 @@ postulate
     glUnbindTexture          : ⦃ MonadIO M ⦄ → Texture → M ⊤′
 
     textureAlphaMod  : Texture → StateVar Word8
-    textureBlendMode : Texture → StateVar Word8
+    textureBlendMode : Texture → StateVar BlendMode
     textureColorMod  : Texture → StateVar (V3 Word8)
     lockTexture      : ⦃ MonadIO M ⦄ → Texture → Maybe (Rectangle CInt) → M (Liftℓ _ (Tuple2 (Ptr ⊤) CInt))
     unlockTexture    : ⦃ MonadIO M ⦄ → Texture → M ⊤′

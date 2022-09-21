@@ -63,7 +63,7 @@ postulate
     quit          : ⦃ MonadIO M ⦄ → M ⊤′
     version       : ⦃ Integral A ⦄ → ⦃ MonadIO M ⦄ → M (Tuple3 A A A)
 
-{-# COMPILE GHC initialize    = \ bℓ f mℓ m -> SDL.Init.initialize    #-}
-{-# COMPILE GHC initializeAll = \ mℓ m      -> SDL.Init.initializeAll #-}
-{-# COMPILE GHC quit          = \ mℓ m      -> SDL.Init.quit          #-}
-{-# COMPILE GHC version       = \ aℓ a m    -> SDL.Init.version       #-}
+{-# COMPILE GHC initialize    = \ bℓ f mℓ m AgdaFoldable AgdaMonadIO -> SDL.Init.initialize    #-}
+{-# COMPILE GHC initializeAll = \ mℓ m AgdaMonadIO                   -> SDL.Init.initializeAll #-}
+{-# COMPILE GHC quit          = \ mℓ m AgdaMonadIO                   -> SDL.Init.quit          #-}
+{-# COMPILE GHC version       = \ aℓ a m AgdaIntegral AgdaMonadIO    -> SDL.Init.version       #-}

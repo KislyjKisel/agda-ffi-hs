@@ -18,6 +18,7 @@ open import Ffi.Hs.Foreign.C.Types          using (CInt; CFloat)
 open import Ffi.Hs.Foreign.Ptr              using (Ptr)
 open import Ffi.Hs.SDL.Input.GameController using (ControllerButton; ControllerButtonState; ControllerDeviceConnection)
 open import Ffi.Hs.SDL.Input.Joystick       using (JoyHatPosition; JoyButtonState; JoyDeviceConnection)
+open import Ffi.Hs.SDL.Input.Keyboard       using (Keysym)
 open import Ffi.Hs.SDL.Input.Mouse          using (MouseDevice; MouseScrollDirection)
 open import Ffi.Hs.SDL.Internal.Types       using (Window)
 open import Ffi.Hs.SDL.Raw.Types as Raw     using ()
@@ -33,6 +34,13 @@ open Ffi.Hs.SDL.Input.Mouse public
     ; ButtonX2
     ; ButtonExtra
     )
+
+import Ffi.Hs.-base.Dictionaries
+
+{-# FOREIGN GHC
+import qualified SDL.Event
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+#-}
 
 private
     variable
@@ -322,7 +330,7 @@ record KeyboardEventData : Set where
         keyboardEventWindow    : Maybe Window
         keyboardEventKeyMotion : InputMotion
         keyboardEventRepeat    : Bool
-        keyboardEventKeysym    : Raw.Keysym
+        keyboardEventKeysym    : Keysym
 
 {-# COMPILE GHC KeyboardEventData = data SDL.Event.KeyboardEventData (SDL.Event.KeyboardEventData) #-}
 
@@ -823,6 +831,8 @@ record Event : Set where
         eventTimestamp : Timestamp
         eventPayload : EventPayload
 
+{-# COMPILE GHC Event = data SDL.Event.Event (SDL.Event.Event) #-}
+
 postulate
     Eq[Event]   : Eq Event
     Ord[Event]  : Ord Event
@@ -928,4 +938,4 @@ postulate
 {-# COMPILE GHC EventWatch = type SDL.Event.EventWatch #-}
 
 {-# COMPILE GHC addEventWatch = \ mℓ m AgdaMonadIO -> SDL.Event.addEventWatch #-}
-{-# COMPILE GHC delEventWatch = \ mℓ m AgdaMonadIO -> SDL.Event.addEventWatch #-}
+{-# COMPILE GHC delEventWatch = \ mℓ m AgdaMonadIO -> SDL.Event.delEventWatch #-}

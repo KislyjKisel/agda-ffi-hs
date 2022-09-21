@@ -24,12 +24,14 @@ instance
 main : IO ⊤
 main = do
     SDL.initializeAll
-    window ← unliftℓ <$> SDL.createWindow "Agda SDL2 example" SDL.defaultWindow
+    window ← unliftℓ <$> SDL.createWindow "Agda SDL2 example" (record SDL.defaultWindow
+        { windowGraphicsContext = SDL.OpenGLContext SDL.defaultOpenGL
+        })
     _ ← SDL.glCreateContext window
     loop
     SDL.destroyWindow window
     unliftℓ <$> SDL.quit
-    
+
     where
         loop : IO ⊤
         loop = do

@@ -329,6 +329,7 @@ postulate
 {-# FOREIGN GHC type AgdaState# aℓ = GHC.Exts.State# #-}
 {-# COMPILE GHC State# = type(1) AgdaState# #-}
 
+-- todo: specify unlifted A B (there are multiple unlifted kinds, levity polymorphism is forbidden...)
 {-# FOREIGN GHC type AgdaTuple2# aℓ bℓ = (# , #) #-}
 {-# COMPILE GHC Tuple2# = type(2) AgdaTuple2# #-}
 

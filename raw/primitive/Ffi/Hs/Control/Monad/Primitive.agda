@@ -27,8 +27,9 @@ postulate
 
     PrimState : (M : Set aℓ → Set aℓ) → ⦃ PrimMonad M ⦄ → Set
 
-    primitiv  : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → Tuple2# (State# (PrimState M)) A) → M A
-    primitiv- : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → State# (PrimState M)) → M ⊤′
+    -- todo: (req unboxed tuples) primitive methods
+    -- primitiv  : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → Tuple2# (State# (PrimState M)) A) → M A
+    -- primitiv- : ⦃ _ : PrimMonad M ⦄ → (State# (PrimState M) → State# (PrimState M)) → M ⊤′
 
     PrimMonad[M]⇒Monad[M] : ⦃ PrimMonad M ⦄ → Monad M
 
@@ -38,8 +39,8 @@ postulate
 {-# FOREIGN GHC type AgdaPrimState mℓ m pm = Control.Monad.Primitive.PrimState m #-}
 {-# COMPILE GHC PrimState = type(3) AgdaPrimState #-}
 
-{-# COMPILE GHC primitiv  = \ mℓ m a AgdaPrimMonad -> Control.Monad.Primitive.primitive  #-}
-{-# COMPILE GHC primitiv- = \ mℓ m   AgdaPrimMonad -> Control.Monad.Primitive.primitive_ #-}
+-- {-# COMPILE GHC primitiv  = \ mℓ m a AgdaPrimMonad -> Control.Monad.Primitive.primitive  #-}
+-- {-# COMPILE GHC primitiv- = \ mℓ m   AgdaPrimMonad -> Control.Monad.Primitive.primitive_ #-}
 
 {-# COMPILE GHC PrimMonad[M]⇒Monad[M] = \ mℓ m AgdaPrimMonad -> AgdaMonad #-}
 

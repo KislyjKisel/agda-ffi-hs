@@ -96,8 +96,8 @@ postulate
 {-# FOREIGN GHC data AgdaHasSetter tℓ aℓ t a = Data.StateVar.HasSetter t a => AgdaHasSetter #-}
 {-# COMPILE GHC HasSetter = type(0) AgdaHasSetter #-}
 
-{-# COMPILE GHC _$=_  = \ tℓ aℓ t a m AgdaHasSetter AgdaMonadIO -> (Data.StateVar.$=)  #-}
-{-# COMPILE GHC _$=!_ = \ tℓ aℓ t a m AgdaHasSetter AgdaMonadIO -> (Data.StateVar.$=!) #-}
+{-# COMPILE GHC _$=_  = \ tℓ aℓ t a mℓ m AgdaHasSetter AgdaMonadIO -> (Data.StateVar.$=)  #-}
+{-# COMPILE GHC _$=!_ = \ tℓ aℓ t a mℓ m AgdaHasSetter AgdaMonadIO -> (Data.StateVar.$=!) #-}
 
 {-# COMPILE GHC HasSetter[Ptr[A],A]              = \ aℓ a AgdaStorable -> AgdaHasSetter #-}
 {-# COMPILE GHC HasSetter[ForeignPtr[A],A]       = \ aℓ a AgdaStorable -> AgdaHasSetter #-}
@@ -127,8 +127,8 @@ postulate
 {-# FOREIGN GHC data AgdaHasUpdate tℓ aℓ bℓ t a b = Data.StateVar.HasUpdate t a b => AgdaHasUpdate #-}
 {-# COMPILE GHC HasUpdate = type(0) AgdaHasUpdate #-}
 
-{-# COMPILE GHC _$~_  = \ tℓ aℓ bℓ t a b m AgdaHasUpdate AgdaMonadIO -> (Data.StateVar.$~)  #-}
-{-# COMPILE GHC _$~!_ = \ tℓ aℓ bℓ t a b m AgdaHasUpdate AgdaMonadIO -> (Data.StateVar.$~!) #-}
+{-# COMPILE GHC _$~_  = \ tℓ aℓ bℓ t a b mℓ m AgdaHasUpdate AgdaMonadIO -> (Data.StateVar.$~)  #-}
+{-# COMPILE GHC _$~!_ = \ tℓ aℓ bℓ t a b mℓ m AgdaHasUpdate AgdaMonadIO -> (Data.StateVar.$~!) #-}
 
 {-# COMPILE GHC HasUpdate[Ptr[A],A,A]        = \ aℓ a AgdaStorable -> AgdaHasUpdate #-}
 {-# COMPILE GHC HasUpdate[ForeignPtr[A],A,A] = \ aℓ a AgdaStorable -> AgdaHasUpdate #-}

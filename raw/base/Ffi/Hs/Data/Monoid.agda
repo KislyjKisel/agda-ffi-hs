@@ -27,7 +27,7 @@ private
 postulate
     mempty  : ⦃ Monoid A ⦄ → A
     mconcat : ⦃ Monoid A ⦄ → List A → A
-    
+
     Dual    : Set aℓ → Set aℓ
     mkDual  : A → Dual A
     getDual : Dual A → A
@@ -231,7 +231,7 @@ postulate
     Functor[Alt[F]]       : ⦃ Functor F ⦄ → Functor (Alt F)
     Monad[Alt[F]]         : ⦃ Monad F ⦄ → Monad (Alt F)
     MonadPlus[Alt[F]]     : ⦃ MonadPlus F ⦄ → MonadPlus (Alt F)
-    Data[Alt[F,A]]        : ⦃ Data (F A) ⦄ → ⦃ Data A ⦄ → ⦃ Typeable F ⦄ → Data (Alt F A)
+    -- todo: (req Typeable for *->*) Data[Alt[F,A]]        : ⦃ Data (F A) ⦄ → ⦃ Data A ⦄ → ⦃ Typeable F ⦄ → Data (Alt F A)
     Monoid[Alt[F,A]]      : ⦃ Alternative F ⦄ → Monoid (Alt F A)
     Semigroup[Alt[F,A]]   : ⦃ Alternative F ⦄ → Semigroup (Alt F A)
     Enum[Alt[F,A]]        : ⦃ Enum (F A) ⦄ → Enum (Alt F A)
@@ -250,7 +250,7 @@ postulate
     Functor[Ap[F]]     : ⦃ Functor F ⦄ → Functor (Ap F)
     Monad[Ap[F]]       : ⦃ Monad F ⦄ → Monad (Ap F)
     MonadPlus[Ap[F]]   : ⦃ MonadPlus F ⦄ → MonadPlus (Ap F)
-    Data[Ap[F,A]]      : ⦃ Data (F A) ⦄ → ⦃ Data A ⦄ → ⦃ Typeable F ⦄ → Data (Ap F A)
+    -- todo: (req Typeable for *->*) Data[Ap[F,A]]      : ⦃ Data (F A) ⦄ → ⦃ Data A ⦄ → ⦃ Typeable F ⦄ → Data (Ap F A)
     Monoid[Ap[F,A]]    : ⦃ Applicative F ⦄ → ⦃ Monoid A ⦄ → Monoid (Ap F A)
     Semigroup[Ap[F,A]] : ⦃ Applicative F ⦄ → ⦃ Semigroup A ⦄ → Semigroup (Ap F A)
     Bounded[Ap[F,A]    : ⦃ Applicative F ⦄ → ⦃ Bounded A ⦄ → Bounded (Ap F A)
@@ -378,7 +378,7 @@ postulate
 {-# COMPILE GHC Show[Alt[F,A]]        = \ fℓ f a AgdaShow        -> AgdaShow      #-}
 {-# COMPILE GHC Eq[Alt[F,A]]          = \ fℓ f a AgdaEq          -> AgdaEq        #-}
 {-# COMPILE GHC Ord[Alt[F,A]]         = \ fℓ f a AgdaOrd         -> AgdaOrd       #-}
-{-# COMPILE GHC Data[Alt[F,A]]        = \ fℓ f a AgdaData AgdaData AgdaTypeable -> AgdaData #-}
+-- {-# COMPILE GHC Data[Alt[F,A]]        = \ fℓ f a AgdaData AgdaData AgdaTypeable -> AgdaData #-}
 
 {-# COMPILE GHC MonadFail[Ap[F]]   = \ fℓ f AgdaMonadFail   -> AgdaMonadFail   #-}
 {-# COMPILE GHC MonadFix[Ap[F]]    = \ fℓ f AgdaMonadFix    -> AgdaMonadFix    #-}
@@ -389,7 +389,7 @@ postulate
 {-# COMPILE GHC Functor[Ap[F]]     = \ fℓ f AgdaFunctor     -> AgdaFunctor     #-}
 {-# COMPILE GHC Monad[Ap[F]]       = \ fℓ f AgdaMonad       -> AgdaMonad       #-}
 {-# COMPILE GHC MonadPlus[Ap[F]]   = \ fℓ f AgdaMonadPlus   -> AgdaMonadPlus   #-}
-{-# COMPILE GHC Data[Ap[F,A]]      = \ fℓ f a AgdaData AgdaData AgdaTypeable -> AgdaData      #-}
+-- {-# COMPILE GHC Data[Ap[F,A]]      = \ fℓ f a AgdaData AgdaData AgdaTypeable -> AgdaData      #-}
 {-# COMPILE GHC Monoid[Ap[F,A]]    = \ fℓ f a AgdaApplicative AgdaMonoid     -> AgdaMonoid    #-}
 {-# COMPILE GHC Semigroup[Ap[F,A]] = \ fℓ f a AgdaApplicative AgdaSemigroup  -> AgdaSemigroup #-}
 {-# COMPILE GHC Bounded[Ap[F,A]    = \ fℓ f a AgdaApplicative AgdaBounded    -> AgdaBounded   #-}

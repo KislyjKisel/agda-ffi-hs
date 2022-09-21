@@ -36,4 +36,4 @@ postulate
 {-# COMPILE GHC _$>_  = \ fℓ f a b AgdaFunctor -> (Data.Functor.$>)  #-}
 {-# COMPILE GHC _<$>_ = \ fℓ f a b AgdaFunctor -> (Data.Functor.<$>) #-}
 {-# COMPILE GHC _<&>_ = \ fℓ f a b AgdaFunctor -> (Data.Functor.<&>) #-}
-{-# COMPILE GHC void  = \ fℓ f a b AgdaFunctor -> Data.Functor.void  #-}
+{-# COMPILE GHC void  = \ fℓ f a AgdaFunctor   -> Data.Functor.void  #-}

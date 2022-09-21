@@ -208,9 +208,9 @@ postulate
     createSoftwareRenderer : ⦃ MonadIO M ⦄ → Surface → M (Liftℓ _ Renderer)
     destroyRenderer        : ⦃ MonadIO M ⦄ → Renderer → M ⊤′
 
-{-# COMPILE GHC createRenderer         = \ mℓ m MonadIO -> SDL.Video.createRenderer #-}
-{-# COMPILE GHC createSoftwareRenderer = \ mℓ m MonadIO -> SDL.Video.createSoftwareRenderer #-}
-{-# COMPILE GHC destroyRenderer        = \ mℓ m MonadIO -> SDL.Video.destroyRenderer #-}
+{-# COMPILE GHC createRenderer         = \ mℓ m AgdaMonadIO -> SDL.Video.createRenderer #-}
+{-# COMPILE GHC createSoftwareRenderer = \ mℓ m AgdaMonadIO -> SDL.Video.createSoftwareRenderer #-}
+{-# COMPILE GHC destroyRenderer        = \ mℓ m AgdaMonadIO -> SDL.Video.destroyRenderer #-}
 
 
 postulate
@@ -218,9 +218,9 @@ postulate
     hasClipboardText : ⦃ MonadIO M ⦄ → M (Liftℓ _ Bool)
     setClipboardText : ⦃ MonadIO M ⦄ → Text → M ⊤′
 
-{-# COMPILE GHC getClipboardText = \ mℓ m MonadIO -> SDL.Video.getClipboardText #-}
-{-# COMPILE GHC hasClipboardText = \ mℓ m MonadIO -> SDL.Video.hasClipboardText #-}
-{-# COMPILE GHC setClipboardText = \ mℓ m MonadIO -> SDL.Video.setClipboardText #-}
+{-# COMPILE GHC getClipboardText = \ mℓ m AgdaMonadIO -> SDL.Video.getClipboardText #-}
+{-# COMPILE GHC hasClipboardText = \ mℓ m AgdaMonadIO -> SDL.Video.hasClipboardText #-}
+{-# COMPILE GHC setClipboardText = \ mℓ m AgdaMonadIO -> SDL.Video.setClipboardText #-}
 
 
 record DisplayMode : Set where

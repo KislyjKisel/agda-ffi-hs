@@ -32,7 +32,7 @@ postulate
     newTVarIO     : A → IO (TVar A)
     readTVar      : TVar A → STM A
     readTVarIO    : TVar A → IO A
-    writeTVar     : TVar A → A → STM A
+    writeTVar     : TVar A → A → STM ⊤
     modifyTVar    : TVar A → (A → A) → STM ⊤
     modifyTVar'   : TVar A → (A → A) → STM ⊤
     stateTVar     : TVar S → (S → Tuple2 A S) → STM A

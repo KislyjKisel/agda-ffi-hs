@@ -40,6 +40,8 @@ record JoystickDevice : Set where
         joystickDeviceName : Text
         joystickDeviceId   : CInt
 
+{-# COMPILE GHC JoystickDevice = data SDL.Input.Joystick.JoystickDevice (SDL.Input.Joystick.JoystickDevice) #-}
+
 postulate
     Eq[JoystickDevice]   : Eq JoystickDevice
     Ord[JoystickDevice]  : Ord JoystickDevice
@@ -55,6 +57,11 @@ postulate
 data JoyButtonState : Set where
     JoyButtonPressed  : JoyButtonState
     JoyButtonReleased : JoyButtonState
+
+{-# COMPILE GHC JoyButtonState = data SDL.Input.Joystick.JoyButtonState
+    ( SDL.Input.Joystick.JoyButtonPressed
+    | SDL.Input.Joystick.JoyButtonReleased
+    ) #-}
 
 postulate
     Eq[JoyButtonState]   : Eq JoyButtonState
@@ -81,6 +88,18 @@ data JoyHatPosition : Set where
     HatLeftUp    : JoyHatPosition
     HatLeftDown  : JoyHatPosition
 
+{-# COMPILE GHC JoyHatPosition = data SDL.Input.Joystick.JoyHatPosition
+    ( SDL.Input.Joystick.HatCentered
+    | SDL.Input.Joystick.HatUp
+    | SDL.Input.Joystick.HatRight
+    | SDL.Input.Joystick.HatDown
+    | SDL.Input.Joystick.HatLeft
+    | SDL.Input.Joystick.HatRightUp
+    | SDL.Input.Joystick.HatRightDown
+    | SDL.Input.Joystick.HatLeftUp
+    | SDL.Input.Joystick.HatLeftDown
+    ) #-}
+
 postulate
     Eq[JoyHatPosition]   : Eq JoyHatPosition
     Data[JoyHatPosition] : Data JoyHatPosition
@@ -98,6 +117,11 @@ postulate
 data JoyDeviceConnection : Set where
     JoyDeviceAdded   : JoyDeviceConnection
     JoyDeviceRemoved : JoyDeviceConnection
+
+{-# COMPILE GHC JoyDeviceConnection = data SDL.Input.Joystick.JoyDeviceConnection
+    ( SDL.Input.Joystick.JoyDeviceAdded
+    | SDL.Input.Joystick.JoyDeviceRemoved
+    ) #-}
 
 postulate
     Eq[JoyDeviceConnection]   : Eq JoyDeviceConnection
@@ -117,7 +141,7 @@ postulate
     numJoysticks       : ⦃ MonadIO M ⦄ → M (Liftℓ _ CInt)
     -- todo: (req Data.Vector) availableJoysticks : ⦃ MonadIO M ⦄ → M (Liftℓ _ (Vector JoystickDevice))
     openJoystick       : ⦃ MonadIO M ⦄ → JoystickDevice → M (Liftℓ _ Joystick)
-    closeJoystick      : ⦃ MonadIO M ⦄ → JoystickDevice → M ⊤′
+    closeJoystick      : ⦃ MonadIO M ⦄ → Joystick → M ⊤′
     getJoystickID      : ⦃ MonadIO M ⦄ → Joystick → M (Liftℓ _ Int32)
 
     buttonPressed : ⦃ MonadIO M ⦄ → Joystick → CInt → M (Liftℓ _ Bool)

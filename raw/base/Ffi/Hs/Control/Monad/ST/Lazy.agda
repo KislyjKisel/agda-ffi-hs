@@ -28,8 +28,8 @@ postulate
     strictToLazyST : Strict.ST S A → ST S A
     lazyToStrictST : ST S A → Strict.ST S A
 
-{-# FOREIGN GHC type AgdaST sℓ aℓ = Control.Monad.ST.Lazy.ST #-}
-{-# COMPILE GHC ST = type(2) AgdaST #-}
+{-# FOREIGN GHC type AgdaST aℓ = Control.Monad.ST.Lazy.ST #-}
+{-# COMPILE GHC ST = type(1) AgdaST #-}
 {-# COMPILE GHC runST  = \ aℓ a f -> Control.Monad.ST.Lazy.runST (f ()) #-}
 {-# COMPILE GHC fixST  = \ aℓ a s -> Control.Monad.ST.Lazy.fixST        #-}
 {-# COMPILE GHC stToIO = \ aℓ a   -> Control.Monad.ST.Lazy.stToIO       #-}

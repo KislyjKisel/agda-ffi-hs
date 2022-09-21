@@ -71,13 +71,13 @@ data MouseButton : Set where
     ButtonX2     : MouseButton
     ButtonExtra  : Int → MouseButton
 
-{-# COMPILE GHC MouseButton = data SDL.Event.MouseButton
-    ( SDL.Event.ButtonLeft
-    | SDL.Event.ButtonMiddle
-    | SDL.Event.ButtonRight
-    | SDL.Event.ButtonX1
-    | SDL.Event.ButtonX2
-    | SDL.Event.ButtonExtra
+{-# COMPILE GHC MouseButton = data SDL.Input.Mouse.MouseButton
+    ( SDL.Input.Mouse.ButtonLeft
+    | SDL.Input.Mouse.ButtonMiddle
+    | SDL.Input.Mouse.ButtonRight
+    | SDL.Input.Mouse.ButtonX1
+    | SDL.Input.Mouse.ButtonX2
+    | SDL.Input.Mouse.ButtonExtra
     ) #-}
 
 postulate
@@ -243,7 +243,7 @@ postulate
     createColorCursor  : ⦃ MonadIO M ⦄ → Surface → Point V2 CInt → M (Liftℓ _ Cursor)
     createSystemCursor : ⦃ MonadIO M ⦄ → SystemCursor → M (Liftℓ _ Cursor)
 
-{-# COMPILE GHC Cursor = SDL.Input.Mouse.Cursor #-}
+{-# COMPILE GHC Cursor = type SDL.Input.Mouse.Cursor #-}
 {-# COMPILE GHC Eq[Cursor] = AgdaEq #-}
 
 {-# COMPILE GHC cursorVisible      =                       SDL.Input.Mouse.cursorVisible      #-}

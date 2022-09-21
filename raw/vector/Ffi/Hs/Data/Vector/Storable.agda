@@ -179,8 +179,8 @@ postulate
     partitionWith         : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → ⦃ Storable C ⦄ → (A → Either B C) → Vector A → Tuple2 (Vector B) (Vector C)
     span                  : ⦃ Storable A ⦄ → (A → Bool) → Vector A → Tuple2 (Vector A) (Vector A)
     break                 : ⦃ Storable A ⦄ → (A → Bool) → Vector A → Tuple2 (Vector A) (Vector A)
-    groupBy               : ⦃ Storable A ⦄ → (A → A → Bool) → Vector A → List (Vector A)
-    group                 : ⦃ Storable A ⦄ → ⦃ Eq A ⦄ → Vector A → List (Vector A)
+    -- todo: (req v13) groupBy               : ⦃ Storable A ⦄ → (A → A → Bool) → Vector A → List (Vector A)
+    -- todo: (req v13) group                 : ⦃ Storable A ⦄ → ⦃ Eq A ⦄ → Vector A → List (Vector A)
     elem                  : ⦃ Storable A ⦄ → ⦃ Eq A ⦄ → A → Vector A → Bool
     notElem               : ⦃ Storable A ⦄ → ⦃ Eq A ⦄ → A → Vector A → Bool
     find                  : ⦃ Storable A ⦄ → (A → Bool) → Vector A → Maybe A
@@ -210,10 +210,10 @@ postulate
     product               : ⦃ Storable A ⦄ → ⦃ Num A ⦄ → Vector A → A
     maximum               : ⦃ Storable A ⦄ → ⦃ Ord A ⦄ → Vector A → A
     maximumBy             : ⦃ Storable A ⦄ → (A → A → Ordering) → Vector A → A
-    maximumOn             : ⦃ Ord B ⦄ → ⦃ Storable A ⦄ → (A → B) → Vector A → A
+    -- todo: (req v13) maximumOn             : ⦃ Ord B ⦄ → ⦃ Storable A ⦄ → (A → B) → Vector A → A
     minimum               : ⦃ Storable A ⦄ → ⦃ Ord A ⦄ → Vector A → A
     minimumBy             : ⦃ Storable A ⦄ → (A → A → Ordering) → Vector A → A
-    minimumOn             : ⦃ Ord B ⦄ → ⦃ Storable A ⦄ → (A → B) → Vector A → A
+    -- todo: (req v13) minimumOn             : ⦃ Ord B ⦄ → ⦃ Storable A ⦄ → (A → B) → Vector A → A
     minIndex              : ⦃ Storable A ⦄ → ⦃ Ord A ⦄ → Vector A → Int
     minIndexBy            : ⦃ Storable A ⦄ → (A → A → Ordering) → Vector A → Int
     maxIndex              : ⦃ Storable A ⦄ → ⦃ Ord A ⦄ → Vector A → Int
@@ -257,7 +257,7 @@ postulate
     fromList              : ⦃ Storable A ⦄ → List A → Vector A
     fromListN             : ⦃ Storable A ⦄ → Int → List A → Vector A
     unsafeCast            : ⦃ Storable A ⦄ → ⦃ Storable B ⦄ → Vector A → Vector B
-    unsafeCoerceVector    : ⦃ Coercible A B ⦄ → Vector A → Vector B
+    -- todo: (req v13) unsafeCoerceVector    : ⦃ Coercible A B ⦄ → Vector A → Vector B
     freeze                : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → M (Vector A)
     thaw                  : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → Vector A → M (MVector (PrimState M) A)
     copy                  : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → Vector A → M ⊤′
@@ -265,9 +265,9 @@ postulate
     unsafeThaw            : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → Vector A → M (MVector (PrimState M) A)
     unsafeCopy            : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → Vector A → M ⊤′
     unsafeFromForeignPtr  : ⦃ Storable A ⦄ → ForeignPtr A → Int → Int → Vector A
-    unsafeFromForeignPtr0 : ForeignPtr A → Int → Vector A
-    unsafeToForeignPtr    : Vector A → Tuple3 (ForeignPtr A) Int Int
-    unsafeToForeignPtr0   : Vector A → Tuple2 (ForeignPtr A) Int
+    -- todo: (req v13/Storable) unsafeFromForeignPtr0 : ForeignPtr A → Int → Vector A
+    -- todo: (req v13/Storable) unsafeToForeignPtr    : Vector A → Tuple3 (ForeignPtr A) Int Int
+    -- todo: (req v13/Storable) unsafeToForeignPtr0   : Vector A → Tuple2 (ForeignPtr A) Int
     unsafeWith            : ⦃ Storable A ⦄ → Vector A → (Ptr A → IO B) → IO B
 
 {-# COMPILE GHC length                = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.length                #-}
@@ -345,8 +345,8 @@ postulate
 {-# COMPILE GHC mapM-                 = \ mℓ m aℓ a b AgdaMonad AgdaStorable                                                                                            ->  Data.Vector.Storable.mapM_                 #-}
 {-# COMPILE GHC imapM-                = \ mℓ m aℓ a b AgdaMonad AgdaStorable                                                                                            ->  Data.Vector.Storable.imapM_                #-}
 {-# COMPILE GHC forM                  = \ mℓ m aℓ a b AgdaMonad AgdaStorable AgdaStorable                                                                               ->  Data.Vector.Storable.forM                  #-}
-{-# COMPILE GHC forM-                 = \ mℓ m aℓ a b AgdaMonad AgdaStorable AgdaStorable                                                                               ->  Data.Vector.Storable.forM_                 #-}
-{-# COMPILE GHC iforM                 = \ mℓ m aℓ a b AgdaMonad AgdaStorable                                                                                            ->  Data.Vector.Storable.iforM                 #-}
+{-# COMPILE GHC forM-                 = \ mℓ m aℓ a b AgdaMonad AgdaStorable                                                                                            ->  Data.Vector.Storable.forM_                 #-}
+{-# COMPILE GHC iforM                 = \ mℓ m aℓ a b AgdaMonad AgdaStorable AgdaStorable                                                                               ->  Data.Vector.Storable.iforM                 #-}
 {-# COMPILE GHC iforM-                = \ mℓ m aℓ a b AgdaMonad AgdaStorable                                                                                            ->  Data.Vector.Storable.iforM_                #-}
 {-# COMPILE GHC zipWith               = \ aℓ a bℓ b cℓ c AgdaStorable AgdaStorable AgdaStorable                                                                         ->  Data.Vector.Storable.zipWith               #-}
 {-# COMPILE GHC zipWith3              = \ aℓ a bℓ b cℓ c dℓ d AgdaStorable AgdaStorable AgdaStorable AgdaStorable                                                       ->  Data.Vector.Storable.zipWith3              #-}
@@ -377,8 +377,8 @@ postulate
 {-# COMPILE GHC partitionWith         = \ aℓ a bℓ b cℓ c AgdaStorable AgdaStorable AgdaStorable                                                                         ->  Data.Vector.Storable.partitionWith         #-}
 {-# COMPILE GHC span                  = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.span                  #-}
 {-# COMPILE GHC break                 = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.break                 #-}
-{-# COMPILE GHC groupBy               = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.groupBy               #-}
-{-# COMPILE GHC group                 = \ aℓ a AgdaStorable AgdaEq                                                                                                      ->  Data.Vector.Storable.group                 #-}
+-- {-# COMPILE GHC groupBy               = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.groupBy               #-}
+-- {-# COMPILE GHC group                 = \ aℓ a AgdaStorable AgdaEq                                                                                                      ->  Data.Vector.Storable.group                 #-}
 {-# COMPILE GHC elem                  = \ aℓ a AgdaStorable AgdaEq                                                                                                      ->  Data.Vector.Storable.elem                  #-}
 {-# COMPILE GHC notElem               = \ aℓ a AgdaStorable AgdaEq                                                                                                      ->  Data.Vector.Storable.notElem               #-}
 {-# COMPILE GHC find                  = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.find                  #-}
@@ -408,10 +408,10 @@ postulate
 {-# COMPILE GHC product               = \ aℓ a AgdaStorable AgdaNum                                                                                                     ->  Data.Vector.Storable.product               #-}
 {-# COMPILE GHC maximum               = \ aℓ a AgdaStorable AgdaOrd                                                                                                     ->  Data.Vector.Storable.maximum               #-}
 {-# COMPILE GHC maximumBy             = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.maximumBy             #-}
-{-# COMPILE GHC maximumOn             = \ bℓ b aℓ a AgdaOrd AgdaStorable                                                                                                ->  Data.Vector.Storable.maximumOn             #-}
+-- {-# COMPILE GHC maximumOn             = \ bℓ b aℓ a AgdaOrd AgdaStorable                                                                                                ->  Data.Vector.Storable.maximumOn             #-}
 {-# COMPILE GHC minimum               = \ aℓ a AgdaStorable AgdaOrd                                                                                                     ->  Data.Vector.Storable.minimum               #-}
 {-# COMPILE GHC minimumBy             = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.minimumBy             #-}
-{-# COMPILE GHC minimumOn             = \ bℓ b aℓ a AgdaOrd AgdaStorable                                                                                                ->  Data.Vector.Storable.minimumOn             #-}
+-- {-# COMPILE GHC minimumOn             = \ bℓ b aℓ a AgdaOrd AgdaStorable                                                                                                ->  Data.Vector.Storable.minimumOn             #-}
 {-# COMPILE GHC minIndex              = \ aℓ a AgdaStorable AgdaOrd                                                                                                     ->  Data.Vector.Storable.minIndex              #-}
 {-# COMPILE GHC minIndexBy            = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.minIndexBy            #-}
 {-# COMPILE GHC maxIndex              = \ aℓ a AgdaStorable AgdaOrd                                                                                                     ->  Data.Vector.Storable.maxIndex              #-}
@@ -455,15 +455,15 @@ postulate
 {-# COMPILE GHC fromList              = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.fromList              #-}
 {-# COMPILE GHC fromListN             = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.fromListN             #-}
 {-# COMPILE GHC unsafeCast            = \ aℓ a bℓ b AgdaStorable AgdaStorable                                                                                           ->  Data.Vector.Storable.unsafeCast            #-}
-{-# COMPILE GHC unsafeCoerceVector    = \ aℓ a bℓ b AgdaStorable AgdaStorable                                                                                           ->  Data.Vector.Storable.unsafeCoerceVector    #-}
+-- {-# COMPILE GHC unsafeCoerceVector    = \ aℓ a bℓ b AgdaStorable AgdaStorable                                                                                           ->  Data.Vector.Storable.unsafeCoerceVector    #-}
 {-# COMPILE GHC freeze                = \ aℓ a m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.freeze                #-}
 {-# COMPILE GHC thaw                  = \ aℓ a m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.thaw                  #-}
-{-# COMPILE GHC copy                  = \ aℓ a m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.copy                  #-}
+{-# COMPILE GHC copy                  = \ aℓ a mℓ m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.copy                  #-}
 {-# COMPILE GHC unsafeFreeze          = \ aℓ a m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.unsafeFreeze          #-}
 {-# COMPILE GHC unsafeThaw            = \ aℓ a m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.unsafeThaw            #-}
-{-# COMPILE GHC unsafeCopy            = \ aℓ a m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.unsafeCopy            #-}
+{-# COMPILE GHC unsafeCopy            = \ aℓ a mℓ m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.unsafeCopy            #-}
 {-# COMPILE GHC unsafeFromForeignPtr  = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.unsafeFromForeignPtr  #-}
-{-# COMPILE GHC unsafeFromForeignPtr0 = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeFromForeignPtr0 #-}
-{-# COMPILE GHC unsafeToForeignPtr    = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeToForeignPtr    #-}
-{-# COMPILE GHC unsafeToForeignPtr0   = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeToForeignPtr0   #-}
+-- {-# COMPILE GHC unsafeFromForeignPtr0 = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeFromForeignPtr0 #-}
+-- {-# COMPILE GHC unsafeToForeignPtr    = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeToForeignPtr    #-}
+-- {-# COMPILE GHC unsafeToForeignPtr0   = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeToForeignPtr0   #-}
 {-# COMPILE GHC unsafeWith            = \ aℓ a bℓ b AgdaStorable                                                                                                        ->  Data.Vector.Storable.unsafeWith            #-}

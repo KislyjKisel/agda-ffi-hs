@@ -40,8 +40,8 @@ postulate
     singleton    : Word8 → ByteString
     pack         : List Word8 → ByteString
     unpack       : ByteString → List Word8
-    fromStrict   : ByteString → ByteString
-    toStrict     : ByteString → ByteString
+    -- todo: (req: lazy bytestring) fromStrict   : ByteString → ByteString
+    -- todo: (req: lazy bytestring) toStrict     : ByteString → ByteString
     fromFilePath : FilePath → IO ByteString
     toFilePath   : ByteString → IO FilePath
 
@@ -168,7 +168,7 @@ postulate
     hGet            : Handle → Int → IO ByteString
     hGetSome        : Handle → Int → IO ByteString
     hGetNonBlocking : Handle → Int → IO ByteString
-    hPut            : Handle → ByteString → IO ByteString
+    hPut            : Handle → ByteString → IO ⊤
     hPutNonBlocking : Handle → ByteString → IO ByteString
     hPutStr         : Handle → ByteString → IO ⊤
 
@@ -176,8 +176,8 @@ postulate
 {-# COMPILE GHC singleton    = Data.ByteString.singleton    #-}
 {-# COMPILE GHC pack         = Data.ByteString.pack         #-}
 {-# COMPILE GHC unpack       = Data.ByteString.unpack       #-}
-{-# COMPILE GHC fromStrict   = Data.ByteString.fromStrict   #-}
-{-# COMPILE GHC toStrict     = Data.ByteString.toStrict     #-}
+-- {-# COMPILE GHC fromStrict   = Data.ByteString.fromStrict   #-}
+-- {-# COMPILE GHC toStrict     = Data.ByteString.toStrict     #-}
 {-# COMPILE GHC fromFilePath = Data.ByteString.fromFilePath #-}
 {-# COMPILE GHC toFilePath   = Data.ByteString.toFilePath   #-}
 
