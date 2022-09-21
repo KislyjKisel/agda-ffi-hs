@@ -352,6 +352,13 @@ data GameControllerButtonBind : Set where
     GameControllerButtonBindAxis   : CInt → GameControllerButtonBind
     GameControllerButtonBindHat    : CInt → CInt → GameControllerButtonBind
 
+{-# COMPILE GHC GameControllerButtonBind = data SDL.Raw.Types.GameControllerButtonBind
+    ( SDL.Raw.Types.GameControllerButtonBindNone
+    | SDL.Raw.Types.GameControllerButtonBindButton
+    | SDL.Raw.Types.GameControllerButtonBindAxis
+    | SDL.Raw.Types.GameControllerButtonBindHat
+    ) #-}
+
 postulate
     Eq[GameControllerButtonBind]       : Eq GameControllerButtonBind
     Show[GameControllerButtonBind]     : Show GameControllerButtonBind
@@ -390,6 +397,15 @@ data HapticEffect : Set where
     HapticRamp      : Word16 → HapticDirection → Word32 → Word16 → Word16 → Word16 → Int16 → Int16 → Word16 → Word16 → Word16 → Word16 → HapticEffect
     HapticLeftRight : Word16 → Word32 → Word16 → Word16 → HapticEffect
     HapticCustom    : Word16 → HapticDirection → Word32 → Word16 → Word16 → Word16 → Word8 → Word16 → Word16 → Ptr Word16 → Word16 → Word16 → Word16 → Word16 → HapticEffect
+
+{-# COMPILE GHC HapticEffect = data SDL.Raw.Types.HapticEffect
+    ( SDL.Raw.Types.HapticConstant
+    | SDL.Raw.Types.HapticPeriodic
+    | SDL.Raw.Types.HapticCondition
+    | SDL.Raw.Types.HapticRamp
+    | SDL.Raw.Types.HapticLeftRight
+    | SDL.Raw.Types.HapticCustom
+    ) #-}
 
 hapticEffectType : HapticEffect → Word16
 hapticEffectType (HapticConstant x _ _ _ _ _ _ _ _ _ _)       = x

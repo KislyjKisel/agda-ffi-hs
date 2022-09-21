@@ -23,6 +23,17 @@ open import Ffi.Hs.SDL.Internal.Types       using (Window)
 open import Ffi.Hs.SDL.Raw.Types as Raw     using ()
 open import Ffi.Hs.SDL.Vect                 using (Point; V2)
 
+open Ffi.Hs.SDL.Input.Mouse public
+    using
+    ( MouseButton
+    ; ButtonLeft
+    ; ButtonMiddle
+    ; ButtonRight
+    ; ButtonX1
+    ; ButtonX2
+    ; ButtonExtra
+    )
+
 private
     variable
         aℓ : Level
@@ -50,42 +61,12 @@ postulate
     Show[InputMotion]    : Show InputMotion
 
 {-# COMPILE GHC Bounded[InputMotion] = AgdaBounded #-}
-{-# COMPILE GHC Enum[InputMotion] = AgdaEnum #-}
-{-# COMPILE GHC Eq[InputMotion] = AgdaEq #-}
-{-# COMPILE GHC Data[InputMotion] = AgdaData #-}
-{-# COMPILE GHC Ord[InputMotion] = AgdaOrd #-}
-{-# COMPILE GHC Read[InputMotion] = AgdaRead #-}
-{-# COMPILE GHC Show[InputMotion] = AgdaShow #-}
-
-data MouseButton : Set where
-    ButtonLeft   : MouseButton
-    ButtonMiddle : MouseButton
-    ButtonRight  : MouseButton
-    ButtonX1     : MouseButton
-    ButtonX2     : MouseButton
-    ButtonExtra  : Int → MouseButton
-
-{-# COMPILE GHC MouseButton = data SDL.Event.MouseButton
-    ( SDL.Event.ButtonLeft
-    | SDL.Event.ButtonMiddle
-    | SDL.Event.ButtonRight
-    | SDL.Event.ButtonX1
-    | SDL.Event.ButtonX2
-    | SDL.Event.ButtonExtra
-    ) #-}
-
-postulate
-    Eq[MouseButton]   : Eq MouseButton
-    Data[MouseButton] : Data MouseButton
-    Ord[MouseButton]  : Ord MouseButton
-    Read[MouseButton] : Read MouseButton
-    Show[MouseButton] : Show MouseButton
-
-{-# COMPILE GHC Eq[MouseButton]   = AgdaEq   #-}
-{-# COMPILE GHC Data[MouseButton] = AgdaData #-}
-{-# COMPILE GHC Ord[MouseButton]  = AgdaOrd  #-}
-{-# COMPILE GHC Read[MouseButton] = AgdaRead #-}
-{-# COMPILE GHC Show[MouseButton] = AgdaShow #-}
+{-# COMPILE GHC Enum[InputMotion]    = AgdaEnum    #-}
+{-# COMPILE GHC Eq[InputMotion]      = AgdaEq      #-}
+{-# COMPILE GHC Data[InputMotion]    = AgdaData    #-}
+{-# COMPILE GHC Ord[InputMotion]     = AgdaOrd     #-}
+{-# COMPILE GHC Read[InputMotion]    = AgdaRead    #-}
+{-# COMPILE GHC Show[InputMotion]    = AgdaShow    #-}
 
 -- Event data
 

@@ -2,6 +2,7 @@
 
 module Ffi.Hs.DearImGui.SDL where
 
+open import Agda.Builtin.List  using (List)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (MonadIO)
