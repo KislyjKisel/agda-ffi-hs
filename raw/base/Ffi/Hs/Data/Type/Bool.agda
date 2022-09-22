@@ -4,7 +4,7 @@ module Ffi.Hs.Data.Type.Bool where
 
 open import Agda.Builtin.Bool using (Bool)
 open import Ffi.Hs.-base.Kind using (IsKind)
-open import Ffi.Hs.Data.Bool using (`Bool; `true; `false)
+open import Ffi.Hs.Data.Bool using (`Bool; `True; `False)
 open import Agda.Primitive
 
 {-# FOREIGN GHC

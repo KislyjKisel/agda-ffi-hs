@@ -6,7 +6,7 @@ open import Ffi.Hs.-base.Class
 open import Ffi.Hs.-base.Kind using (IsKind)
 
 open import Agda.Builtin.Bool public
-    using (Bool; true; false)
+    using (Bool) renaming (true to True; false to False)
 
 {-# FOREIGN GHC {-# LANGUAGE DataKinds #-} #-}
 {-# FOREIGN GHC
@@ -19,22 +19,22 @@ infixr 6 _&&_
 infixr 5 _||_
 
 _&&_ : Bool → Bool → Bool
-true  && x = x
-false && x = false
+True  && x = x
+False && x = False
 
 _||_ : Bool → Bool → Bool
-true  || x = true
-false || x = x
+True  || x = True
+False || x = x
 
 bool : ∀{aℓ} {A : Set aℓ} → A → A → Bool → A
-bool x y false = x
-bool x y true  = y
+bool x y False = x
+bool x y True  = y
 
 not : Bool → Bool
-not true  = false
-not false = true
+not True  = False
+not False = True
 
-otherwise = true
+otherwise = True
 
 postulate
     Data[Bool]       : Data Bool
@@ -63,16 +63,16 @@ postulate
 
 postulate
     `Bool  : Set₁
-    `true  : `Bool
-    `false : `Bool
+    `True  : `Bool
+    `False : `Bool
 
 {-# COMPILE GHC `Bool  = type Data.Bool.Bool #-}
-{-# COMPILE GHC `true  = type 'True          #-}
-{-# COMPILE GHC `false = type 'False         #-}
+{-# COMPILE GHC `True  = type 'True          #-}
+{-# COMPILE GHC `False = type 'False         #-}
 
 lift`Bool : Bool → `Bool
-lift`Bool true  = `true
-lift`Bool false = `false
+lift`Bool True  = `True
+lift`Bool False = `False
 
 postulate
     IsKind[`Bool] : IsKind `Bool

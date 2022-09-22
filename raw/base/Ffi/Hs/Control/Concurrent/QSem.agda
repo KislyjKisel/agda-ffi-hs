@@ -4,8 +4,12 @@ module Ffi.Hs.Control.Concurrent.QSem where
 
 open import Agda.Builtin.IO   using (IO)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit using (⊤; ⊤′)
+open import Ffi.Hs.-base.Unit using (⊤)
 open import Ffi.Hs.Data.Int   using (Int)
+
+{-# FOREIGN GHC
+import qualified Control.Concurrent.QSem
+#-}
 
 postulate
     QSem : Set
@@ -13,8 +17,7 @@ postulate
     waitQSem   : QSem → IO ⊤
     signalQSem : QSem → IO ⊤
 
-{-# FOREIGN GHC import qualified Control.Concurrent.QSem as AgdaHsQSem #-}
-{-# COMPILE GHC QSem       = AgdaHsQSem.QSem       #-}
-{-# COMPILE GHC newQSem    = AgdaHsQSem.newQSem    #-}
-{-# COMPILE GHC waitQSem   = AgdaHsQSem.waitQSem   #-}
-{-# COMPILE GHC signalQSem = AgdaHsQSem.signalQSem #-}
+{-# COMPILE GHC QSem = type Control.Concurrent.QSem.QSem #-}
+{-# COMPILE GHC newQSem    = Control.Concurrent.QSem.newQSem    #-}
+{-# COMPILE GHC waitQSem   = Control.Concurrent.QSem.waitQSem   #-}
+{-# COMPILE GHC signalQSem = Control.Concurrent.QSem.signalQSem #-}

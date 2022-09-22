@@ -81,11 +81,6 @@ record Kleisli (M : Set bℓ → Set bℓ) (A : Set aℓ) (B : Set bℓ) : Set (
 {-# COMPILE GHC Kleisli = data(2) AgdaKleisli (Control.Arrow.Kleisli) #-}
 
 postulate
-    Arrow[⟶]       : Arrow {aℓ} {bℓ} (λ a b → (a → b))
-    ArrowChoice[⟶] : ArrowChoice {aℓ} {bℓ} (λ a b → (a → b))
-    ArrowApply[⟶]  : ArrowApply {aℓ} {bℓ} (λ a b → (a → b))
-    ArrowLoop[⟶]   : ArrowLoop {aℓ} {bℓ} (λ a b → (a → b))
-
     Arrow[Kleisli[M]]         : ⦃ Monad M ⦄       → Arrow {aℓ} (Kleisli M)
     Category[Kleisli[M]]      : ⦃ Monad M ⦄       → Category {aℓ} (Kleisli M)
     ArrowApply[Kleisli[M]]    : ⦃ Monad M ⦄       → ArrowApply {aℓ} (Kleisli M)
@@ -104,18 +99,13 @@ postulate
     Alternative[ArrowMonad[Cat]]  : ⦃ ArrowPlus  {aℓ} {aℓ} {aℓ} Cat ⦄ → Alternative (ArrowMonad Cat)
     Monad[ArrowMonad[Cat]]        : ⦃ ArrowApply {aℓ} {aℓ} {aℓ} Cat ⦄ → Monad (ArrowMonad Cat)
     MonadPlus[ArrowMonad[Cat]]    : ⦃ ArrowApply {aℓ} {aℓ} {aℓ} Cat ⦄ → ⦃ ArrowPlus Cat ⦄ → MonadPlus (ArrowMonad Cat)
-    
+
     Arrow[Cat]⇒Category[Cat]      : ⦃ Arrow Cat ⦄       → Category Cat
     ArrowZero[Cat]⇒Arrow[Cat]     : ⦃ ArrowZero Cat ⦄   → Arrow Cat
     ArrowPlus[Cat]⇒ArrowZero[Cat] : ⦃ ArrowPlus Cat ⦄   → ArrowZero Cat
     ArrowChoice[Cat]⇒Arrow[Cat]   : ⦃ ArrowChoice Cat ⦄ → Arrow Cat
     ArrowApply[Cat]⇒Arrow[Cat]    : ⦃ ArrowApply Cat ⦄  → Arrow Cat
     ArrowLoop[Cat]⇒Arrow[Cat]     : ⦃ ArrowLoop Cat ⦄   → Arrow Cat
-
-{-# COMPILE GHC Arrow[⟶]       = \ aℓ bℓ -> AgdaArrow       #-}
-{-# COMPILE GHC ArrowChoice[⟶] = \ aℓ bℓ -> AgdaArrowChoice #-}
-{-# COMPILE GHC ArrowApply[⟶]  = \ aℓ bℓ -> AgdaArrowApply  #-}
-{-# COMPILE GHC ArrowLoop[⟶]   = \ aℓ bℓ -> AgdaArrowLoop   #-}
 
 {-# COMPILE GHC Arrow[Kleisli[M]]         = \ aℓ mℓ m AgdaMonad -> AgdaArrow       #-}
 {-# COMPILE GHC Category[Kleisli[M]]      = \ aℓ mℓ m AgdaMonad -> AgdaCategory    #-}

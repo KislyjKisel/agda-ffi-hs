@@ -9,15 +9,19 @@ open import Agda.Builtin.List  using (List)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class using (Read; Show; Num)
-open import Ffi.Hs.-base.Real  using (Rational)
 open import Ffi.Hs.-base.Unit  using (⊤; ⊤′)
 open import Ffi.Hs.Data.Eq     using (Eq)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Data.Tuple  using (Tuple2)
+open import Ffi.Hs.GHC.Real    using (Rational)
 open import Ffi.Hs.Text.ParserCombinators.ReadP using (ReadP)
 
-{-# FOREIGN GHC import qualified Text.Read.Lex #-}
-{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.-base.Class (AgdaShow, AgdaRead, AgdaEq, AgdaNum) #-}
+import Ffi.Hs.-base.Dictionaries
+
+{-# FOREIGN GHC
+import qualified Text.Read.Lex
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+#-}
 
 private
     variable
@@ -31,7 +35,7 @@ postulate
     numberToRational       : Number → Rational
     numberToRangedRational : Tuple2 Int Int → Number → Maybe Rational
 
-{-# COMPILE GHC Number                 = Text.Read.Lex.Number                 #-}
+{-# COMPILE GHC Number = type Text.Read.Lex.Number #-}
 {-# COMPILE GHC numberToInteger        = Text.Read.Lex.numberToInteger        #-}
 {-# COMPILE GHC numberToFixed          = Text.Read.Lex.numberToFixed          #-}
 {-# COMPILE GHC numberToRational       = Text.Read.Lex.numberToRational       #-}

@@ -8,17 +8,23 @@ open import Agda.Builtin.Int                    using () renaming (Int to Intege
 open import Agda.Builtin.List                   using (List)
 open import Agda.Builtin.Maybe                  using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Float                  using (RealFloat)
-open import Ffi.Hs.-base.Num                    using (Num)
-open import Ffi.Hs.-base.Real                   using (Real; RealFrac; Rational; Integral)
-open import Ffi.Hs.Data.Tuple                  using (Tuple2)
+open import Ffi.Hs.-base.Class
 open import Ffi.Hs.Data.Eq                      using (Eq)
 open import Ffi.Hs.Data.Int                     using (Int)
+open import Ffi.Hs.Data.Tuple                   using (Tuple2)
+open import Ffi.Hs.GHC.Real                     using (Rational)
 open import Ffi.Hs.Text.ParserCombinators.ReadP using (ReadS)
 open import Ffi.Hs.Text.Show                    using (ShowS)
 
-open Ffi.Hs.-base.Real public
+open Ffi.Hs.GHC.Real public
     using (showSigned)
+
+import Ffi.Hs.-base.Dictionaries
+
+{-# FOREIGN GHC
+import qualified Numeric
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+#-}
 
 private
     variable

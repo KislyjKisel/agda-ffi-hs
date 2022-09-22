@@ -46,10 +46,20 @@ on f g x y = f (g x) (g y)
 
 -- todo: (lambda term in compile pragma) Fn instances
 -- postulate
---     Functor[A⟶]     : {A : Set fℓ} → Functor     {fℓ} (λ b → (A → b))
---     Applicative[A⟶] : {A : Set fℓ} → Applicative {fℓ} (λ b → (A → b))
---     Monad[A⟶]       : {A : Set fℓ} → Monad       {fℓ} (λ b → (A → b))
+-- Functor[A⟶]     : {A : Set fℓ} → Functor     {fℓ} (λ b → (A → b))
+-- Applicative[A⟶] : {A : Set fℓ} → Applicative {fℓ} (λ b → (A → b))
+-- Monad[A⟶]       : {A : Set fℓ} → Monad       {fℓ} (λ b → (A → b))
+-- Category[⟶]    : Category {aℓ} {bℓ} (\ a b → (a → b))
+-- Arrow[⟶]       : Arrow {aℓ} {bℓ} (λ a b → (a → b))
+-- ArrowChoice[⟶] : ArrowChoice {aℓ} {bℓ} (λ a b → (a → b))
+-- ArrowApply[⟶]  : ArrowApply {aℓ} {bℓ} (λ a b → (a → b))
+-- ArrowLoop[⟶]   : ArrowLoop {aℓ} {bℓ} (λ a b → (a → b))
 
 -- {-# COMPILE GHC Functor[A⟶]     = \ fℓ a -> AgdaFunctor     #-}
 -- {-# COMPILE GHC Applicative[A⟶] = \ fℓ a -> AgdaApplicative #-}
 -- {-# COMPILE GHC Monad[A⟶]       = \ fℓ a -> AgdaMonad       #-}
+-- {-# COMPILE GHC Category[⟶] = \ aℓ bℓ -> AgdaCategory #-}
+-- {-# COMPILE GHC Arrow[⟶]       = \ aℓ bℓ -> AgdaArrow       #-}
+-- {-# COMPILE GHC ArrowChoice[⟶] = \ aℓ bℓ -> AgdaArrowChoice #-}
+-- {-# COMPILE GHC ArrowApply[⟶]  = \ aℓ bℓ -> AgdaArrowApply  #-}
+-- {-# COMPILE GHC ArrowLoop[⟶]   = \ aℓ bℓ -> AgdaArrowLoop   #-}

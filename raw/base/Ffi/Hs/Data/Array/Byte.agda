@@ -43,7 +43,7 @@ postulate
 data MutableByteArray (S : Set sℓ) : Set sℓ where
     mkMutableByteArray : MutableByteArray# S → MutableByteArray S
 
-{-# COMPILE GHC ByteArray = data Data.Array.Byte.MutableByteArray (Data.Array.Byte.MutableByteArray) #-}
+{-# COMPILE GHC MutableByteArray = data Data.Array.Byte.MutableByteArray (Data.Array.Byte.MutableByteArray) #-}
 
 postulate
     Data[MutableByteArray[S]] : ⦃ Typeable S ⦄ → Data (MutableByteArray S)

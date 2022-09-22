@@ -7,6 +7,11 @@ open import Agda.Primitive
 open import Ffi.Hs.-base.Class public
     using (Category)
 
+{-# FOREIGN GHC
+import qualified Control.Category
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+#-}
+
 private
     variable
         aℓ bℓ cℓ : Level
@@ -28,11 +33,5 @@ _<<<_ = _∘_
 _>>>_ : ⦃ Category Cat ⦄ → Cat A B → Cat B C → Cat A C
 f >>> g = g ∘ f
 
-postulate
-    Category[⟶] : Category {aℓ} {bℓ} (\ a b → (a → b))
-
-{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries #-}
-{-# FOREIGN GHC import qualified Control.Category as AgdaHsConCat #-}
-{-# COMPILE GHC id  = \ aℓ a rℓ cat AgdaCategory ->  AgdaHsConCat.id  #-}
-{-# COMPILE GHC _∘_ = \ aℓ cat a b c AgdaCategory -> (AgdaHsConCat..) #-}
-{-# COMPILE GHC Category[⟶] = \ aℓ bℓ -> AgdaCategory #-}
+{-# COMPILE GHC id  = \ aℓ a rℓ cat AgdaCategory ->  Control.Category.id  #-}
+{-# COMPILE GHC _∘_ = \ aℓ cat a b c AgdaCategory -> (Control.Category..) #-}

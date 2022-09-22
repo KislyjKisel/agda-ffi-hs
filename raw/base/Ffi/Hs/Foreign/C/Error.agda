@@ -28,7 +28,7 @@ private
 data Errno : Set where
     mkErrno : CInt → Errno
 
-{-# COMPILE GHC Errno = Foreign.C.Error.Errno #-}
+{-# COMPILE GHC Errno = data Foreign.C.Error.Errno (Foreign.C.Error.Errno) #-}
 
 postulate
     Eq[Errno] : Eq Errno

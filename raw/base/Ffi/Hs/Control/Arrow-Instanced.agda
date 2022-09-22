@@ -5,11 +5,6 @@ module Ffi.Hs.Control.Arrow-Instanced where
 open import Ffi.Hs.Control.Arrow
 
 instance
-    inst:Arrow[⟶]       = Arrow[⟶]
-    inst:ArrowChoice[⟶] = ArrowChoice[⟶]
-    inst:ArrowApply[⟶]  = ArrowApply[⟶]
-    inst:ArrowLoop[⟶]   = ArrowLoop[⟶]
-
     inst:Arrow[Kleisli[M]]         = Arrow[Kleisli[M]]
     inst:Category[Kleisli[M]]      = Category[Kleisli[M]]
     inst:ArrowApply[Kleisli[M]]    = ArrowApply[Kleisli[M]]
@@ -28,7 +23,7 @@ instance
     inst:Alternative[ArrowMonad[Cat]] = Alternative[ArrowMonad[Cat]]
     inst:Monad[ArrowMonad[Cat]]       = Monad[ArrowMonad[Cat]]
     inst:MonadPlus[ArrowMonad[Cat]]   = MonadPlus[ArrowMonad[Cat]]
-    
+
     inst:Arrow[Cat]⇒Category[Cat]      = Arrow[Cat]⇒Category[Cat]
     inst:ArrowZero[Cat]⇒Arrow[Cat]     = ArrowZero[Cat]⇒Arrow[Cat]
     inst:ArrowPlus[Cat]⇒ArrowZero[Cat] = ArrowPlus[Cat]⇒ArrowZero[Cat]
