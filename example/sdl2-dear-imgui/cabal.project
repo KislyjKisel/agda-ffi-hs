@@ -1,0 +1,5 @@
+packages: ./*.cabal
+
+allow-newer: dear-imgui:*
+
+package agda-ffi-hs-example-sdl2-dear-imgui

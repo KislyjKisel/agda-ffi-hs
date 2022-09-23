@@ -38,29 +38,30 @@ postulate
 
 {-# COMPILE GHC MonadUnliftIO[M]⇒MonadIO[M] = \ mℓ m AgdaMonadUnliftIO -> AgdaMonadIO #-}
 
-{-# COMPILE GHC withRunInIO = \ mℓ m AgdaMonadUnliftIO f -> Control.Monad.IO.Unlift.withRunInIO (\ g -> f (\ _ -> g)) #-}
+{-# COMPILE GHC withRunInIO = \ mℓ m b AgdaMonadUnliftIO f -> Control.Monad.IO.Unlift.withRunInIO (\ g -> f (\ _ -> g)) #-}
 
 {-# COMPILE GHC MonadUnliftIO[IO] = \ aℓ -> AgdaMonadUnliftIO #-}
 
-record UnliftIO (M : Set aℓ → Set aℓ) : Set (lsuc aℓ) where
-    constructor mkUnliftIO
-    field
-        unliftIO : ∀{A} → M A → IO A
+-- todo: UnliftIO (A:Set  is erased in generated hs pattern, but not in check fn, why?)
+-- record UnliftIO (M : Set aℓ → Set aℓ) : Set (lsuc aℓ) where
+--     constructor mkUnliftIO
+--     field
+--         unliftIO : ∀{A} → M A → IO A
 
-{-# FOREIGN GHC type AgdaUnliftIO mℓ = Control.Monad.IO.Unlift.UnliftIO #-}
-{-# COMPILE GHC UnliftIO = data(1) AgdaUnliftIO (Control.Monad.IO.Unlift.UnliftIO) #-}
+-- {-# FOREIGN GHC type AgdaUnliftIO mℓ = Control.Monad.IO.Unlift.UnliftIO #-}
+-- {-# COMPILE GHC UnliftIO = data(1) AgdaUnliftIO (Control.Monad.IO.Unlift.UnliftIO) #-}
 
 postulate
-    askUnliftIO        : {M : ∀{aℓ} → Set aℓ → Set aℓ} → ⦃ MonadUnliftIO (M {aℓ}) ⦄ → M (UnliftIO (M {aℓ}))
+    -- askUnliftIO        : {M : ∀{aℓ} → Set aℓ → Set aℓ} → ⦃ MonadUnliftIO (M {aℓ}) ⦄ → M (UnliftIO (M {aℓ}))
     askRunInIO         : ⦃ MonadUnliftIO M ⦄ → M (M A → IO A)
-    withUnliftIO       : ⦃ MonadUnliftIO M ⦄ → (UnliftIO M → IO A) → M A
+    -- withUnliftIO       : ⦃ MonadUnliftIO M ⦄ → (UnliftIO M → IO A) → M A
     toIO               : ⦃ MonadUnliftIO M ⦄ → M A → M (IO A)
     wrappedWithRunInIO : ⦃ MonadUnliftIO N ⦄ → (N B → M B) → (∀{A} → M A → N A) → ((∀{A} → M A → IO A) → IO B) → M B
 
-{-# COMPILE GHC askUnliftIO  = \ aℓ m   AgdaMonadUnliftIO -> Control.Monad.IO.UnliftaskUnliftIO  #-}
-{-# COMPILE GHC askRunInIO   = \ mℓ m a AgdaMonadUnliftIO -> Control.Monad.IO.UnliftaskRunInIO   #-}
-{-# COMPILE GHC withUnliftIO = \ mℓ m a AgdaMonadUnliftIO -> Control.Monad.IO.UnliftwithUnliftIO #-}
-{-# COMPILE GHC toIO         = \ mℓ m a AgdaMonadUnliftIO -> Control.Monad.IO.UnlifttoIO         #-}
+-- {-# COMPILE GHC askUnliftIO  = \ aℓ m   AgdaMonadUnliftIO -> Control.Monad.IO.Unlift.askUnliftIO  #-}
+{-# COMPILE GHC askRunInIO   = \ mℓ m a AgdaMonadUnliftIO -> Control.Monad.IO.Unlift.askRunInIO   #-}
+-- {-# COMPILE GHC withUnliftIO = \ mℓ m a AgdaMonadUnliftIO -> Control.Monad.IO.Unlift.withUnliftIO #-}
+{-# COMPILE GHC toIO         = \ mℓ m a AgdaMonadUnliftIO -> Control.Monad.IO.Unlift.toIO         #-}
 
 {-# COMPILE GHC wrappedWithRunInIO =
-    \ nℓ n b m AgdaMonadUnliftIO f g h -> Control.Monad.IO.UnliftwrappedWithRunInIO f (g ()) (\ i -> h (\ _ -> i)) #-}
+    \ nℓ n b m AgdaMonadUnliftIO f g h -> Control.Monad.IO.Unlift.wrappedWithRunInIO f (g ()) (\ i -> h (\ _ -> i)) #-}

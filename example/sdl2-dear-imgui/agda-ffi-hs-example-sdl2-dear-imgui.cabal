@@ -1,8 +1,8 @@
 cabal-version:      2.4
-name:               agda-ffi-hs-example-sdl2
+name:               agda-ffi-hs-example-sdl2-dear-imgui
 version:            0.1.0.0
 
-executable agda-ffi-hs-example-sdl2
+executable agda-ffi-hs-example-sdl2-dear-imgui
     main-is:          Main.hs
     other-modules: MAlonzo.Code.Main
     hs-source-dirs:   src
@@ -10,7 +10,8 @@ executable agda-ffi-hs-example-sdl2
     build-depends:
         base ^>=4.17.0.0,
         sdl2 ^>=2.5.0.0,
-        text ^>=2.0.1,
+        dear-imgui ^>=2.1.1,
+        text ==2.0.1,
         array,
         deepseq,
         stm,
@@ -18,3 +19,4 @@ executable agda-ffi-hs-example-sdl2
         bytestring,
         primitive,
         vector,
+        unliftio-core,

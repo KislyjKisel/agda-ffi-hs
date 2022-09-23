@@ -21,7 +21,7 @@ open import Ffi.Hs.-base.Kind.List public
 {-# FOREIGN GHC {-# LANGUAGE DataKinds #-} #-}
 {-# FOREIGN GHC
 import qualified Data.List
-import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack)
+import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack(AgdaHasCallStack))
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
@@ -136,102 +136,102 @@ postulate
     genericIndex     : ⦃ Integral B ⦄ → List A → B → A
     genericReplicate : ⦃ Integral B ⦄ → B → A → List A
 
-{-# COMPILE GHC _++_      = \ aℓ a                  -> (Data.List.NonEmpty.++)      #-}
-{-# COMPILE GHC head      = \ aℓ a AgdaHasCallStack -> Data.List.NonEmpty.head      #-}
-{-# COMPILE GHC last      = \ aℓ a AgdaHasCallStack -> Data.List.NonEmpty.last      #-}
-{-# COMPILE GHC tail      = \ aℓ a AgdaHasCallStack -> Data.List.NonEmpty.tail      #-}
-{-# COMPILE GHC init      = \ aℓ a AgdaHasCallStack -> Data.List.NonEmpty.init      #-}
-{-# COMPILE GHC uncons    = \ aℓ a                  -> Data.List.NonEmpty.uncons    #-}
-{-# COMPILE GHC singleton = \ aℓ a                  -> Data.List.NonEmpty.singleton #-}
-{-# COMPILE GHC null      = \ aℓ a                  -> Data.List.NonEmpty.null      #-}
-{-# COMPILE GHC length    = \ aℓ a                  -> Data.List.NonEmpty.length    #-}
+{-# COMPILE GHC _++_      = \ aℓ a                  -> (Data.List.++)      #-}
+{-# COMPILE GHC head      = \ aℓ a AgdaHasCallStack -> Data.List.head      #-}
+{-# COMPILE GHC last      = \ aℓ a AgdaHasCallStack -> Data.List.last      #-}
+{-# COMPILE GHC tail      = \ aℓ a AgdaHasCallStack -> Data.List.tail      #-}
+{-# COMPILE GHC init      = \ aℓ a AgdaHasCallStack -> Data.List.init      #-}
+{-# COMPILE GHC uncons    = \ aℓ a                  -> Data.List.uncons    #-}
+{-# COMPILE GHC singleton = \ aℓ a                  -> Data.List.singleton #-}
+{-# COMPILE GHC null      = \ aℓ a                  -> Data.List.null      #-}
+{-# COMPILE GHC length    = \ aℓ a                  -> Data.List.length    #-}
 
-{-# COMPILE GHC map          = \ aℓ a bℓ b -> Data.List.NonEmpty.map          #-}
-{-# COMPILE GHC reverse      = \ aℓ a      -> Data.List.NonEmpty.reverse      #-}
-{-# COMPILE GHC intersperse  = \ aℓ a      -> Data.List.NonEmpty.intersperse  #-}
-{-# COMPILE GHC intercalate  = \ aℓ a      -> Data.List.NonEmpty.intercalate  #-}
-{-# COMPILE GHC transpose    = \ aℓ a      -> Data.List.NonEmpty.transpose    #-}
-{-# COMPILE GHC subsequences = \ aℓ a      -> Data.List.NonEmpty.subsequences #-}
-{-# COMPILE GHC permutations = \ aℓ a      -> Data.List.NonEmpty.permutations #-}
+{-# COMPILE GHC map          = \ aℓ a bℓ b -> Data.List.map          #-}
+{-# COMPILE GHC reverse      = \ aℓ a      -> Data.List.reverse      #-}
+{-# COMPILE GHC intersperse  = \ aℓ a      -> Data.List.intersperse  #-}
+{-# COMPILE GHC intercalate  = \ aℓ a      -> Data.List.intercalate  #-}
+{-# COMPILE GHC transpose    = \ aℓ a      -> Data.List.transpose    #-}
+{-# COMPILE GHC subsequences = \ aℓ a      -> Data.List.subsequences #-}
+{-# COMPILE GHC permutations = \ aℓ a      -> Data.List.permutations #-}
 
-{-# COMPILE GHC scanl  = \ aℓ a bℓ b -> Data.List.NonEmpty.scanl  #-}
-{-# COMPILE GHC scanl' = \ aℓ a bℓ b -> Data.List.NonEmpty.scanl' #-}
-{-# COMPILE GHC scanl1 = \ aℓ a      -> Data.List.NonEmpty.scanl1 #-}
-{-# COMPILE GHC scanr  = \ aℓ a bℓ b -> Data.List.NonEmpty.scanr  #-}
-{-# COMPILE GHC scanr1 = \ aℓ a      -> Data.List.NonEmpty.scanr1 #-}
+{-# COMPILE GHC scanl  = \ aℓ a bℓ b -> Data.List.scanl  #-}
+{-# COMPILE GHC scanl' = \ aℓ a bℓ b -> Data.List.scanl' #-}
+{-# COMPILE GHC scanl1 = \ aℓ a      -> Data.List.scanl1 #-}
+{-# COMPILE GHC scanr  = \ aℓ a bℓ b -> Data.List.scanr  #-}
+{-# COMPILE GHC scanr1 = \ aℓ a      -> Data.List.scanr1 #-}
 
-{-# COMPILE GHC iterate   = \ aℓ a                  -> Data.List.NonEmpty.iterate   #-}
-{-# COMPILE GHC iterate'  = \ aℓ a                  -> Data.List.NonEmpty.iterate'  #-}
-{-# COMPILE GHC repeat    = \ aℓ a                  -> Data.List.NonEmpty.repeat    #-}
-{-# COMPILE GHC replicate = \ aℓ a                  -> Data.List.NonEmpty.replicate #-}
-{-# COMPILE GHC cycle     = \ aℓ a AgdaHasCallStack -> Data.List.NonEmpty.cycle     #-}
-{-# COMPILE GHC unfoldr   = \ aℓ a bℓ b             -> Data.List.NonEmpty.unfoldr   #-}
+{-# COMPILE GHC iterate   = \ aℓ a                  -> Data.List.iterate   #-}
+{-# COMPILE GHC iterate'  = \ aℓ a                  -> Data.List.iterate'  #-}
+{-# COMPILE GHC repeat    = \ aℓ a                  -> Data.List.repeat    #-}
+{-# COMPILE GHC replicate = \ aℓ a                  -> Data.List.replicate #-}
+{-# COMPILE GHC cycle     = \ aℓ a AgdaHasCallStack -> Data.List.cycle     #-}
+{-# COMPILE GHC unfoldr   = \ aℓ a bℓ b             -> Data.List.unfoldr   #-}
 
-{-# COMPILE GHC take         = \ aℓ a        -> Data.List.NonEmpty.take         #-}
-{-# COMPILE GHC drop         = \ aℓ a        -> Data.List.NonEmpty.drop         #-}
-{-# COMPILE GHC splitAt      = \ aℓ a        -> Data.List.NonEmpty.splitAt      #-}
-{-# COMPILE GHC takeWhile    = \ aℓ a        -> Data.List.NonEmpty.takeWhile    #-}
-{-# COMPILE GHC dropWhile    = \ aℓ a        -> Data.List.NonEmpty.dropWhile    #-}
-{-# COMPILE GHC dropWhileEnd = \ aℓ a        -> Data.List.NonEmpty.dropWhileEnd #-}
-{-# COMPILE GHC span         = \ aℓ a        -> Data.List.NonEmpty.span         #-}
-{-# COMPILE GHC break        = \ aℓ a        -> Data.List.NonEmpty.break        #-}
-{-# COMPILE GHC stripPrefix  = \ aℓ a AgdaEq -> Data.List.NonEmpty.stripPrefix  #-}
-{-# COMPILE GHC group        = \ aℓ a AgdaEq -> Data.List.NonEmpty.group        #-}
-{-# COMPILE GHC inits        = \ aℓ a        -> Data.List.NonEmpty.inits        #-}
-{-# COMPILE GHC tails        = \ aℓ a        -> Data.List.NonEmpty.tails        #-}
+{-# COMPILE GHC take         = \ aℓ a        -> Data.List.take         #-}
+{-# COMPILE GHC drop         = \ aℓ a        -> Data.List.drop         #-}
+{-# COMPILE GHC splitAt      = \ aℓ a        -> Data.List.splitAt      #-}
+{-# COMPILE GHC takeWhile    = \ aℓ a        -> Data.List.takeWhile    #-}
+{-# COMPILE GHC dropWhile    = \ aℓ a        -> Data.List.dropWhile    #-}
+{-# COMPILE GHC dropWhileEnd = \ aℓ a        -> Data.List.dropWhileEnd #-}
+{-# COMPILE GHC span         = \ aℓ a        -> Data.List.span         #-}
+{-# COMPILE GHC break        = \ aℓ a        -> Data.List.break        #-}
+{-# COMPILE GHC stripPrefix  = \ aℓ a AgdaEq -> Data.List.stripPrefix  #-}
+{-# COMPILE GHC group        = \ aℓ a AgdaEq -> Data.List.group        #-}
+{-# COMPILE GHC inits        = \ aℓ a        -> Data.List.inits        #-}
+{-# COMPILE GHC tails        = \ aℓ a        -> Data.List.tails        #-}
 
-{-# COMPILE GHC isPrefixOf      = \ aℓ a AgdaEq -> Data.List.NonEmpty.isPrefixOf #-}
-{-# COMPILE GHC isSuffixOf      = \ aℓ a AgdaEq -> Data.List.NonEmpty.isSuffixOf #-}
-{-# COMPILE GHC isInfixOf       = \ aℓ a AgdaEq -> Data.List.NonEmpty.isInfixOf #-}
-{-# COMPILE GHC isSubsequenceOf = \ aℓ a AgdaEq -> Data.List.NonEmpty.isSubsequenceOf #-}
+{-# COMPILE GHC isPrefixOf      = \ aℓ a AgdaEq -> Data.List.isPrefixOf #-}
+{-# COMPILE GHC isSuffixOf      = \ aℓ a AgdaEq -> Data.List.isSuffixOf #-}
+{-# COMPILE GHC isInfixOf       = \ aℓ a AgdaEq -> Data.List.isInfixOf #-}
+{-# COMPILE GHC isSubsequenceOf = \ aℓ a AgdaEq -> Data.List.isSubsequenceOf #-}
 
-{-# COMPILE GHC lookup      = \ aℓ a bℓ b AgdaEq      -> Data.List.NonEmpty.lookup      #-}
-{-# COMPILE GHC filter      = \ aℓ a                  -> Data.List.NonEmpty.filter      #-}
-{-# COMPILE GHC partition   = \ aℓ a                  -> Data.List.NonEmpty.partition   #-}
-{-# COMPILE GHC _!!_        = \ aℓ a AgdaHasCallStack -> (Data.List.NonEmpty.!!)        #-}
-{-# COMPILE GHC elemIndex   = \ aℓ a AgdaEq           -> Data.List.NonEmpty.elemIndex   #-}
-{-# COMPILE GHC elemIndices = \ aℓ a AgdaEq           -> Data.List.NonEmpty.elemIndices #-}
-{-# COMPILE GHC findIndex   = \ aℓ a                  -> Data.List.NonEmpty.findIndex   #-}
-{-# COMPILE GHC findIndices = \ aℓ a                  -> Data.List.NonEmpty.findIndices #-}
+{-# COMPILE GHC lookup      = \ aℓ a bℓ b AgdaEq      -> Data.List.lookup      #-}
+{-# COMPILE GHC filter      = \ aℓ a                  -> Data.List.filter      #-}
+{-# COMPILE GHC partition   = \ aℓ a                  -> Data.List.partition   #-}
+{-# COMPILE GHC _!!_        = \ aℓ a AgdaHasCallStack -> (Data.List.!!)        #-}
+{-# COMPILE GHC elemIndex   = \ aℓ a AgdaEq           -> Data.List.elemIndex   #-}
+{-# COMPILE GHC elemIndices = \ aℓ a AgdaEq           -> Data.List.elemIndices #-}
+{-# COMPILE GHC findIndex   = \ aℓ a                  -> Data.List.findIndex   #-}
+{-# COMPILE GHC findIndices = \ aℓ a                  -> Data.List.findIndices #-}
 
-{-# COMPILE GHC zip      = \ aℓ a bℓ b                -> Data.List.NonEmpty.zip      #-}
-{-# COMPILE GHC zip3     = \ aℓ a bℓ b cℓ c           -> Data.List.NonEmpty.zip3     #-}
-{-# COMPILE GHC zip4     = \ aℓ a bℓ b cℓ c dℓ d      -> Data.List.NonEmpty.zip4     #-}
-{-# COMPILE GHC zip5     = \ aℓ a bℓ b cℓ c dℓ d eℓ e -> Data.List.NonEmpty.zip5     #-}
-{-# COMPILE GHC zipWith  = \ aℓ a bℓ b cℓ c           -> Data.List.NonEmpty.zipWith  #-}
-{-# COMPILE GHC zipWith3 = \ aℓ a bℓ b cℓ c dℓ d      -> Data.List.NonEmpty.zipWith3 #-}
-{-# COMPILE GHC zipWith4 = \ aℓ a bℓ b cℓ c dℓ d eℓ e -> Data.List.NonEmpty.zipWith4 #-}
-{-# COMPILE GHC unzip    = \ aℓ a bℓ b                -> Data.List.NonEmpty.unzip    #-}
-{-# COMPILE GHC unzip3   = \ aℓ a bℓ b cℓ c           -> Data.List.NonEmpty.unzip3   #-}
-{-# COMPILE GHC unzip4   = \ aℓ a bℓ b cℓ c dℓ d      -> Data.List.NonEmpty.unzip4   #-}
-{-# COMPILE GHC unzip5   = \ aℓ a bℓ b cℓ c dℓ d eℓ e -> Data.List.NonEmpty.unzip5   #-}
+{-# COMPILE GHC zip      = \ aℓ a bℓ b                -> Data.List.zip      #-}
+{-# COMPILE GHC zip3     = \ aℓ a bℓ b cℓ c           -> Data.List.zip3     #-}
+{-# COMPILE GHC zip4     = \ aℓ a bℓ b cℓ c dℓ d      -> Data.List.zip4     #-}
+{-# COMPILE GHC zip5     = \ aℓ a bℓ b cℓ c dℓ d eℓ e -> Data.List.zip5     #-}
+{-# COMPILE GHC zipWith  = \ aℓ a bℓ b cℓ c           -> Data.List.zipWith  #-}
+{-# COMPILE GHC zipWith3 = \ aℓ a bℓ b cℓ c dℓ d      -> Data.List.zipWith3 #-}
+{-# COMPILE GHC zipWith4 = \ aℓ a bℓ b cℓ c dℓ d eℓ e -> Data.List.zipWith4 #-}
+{-# COMPILE GHC unzip    = \ aℓ a bℓ b                -> Data.List.unzip    #-}
+{-# COMPILE GHC unzip3   = \ aℓ a bℓ b cℓ c           -> Data.List.unzip3   #-}
+{-# COMPILE GHC unzip4   = \ aℓ a bℓ b cℓ c dℓ d      -> Data.List.unzip4   #-}
+{-# COMPILE GHC unzip5   = \ aℓ a bℓ b cℓ c dℓ d eℓ e -> Data.List.unzip5   #-}
 
-{-# COMPILE GHC nub       = \ aℓ a AgdaEq -> Data.List.NonEmpty.nub #-}
-{-# COMPILE GHC delete    = \ aℓ a AgdaEq -> Data.List.NonEmpty.delete #-}
-{-# COMPILE GHC _\\_      = \ aℓ a AgdaEq -> (Data.List.NonEmpty.\\) #-}
-{-# COMPILE GHC union     = \ aℓ a AgdaEq -> Data.List.NonEmpty.union #-}
-{-# COMPILE GHC intersect = \ aℓ a AgdaEq -> Data.List.NonEmpty.intersect #-}
+{-# COMPILE GHC nub       = \ aℓ a AgdaEq -> Data.List.nub       #-}
+{-# COMPILE GHC delete    = \ aℓ a AgdaEq -> Data.List.delete    #-}
+{-# COMPILE GHC _\\_      = \ aℓ a AgdaEq -> (Data.List.\\)      #-}
+{-# COMPILE GHC union     = \ aℓ a AgdaEq -> Data.List.union     #-}
+{-# COMPILE GHC intersect = \ aℓ a AgdaEq -> Data.List.intersect #-}
 
-{-# COMPILE GHC sort   = \ aℓ a      AgdaOrd -> Data.List.NonEmpty.sort   #-}
-{-# COMPILE GHC sortOn = \ aℓ a bℓ b AgdaOrd -> Data.List.NonEmpty.sortOn #-}
-{-# COMPILE GHC insert = \ aℓ a      AgdaOrd -> Data.List.NonEmpty.insert #-}
+{-# COMPILE GHC sort   = \ aℓ a      AgdaOrd -> Data.List.sort   #-}
+{-# COMPILE GHC sortOn = \ aℓ a bℓ b AgdaOrd -> Data.List.sortOn #-}
+{-# COMPILE GHC insert = \ aℓ a      AgdaOrd -> Data.List.insert #-}
 
-{-# COMPILE GHC nubBy          = \ aℓ a -> Data.List.NonEmpty.nubBy          #-}
-{-# COMPILE GHC deleteBy       = \ aℓ a -> Data.List.NonEmpty.deleteBy       #-}
-{-# COMPILE GHC deleteFirstsBy = \ aℓ a -> Data.List.NonEmpty.deleteFirstsBy #-}
-{-# COMPILE GHC unionBy        = \ aℓ a -> Data.List.NonEmpty.unionBy        #-}
-{-# COMPILE GHC intersectBy    = \ aℓ a -> Data.List.NonEmpty.intersectBy    #-}
-{-# COMPILE GHC groupBy        = \ aℓ a -> Data.List.NonEmpty.groupBy        #-}
+{-# COMPILE GHC nubBy          = \ aℓ a -> Data.List.nubBy          #-}
+{-# COMPILE GHC deleteBy       = \ aℓ a -> Data.List.deleteBy       #-}
+{-# COMPILE GHC deleteFirstsBy = \ aℓ a -> Data.List.deleteFirstsBy #-}
+{-# COMPILE GHC unionBy        = \ aℓ a -> Data.List.unionBy        #-}
+{-# COMPILE GHC intersectBy    = \ aℓ a -> Data.List.intersectBy    #-}
+{-# COMPILE GHC groupBy        = \ aℓ a -> Data.List.groupBy        #-}
 
-{-# COMPILE GHC sortBy   = \ aℓ a -> Data.List.NonEmpty.sortBy   #-}
-{-# COMPILE GHC insertBy = \ aℓ a -> Data.List.NonEmpty.insertBy #-}
+{-# COMPILE GHC sortBy   = \ aℓ a -> Data.List.sortBy   #-}
+{-# COMPILE GHC insertBy = \ aℓ a -> Data.List.insertBy #-}
 
-{-# COMPILE GHC genericLength    = \ aℓ a bℓ b AgdaNum      -> Data.List.NonEmpty.genericLength    #-}
-{-# COMPILE GHC genericTake      = \ aℓ a bℓ b AgdaIntegral -> Data.List.NonEmpty.genericTake      #-}
-{-# COMPILE GHC genericDrop      = \ aℓ a bℓ b AgdaIntegral -> Data.List.NonEmpty.genericDrop      #-}
-{-# COMPILE GHC genericSplitAt   = \ aℓ a bℓ b AgdaIntegral -> Data.List.NonEmpty.genericSplitAt   #-}
-{-# COMPILE GHC genericIndex     = \ aℓ a bℓ b AgdaIntegral -> Data.List.NonEmpty.genericIndex     #-}
-{-# COMPILE GHC genericReplicate = \ aℓ a bℓ b AgdaIntegral -> Data.List.NonEmpty.genericReplicate #-}
+{-# COMPILE GHC genericLength    = \ aℓ a bℓ b AgdaNum      -> Data.List.genericLength    #-}
+{-# COMPILE GHC genericTake      = \ aℓ a bℓ b AgdaIntegral -> Data.List.genericTake      #-}
+{-# COMPILE GHC genericDrop      = \ aℓ a bℓ b AgdaIntegral -> Data.List.genericDrop      #-}
+{-# COMPILE GHC genericSplitAt   = \ aℓ a bℓ b AgdaIntegral -> Data.List.genericSplitAt   #-}
+{-# COMPILE GHC genericIndex     = \ aℓ a bℓ b AgdaIntegral -> Data.List.genericIndex     #-}
+{-# COMPILE GHC genericReplicate = \ aℓ a bℓ b AgdaIntegral -> Data.List.genericReplicate #-}
 
 postulate
     Functor[List]     : Functor {aℓ} List

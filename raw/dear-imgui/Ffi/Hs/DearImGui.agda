@@ -1925,7 +1925,7 @@ postulate
 data Context : Set where
     mkContext : Ptr ImGuiContext → Context
 
-{-# COMPILE GHC Context = type DearImGui.Context #-}
+{-# COMPILE GHC Context = data DearImGui.Context (DearImGui.Context) #-}
 
 postulate
     createContext     : ⦃ MonadIO M ⦄ → M (Liftℓ _ Context)
@@ -1944,7 +1944,7 @@ postulate
 data DrawData : Set where
     mkDrawData : Ptr ⊤ → DrawData
 
-{-# COMPILE GHC DrawData = type DearImGui.DrawData #-}
+{-# COMPILE GHC DrawData = data DearImGui.DrawData (DearImGui.DrawData) #-}
 
 postulate
     newFrame     : ⦃ MonadIO M ⦄ → M ⊤′
@@ -2135,7 +2135,7 @@ postulate
     ToID[Integer]                : ToID Integer
     ToID[Int]                    : ToID Int
     ToID[Ptr[CChar]]             : ToID (Ptr CChar)
-    ToID[Ptr[A]]                 : ToID (Ptr A)
+    -- todo: (overlaps, but should be ok?) ToID[Ptr[A]]                 : ToID (Ptr A)
     ToID[Tuple2[Ptr[CChar],Int]] : ToID (Tuple2 (Ptr CChar) Int)
 
     pushID : ⦃ ToID A ⦄ → ⦃ MonadIO M ⦄ → A → M ⊤′
@@ -2149,7 +2149,7 @@ postulate
 {-# COMPILE GHC ToID[Integer]                =           AgdaToID #-}
 {-# COMPILE GHC ToID[Int]                    =           AgdaToID #-}
 {-# COMPILE GHC ToID[Ptr[CChar]]             =           AgdaToID #-}
-{-# COMPILE GHC ToID[Ptr[A]]                 = \ aℓ a -> AgdaToID #-}
+-- {-# COMPILE GHC ToID[Ptr[A]]                 = \ aℓ a -> AgdaToID #-}
 {-# COMPILE GHC ToID[Tuple2[Ptr[CChar],Int]] =           AgdaToID #-}
 
 {-# COMPILE GHC pushID = \ aℓ a mℓ m AgdaToID AgdaMonadIO         -> DearImGui.pushID #-}
@@ -2323,7 +2323,7 @@ postulate
     tableSetColumnIndex : ⦃ MonadIO M ⦄ → Int → M (Liftℓ _ Bool)
 
     -- Sorting
-    withSortableTable : ⦃ MonadIO M ⦄ → (Bool → List TableSortingSpecs → M ⊤) → M ⊤′
+    withSortableTable : ⦃ MonadIO M ⦄ → (Bool → List TableSortingSpecs → M ⊤′) → M ⊤′
 
     -- Queries
     tableGetColumnCount   : ⦃ MonadIO M ⦄ → M (Liftℓ _ Int)
@@ -2404,16 +2404,16 @@ postulate
 {-# COMPILE GHC endCombo      = \ mℓ m AgdaMonadIO                                  -> DearImGui.endCombo      #-}
 {-# COMPILE GHC combo         = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.combo         #-}
 
-{-# COMPILE GHC dragFloat       = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragFloat       #-}
-{-# COMPILE GHC dragFloat2      = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragFloat2      #-}
-{-# COMPILE GHC dragFloat3      = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragFloat3      #-}
-{-# COMPILE GHC dragFloat4      = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragFloat4      #-}
-{-# COMPILE GHC dragFloatRange2 = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragFloatRange2 #-}
-{-# COMPILE GHC dragInt         = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragInt         #-}
-{-# COMPILE GHC dragInt2        = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragInt2        #-}
-{-# COMPILE GHC dragInt3        = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragInt3        #-}
-{-# COMPILE GHC dragInt4        = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragInt4        #-}
-{-# COMPILE GHC dragIntRange2   = \ mℓ m rℓ r AgdaMonadIO AgdaHasGetter AgdaHasSetter -> DearImGui.dragIntRange2   #-}
+{-# COMPILE GHC dragFloat       = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragFloat       #-}
+{-# COMPILE GHC dragFloat2      = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragFloat2      #-}
+{-# COMPILE GHC dragFloat3      = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragFloat3      #-}
+{-# COMPILE GHC dragFloat4      = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragFloat4      #-}
+{-# COMPILE GHC dragFloatRange2 = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragFloatRange2 #-}
+{-# COMPILE GHC dragInt         = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragInt         #-}
+{-# COMPILE GHC dragInt2        = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragInt2        #-}
+{-# COMPILE GHC dragInt3        = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragInt3        #-}
+{-# COMPILE GHC dragInt4        = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragInt4        #-}
+{-# COMPILE GHC dragIntRange2   = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.dragIntRange2   #-}
 {-# COMPILE GHC dragScalar  = \ mℓ m rℓ r aℓ a rangeℓ range AgdaHasSetter AgdaHasGetter AgdaHasGetter AgdaStorable AgdaMonadIO -> DearImGui.dragScalar  #-}
 {-# COMPILE GHC dragScalarN = \ mℓ m rℓ r aℓ a rangeℓ range AgdaHasSetter AgdaHasGetter AgdaHasGetter AgdaStorable AgdaMonadIO -> DearImGui.dragScalarN #-}
 
@@ -2427,7 +2427,7 @@ postulate
 {-# COMPILE GHC sliderInt3    = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.sliderInt3    #-}
 {-# COMPILE GHC sliderInt4    = \ mℓ m rℓ r AgdaMonadIO AgdaHasSetter AgdaHasGetter -> DearImGui.sliderInt4    #-}
 {-# COMPILE GHC sliderScalar  = \ mℓ m rℓ r aℓ a rangeℓ range AgdaHasGetter AgdaHasSetter AgdaHasGetter AgdaStorable AgdaMonadIO -> DearImGui.sliderScalar #-}
-{-# COMPILE GHC sliderScalarN = \ mℓ m rℓ r aℓ a valueℓ value rangeℓ range AgdaHasSetter AgdaHasGetter AgdaHasGetter AgdaStorable AgdaMonadIO -> DearImGui.sliderScalarN #-}
+{-# COMPILE GHC sliderScalarN = \ mℓ m aℓ a valueℓ value rangeℓ range AgdaHasSetter AgdaHasGetter AgdaHasGetter AgdaStorable AgdaMonadIO -> DearImGui.sliderScalarN #-}
 {-# COMPILE GHC vSliderFloat = \ mℓ m rℓ r AgdaHasSetter AgdaHasGetter AgdaMonadIO -> DearImGui.vSliderFloat #-}
 {-# COMPILE GHC vSliderInt = \ mℓ m rℓ r AgdaHasSetter AgdaHasGetter AgdaMonadIO -> DearImGui.vSliderInt #-}
 {-# COMPILE GHC vSliderScalar = \ mℓ m rℓ r aℓ a rangeℓ range AgdaHasSetter AgdaHasGetter AgdaHasGetter AgdaStorable AgdaMonadIO -> DearImGui.vSliderScalar #-}
@@ -2635,22 +2635,22 @@ module _ {T : Set aℓ → Set bℓ} where
     postulate
         itemCount : ⦃ ClipItems T A ⦄ → T A → Maybe Int
         clipItems : ⦃ ClipItems T A ⦄ → Int → Int → T A → T A
-        stepItems : ⦃ ClipItems T A ⦄ → ⦃ Monad M ⦄ → (A → M ⊤) → T A → M ⊤′
+        stepItems : ⦃ ClipItems T A ⦄ → ⦃ Monad M ⦄ → (A → M ⊤′) → T A → M ⊤′
 
-{-# COMPILE GHC itemCount = \ aℓ bℓ t a AgdaClipItems -> DearImGui.itemCount #-}
-{-# COMPILE GHC clipItems = \ aℓ bℓ t a AgdaClipItems -> DearImGui.clipItems #-}
-{-# COMPILE GHC stepItems = \ aℓ bℓ t a AgdaClipItems -> DearImGui.stepItems #-}
+{-# COMPILE GHC itemCount = \ aℓ bℓ t a      AgdaClipItems           -> DearImGui.itemCount #-}
+{-# COMPILE GHC clipItems = \ aℓ bℓ t a      AgdaClipItems           -> DearImGui.clipItems #-}
+{-# COMPILE GHC stepItems = \ aℓ bℓ t a mℓ m AgdaClipItems AgdaMonad -> DearImGui.stepItems #-}
 
 postulate
 
     -- ListClipper
-    withListClipper : {T : Set aℓ → Set bℓ} → ⦃ ClipItems T A ⦄ → ⦃ MonadUnliftIO M ⦄ → Maybe Float → T A → (A → M ⊤) → M ⊤′
+    withListClipper : {T : Set aℓ → Set bℓ} → ⦃ ClipItems T A ⦄ → ⦃ MonadUnliftIO M ⦄ → Maybe Float → T A → (A → M ⊤′) → M ⊤′
 
     -- Miscellaneous
     -- todo: (req raw DrawList) getBackgroundDrawList : ⦃ MonadIO M ⦄ → M (Liftℓ _ DrawList)
     -- todo: (req raw DrawList) getForegroundDrawList : ⦃ MonadIO M ⦄ → M (Liftℓ _ DrawList)
     imCol32 : CUChar → CUChar → CUChar → CUChar → ImU32
 
-{-# COMPILE GHC withListClipper = \ aℓ bℓ a t AgdaClipItems AgdaMonadUnliftIO -> DearImGui.withListClipper #-}
+{-# COMPILE GHC withListClipper = \ aℓ bℓ a t mℓ m AgdaClipItems AgdaMonadUnliftIO -> DearImGui.withListClipper #-}
 
 {-# COMPILE GHC imCol32 = DearImGui.imCol32 #-}

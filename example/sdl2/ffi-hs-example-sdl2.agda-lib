@@ -1,5 +1,0 @@
-name: ffi-hs-example-sdl2
-include: src
-depend:
-    ffi-hs-base
-    ffi-hs-sdl2
