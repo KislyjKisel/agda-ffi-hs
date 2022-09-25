@@ -47,7 +47,7 @@ postulate
     addCircleFilled         : ⦃ MonadIO M ⦄ → DrawList → Ptr ImVec2 → CFloat → ImU32 → CInt → M ⊤′
     addNgon                 : ⦃ MonadIO M ⦄ → DrawList → Ptr ImVec2 → CFloat → ImU32 → CInt → CFloat → M ⊤′
     addNgonFilled           : ⦃ MonadIO M ⦄ → DrawList → Ptr ImVec2 → CFloat → ImU32 → CInt → M ⊤′
-    addText_                : ⦃ MonadIO M ⦄ → DrawList → Ptr ImVec2 → ImU32 → CString → CString → M ⊤′
+    addText-                : ⦃ MonadIO M ⦄ → DrawList → Ptr ImVec2 → ImU32 → CString → CString → M ⊤′
     addText                 : ⦃ MonadIO M ⦄ → DrawList → Ptr ImFont → CFloat → Ptr ImVec2 → ImU32 → CString → CString → CFloat → Ptr ImVec4 → M ⊤′
     addPolyLine             : ⦃ MonadIO M ⦄ → DrawList → Ptr ImVec2 → CInt → ImU32 → ImDrawFlags → CFloat → M ⊤′
     addConvexPolyFilled     : ⦃ MonadIO M ⦄ → DrawList → Ptr ImVec2 → CInt → ImU32 → M ⊤′
@@ -92,7 +92,7 @@ postulate
 {-# COMPILE GHC addCircleFilled            = \ mℓ m AgdaMonadIO -> DearImGui.Raw.DrawList.addCircleFilled            #-}
 {-# COMPILE GHC addNgon                    = \ mℓ m AgdaMonadIO -> DearImGui.Raw.DrawList.addNgon                    #-}
 {-# COMPILE GHC addNgonFilled              = \ mℓ m AgdaMonadIO -> DearImGui.Raw.DrawList.addNgonFilled              #-}
-{-# COMPILE GHC addText_                   = \ mℓ m AgdaMonadIO -> DearImGui.Raw.DrawList.addText_                   #-}
+{-# COMPILE GHC addText-                   = \ mℓ m AgdaMonadIO -> DearImGui.Raw.DrawList.addText_                   #-}
 {-# COMPILE GHC addText                    = \ mℓ m AgdaMonadIO -> DearImGui.Raw.DrawList.addText                    #-}
 {-# COMPILE GHC addPolyLine                = \ mℓ m AgdaMonadIO -> DearImGui.Raw.DrawList.addPolyLine                #-}
 {-# COMPILE GHC addConvexPolyFilled        = \ mℓ m AgdaMonadIO -> DearImGui.Raw.DrawList.addConvexPolyFilled        #-}
