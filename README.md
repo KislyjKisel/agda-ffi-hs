@@ -27,6 +27,7 @@
 ### Planned bindings to
 * `containers`
 * `aeson`
+* `binary`
 * some graphical api (I assume code generation is a must for OGL/Vulkan - todo)
 * some file loaders
 * some computation heavy (native?) libs
