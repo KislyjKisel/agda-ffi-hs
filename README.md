@@ -22,9 +22,9 @@
 * `exceptions`
 * `vector-0.12.3.1`
 * `bytestring-0.11.3.1`
+* `text-2.0.1` (only Data.Text)
 
 ### Planned bindings to
-* `text`
 * `containers`
 * `aeson`
 * some graphical api (I assume code generation is a must for OGL/Vulkan - todo)

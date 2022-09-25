@@ -1,3 +1,5 @@
 name: ffi-hs-text
 include: .
-depend: ffi-hs-base
+depend:
+    ffi-hs-base
+    ffi-hs-deepseq
