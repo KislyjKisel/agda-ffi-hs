@@ -6,3 +6,4 @@ depend:
     ffi-hs-unliftio-core
     ffi-hs-StateVar
     ffi-hs-vector
+    ffi-hs-text
