@@ -39,7 +39,7 @@
 * Many modules haven't been compiled and can contain wrong ffi pragmas.
 Almost nothing has been tested.
 * All MAlonzo generated code, including libraries, ends up in the project being compiled (agda issue 2330).
-Thus, all code generated from bindings compiles under single cabal file, which in turn must specify all Haskell dependencies, including transitive ones. (Can cause conflicting module names? fix: PackageImports)
+Thus, all code generated from bindings compiles under single cabal file, which in turn must specify all Haskell dependencies, including transitive ones. (Can cause conflicting module names? fix: PackageImports, but only on hs side)
 * `dear-imgui-2.1.1` has dependency constraints incompatible with base-4.17.0.0, new TH etc.
 Temporary fix - `allow-newer` in `cabal.project`.
 * Preprocessor (like hs CPP ext) is required for correct handling of some library flags, platform dependent modules etc.
