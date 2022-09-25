@@ -4,25 +4,24 @@
 ## Contents
 
 ### (Almost) complete raw bindings to
-* `stm-2.5.1.0`
+* `dear-imgui-2.1.1` (no GLFW, partial Vulkan)
 * `deepseq-1.4.8.0`
 * `StateVar-1.2.2`
+* `stm-2.5.1.0`
 * `unliftio-core-2.0.1` (no `UnliftIO` type)
 
 ### Substantial raw bindings to
 * `base-4.17.0.0` (no Prelude, GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*, Data.Traversable)
-* `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Hint, SDL.Internal.\*, SDL.Raw.\*)
-* `dear-imgui-2.1.1` (only main, SDL, OGL3)
 * `scientific-0.3.7.0` (no Text/ByteString builders)
+* `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Hint, SDL.Internal.\*, SDL.Raw.\*)
 
 ### Poor raw bindings (for use by other bindings only) to
-* `linear`
-* `bytestring`
-* `primitive`
-* `exceptions`
-* `vector-0.12.3.1`
 * `bytestring-0.11.3.1`
+* `exceptions`
+* `linear`
+* `primitive`
 * `text-2.0.1` (only Data.Text)
+* `vector-0.12.3.1`
 
 ### Planned bindings to
 * `containers`
