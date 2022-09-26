@@ -1,0 +1,3 @@
+name: ffi-hs-transformers
+include: .
+depend: ffi-hs-base
