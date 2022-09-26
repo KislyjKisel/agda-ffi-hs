@@ -1,0 +1,7 @@
+name: ffi-hs-JuicyPixels
+include: .
+depend:
+    ffi-hs-base
+    ffi-hs-deepseq
+    ffi-hs-vector
+    ffi-hs-primitive
