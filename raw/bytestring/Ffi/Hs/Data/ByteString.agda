@@ -14,6 +14,30 @@ open import Ffi.Hs.Foreign.C.String using (CString; CStringLen)
 open import Ffi.Hs.GHC.Stack        using (HasCallStack)
 open import Ffi.Hs.System.IO        using (IO; Handle; FilePath)
 
+open import Ffi.Hs.Data.ByteString.Internal public
+    using
+    ( ByteString
+    ; StrictByteString
+    ; IsList[ByteString]
+    ; Eq[ByteString]
+    ; Data[ByteString]
+    ; Ord[ByteString]
+    ; Read[ByteString]
+    ; Show[ByteString]
+    ; IsString[ByteString]
+    ; Semigroup[ByteString]
+    ; Monoid[ByteString]
+    ; NFData[ByteString]
+    ; empty
+    )
+    renaming
+    ( packBytes to pack
+    ; unpackBytes to unpack
+    )
+
+open import Ffi.Hs.Data.ByteString.Lazy.Internal public
+    using (fromStrict; toStrict)
+
 private
     variable
         aℓ : Level
@@ -25,23 +49,10 @@ import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack(AgdaHasCallStack))
 #-}
 
-postulate
-    ByteString : Set
-
-{-# COMPILE GHC ByteString = type Data.ByteString.ByteString #-}
-
-StrictByteString : Set
-StrictByteString = ByteString
-
 infixl 9 _!?_
 
 postulate
-    empty        : ByteString
     singleton    : Word8 → ByteString
-    pack         : List Word8 → ByteString
-    unpack       : ByteString → List Word8
-    -- todo: (req: lazy bytestring) fromStrict   : ByteString → ByteString
-    -- todo: (req: lazy bytestring) toStrict     : ByteString → ByteString
     fromFilePath : FilePath → IO ByteString
     toFilePath   : ByteString → IO FilePath
 
@@ -172,12 +183,7 @@ postulate
     hPutNonBlocking : Handle → ByteString → IO ByteString
     hPutStr         : Handle → ByteString → IO ⊤
 
-{-# COMPILE GHC empty        = Data.ByteString.empty        #-}
 {-# COMPILE GHC singleton    = Data.ByteString.singleton    #-}
-{-# COMPILE GHC pack         = Data.ByteString.pack         #-}
-{-# COMPILE GHC unpack       = Data.ByteString.unpack       #-}
--- {-# COMPILE GHC fromStrict   = Data.ByteString.fromStrict   #-}
--- {-# COMPILE GHC toStrict     = Data.ByteString.toStrict     #-}
 {-# COMPILE GHC fromFilePath = Data.ByteString.fromFilePath #-}
 {-# COMPILE GHC toFilePath   = Data.ByteString.toFilePath   #-}
 
@@ -226,25 +232,25 @@ postulate
 {-# COMPILE GHC unfoldr   = \ aℓ a -> Data.ByteString.unfoldr   #-}
 {-# COMPILE GHC unfoldrN  = \ aℓ a -> Data.ByteString.unfoldrN  #-}
 
-{-# COMPILE GHC take         = Data.ByteString.take #-}
-{-# COMPILE GHC takeEnd      = Data.ByteString.takeEnd #-}
-{-# COMPILE GHC drop         = Data.ByteString.drop #-}
-{-# COMPILE GHC dropEnd      = Data.ByteString.dropEnd #-}
-{-# COMPILE GHC splitAt      = Data.ByteString.splitAt #-}
-{-# COMPILE GHC takeWhile    = Data.ByteString.takeWhile #-}
+{-# COMPILE GHC take         = Data.ByteString.take         #-}
+{-# COMPILE GHC takeEnd      = Data.ByteString.takeEnd      #-}
+{-# COMPILE GHC drop         = Data.ByteString.drop         #-}
+{-# COMPILE GHC dropEnd      = Data.ByteString.dropEnd      #-}
+{-# COMPILE GHC splitAt      = Data.ByteString.splitAt      #-}
+{-# COMPILE GHC takeWhile    = Data.ByteString.takeWhile    #-}
 {-# COMPILE GHC takeWhileEnd = Data.ByteString.takeWhileEnd #-}
-{-# COMPILE GHC dropWhile    = Data.ByteString.dropWhile #-}
+{-# COMPILE GHC dropWhile    = Data.ByteString.dropWhile    #-}
 {-# COMPILE GHC dropWhileEnd = Data.ByteString.dropWhileEnd #-}
-{-# COMPILE GHC span         = Data.ByteString.span #-}
-{-# COMPILE GHC spanEnd      = Data.ByteString.spanEnd #-}
-{-# COMPILE GHC break        = Data.ByteString.break #-}
-{-# COMPILE GHC breakEnd     = Data.ByteString.breakEnd #-}
-{-# COMPILE GHC group        = Data.ByteString.group #-}
-{-# COMPILE GHC groupBy      = Data.ByteString.groupBy #-}
-{-# COMPILE GHC inits        = Data.ByteString.inits #-}
-{-# COMPILE GHC tails        = Data.ByteString.tails #-}
-{-# COMPILE GHC stripPrefix  = Data.ByteString.stripPrefix #-}
-{-# COMPILE GHC stripSuffix  = Data.ByteString.stripSuffix #-}
+{-# COMPILE GHC span         = Data.ByteString.span         #-}
+{-# COMPILE GHC spanEnd      = Data.ByteString.spanEnd      #-}
+{-# COMPILE GHC break        = Data.ByteString.break        #-}
+{-# COMPILE GHC breakEnd     = Data.ByteString.breakEnd     #-}
+{-# COMPILE GHC group        = Data.ByteString.group        #-}
+{-# COMPILE GHC groupBy      = Data.ByteString.groupBy      #-}
+{-# COMPILE GHC inits        = Data.ByteString.inits        #-}
+{-# COMPILE GHC tails        = Data.ByteString.tails        #-}
+{-# COMPILE GHC stripPrefix  = Data.ByteString.stripPrefix  #-}
+{-# COMPILE GHC stripSuffix  = Data.ByteString.stripSuffix  #-}
 
 {-# COMPILE GHC split     = Data.ByteString.split     #-}
 {-# COMPILE GHC splitWith = Data.ByteString.splitWith #-}
