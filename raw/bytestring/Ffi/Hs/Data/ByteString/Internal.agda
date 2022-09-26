@@ -25,6 +25,8 @@ import Ffi.Hs.-base.Dictionaries
 {-# FOREIGN GHC
 import qualified Data.ByteString.Internal
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList(AgdaIsList))
+import MAlonzo.Code.Ffi.Hs.Control.DeepSeq (AgdaNFData(AgdaNFData))
 #-}
 
 private
