@@ -39,7 +39,7 @@ record ImGuiTableColumnSortSpecs : Set where
         sortOrder     : ImS16
         sortDirection : ImGuiSortDirection
 
-{-# COMPILE GHC ImGuiTableColumnSortSpecs = data DearImGui.ImGuiTableColumnSortSpecs (DearImGui.ImGuiTableColumnSortSpecs) #-}
+{-# COMPILE GHC ImGuiTableColumnSortSpecs = data DearImGui.Raw.ImGuiTableColumnSortSpecs (DearImGui.Raw.ImGuiTableColumnSortSpecs) #-}
 
 postulate
     Storable[ImGuiTableColumnSortSpecs] : Storable ImGuiTableColumnSortSpecs
@@ -58,7 +58,7 @@ record ImGuiTableSortSpecs : Set where
         specsCount : CInt
         specsDirty : CBool
 
-{-# COMPILE GHC ImGuiTableSortSpecs = data DearImGui.ImGuiTableSortSpecs (DearImGui.ImGuiTableSortSpecs) #-}
+{-# COMPILE GHC ImGuiTableSortSpecs = data DearImGui.Raw.ImGuiTableSortSpecs (DearImGui.Raw.ImGuiTableSortSpecs) #-}
 
 postulate
     Storable[ImGuiTableSortSpecs] : Storable ImGuiTableSortSpecs
@@ -75,7 +75,7 @@ postulate
 data Context : Set where
     mkContext : Ptr ImGuiContext → Context
 
-{-# COMPILE GHC Context = data DearImGui.Context (DearImGui.Context) #-}
+{-# COMPILE GHC Context = data DearImGui.Raw.Context (DearImGui.Raw.Context) #-}
 
 postulate
     createContext     : ⦃ MonadIO M ⦄ → M (Liftℓ _ Context)
@@ -94,7 +94,7 @@ postulate
 data DrawData : Set where
     mkDrawData : Ptr ⊤ → DrawData
 
-{-# COMPILE GHC DrawData = data DearImGui.DrawData (DearImGui.DrawData) #-}
+{-# COMPILE GHC DrawData = data DearImGui.Raw.DrawData (DearImGui.Raw.DrawData) #-}
 
 postulate
     newFrame     : ⦃ MonadIO M ⦄ → M ⊤′
@@ -141,7 +141,7 @@ postulate
 -- Windows
 
 postulate
-    begin : ⦃ MonadIO M ⦄ → CString → Maybe (Ptr Bool) → Maybe ImGuiWindowFlags → M (Liftℓ _ Bool)
+    begin : ⦃ MonadIO M ⦄ → CString → Maybe (Ptr CBool) → Maybe ImGuiWindowFlags → M (Liftℓ _ Bool)
     end   : ⦃ MonadIO M ⦄ → M ⊤′
 
 {-# COMPILE GHC begin = \ mℓ m AgdaMonadIO -> DearImGui.Raw.begin #-}
@@ -175,13 +175,13 @@ postulate
     setNextWindowCollapsed       : ⦃ MonadIO M ⦄ → CBool → ImGuiCond → M ⊤′
     setNextWindowBgAlpha         : ⦃ MonadIO M ⦄ → CFloat → M ⊤′
 
-{-# COMPILE GHC setNextWindowPos             = \ mℓ m AgdaMonadIO -> DearImGui.setNextWindowPos             #-}
-{-# COMPILE GHC setNextWindowSize            = \ mℓ m AgdaMonadIO -> DearImGui.setNextWindowSize            #-}
-{-# COMPILE GHC setNextWindowFullscreen      = \ mℓ m AgdaMonadIO -> DearImGui.setNextWindowFullscreen      #-}
-{-# COMPILE GHC setNextWindowContentSize     = \ mℓ m AgdaMonadIO -> DearImGui.setNextWindowContentSize     #-}
-{-# COMPILE GHC setNextWindowSizeConstraints = \ mℓ m AgdaMonadIO -> DearImGui.setNextWindowSizeConstraints #-}
-{-# COMPILE GHC setNextWindowCollapsed       = \ mℓ m AgdaMonadIO -> DearImGui.setNextWindowCollapsed       #-}
-{-# COMPILE GHC setNextWindowBgAlpha         = \ mℓ m AgdaMonadIO -> DearImGui.setNextWindowBgAlpha         #-}
+{-# COMPILE GHC setNextWindowPos             = \ mℓ m AgdaMonadIO -> DearImGui.Raw.setNextWindowPos             #-}
+{-# COMPILE GHC setNextWindowSize            = \ mℓ m AgdaMonadIO -> DearImGui.Raw.setNextWindowSize            #-}
+{-# COMPILE GHC setNextWindowFullscreen      = \ mℓ m AgdaMonadIO -> DearImGui.Raw.setNextWindowFullscreen      #-}
+{-# COMPILE GHC setNextWindowContentSize     = \ mℓ m AgdaMonadIO -> DearImGui.Raw.setNextWindowContentSize     #-}
+{-# COMPILE GHC setNextWindowSizeConstraints = \ mℓ m AgdaMonadIO -> DearImGui.Raw.setNextWindowSizeConstraints #-}
+{-# COMPILE GHC setNextWindowCollapsed       = \ mℓ m AgdaMonadIO -> DearImGui.Raw.setNextWindowCollapsed       #-}
+{-# COMPILE GHC setNextWindowBgAlpha         = \ mℓ m AgdaMonadIO -> DearImGui.Raw.setNextWindowBgAlpha         #-}
 
 
 -- Child Windows
