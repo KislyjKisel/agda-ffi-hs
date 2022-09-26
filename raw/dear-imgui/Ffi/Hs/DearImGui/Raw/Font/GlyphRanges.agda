@@ -40,7 +40,16 @@ data Builtin : Set where
     Thai                    : Builtin
     Vietnamese              : Builtin
 
-{-# COMPILE GHC Builtin = data DearImGui.Raw.Font.GlyphRanges.Builtin (DearImGui.Raw.Font.GlyphRanges.Builtin) #-}
+{-# COMPILE GHC Builtin = data DearImGui.Raw.Font.GlyphRanges.Builtin
+    ( DearImGui.Raw.Font.GlyphRanges.Latin
+    | DearImGui.Raw.Font.GlyphRanges.Korean
+    | DearImGui.Raw.Font.GlyphRanges.Japanese
+    | DearImGui.Raw.Font.GlyphRanges.ChineseFull
+    | DearImGui.Raw.Font.GlyphRanges.ChineseSimplifiedCommon
+    | DearImGui.Raw.Font.GlyphRanges.Cyrillic
+    | DearImGui.Raw.Font.GlyphRanges.Thai
+    | DearImGui.Raw.Font.GlyphRanges.Vietnamese
+    ) #-}
 
 postulate
     Bounded[Builtin] : Bounded Builtin
