@@ -5,3 +5,4 @@ depend:
     ffi-hs-deepseq
     ffi-hs-vector
     ffi-hs-primitive
+    ffi-hs-bytestring
