@@ -35,16 +35,16 @@ postulate
     mapMaybe    : (A → Maybe B) → List A → List B
     fromJust    : ⦃ HasCallStack ⦄ → Maybe A → A
 
-{-# COMPILE GHC maybe       = \ aℓ bℓ a b → Data.Maybe.maybe       #-}
-{-# COMPILE GHC isJust      = \ aℓ a      → Data.Maybe.isJust      #-}
-{-# COMPILE GHC isNothing   = \ aℓ a      → Data.Maybe.isNothing   #-}
-{-# COMPILE GHC fromMaybe   = \ aℓ a      → Data.Maybe.fromMaybe   #-}
-{-# COMPILE GHC listToMaybe = \ aℓ a      → Data.Maybe.listToMaybe #-}
-{-# COMPILE GHC maybeToList = \ aℓ a      → Data.Maybe.maybeToList #-}
-{-# COMPILE GHC catMaybes   = \ aℓ a      → Data.Maybe.catMaybes   #-}
-{-# COMPILE GHC mapMaybe    = \ aℓ bℓ a b → Data.Maybe.mapMaybe    #-}
+{-# COMPILE GHC maybe       = \ aℓ bℓ a b -> Data.Maybe.maybe       #-}
+{-# COMPILE GHC isJust      = \ aℓ a      -> Data.Maybe.isJust      #-}
+{-# COMPILE GHC isNothing   = \ aℓ a      -> Data.Maybe.isNothing   #-}
+{-# COMPILE GHC fromMaybe   = \ aℓ a      -> Data.Maybe.fromMaybe   #-}
+{-# COMPILE GHC listToMaybe = \ aℓ a      -> Data.Maybe.listToMaybe #-}
+{-# COMPILE GHC maybeToList = \ aℓ a      -> Data.Maybe.maybeToList #-}
+{-# COMPILE GHC catMaybes   = \ aℓ a      -> Data.Maybe.catMaybes   #-}
+{-# COMPILE GHC mapMaybe    = \ aℓ bℓ a b -> Data.Maybe.mapMaybe    #-}
 {-# COMPILE GHC fromJust =
-    \ aℓ a AgdaHasCallStack → Data.Maybe.fromJust #-}
+    \ aℓ a AgdaHasCallStack -> Data.Maybe.fromJust #-}
 
 postulate
     MonadFail[Maybe]   : MonadFail {aℓ} Maybe
@@ -69,16 +69,16 @@ postulate
     Read1[Maybe]        : Read1 {aℓ} Maybe
     Show1[Maybe]        : Show1 {aℓ} Maybe
 
-{-# COMPILE GHC MonadFail[Maybe]    = \ aℓ a               -> AgdaMonadFail   #-}
-{-# COMPILE GHC MonadFix[Maybe]     = \ aℓ a               -> AgdaMonadFix    #-}
-{-# COMPILE GHC MonadZip[Maybe]     = \ aℓ a               -> AgdaMonadZip    #-}
-{-# COMPILE GHC Foldable[Maybe]     = \ aℓ a               -> AgdaFoldable    #-}
-{-# COMPILE GHC Traversable[Maybe]  = \ aℓ a               -> AgdaTraversable #-}
-{-# COMPILE GHC Alternative[Maybe]  = \ aℓ a               -> AgdaAlternative #-}
-{-# COMPILE GHC Applicative[Maybe]  = \ aℓ a               -> AgdaApplicative #-}
-{-# COMPILE GHC Functor[Maybe]      = \ aℓ a               -> AgdaFunctor     #-}
-{-# COMPILE GHC Monad[Maybe]        = \ aℓ a               -> AgdaMonad       #-}
-{-# COMPILE GHC MonadPlus[Maybe]    = \ aℓ a               -> AgdaMonadPlus   #-}
+{-# COMPILE GHC MonadFail[Maybe]    = \ aℓ                 -> AgdaMonadFail   #-}
+{-# COMPILE GHC MonadFix[Maybe]     = \ aℓ                 -> AgdaMonadFix    #-}
+{-# COMPILE GHC MonadZip[Maybe]     = \ aℓ                 -> AgdaMonadZip    #-}
+{-# COMPILE GHC Foldable[Maybe]     = \ aℓ                 -> AgdaFoldable    #-}
+{-# COMPILE GHC Traversable[Maybe]  = \ aℓ                 -> AgdaTraversable #-}
+{-# COMPILE GHC Alternative[Maybe]  = \ aℓ                 -> AgdaAlternative #-}
+{-# COMPILE GHC Applicative[Maybe]  = \ aℓ                 -> AgdaApplicative #-}
+{-# COMPILE GHC Functor[Maybe]      = \ aℓ                 -> AgdaFunctor     #-}
+{-# COMPILE GHC Monad[Maybe]        = \ aℓ                 -> AgdaMonad       #-}
+{-# COMPILE GHC MonadPlus[Maybe]    = \ aℓ                 -> AgdaMonadPlus   #-}
 {-# COMPILE GHC Data[Maybe[A]]      = \ aℓ a AgdaData      -> AgdaData        #-}
 {-# COMPILE GHC Monoid[Maybe[A]]    = \ aℓ a AgdaSemigroup -> AgdaMonoid      #-}
 {-# COMPILE GHC Semigroup[Maybe[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup   #-}
