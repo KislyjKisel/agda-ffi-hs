@@ -6,7 +6,6 @@ open import Agda.Builtin.Bool            using (Bool)
 open import Agda.Builtin.Char            using (Char)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class           using (Eq)
-open import Ffi.Hs.-base.Float           using (Float; Double)
 open import Ffi.Hs.Control.Monad.ST      using () renaming (ST to StrictST)
 open import Ffi.Hs.Control.Monad.ST.Lazy using () renaming (ST to LazyST)
 open import Ffi.Hs.Data.Array.Base       using (Array)
@@ -15,6 +14,7 @@ open import Ffi.Hs.Data.Int              using (Int; Int8; Int16; Int32; Int64)
 open import Ffi.Hs.Data.Word             using (Word; Word8; Word16; Word32; Word64)
 open import Ffi.Hs.Foreign.Ptr           using (Ptr; FunPtr)
 open import Ffi.Hs.Foreign.StablePtr     using (StablePtr)
+open import Ffi.Hs.GHC.Float             using (Float; Double)
 
 open import Ffi.Hs.Data.Array.MArray public
 

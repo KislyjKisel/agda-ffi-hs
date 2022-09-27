@@ -5,11 +5,11 @@ module Ffi.Hs.Linear.Conjugate where
 open import Agda.Builtin.Int       using () renaming (Int to Integer)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class     using (Num; RealFloat)
-open import Ffi.Hs.-base.Float     using (Float; Double)
 open import Ffi.Hs.Data.Complex    using (Complex)
 open import Ffi.Hs.Data.Int        using (Int; Int8; Int16; Int32; Int64)
 open import Ffi.Hs.Data.Word       using (Word; Word8; Word16; Word32; Word64)
 open import Ffi.Hs.Foreign.C.Types using (CFloat; CDouble)
+open import Ffi.Hs.GHC.Float       using (Float; Double)
 
 import Ffi.Hs.-base.Dictionaries
 

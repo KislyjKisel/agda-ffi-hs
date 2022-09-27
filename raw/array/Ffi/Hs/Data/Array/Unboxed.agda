@@ -6,11 +6,11 @@ open import Agda.Builtin.Bool        using (Bool)
 open import Agda.Builtin.Char        using (Char)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class       using (Eq; Ord; Read; Show)
-open import Ffi.Hs.-base.Float       using (Float; Double)
 open import Ffi.Hs.Data.Int          using (Int; Int8; Int16; Int32; Int64)
 open import Ffi.Hs.Data.Word         using (Word; Word8; Word16; Word32; Word64)
 open import Ffi.Hs.Foreign.Ptr       using (Ptr; FunPtr)
 open import Ffi.Hs.Foreign.StablePtr using (StablePtr)
+open import Ffi.Hs.GHC.Float         using (Float; Double)
 
 open import Ffi.Hs.Data.Array.IArray public
 

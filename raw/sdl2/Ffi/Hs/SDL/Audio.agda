@@ -7,7 +7,6 @@ open import Agda.Builtin.Maybe                  using (Maybe)
 open import Agda.Builtin.String                 using () renaming (String to Text)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Float                  using (Float)
 open import Ffi.Hs.-base.Level                  using (Liftℓ)
 open import Ffi.Hs.-base.Unit                   using (⊤; ⊤′)
 open import Ffi.Hs.Data.Int                     using (Int8; Int16; Int32)
@@ -16,6 +15,7 @@ open import Ffi.Hs.Data.Vector.Storable         using (Vector)
 open import Ffi.Hs.Data.Vector.Storable.Mutable using (IOVector)
 open import Ffi.Hs.Data.Word                    using (Word8; Word16; Word32)
 open import Ffi.Hs.Foreign.C.Types              using (CInt)
+open import Ffi.Hs.GHC.Float                    using (Float)
 
 import Ffi.Hs.-base.Dictionaries
 

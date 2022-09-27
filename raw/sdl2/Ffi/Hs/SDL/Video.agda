@@ -9,7 +9,6 @@ open import Agda.Builtin.Maybe          using (Maybe)
 open import Agda.Builtin.String         using () renaming (String to Text)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Float          using (Float)
 open import Ffi.Hs.-base.Unit           using (⊤; ⊤′)
 open import Ffi.Hs.-base.Level          using (Liftℓ)
 open import Ffi.Hs.Data.StateVar        using (StateVar)
@@ -18,6 +17,7 @@ open import Ffi.Hs.Data.Word            using (Word16)
 open import Ffi.Hs.Foreign.C.String     using (CString)
 open import Ffi.Hs.Foreign.C.Types      using (CInt)
 open import Ffi.Hs.Foreign.Ptr          using (Ptr)
+open import Ffi.Hs.GHC.Float            using (Float)
 open import Ffi.Hs.SDL.Vect             using (Point; V2; V3; V4)
 
 open import Ffi.Hs.SDL.Video.OpenGL   public

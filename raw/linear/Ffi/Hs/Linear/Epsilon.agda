@@ -5,9 +5,9 @@ module Ffi.Hs.Linear.Epsilon where
 open import Agda.Builtin.Bool      using (Bool)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class     using (Num; RealFloat)
-open import Ffi.Hs.-base.Float     using (Double; Float)
 open import Ffi.Hs.Data.Complex    using (Complex)
 open import Ffi.Hs.Foreign.C.Types using (CFloat; CDouble)
+open import Ffi.Hs.GHC.Float       using (Double; Float)
 
 import Ffi.Hs.-base.Dictionaries
 

@@ -8,7 +8,6 @@ open import Agda.Builtin.List              using (List)
 open import Agda.Builtin.Maybe             using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Float             using (Float)
 open import Ffi.Hs.-base.Level             using (Liftℓ)
 open import Ffi.Hs.-base.Unit              using (⊤; ⊤′)
 open import Ffi.Hs.Control.Monad.IO.Unlift using (MonadUnliftIO)
@@ -19,6 +18,7 @@ open import Ffi.Hs.Data.Tuple              using (Tuple2; Tuple3; Tuple4)
 open import Ffi.Hs.Data.Vector.Storable    using () renaming (Vector to SVector)
 open import Ffi.Hs.Foreign.C.Types         using (CInt; CFloat; CBool; CChar; CUChar)
 open import Ffi.Hs.Foreign.Ptr             using (Ptr)
+open import Ffi.Hs.GHC.Float               using (Float)
 
 open import Ffi.Hs.-dear-imgui.Types public
 

@@ -3,10 +3,10 @@
 module Ffi.Hs.-dear-imgui.Types where
 
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Float     using (Float)
 open import Ffi.Hs.Data.Int        using (Int16)
 open import Ffi.Hs.Data.Word       using (Word32)
 open import Ffi.Hs.Foreign.C.Types using (CInt)
+open import Ffi.Hs.GHC.Float       using (Float)
 
 import Ffi.Hs.-base.Dictionaries
 

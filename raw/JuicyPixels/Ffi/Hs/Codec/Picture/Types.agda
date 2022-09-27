@@ -11,7 +11,7 @@ open import Ffi.Hs.-base.Class
 open import Ffi.Hs.Data.Type.Equality using (_~_)
 open import Agda.Builtin.Equality using (_≡_)
 open import Ffi.Hs.Data.Word using (Word8; Word16; Word32)
-open import Ffi.Hs.-base.Float using (Float)
+open import Ffi.Hs.GHC.Float using (Float)
 open import Ffi.Hs.Data.Int using (Int)
 open import Ffi.Hs.Control.Monad.Primitive using (PrimMonad; PrimState)
 open import Ffi.Hs.-base.Unit using (⊤; ⊤′)
