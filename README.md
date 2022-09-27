@@ -4,6 +4,7 @@
 ## Contents
 
 ### (Almost) complete raw bindings to
+* `array-0.5.4.0`
 * `dear-imgui-2.1.1` (no GLFW, partial Vulkan)
 * `deepseq-1.4.8.0`
 * `StateVar-1.2.2`
@@ -11,22 +12,23 @@
 * `unliftio-core-2.0.1` (no `UnliftIO` type)
 
 ### Substantial raw bindings to
-* `base-4.17.0.0` (no Prelude, GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*, Data.Traversable)
+* `base-4.17.0.0` (no GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*, Data.Traversable)
 * `scientific-0.3.7.0` (no Text/ByteString builders)
 * `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Hint, SDL.Internal.\*, SDL.Raw.\*)
 
 ### Poor raw bindings (for use by other bindings only) to
-* `bytestring-0.11.3.1`
+* `bytestring-0.11.3.1` (only Data.ByteString(.Internal), Data.ByteString.Lazy(.Internal))
 * `exceptions`
 * `linear`
 * `primitive`
 * `text-2.0.1` (only Data.Text)
-* `vector-0.12.3.1`
+* `vector-0.12.3.1` (only storable)
 
 ### Planned bindings to
 * `containers`
 * `aeson`
 * `binary`
+* `transformers`
 * some graphical api (I assume code generation is a must for OGL/Vulkan - todo)
 * some file loaders
 * some computation heavy (native?) libs
