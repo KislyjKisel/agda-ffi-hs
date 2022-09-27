@@ -13,7 +13,7 @@ import Ffi.Hs.-base.Dictionaries
 
 {-# FOREIGN GHC
 import qualified GHC.Num
-import MAlonzo.Code.QZ45Zbase.Dictionaries
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
 private
