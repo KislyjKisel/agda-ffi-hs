@@ -12,7 +12,7 @@
 * `unliftio-core-2.0.1` (no `UnliftIO` type)
 
 ### Substantial raw bindings to
-* `base-4.17.0.0` (no GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*, Data.Traversable)
+* `base-4.17.0.0` (no GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*)
 * `scientific-0.3.7.0` (no Text/ByteString builders)
 * `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Hint, SDL.Internal.\*, SDL.Raw.\*)
 
@@ -23,15 +23,13 @@
 * `primitive`
 * `text-2.0.1` (only Data.Text)
 * `vector-0.12.3.1` (only storable)
+* `JuicyPixels`
 
 ### Planned bindings to
 * `containers`
 * `aeson`
 * `binary`
 * `transformers`
-* some graphical api (I assume code generation is a must for OGL/Vulkan - todo)
-* some file loaders
-* some computation heavy (native?) libs
 * ...
 
 

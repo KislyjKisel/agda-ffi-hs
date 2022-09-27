@@ -430,7 +430,14 @@ open import Ffi.Hs.Data.Foldable public
     ; notElem
     )
 
--- todo: Traversable, traverse, sequenceA, mapM, sequence
+open import Ffi.Hs.Data.Traversable public
+    using
+    ( Traversable
+    ; traverse
+    ; sequenceA
+    ; mapM
+    ; sequence
+    )
 
 open import Ffi.Hs.Data.Function public
     using
