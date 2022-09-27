@@ -82,7 +82,7 @@ postulate
     group        : ⦃ Eq A ⦄ → List A → List (List A)
     inits        : List A → List (List A)
     tails        : List A → List (List A)
-    
+
     isPrefixOf      : ⦃ Eq A ⦄ → List A → List A → Bool
     isSuffixOf      : ⦃ Eq A ⦄ → List A → List A → Bool
     isInfixOf       : ⦃ Eq A ⦄ → List A → List A → Bool
