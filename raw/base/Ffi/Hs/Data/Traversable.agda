@@ -3,7 +3,7 @@
 module Ffi.Hs.Data.Traversable where
 
 open import Agda.Primitive
-open import Ffi.Hs.-base.Class using (Applicative; Monad; Monoid)
+open import Ffi.Hs.-base.Class
 open import Ffi.Hs.Data.Tuple  using (Tuple2)
 
 open Ffi.Hs.-base.Class public
@@ -20,10 +20,12 @@ private
     variable
         aℓ bℓ : Level
         A B S : Set aℓ
-        F M : Set aℓ → Set aℓ
-        T : Set aℓ → Set bℓ
+        F M T : Set aℓ → Set aℓ
 
 postulate
+    Traversable[T]⇒Foldable[T] : ⦃ Traversable T ⦄ → Foldable T
+    Traversable[T]⇒Functor[T]  : ⦃ Traversable T ⦄ → Functor T
+
     traverse  : ⦃ Traversable T ⦄ → ⦃ Applicative F ⦄ → (A → F B) → T A → F (T B)
     sequenceA : ⦃ Traversable T ⦄ → ⦃ Applicative F ⦄ → T (F A) → F (T A)
     mapM      : ⦃ Traversable T ⦄ → ⦃ Monad M ⦄ → (A → M B) → T A → M (T B)
@@ -37,6 +39,9 @@ postulate
     fmapDefault    : ⦃ Traversable T ⦄ → (A → B) → T A → T B
     foldMapDefault : ⦃ Traversable T ⦄ → ⦃ Monoid B ⦄ → (A → B) → T A → B
 
+{-# COMPILE GHC Traversable[T]⇒Foldable[T] = \ tℓ t AgdaTraversable -> AgdaFoldable #-}
+{-# COMPILE GHC Traversable[T]⇒Functor[T]  = \ tℓ t AgdaTraversable -> AgdaFunctor  #-}
+
 {-# COMPILE GHC traverse  = \ ℓ t f a b AgdaTraversable AgdaApplicative -> Data.Traversable.traverse  #-}
 {-# COMPILE GHC sequenceA = \ ℓ t f a AgdaTraversable AgdaApplicative   -> Data.Traversable.sequenceA #-}
 {-# COMPILE GHC mapM      = \ ℓ t m a b AgdaTraversable AgdaMonad       -> Data.Traversable.mapM      #-}
@@ -44,8 +49,8 @@ postulate
 
 {-# COMPILE GHC for       = \ ℓ t f a b AgdaTraversable AgdaApplicative -> Data.Traversable.for       #-}
 {-# COMPILE GHC forM      = \ ℓ t m a b AgdaTraversable AgdaMonad       -> Data.Traversable.forM      #-}
-{-# COMPILE GHC mapAccumL = \ tℓ1 tℓ2 t sℓ s a b AgdaTraversable        -> Data.Traversable.mapAccumL #-}
-{-# COMPILE GHC mapAccumR = \ tℓ1 tℓ2 t sℓ s a b AgdaTraversable        -> Data.Traversable.mapAccumR #-}
+{-# COMPILE GHC mapAccumL = \ tℓ t sℓ s a b AgdaTraversable             -> Data.Traversable.mapAccumL #-}
+{-# COMPILE GHC mapAccumR = \ tℓ t sℓ s a b AgdaTraversable             -> Data.Traversable.mapAccumR #-}
 
-{-# COMPILE GHC fmapDefault    = \ tℓ1 tℓ2 t a b AgdaTraversable               -> Data.Traversable.fmapDefault    #-}
-{-# COMPILE GHC foldMapDefault = \ tℓ1 tℓ2 t a bℓ b AgdaTraversable AgdaMonoid -> Data.Traversable.foldMapDefault #-}
+{-# COMPILE GHC fmapDefault    = \ tℓ t a b AgdaTraversable               -> Data.Traversable.fmapDefault    #-}
+{-# COMPILE GHC foldMapDefault = \ tℓ t a bℓ b AgdaTraversable AgdaMonoid -> Data.Traversable.foldMapDefault #-}
