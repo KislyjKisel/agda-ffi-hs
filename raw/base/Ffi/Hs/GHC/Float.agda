@@ -18,6 +18,7 @@ open import Ffi.Hs.Numeric.Natural using (Natural)
 
 import Ffi.Hs.-base.Dictionaries
 
+{-# FOREIGN GHC {-# LANGUAGE MagicHash #-} #-}
 {-# FOREIGN GHC
 import qualified GHC.Float
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -39,8 +40,8 @@ private
 
 postulate
     pi          : ⦃ Floating A ⦄ → A
-    exp         : ⦃ Floating A ⦄ → A
-    log         : ⦃ Floating A ⦄ → A
+    exp         : ⦃ Floating A ⦄ → A → A
+    log         : ⦃ Floating A ⦄ → A → A
     sqrt        : ⦃ Floating A ⦄ → A → A
     sin         : ⦃ Floating A ⦄ → A → A
     cos         : ⦃ Floating A ⦄ → A → A
@@ -173,7 +174,7 @@ postulate
     isFloatInfinite       : Float → Int
     isFloatDenormalized   : Float → Int
     isFloatNegativeZero   : Float → Int
-    showSignedFloat       : ⦃ RealFloat A ⦄ → (A → List Char) → Int → A → List Char → List Char
+    showSignedFloat       : ⦃ RealFloat A ⦄ → (A → List Char → List Char) → Int → A → List Char → List Char
     plusDouble            : Double → Double → Double
     minusDouble           : Double → Double → Double
     negateDouble          : Double → Double
