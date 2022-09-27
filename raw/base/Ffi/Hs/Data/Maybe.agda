@@ -14,7 +14,7 @@ open import Agda.Builtin.Maybe public
 
 {-# FOREIGN GHC
 import qualified Data.Maybe
-import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack)
+import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack(AgdaHasCallStack))
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
@@ -64,21 +64,29 @@ postulate
     Show[Maybe[A]]      : ⦃ Show A ⦄ → Show (Maybe A)
     Eq[Maybe[A]]        : ⦃ Eq A ⦄ → Eq (Maybe A)
     Ord[Maybe[A]]       : ⦃ Ord A ⦄ → Ord (Maybe A)
+    Eq1[Maybe]          : Eq1 {aℓ} Maybe
+    Ord1[Maybe]         : Ord1 {aℓ} Maybe
+    Read1[Maybe]        : Read1 {aℓ} Maybe
+    Show1[Maybe]        : Show1 {aℓ} Maybe
 
-{-# COMPILE GHC MonadFail[Maybe]   = \ aℓ a -> AgdaMonadFail   #-}
-{-# COMPILE GHC MonadFix[Maybe]    = \ aℓ a -> AgdaMonadFix    #-}
-{-# COMPILE GHC MonadZip[Maybe]    = \ aℓ a -> AgdaMonadZip    #-}
-{-# COMPILE GHC Foldable[Maybe]    = \ aℓ a -> AgdaFoldable    #-}
-{-# COMPILE GHC Traversable[Maybe] = \ aℓ a -> AgdaTraversable #-}
-{-# COMPILE GHC Alternative[Maybe] = \ aℓ a -> AgdaAlternative #-}
-{-# COMPILE GHC Applicative[Maybe] = \ aℓ a -> AgdaApplicative #-}
-{-# COMPILE GHC Functor[Maybe]     = \ aℓ a -> AgdaFunctor     #-}
-{-# COMPILE GHC Monad[Maybe]       = \ aℓ a -> AgdaMonad       #-}
-{-# COMPILE GHC MonadPlus[Maybe]   = \ aℓ a -> AgdaMonadPlus   #-}
-{-# COMPILE GHC Data[Maybe[A]]      = \ aℓ a AgdaData      -> AgdaData      #-}
-{-# COMPILE GHC Monoid[Maybe[A]]    = \ aℓ a AgdaSemigroup -> AgdaMonoid    #-}
-{-# COMPILE GHC Semigroup[Maybe[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup #-}
-{-# COMPILE GHC Read[Maybe[A]]      = \ aℓ a AgdaRead      -> AgdaRead      #-}
-{-# COMPILE GHC Show[Maybe[A]]      = \ aℓ a AgdaShow      -> AgdaShow      #-}
-{-# COMPILE GHC Eq[Maybe[A]]        = \ aℓ a AgdaEq        -> AgdaEq        #-}
-{-# COMPILE GHC Ord[Maybe[A]]       = \ aℓ a AgdaOrd       -> AgdaOrd       #-}
+{-# COMPILE GHC MonadFail[Maybe]    = \ aℓ a               -> AgdaMonadFail   #-}
+{-# COMPILE GHC MonadFix[Maybe]     = \ aℓ a               -> AgdaMonadFix    #-}
+{-# COMPILE GHC MonadZip[Maybe]     = \ aℓ a               -> AgdaMonadZip    #-}
+{-# COMPILE GHC Foldable[Maybe]     = \ aℓ a               -> AgdaFoldable    #-}
+{-# COMPILE GHC Traversable[Maybe]  = \ aℓ a               -> AgdaTraversable #-}
+{-# COMPILE GHC Alternative[Maybe]  = \ aℓ a               -> AgdaAlternative #-}
+{-# COMPILE GHC Applicative[Maybe]  = \ aℓ a               -> AgdaApplicative #-}
+{-# COMPILE GHC Functor[Maybe]      = \ aℓ a               -> AgdaFunctor     #-}
+{-# COMPILE GHC Monad[Maybe]        = \ aℓ a               -> AgdaMonad       #-}
+{-# COMPILE GHC MonadPlus[Maybe]    = \ aℓ a               -> AgdaMonadPlus   #-}
+{-# COMPILE GHC Data[Maybe[A]]      = \ aℓ a AgdaData      -> AgdaData        #-}
+{-# COMPILE GHC Monoid[Maybe[A]]    = \ aℓ a AgdaSemigroup -> AgdaMonoid      #-}
+{-# COMPILE GHC Semigroup[Maybe[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup   #-}
+{-# COMPILE GHC Read[Maybe[A]]      = \ aℓ a AgdaRead      -> AgdaRead        #-}
+{-# COMPILE GHC Show[Maybe[A]]      = \ aℓ a AgdaShow      -> AgdaShow        #-}
+{-# COMPILE GHC Eq[Maybe[A]]        = \ aℓ a AgdaEq        -> AgdaEq          #-}
+{-# COMPILE GHC Ord[Maybe[A]]       = \ aℓ a AgdaOrd       -> AgdaOrd         #-}
+{-# COMPILE GHC Eq1[Maybe]          = \ aℓ                 -> AgdaEq1         #-}
+{-# COMPILE GHC Ord1[Maybe]         = \ aℓ                 -> AgdaOrd1        #-}
+{-# COMPILE GHC Read1[Maybe]        = \ aℓ                 -> AgdaRead1       #-}
+{-# COMPILE GHC Show1[Maybe]        = \ aℓ                 -> AgdaShow1       #-}
