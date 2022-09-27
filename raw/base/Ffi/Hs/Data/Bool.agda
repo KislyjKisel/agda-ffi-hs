@@ -11,7 +11,7 @@ open import Agda.Builtin.Bool public
 {-# FOREIGN GHC {-# LANGUAGE DataKinds #-} #-}
 {-# FOREIGN GHC
 import qualified Data.Bool
-import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Kind (AgdaIsKind)
+import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Kind (AgdaIsKind(AgdaIsKind))
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
