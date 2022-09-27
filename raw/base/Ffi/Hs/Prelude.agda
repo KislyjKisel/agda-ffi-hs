@@ -2,6 +2,18 @@
 
 module Ffi.Hs.Prelude where
 
+--- tmp
+open import Agda.Primitive
+open import Ffi.Hs.-base.Class
+
+private
+    variable
+        aℓ : Level
+        A : Set aℓ
+
+{-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries #-}
+--- tmp
+
 open import Ffi.Hs.-base.Level public
     using (Liftℓ; liftℓ; unliftℓ)
 
@@ -28,27 +40,50 @@ open import Ffi.Hs.Data.Maybe public
     using (Maybe; Just; Nothing; maybe)
 
 instance
-    inst:MonadFail[Maybe]    = Ffi.Hs.Data.Maybe.MonadFail[Maybe]
-    inst:MonadFix[Maybe]     = Ffi.Hs.Data.Maybe.MonadFix[Maybe]
-    inst:MonadZip[Maybe]     = Ffi.Hs.Data.Maybe.MonadZip[Maybe]
-    inst:Foldable[Maybe]     = Ffi.Hs.Data.Maybe.Foldable[Maybe]
-    inst:Eq1[Maybe]          = Ffi.Hs.Data.Maybe.Eq1[Maybe]
-    inst:Ord1[Maybe]         = Ffi.Hs.Data.Maybe.Ord1[Maybe]
-    inst:Read1[Maybe]        = Ffi.Hs.Data.Maybe.Read1[Maybe]
-    inst:Show1[Maybe]        = Ffi.Hs.Data.Maybe.Show1[Maybe]
-    inst:Traversable[Maybe]  = Ffi.Hs.Data.Maybe.Traversable[Maybe]
-    inst:Alternative[Maybe]  = Ffi.Hs.Data.Maybe.Alternative[Maybe]
-    inst:Applicative[Maybe]  = Ffi.Hs.Data.Maybe.Applicative[Maybe]
-    inst:Functor[Maybe]      = Ffi.Hs.Data.Maybe.Functor[Maybe]
-    inst:Monad[Maybe]        = Ffi.Hs.Data.Maybe.Monad[Maybe]
-    inst:MonadPlus[Maybe]    = Ffi.Hs.Data.Maybe.MonadPlus[Maybe]
-    inst:Data[Maybe[A]]      = Ffi.Hs.Data.Maybe.Data[Maybe[A]]
-    inst:Monoid[Maybe[A]]    = Ffi.Hs.Data.Maybe.Monoid[Maybe[A]]
-    inst:Semigroup[Maybe[A]] = Ffi.Hs.Data.Maybe.Semigroup[Maybe[A]]
-    inst:Read[Maybe[A]]      = Ffi.Hs.Data.Maybe.Read[Maybe[A]]
-    inst:Show[Maybe[A]]      = Ffi.Hs.Data.Maybe.Show[Maybe[A]]
-    inst:Eq[Maybe[A]]        = Ffi.Hs.Data.Maybe.Eq[Maybe[A]]
-    inst:Ord[Maybe[A]]       = Ffi.Hs.Data.Maybe.Ord[Maybe[A]]
+    postulate
+        inst:MonadFail[Maybe]    : MonadFail {aℓ} Maybe
+        inst:MonadFix[Maybe]     : MonadFix {aℓ} Maybe
+        inst:MonadZip[Maybe]     : MonadZip {aℓ} Maybe
+        inst:Foldable[Maybe]     : Foldable {aℓ} Maybe
+        inst:Traversable[Maybe]  : Traversable {aℓ} Maybe
+        inst:Alternative[Maybe]  : Alternative {aℓ} Maybe
+        inst:Applicative[Maybe]  : Applicative {aℓ} Maybe
+        inst:Functor[Maybe]      : Functor {aℓ} Maybe
+        inst:Monad[Maybe]        : Monad {aℓ} Maybe
+        inst:MonadPlus[Maybe]    : MonadPlus {aℓ} Maybe
+        inst:Data[Maybe[A]]      : ⦃ Data A ⦄ → Data (Maybe A)
+        inst:Monoid[Maybe[A]]    : ⦃ Semigroup A ⦄ → Monoid (Maybe A)
+        inst:Semigroup[Maybe[A]] : ⦃ Semigroup A ⦄ → Semigroup (Maybe A)
+        inst:Read[Maybe[A]]      : ⦃ Read A ⦄ → Read (Maybe A)
+        inst:Show[Maybe[A]]      : ⦃ Show A ⦄ → Show (Maybe A)
+        inst:Eq[Maybe[A]]        : ⦃ Eq A ⦄ → Eq (Maybe A)
+        inst:Ord[Maybe[A]]       : ⦃ Ord A ⦄ → Ord (Maybe A)
+        inst:Eq1[Maybe]          : Eq1 {aℓ} Maybe
+        inst:Ord1[Maybe]         : Ord1 {aℓ} Maybe
+        inst:Read1[Maybe]        : Read1 {aℓ} Maybe
+        inst:Show1[Maybe]        : Show1 {aℓ} Maybe
+
+{-# COMPILE GHC inst:MonadFail[Maybe]    = \ aℓ                 -> AgdaMonadFail   #-}
+{-# COMPILE GHC inst:MonadFix[Maybe]     = \ aℓ                 -> AgdaMonadFix    #-}
+{-# COMPILE GHC inst:MonadZip[Maybe]     = \ aℓ                 -> AgdaMonadZip    #-}
+{-# COMPILE GHC inst:Foldable[Maybe]     = \ aℓ                 -> AgdaFoldable    #-}
+{-# COMPILE GHC inst:Traversable[Maybe]  = \ aℓ                 -> AgdaTraversable #-}
+{-# COMPILE GHC inst:Alternative[Maybe]  = \ aℓ                 -> AgdaAlternative #-}
+{-# COMPILE GHC inst:Applicative[Maybe]  = \ aℓ                 -> AgdaApplicative #-}
+{-# COMPILE GHC inst:Functor[Maybe]      = \ aℓ                 -> AgdaFunctor     #-}
+{-# COMPILE GHC inst:Monad[Maybe]        = \ aℓ                 -> AgdaMonad       #-}
+{-# COMPILE GHC inst:MonadPlus[Maybe]    = \ aℓ                 -> AgdaMonadPlus   #-}
+{-# COMPILE GHC inst:Data[Maybe[A]]      = \ aℓ a AgdaData      -> AgdaData        #-}
+{-# COMPILE GHC inst:Monoid[Maybe[A]]    = \ aℓ a AgdaSemigroup -> AgdaMonoid      #-}
+{-# COMPILE GHC inst:Semigroup[Maybe[A]] = \ aℓ a AgdaSemigroup -> AgdaSemigroup   #-}
+{-# COMPILE GHC inst:Read[Maybe[A]]      = \ aℓ a AgdaRead      -> AgdaRead        #-}
+{-# COMPILE GHC inst:Show[Maybe[A]]      = \ aℓ a AgdaShow      -> AgdaShow        #-}
+{-# COMPILE GHC inst:Eq[Maybe[A]]        = \ aℓ a AgdaEq        -> AgdaEq          #-}
+{-# COMPILE GHC inst:Ord[Maybe[A]]       = \ aℓ a AgdaOrd       -> AgdaOrd         #-}
+{-# COMPILE GHC inst:Eq1[Maybe]          = \ aℓ                 -> AgdaEq1         #-}
+{-# COMPILE GHC inst:Ord1[Maybe]         = \ aℓ                 -> AgdaOrd1        #-}
+{-# COMPILE GHC inst:Read1[Maybe]        = \ aℓ                 -> AgdaRead1       #-}
+{-# COMPILE GHC inst:Show1[Maybe]        = \ aℓ                 -> AgdaShow1       #-}
 
 open import Ffi.Hs.Data.Either public
     using (Either; Left; Right; either)
@@ -367,7 +402,7 @@ open import Ffi.Hs.Control.Monad.Fail public
     ; fail
     )
 
-open import Ffi.Hs.Data.Foldable
+open import Ffi.Hs.Data.Foldable public
     using
     ( mapM-
     ; sequence-
@@ -450,24 +485,44 @@ open import Ffi.Hs.Data.List public
     )
 
 instance
-    inst:Functor[List]     = Ffi.Hs.Data.List.Functor[List]
-    inst:Applicative[List] = Ffi.Hs.Data.List.Applicative[List]
-    inst:Alternative[List] = Ffi.Hs.Data.List.Alternative[List]
-    inst:Monad[List]       = Ffi.Hs.Data.List.Monad[List]
-    inst:MonadPlus[List]   = Ffi.Hs.Data.List.MonadPlus[List]
-    inst:Foldable[List]    = Ffi.Hs.Data.List.Foldable[List]
-    inst:Traversable[List] = Ffi.Hs.Data.List.Traversable[List]
-    inst:Semigroup[List]   = Ffi.Hs.Data.List.Semigroup[List]
-    inst:Monoid[List]      = Ffi.Hs.Data.List.Monoid[List]
-    inst:Data[List[A]]     = Ffi.Hs.Data.List.Data[List[A]]
-    inst:Eq[List[A]]       = Ffi.Hs.Data.List.Eq[List[A]]
-    inst:Ord[List[A]]      = Ffi.Hs.Data.List.Ord[List[A]]
-    inst:Show[List[A]]     = Ffi.Hs.Data.List.Show[List[A]]
-    inst:Read[List[A]]     = Ffi.Hs.Data.List.Read[List[A]]
-    inst:Eq1[List]         = Ffi.Hs.Data.List.Eq1[List]
-    inst:Ord1[List]        = Ffi.Hs.Data.List.Ord1[List]
-    inst:Read1[List]       = Ffi.Hs.Data.List.Read1[List]
-    inst:Show1[List]       = Ffi.Hs.Data.List.Show1[List]
+    postulate
+        inst:Functor[List]     : Functor {aℓ} List
+        inst:Applicative[List] : Applicative {aℓ} List
+        inst:Alternative[List] : Alternative {aℓ} List
+        inst:Monad[List]       : Monad {aℓ} List
+        inst:MonadPlus[List]   : MonadPlus {aℓ} List
+        inst:Foldable[List]    : Foldable {aℓ} List
+        inst:Traversable[List] : Traversable {aℓ} List
+        inst:Semigroup[List]   : Semigroup (List A)
+        inst:Monoid[List]      : Monoid (List A)
+        inst:Data[List[A]]     : ⦃ Data A ⦄ → Data (List A)
+        inst:Eq[List[A]]       : ⦃ Eq A ⦄ → Eq (List A)
+        inst:Ord[List[A]]      : ⦃ Ord A ⦄ → Ord (List A)
+        inst:Show[List[A]]     : ⦃ Show A ⦄ → Show (List A)
+        inst:Read[List[A]]     : ⦃ Read A ⦄ → Read (List A)
+        inst:Eq1[List]         : Eq1 {aℓ} List
+        inst:Ord1[List]        : Ord1 {aℓ} List
+        inst:Read1[List]       : Read1 {aℓ} List
+        inst:Show1[List]       : Show1 {aℓ} List
+
+{-# COMPILE GHC inst:Functor[List]     = \ aℓ            -> AgdaFunctor     #-}
+{-# COMPILE GHC inst:Applicative[List] = \ aℓ            -> AgdaApplicative #-}
+{-# COMPILE GHC inst:Alternative[List] = \ aℓ            -> AgdaAlternative #-}
+{-# COMPILE GHC inst:Monad[List]       = \ aℓ            -> AgdaMonad       #-}
+{-# COMPILE GHC inst:MonadPlus[List]   = \ aℓ            -> AgdaMonadPlus   #-}
+{-# COMPILE GHC inst:Foldable[List]    = \ aℓ            -> AgdaFoldable    #-}
+{-# COMPILE GHC inst:Traversable[List] = \ aℓ            -> AgdaTraversable #-}
+{-# COMPILE GHC inst:Semigroup[List]   = \ aℓ a          -> AgdaSemigroup   #-}
+{-# COMPILE GHC inst:Monoid[List]      = \ aℓ a          -> AgdaMonoid      #-}
+{-# COMPILE GHC inst:Data[List[A]]     = \ aℓ a AgdaData -> AgdaData        #-}
+{-# COMPILE GHC inst:Eq[List[A]]       = \ aℓ a AgdaEq   -> AgdaEq          #-}
+{-# COMPILE GHC inst:Ord[List[A]]      = \ aℓ a AgdaOrd  -> AgdaOrd         #-}
+{-# COMPILE GHC inst:Show[List[A]]     = \ aℓ a AgdaShow -> AgdaShow        #-}
+{-# COMPILE GHC inst:Read[List[A]]     = \ aℓ a AgdaRead -> AgdaRead        #-}
+{-# COMPILE GHC inst:Eq1[List]         = \ aℓ            -> AgdaEq1         #-}
+{-# COMPILE GHC inst:Ord1[List]        = \ aℓ            -> AgdaOrd1        #-}
+{-# COMPILE GHC inst:Read1[List]       = \ aℓ            -> AgdaRead1       #-}
+{-# COMPILE GHC inst:Show1[List]       = \ aℓ            -> AgdaShow1       #-}
 
 open import Ffi.Hs.Text.Show public
     using
