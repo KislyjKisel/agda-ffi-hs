@@ -2,17 +2,8 @@
 
 module Main where
 
-open import Agda.Primitive             using (lzero)
-open import Ffi.Hs.-base.Level         using (liftℓ; unliftℓ)
-open import Ffi.Hs.-base.Unit          using (⊤; ⊤′)
+open import Ffi.Hs.Prelude
 open import Ffi.Hs.Control.Applicative using (unless)
-open import Ffi.Hs.Control.Monad       using (_>>=_; _>>_; _=<<_; return)
-open import Ffi.Hs.Data.Eq             using (_==_)
-open import Ffi.Hs.Data.Foldable       using (any)
-open import Ffi.Hs.Data.Function       using (_∘_; _$_)
-open import Ffi.Hs.Data.Functor        using (_<$>_)
-open import Ffi.Hs.Data.List as List   using (map)
-open import Ffi.Hs.System.IO as IO     using (IO)
 
 import Ffi.Hs.SDL.Init           as SDL
 import Ffi.Hs.SDL.Video          as SDL
@@ -26,13 +17,7 @@ import Ffi.Hs.DearImGui.SDL.OpenGL as ImGui
 import Ffi.Hs.DearImGui.OpenGL3    as ImGui
 
 instance
-    _ = IO.Functor[IO]
-    _ = IO.Monad[IO]
-    _ = IO.MonadIO[IO]
-    _ = IO.Applicative[IO]
-
     _ = SDL.Eq[EventPayload]
-    _ = List.Foldable[List]
 
 {-# NON_TERMINATING #-}
 loop : SDL.Window → IO ⊤′
@@ -52,7 +37,7 @@ loop window = unlessQuit do
     unlessQuit : IO ⊤′ → IO ⊤′
     unlessQuit act = do
         events ← unliftℓ <$> ImGui.pollEventsWithImGui
-        let quit = any ⦃ List.Foldable[List] ⦄ ((SDL.QuitEvent ==_) ∘ SDL.Event.eventPayload) events
+        let quit = any ⦃ inst:Foldable[List] ⦄ ((SDL.QuitEvent ==_) ∘ SDL.Event.eventPayload) events
         unless quit act
 
 
