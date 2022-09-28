@@ -7,6 +7,7 @@ open import Agda.Builtin.List              using (List)
 open import Agda.Builtin.Maybe             using (Maybe)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
+open import Ffi.Hs.-base.Level             using (Liftℓ)
 open import Ffi.Hs.-base.Unit              using (⊤; ⊤′)
 open import Ffi.Hs.Control.DeepSeq         using (NFData; NFData1)
 open import Ffi.Hs.Control.Monad.Primitive using (PrimMonad; PrimState)
@@ -49,17 +50,48 @@ postulate
     MonadPlus[Vector]    : MonadPlus {aℓ} Vector
     NFData1[Vector]      : NFData1 {aℓ} Vector
     IsList[Vector[A]]    : IsList (Vector A)
-    Eq[Vector[A]]        : Eq (Vector A)
-    Data[Vector[A]]      : Data (Vector A)
-    Ord[Vector[A]]       : Ord (Vector A)
-    Read[Vector[A]]      : Read (Vector A)
-    Show[Vector[A]]      : Show (Vector A)
+    Eq[Vector[A]]        : ⦃ Eq A ⦄ → Eq (Vector A)
+    Data[Vector[A]]      : ⦃ Data A ⦄ → Data (Vector A)
+    Ord[Vector[A]]       : ⦃ Ord A ⦄ → Ord (Vector A)
+    Read[Vector[A]]      : ⦃ Read A ⦄ → Read (Vector A)
+    Show[Vector[A]]      : ⦃ Show A ⦄ → Show (Vector A)
     Semigroup[Vector[A]] : Semigroup (Vector A)
     Monoid[Vector[A]]    : Monoid (Vector A)
     NFData[Vector[A]]    : ⦃ NFData A ⦄ → NFData (Vector A)
 
+{-# FOREIGN GHC type AgdaVector aℓ = Data.Vector.Vector #-}
+{-# COMPILE GHC Vector = type(1) AgdaVector #-}
+
+{-# COMPILE GHC Monad[Vector]        = \ aℓ              -> AgdaMonad       #-}
+{-# COMPILE GHC Functor[Vector]      = \ aℓ              -> AgdaFunctor     #-}
+{-# COMPILE GHC MonadFix[Vector]     = \ aℓ              -> AgdaMonadFix    #-}
+{-# COMPILE GHC MonadFail[Vector]    = \ aℓ              -> AgdaMonadFail   #-}
+{-# COMPILE GHC Applicative[Vector]  = \ aℓ              -> AgdaApplicative #-}
+{-# COMPILE GHC Foldable[Vector]     = \ aℓ              -> AgdaFoldable    #-}
+{-# COMPILE GHC Traversable[Vector]  = \ aℓ              -> AgdaTraversable #-}
+{-# COMPILE GHC Eq1[Vector]          = \ aℓ              -> AgdaEq1         #-}
+{-# COMPILE GHC Ord1[Vector]         = \ aℓ              -> AgdaOrd1        #-}
+{-# COMPILE GHC Read1[Vector]        = \ aℓ              -> AgdaRead1       #-}
+{-# COMPILE GHC Show1[Vector]        = \ aℓ              -> AgdaShow1       #-}
+{-# COMPILE GHC MonadZip[Vector]     = \ aℓ              -> AgdaMonadZip    #-}
+{-# COMPILE GHC Alternative[Vector]  = \ aℓ              -> AgdaAlternative #-}
+{-# COMPILE GHC MonadPlus[Vector]    = \ aℓ              -> AgdaMonadPlus   #-}
+{-# COMPILE GHC NFData1[Vector]      = \ aℓ              -> AgdaNFData1     #-}
+{-# COMPILE GHC IsList[Vector[A]]    = \ aℓ a            -> AgdaIsList      #-}
+{-# COMPILE GHC Eq[Vector[A]]        = \ aℓ a AgdaEq     -> AgdaEq          #-}
+{-# COMPILE GHC Data[Vector[A]]      = \ aℓ a AgdaData   -> AgdaData        #-}
+{-# COMPILE GHC Ord[Vector[A]]       = \ aℓ a AgdaOrd    -> AgdaOrd         #-}
+{-# COMPILE GHC Read[Vector[A]]      = \ aℓ a AgdaRead   -> AgdaRead        #-}
+{-# COMPILE GHC Show[Vector[A]]      = \ aℓ a AgdaShow   -> AgdaShow        #-}
+{-# COMPILE GHC Semigroup[Vector[A]] = \ aℓ a            -> AgdaSemigroup   #-}
+{-# COMPILE GHC Monoid[Vector[A]]    = \ aℓ a            -> AgdaMonoid      #-}
+{-# COMPILE GHC NFData[Vector[A]]    = \ aℓ a AgdaNFData -> AgdaNFData      #-}
+
 postulate
     MVector : Set → Set aℓ → Set aℓ
+
+{-# FOREIGN GHC type AgdaMVector aℓ = Data.Vector.MVector #-}
+{-# COMPILE GHC MVector = type(1) AgdaMVector #-}
 
 infixr 5 _++_
 postulate
@@ -168,7 +200,7 @@ postulate
     unzip5            : Vector (Tuple5 A B C D E) → Tuple5 (Vector A) (Vector B) (Vector C) (Vector D) (Vector E)
     filter            : (A → Bool) → Vector A → Vector A
     ifilter           : (Int → A → Bool) → Vector A → Vector A
-    filterM           : ⦃ Monad M ⦄ → (A → M Bool) → Vector A → M (Vector A)
+    filterM           : ⦃ Monad M ⦄ → (A → M (Liftℓ _ Bool)) → Vector A → M (Vector A)
     uniq              : ⦃ Eq A ⦄ → Vector A → Vector A
     mapMaybe          : (A → Maybe B) → Vector A → Vector B
     imapMaybe         : (Int → A → Maybe B) → Vector A → Vector B
@@ -266,202 +298,202 @@ postulate
     unsafeThaw        : ⦃ _ : PrimMonad M ⦄ → Vector A → M (MVector (PrimState M) A)
     unsafeCopy        : ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → Vector A → M ⊤′
 
-{-# COMPILE GHC length            = Data.Vector.length            #-}
-{-# COMPILE GHC null              = Data.Vector.null              #-}
-{-# COMPILE GHC _!_               = (Data.Vector.!)               #-}
-{-# COMPILE GHC _!?_              = (Data.Vector.!?)              #-}
-{-# COMPILE GHC head              = Data.Vector.head              #-}
-{-# COMPILE GHC last              = Data.Vector.last              #-}
-{-# COMPILE GHC unsafeIndex       = Data.Vector.unsafeIndex       #-}
-{-# COMPILE GHC unsafeHead        = Data.Vector.unsafeHead        #-}
-{-# COMPILE GHC unsafeLast        = Data.Vector.unsafeLast        #-}
-{-# COMPILE GHC indexM            = Data.Vector.indexM            #-}
-{-# COMPILE GHC headM             = Data.Vector.headM             #-}
-{-# COMPILE GHC lastM             = Data.Vector.lastM             #-}
-{-# COMPILE GHC unsafeIndexM      = Data.Vector.unsafeIndexM      #-}
-{-# COMPILE GHC unsafeHeadM       = Data.Vector.unsafeHeadM       #-}
-{-# COMPILE GHC unsafeLastM       = Data.Vector.unsafeLastM       #-}
-{-# COMPILE GHC slice             = Data.Vector.slice             #-}
-{-# COMPILE GHC init              = Data.Vector.init              #-}
-{-# COMPILE GHC tail              = Data.Vector.tail              #-}
-{-# COMPILE GHC take              = Data.Vector.take              #-}
-{-# COMPILE GHC drop              = Data.Vector.drop              #-}
-{-# COMPILE GHC splitAt           = Data.Vector.splitAt           #-}
-{-# COMPILE GHC uncons            = Data.Vector.uncons            #-}
-{-# COMPILE GHC unsnoc            = Data.Vector.unsnoc            #-}
-{-# COMPILE GHC unsafeSlice       = Data.Vector.unsafeSlice       #-}
-{-# COMPILE GHC unsafeInit        = Data.Vector.unsafeInit        #-}
-{-# COMPILE GHC unsafeTail        = Data.Vector.unsafeTail        #-}
-{-# COMPILE GHC unsafeTake        = Data.Vector.unsafeTake        #-}
-{-# COMPILE GHC unsafeDrop        = Data.Vector.unsafeDrop        #-}
-{-# COMPILE GHC empty             = Data.Vector.empty             #-}
-{-# COMPILE GHC singleton         = Data.Vector.singleton         #-}
-{-# COMPILE GHC replicate         = Data.Vector.replicate         #-}
-{-# COMPILE GHC generate          = Data.Vector.generate          #-}
-{-# COMPILE GHC iterateN          = Data.Vector.iterateN          #-}
-{-# COMPILE GHC replicateM        = Data.Vector.replicateM        #-}
-{-# COMPILE GHC generateM         = Data.Vector.generateM         #-}
-{-# COMPILE GHC iterateNM         = Data.Vector.iterateNM         #-}
-{-# COMPILE GHC create            = Data.Vector.create            #-}
-{-# COMPILE GHC createT           = Data.Vector.createT           #-}
-{-# COMPILE GHC unfoldr           = Data.Vector.unfoldr           #-}
-{-# COMPILE GHC unfoldrN          = Data.Vector.unfoldrN          #-}
-{-# COMPILE GHC unfoldrExactN     = Data.Vector.unfoldrExactN     #-}
-{-# COMPILE GHC unfoldrM          = Data.Vector.unfoldrM          #-}
-{-# COMPILE GHC unfoldrNM         = Data.Vector.unfoldrNM         #-}
-{-# COMPILE GHC unfoldrExactNM    = Data.Vector.unfoldrExactNM    #-}
-{-# COMPILE GHC constructN        = Data.Vector.constructN        #-}
-{-# COMPILE GHC constructrN       = Data.Vector.constructrN       #-}
-{-# COMPILE GHC enumFromN         = Data.Vector.enumFromN         #-}
-{-# COMPILE GHC enumFromStepN     = Data.Vector.enumFromStepN     #-}
-{-# COMPILE GHC enumFromTo        = Data.Vector.enumFromTo        #-}
-{-# COMPILE GHC enumFromThenTo    = Data.Vector.enumFromThenTo    #-}
-{-# COMPILE GHC cons              = Data.Vector.cons              #-}
-{-# COMPILE GHC snoc              = Data.Vector.snoc              #-}
-{-# COMPILE GHC _++_              = (Data.Vector.++)              #-}
-{-# COMPILE GHC concat            = Data.Vector.concat            #-}
-{-# COMPILE GHC force             = Data.Vector.force             #-}
-{-# COMPILE GHC _//_              = (Data.Vector.//)              #-}
-{-# COMPILE GHC update            = Data.Vector.update            #-}
-{-# COMPILE GHC update-           = Data.Vector.update_           #-}
-{-# COMPILE GHC unsafeUpd         = Data.Vector.unsafeUpd         #-}
-{-# COMPILE GHC unsafeUpdate      = Data.Vector.unsafeUpdate      #-}
-{-# COMPILE GHC unsafeUpdate-     = Data.Vector.unsafeUpdate_     #-}
-{-# COMPILE GHC accum             = Data.Vector.accum             #-}
-{-# COMPILE GHC accumulate        = Data.Vector.accumulate        #-}
-{-# COMPILE GHC accumulate-       = Data.Vector.accumulate_       #-}
-{-# COMPILE GHC unsafeAccum       = Data.Vector.unsafeAccum       #-}
-{-# COMPILE GHC unsafeAccumulate  = Data.Vector.unsafeAccumulate  #-}
-{-# COMPILE GHC unsafeAccumulate- = Data.Vector.unsafeAccumulate_ #-}
-{-# COMPILE GHC reverse           = Data.Vector.reverse           #-}
-{-# COMPILE GHC backpermute       = Data.Vector.backpermute       #-}
-{-# COMPILE GHC unsafeBackpermute = Data.Vector.unsafeBackpermute #-}
-{-# COMPILE GHC modify            = Data.Vector.modify            #-}
-{-# COMPILE GHC indexed           = Data.Vector.indexed           #-}
-{-# COMPILE GHC map               = Data.Vector.map               #-}
-{-# COMPILE GHC imap              = Data.Vector.imap              #-}
-{-# COMPILE GHC concatMap         = Data.Vector.concatMap         #-}
-{-# COMPILE GHC mapM              = Data.Vector.mapM              #-}
-{-# COMPILE GHC imapM             = Data.Vector.imapM             #-}
-{-# COMPILE GHC mapM-             = Data.Vector.mapM_             #-}
-{-# COMPILE GHC imapM-            = Data.Vector.imapM_            #-}
-{-# COMPILE GHC forM              = Data.Vector.forM              #-}
-{-# COMPILE GHC forM-             = Data.Vector.forM_             #-}
-{-# COMPILE GHC iforM             = Data.Vector.iforM             #-}
-{-# COMPILE GHC iforM-            = Data.Vector.iforM_            #-}
-{-# COMPILE GHC zipWith           = Data.Vector.zipWith           #-}
-{-# COMPILE GHC zipWith3          = Data.Vector.zipWith3          #-}
-{-# COMPILE GHC zipWith4          = Data.Vector.zipWith4          #-}
-{-# COMPILE GHC zipWith5          = Data.Vector.zipWith5          #-}
-{-# COMPILE GHC izipWith          = Data.Vector.izipWith          #-}
-{-# COMPILE GHC izipWith3         = Data.Vector.izipWith3         #-}
-{-# COMPILE GHC izipWith4         = Data.Vector.izipWith4         #-}
-{-# COMPILE GHC izipWith5         = Data.Vector.izipWith5         #-}
-{-# COMPILE GHC zip               = Data.Vector.zip               #-}
-{-# COMPILE GHC zip3              = Data.Vector.zip3              #-}
-{-# COMPILE GHC zip4              = Data.Vector.zip4              #-}
-{-# COMPILE GHC zip5              = Data.Vector.zip5              #-}
-{-# COMPILE GHC zipWithM          = Data.Vector.zipWithM          #-}
-{-# COMPILE GHC izipWithM         = Data.Vector.izipWithM         #-}
-{-# COMPILE GHC zipWithM-         = Data.Vector.zipWithM_         #-}
-{-# COMPILE GHC izipWithM-        = Data.Vector.izipWithM_        #-}
-{-# COMPILE GHC unzip             = Data.Vector.unzip             #-}
-{-# COMPILE GHC unzip3            = Data.Vector.unzip3            #-}
-{-# COMPILE GHC unzip4            = Data.Vector.unzip4            #-}
-{-# COMPILE GHC unzip5            = Data.Vector.unzip5            #-}
-{-# COMPILE GHC filter            = Data.Vector.filter            #-}
-{-# COMPILE GHC ifilter           = Data.Vector.ifilter           #-}
-{-# COMPILE GHC filterM           = Data.Vector.filterM           #-}
-{-# COMPILE GHC uniq              = Data.Vector.uniq              #-}
-{-# COMPILE GHC mapMaybe          = Data.Vector.mapMaybe          #-}
-{-# COMPILE GHC imapMaybe         = Data.Vector.imapMaybe         #-}
-{-# COMPILE GHC mapMaybeM         = Data.Vector.mapMaybeM         #-}
-{-# COMPILE GHC imapMaybeM        = Data.Vector.imapMaybeM        #-}
-{-# COMPILE GHC catMaybes         = Data.Vector.catMaybes         #-}
-{-# COMPILE GHC takeWhile         = Data.Vector.takeWhile         #-}
-{-# COMPILE GHC dropWhile         = Data.Vector.dropWhile         #-}
-{-# COMPILE GHC partition         = Data.Vector.partition         #-}
-{-# COMPILE GHC unstablePartition = Data.Vector.unstablePartition #-}
-{-# COMPILE GHC partitionWith     = Data.Vector.partitionWith     #-}
-{-# COMPILE GHC span              = Data.Vector.span              #-}
-{-# COMPILE GHC break             = Data.Vector.break             #-}
-{-# COMPILE GHC elem              = Data.Vector.elem              #-}
-{-# COMPILE GHC notElem           = Data.Vector.notElem           #-}
-{-# COMPILE GHC find              = Data.Vector.find              #-}
-{-# COMPILE GHC findIndex         = Data.Vector.findIndex         #-}
-{-# COMPILE GHC findIndices       = Data.Vector.findIndices       #-}
-{-# COMPILE GHC elemIndex         = Data.Vector.elemIndex         #-}
-{-# COMPILE GHC elemIndices       = Data.Vector.elemIndices       #-}
-{-# COMPILE GHC foldl             = Data.Vector.foldl             #-}
-{-# COMPILE GHC foldl1            = Data.Vector.foldl1            #-}
-{-# COMPILE GHC foldl'            = Data.Vector.foldl'            #-}
-{-# COMPILE GHC foldl1'           = Data.Vector.foldl1'           #-}
-{-# COMPILE GHC foldr             = Data.Vector.foldr             #-}
-{-# COMPILE GHC foldr1            = Data.Vector.foldr1            #-}
-{-# COMPILE GHC foldr'            = Data.Vector.foldr'            #-}
-{-# COMPILE GHC foldr1'           = Data.Vector.foldr1'           #-}
-{-# COMPILE GHC ifoldl            = Data.Vector.ifoldl            #-}
-{-# COMPILE GHC ifoldl'           = Data.Vector.ifoldl'           #-}
-{-# COMPILE GHC ifoldr            = Data.Vector.ifoldr            #-}
-{-# COMPILE GHC ifoldr'           = Data.Vector.ifoldr'           #-}
-{-# COMPILE GHC foldMap           = Data.Vector.foldMap           #-}
-{-# COMPILE GHC foldMap'          = Data.Vector.foldMap'          #-}
-{-# COMPILE GHC all               = Data.Vector.all               #-}
-{-# COMPILE GHC any               = Data.Vector.any               #-}
-{-# COMPILE GHC and               = Data.Vector.and               #-}
-{-# COMPILE GHC or                = Data.Vector.or                #-}
-{-# COMPILE GHC sum               = Data.Vector.sum               #-}
-{-# COMPILE GHC product           = Data.Vector.product           #-}
-{-# COMPILE GHC maximum           = Data.Vector.maximum           #-}
-{-# COMPILE GHC maximumBy         = Data.Vector.maximumBy         #-}
-{-# COMPILE GHC minimum           = Data.Vector.minimum           #-}
-{-# COMPILE GHC minimumBy         = Data.Vector.minimumBy         #-}
-{-# COMPILE GHC minIndex          = Data.Vector.minIndex          #-}
-{-# COMPILE GHC minIndexBy        = Data.Vector.minIndexBy        #-}
-{-# COMPILE GHC maxIndex          = Data.Vector.maxIndex          #-}
-{-# COMPILE GHC maxIndexBy        = Data.Vector.maxIndexBy        #-}
-{-# COMPILE GHC foldM             = Data.Vector.foldM             #-}
-{-# COMPILE GHC ifoldM            = Data.Vector.ifoldM            #-}
-{-# COMPILE GHC foldM'            = Data.Vector.foldM'            #-}
-{-# COMPILE GHC ifoldM'           = Data.Vector.ifoldM'           #-}
-{-# COMPILE GHC fold1M            = Data.Vector.fold1M            #-}
-{-# COMPILE GHC fold1M'           = Data.Vector.fold1M'           #-}
-{-# COMPILE GHC foldM-            = Data.Vector.foldM_            #-}
-{-# COMPILE GHC ifoldM-           = Data.Vector.ifoldM_           #-}
-{-# COMPILE GHC foldM'-           = Data.Vector.foldM'_           #-}
-{-# COMPILE GHC ifoldM'-          = Data.Vector.ifoldM'_          #-}
-{-# COMPILE GHC fold1M-           = Data.Vector.fold1M_           #-}
-{-# COMPILE GHC fold1M'-          = Data.Vector.fold1M'_          #-}
-{-# COMPILE GHC sequence          = Data.Vector.sequence          #-}
-{-# COMPILE GHC sequence-         = Data.Vector.sequence_         #-}
-{-# COMPILE GHC prescanl          = Data.Vector.prescanl          #-}
-{-# COMPILE GHC prescanl'         = Data.Vector.prescanl'         #-}
-{-# COMPILE GHC postscanl         = Data.Vector.postscanl         #-}
-{-# COMPILE GHC postscanl'        = Data.Vector.postscanl'        #-}
-{-# COMPILE GHC scanl             = Data.Vector.scanl             #-}
-{-# COMPILE GHC scanl'            = Data.Vector.scanl'            #-}
-{-# COMPILE GHC scanl1            = Data.Vector.scanl1            #-}
-{-# COMPILE GHC scanl1'           = Data.Vector.scanl1'           #-}
-{-# COMPILE GHC iscanl            = Data.Vector.iscanl            #-}
-{-# COMPILE GHC iscanl'           = Data.Vector.iscanl'           #-}
-{-# COMPILE GHC prescanr          = Data.Vector.prescanr          #-}
-{-# COMPILE GHC prescanr'         = Data.Vector.prescanr'         #-}
-{-# COMPILE GHC postscanr         = Data.Vector.postscanr         #-}
-{-# COMPILE GHC postscanr'        = Data.Vector.postscanr'        #-}
-{-# COMPILE GHC scanr             = Data.Vector.scanr             #-}
-{-# COMPILE GHC scanr'            = Data.Vector.scanr'            #-}
-{-# COMPILE GHC scanr1            = Data.Vector.scanr1            #-}
-{-# COMPILE GHC scanr1'           = Data.Vector.scanr1'           #-}
-{-# COMPILE GHC iscanr            = Data.Vector.iscanr            #-}
-{-# COMPILE GHC iscanr'           = Data.Vector.iscanr'           #-}
-{-# COMPILE GHC eqBy              = Data.Vector.eqBy              #-}
-{-# COMPILE GHC cmpBy             = Data.Vector.cmpBy             #-}
-{-# COMPILE GHC toList            = Data.Vector.toList            #-}
-{-# COMPILE GHC fromList          = Data.Vector.fromList          #-}
-{-# COMPILE GHC fromListN         = Data.Vector.fromListN         #-}
-{-# COMPILE GHC freeze            = Data.Vector.freeze            #-}
-{-# COMPILE GHC thaw              = Data.Vector.thaw              #-}
-{-# COMPILE GHC copy              = Data.Vector.copy              #-}
-{-# COMPILE GHC unsafeFreeze      = Data.Vector.unsafeFreeze      #-}
-{-# COMPILE GHC unsafeThaw        = Data.Vector.unsafeThaw        #-}
-{-# COMPILE GHC unsafeCopy        = Data.Vector.unsafeCopy        #-}
+{-# COMPILE GHC length            = \ aℓ a                          ->  Data.Vector.length            #-}
+{-# COMPILE GHC null              = \ aℓ a                          ->  Data.Vector.null              #-}
+{-# COMPILE GHC _!_               = \ aℓ a                          -> (Data.Vector.!)                #-}
+{-# COMPILE GHC _!?_              = \ aℓ a                          -> (Data.Vector.!?)               #-}
+{-# COMPILE GHC head              = \ aℓ a                          ->  Data.Vector.head              #-}
+{-# COMPILE GHC last              = \ aℓ a                          ->  Data.Vector.last              #-}
+{-# COMPILE GHC unsafeIndex       = \ aℓ a                          ->  Data.Vector.unsafeIndex       #-}
+{-# COMPILE GHC unsafeHead        = \ aℓ a                          ->  Data.Vector.unsafeHead        #-}
+{-# COMPILE GHC unsafeLast        = \ aℓ a                          ->  Data.Vector.unsafeLast        #-}
+{-# COMPILE GHC indexM            = \ mℓ m a AgdaMonad              ->  Data.Vector.indexM            #-}
+{-# COMPILE GHC headM             = \ mℓ m a AgdaMonad              ->  Data.Vector.headM             #-}
+{-# COMPILE GHC lastM             = \ mℓ m a AgdaMonad              ->  Data.Vector.lastM             #-}
+{-# COMPILE GHC unsafeIndexM      = \ mℓ m a AgdaMonad              ->  Data.Vector.unsafeIndexM      #-}
+{-# COMPILE GHC unsafeHeadM       = \ mℓ m a AgdaMonad              ->  Data.Vector.unsafeHeadM       #-}
+{-# COMPILE GHC unsafeLastM       = \ mℓ m a AgdaMonad              ->  Data.Vector.unsafeLastM       #-}
+{-# COMPILE GHC slice             = \ aℓ a                          ->  Data.Vector.slice             #-}
+{-# COMPILE GHC init              = \ aℓ a                          ->  Data.Vector.init              #-}
+{-# COMPILE GHC tail              = \ aℓ a                          ->  Data.Vector.tail              #-}
+{-# COMPILE GHC take              = \ aℓ a                          ->  Data.Vector.take              #-}
+{-# COMPILE GHC drop              = \ aℓ a                          ->  Data.Vector.drop              #-}
+{-# COMPILE GHC splitAt           = \ aℓ a                          ->  Data.Vector.splitAt           #-}
+{-# COMPILE GHC uncons            = \ aℓ a                          ->  Data.Vector.uncons            #-}
+{-# COMPILE GHC unsnoc            = \ aℓ a                          ->  Data.Vector.unsnoc            #-}
+{-# COMPILE GHC unsafeSlice       = \ aℓ a                          ->  Data.Vector.unsafeSlice       #-}
+{-# COMPILE GHC unsafeInit        = \ aℓ a                          ->  Data.Vector.unsafeInit        #-}
+{-# COMPILE GHC unsafeTail        = \ aℓ a                          ->  Data.Vector.unsafeTail        #-}
+{-# COMPILE GHC unsafeTake        = \ aℓ a                          ->  Data.Vector.unsafeTake        #-}
+{-# COMPILE GHC unsafeDrop        = \ aℓ a                          ->  Data.Vector.unsafeDrop        #-}
+{-# COMPILE GHC empty             = \ aℓ a                          ->  Data.Vector.empty             #-}
+{-# COMPILE GHC singleton         = \ aℓ a                          ->  Data.Vector.singleton         #-}
+{-# COMPILE GHC replicate         = \ aℓ a                          ->  Data.Vector.replicate         #-}
+{-# COMPILE GHC generate          = \ aℓ a                          ->  Data.Vector.generate          #-}
+{-# COMPILE GHC iterateN          = \ aℓ a                          ->  Data.Vector.iterateN          #-}
+{-# COMPILE GHC replicateM        = \ mℓ m a AgdaMonad              ->  Data.Vector.replicateM        #-}
+{-# COMPILE GHC generateM         = \ mℓ m a AgdaMonad              ->  Data.Vector.generateM         #-}
+{-# COMPILE GHC iterateNM         = \ mℓ m a AgdaMonad              ->  Data.Vector.iterateNM         #-}
+{-# COMPILE GHC create            = \ aℓ a f                        ->  Data.Vector.create (f ())     #-}
+{-# COMPILE GHC createT           = \ mℓ m a AgdaTraversable f      ->  Data.Vector.createT (f ())    #-}
+{-# COMPILE GHC unfoldr           = \ aℓ a bℓ b                     ->  Data.Vector.unfoldr           #-}
+{-# COMPILE GHC unfoldrN          = \ aℓ a bℓ b                     ->  Data.Vector.unfoldrN          #-}
+{-# COMPILE GHC unfoldrExactN     = \ aℓ a bℓ b                     ->  Data.Vector.unfoldrExactN     #-}
+{-# COMPILE GHC unfoldrM          = \ aℓ m a b AgdaMonad            ->  Data.Vector.unfoldrM          #-}
+{-# COMPILE GHC unfoldrNM         = \ aℓ m a b AgdaMonad            ->  Data.Vector.unfoldrNM         #-}
+{-# COMPILE GHC unfoldrExactNM    = \ aℓ m a b AgdaMonad            ->  Data.Vector.unfoldrExactNM    #-}
+{-# COMPILE GHC constructN        = \ aℓ a                          ->  Data.Vector.constructN        #-}
+{-# COMPILE GHC constructrN       = \ aℓ a                          ->  Data.Vector.constructrN       #-}
+{-# COMPILE GHC enumFromN         = \ aℓ a AgdaNum                  ->  Data.Vector.enumFromN         #-}
+{-# COMPILE GHC enumFromStepN     = \ aℓ a AgdaNum                  ->  Data.Vector.enumFromStepN     #-}
+{-# COMPILE GHC enumFromTo        = \ aℓ a AgdaEnum                 ->  Data.Vector.enumFromTo        #-}
+{-# COMPILE GHC enumFromThenTo    = \ aℓ a AgdaEnum                 ->  Data.Vector.enumFromThenTo    #-}
+{-# COMPILE GHC cons              = \ aℓ a                          ->  Data.Vector.cons              #-}
+{-# COMPILE GHC snoc              = \ aℓ a                          ->  Data.Vector.snoc              #-}
+{-# COMPILE GHC _++_              = \ aℓ a                          -> (Data.Vector.++)               #-}
+{-# COMPILE GHC concat            = \ aℓ a                          ->  Data.Vector.concat            #-}
+{-# COMPILE GHC force             = \ aℓ a                          ->  Data.Vector.force             #-}
+{-# COMPILE GHC _//_              = \ aℓ a                          -> (Data.Vector.//)               #-}
+{-# COMPILE GHC update            = \ aℓ a                          ->  Data.Vector.update            #-}
+{-# COMPILE GHC update-           = \ aℓ a                          ->  Data.Vector.update_           #-}
+{-# COMPILE GHC unsafeUpd         = \ aℓ a                          ->  Data.Vector.unsafeUpd         #-}
+{-# COMPILE GHC unsafeUpdate      = \ aℓ a                          ->  Data.Vector.unsafeUpdate      #-}
+{-# COMPILE GHC unsafeUpdate-     = \ aℓ a                          ->  Data.Vector.unsafeUpdate_     #-}
+{-# COMPILE GHC accum             = \ aℓ a bℓ b                     ->  Data.Vector.accum             #-}
+{-# COMPILE GHC accumulate        = \ aℓ a bℓ b                     ->  Data.Vector.accumulate        #-}
+{-# COMPILE GHC accumulate-       = \ aℓ a bℓ b                     ->  Data.Vector.accumulate_       #-}
+{-# COMPILE GHC unsafeAccum       = \ aℓ a bℓ b                     ->  Data.Vector.unsafeAccum       #-}
+{-# COMPILE GHC unsafeAccumulate  = \ aℓ a bℓ b                     ->  Data.Vector.unsafeAccumulate  #-}
+{-# COMPILE GHC unsafeAccumulate- = \ aℓ a bℓ b                     ->  Data.Vector.unsafeAccumulate_ #-}
+{-# COMPILE GHC reverse           = \ aℓ a                          ->  Data.Vector.reverse           #-}
+{-# COMPILE GHC backpermute       = \ aℓ a                          ->  Data.Vector.backpermute       #-}
+{-# COMPILE GHC unsafeBackpermute = \ aℓ a                          ->  Data.Vector.unsafeBackpermute #-}
+{-# COMPILE GHC modify            = \ aℓ a f                        ->  Data.Vector.modify (f ())     #-}
+{-# COMPILE GHC indexed           = \ aℓ a                          ->  Data.Vector.indexed           #-}
+{-# COMPILE GHC map               = \ aℓ a bℓ b                     ->  Data.Vector.map               #-}
+{-# COMPILE GHC imap              = \ aℓ a bℓ b                     ->  Data.Vector.imap              #-}
+{-# COMPILE GHC concatMap         = \ aℓ a bℓ b                     ->  Data.Vector.concatMap         #-}
+{-# COMPILE GHC mapM              = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.mapM              #-}
+{-# COMPILE GHC imapM             = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.imapM             #-}
+{-# COMPILE GHC mapM-             = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.mapM_             #-}
+{-# COMPILE GHC imapM-            = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.imapM_            #-}
+{-# COMPILE GHC forM              = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.forM              #-}
+{-# COMPILE GHC forM-             = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.forM_             #-}
+{-# COMPILE GHC iforM             = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.iforM             #-}
+{-# COMPILE GHC iforM-            = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.iforM_            #-}
+{-# COMPILE GHC zipWith           = \ aℓ a bℓ b cℓ c                ->  Data.Vector.zipWith           #-}
+{-# COMPILE GHC zipWith3          = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.zipWith3          #-}
+{-# COMPILE GHC zipWith4          = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.zipWith4          #-}
+{-# COMPILE GHC zipWith5          = \ aℓ a bℓ b cℓ c dℓ d eℓ e fℓ f ->  Data.Vector.zipWith5          #-}
+{-# COMPILE GHC izipWith          = \ aℓ a bℓ b cℓ c                ->  Data.Vector.izipWith          #-}
+{-# COMPILE GHC izipWith3         = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.izipWith3         #-}
+{-# COMPILE GHC izipWith4         = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.izipWith4         #-}
+{-# COMPILE GHC izipWith5         = \ aℓ a bℓ b cℓ c dℓ d eℓ e fℓ f ->  Data.Vector.izipWith5         #-}
+{-# COMPILE GHC zip               = \ aℓ a bℓ b cℓ c                ->  Data.Vector.zip               #-}
+{-# COMPILE GHC zip3              = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.zip3              #-}
+{-# COMPILE GHC zip4              = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.zip4              #-}
+{-# COMPILE GHC zip5              = \ aℓ a bℓ b cℓ c dℓ d eℓ e fℓ f ->  Data.Vector.zip5              #-}
+{-# COMPILE GHC zipWithM          = \ mℓ m aℓ a bℓ b c AgdaMonad    ->  Data.Vector.zipWithM          #-}
+{-# COMPILE GHC izipWithM         = \ mℓ m aℓ a bℓ b c AgdaMonad    ->  Data.Vector.izipWithM         #-}
+{-# COMPILE GHC zipWithM-         = \ mℓ m aℓ a bℓ b c AgdaMonad    ->  Data.Vector.zipWithM_         #-}
+{-# COMPILE GHC izipWithM-        = \ mℓ m aℓ a bℓ b c AgdaMonad    ->  Data.Vector.izipWithM_        #-}
+{-# COMPILE GHC unzip             = \ aℓ a bℓ b cℓ c                ->  Data.Vector.unzip             #-}
+{-# COMPILE GHC unzip3            = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.unzip3            #-}
+{-# COMPILE GHC unzip4            = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.unzip4            #-}
+{-# COMPILE GHC unzip5            = \ aℓ a bℓ b cℓ c dℓ d eℓ e fℓ f ->  Data.Vector.unzip5            #-}
+{-# COMPILE GHC filter            = \ aℓ a                          ->  Data.Vector.filter            #-}
+{-# COMPILE GHC ifilter           = \ aℓ a                          ->  Data.Vector.ifilter           #-}
+{-# COMPILE GHC filterM           = \ mℓ m a AgdaMonad              ->  Data.Vector.filterM           #-}
+{-# COMPILE GHC uniq              = \ aℓ a AgdaEq                   ->  Data.Vector.uniq              #-}
+{-# COMPILE GHC mapMaybe          = \ aℓ a bℓ b                     ->  Data.Vector.mapMaybe          #-}
+{-# COMPILE GHC imapMaybe         = \ aℓ a bℓ b                     ->  Data.Vector.imapMaybe         #-}
+{-# COMPILE GHC mapMaybeM         = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.mapMaybeM         #-}
+{-# COMPILE GHC imapMaybeM        = \ mℓ m aℓ a b AgdaMonad         ->  Data.Vector.imapMaybeM        #-}
+{-# COMPILE GHC catMaybes         = \ aℓ a                          ->  Data.Vector.catMaybes         #-}
+{-# COMPILE GHC takeWhile         = \ aℓ a                          ->  Data.Vector.takeWhile         #-}
+{-# COMPILE GHC dropWhile         = \ aℓ a                          ->  Data.Vector.dropWhile         #-}
+{-# COMPILE GHC partition         = \ aℓ a                          ->  Data.Vector.partition         #-}
+{-# COMPILE GHC unstablePartition = \ aℓ a                          ->  Data.Vector.unstablePartition #-}
+{-# COMPILE GHC partitionWith     = \ aℓ a bℓ b cℓ c                ->  Data.Vector.partitionWith     #-}
+{-# COMPILE GHC span              = \ aℓ a                          ->  Data.Vector.span              #-}
+{-# COMPILE GHC break             = \ aℓ a                          ->  Data.Vector.break             #-}
+{-# COMPILE GHC elem              = \ aℓ a AgdaEq                   ->  Data.Vector.elem              #-}
+{-# COMPILE GHC notElem           = \ aℓ a AgdaEq                   ->  Data.Vector.notElem           #-}
+{-# COMPILE GHC find              = \ aℓ a                          ->  Data.Vector.find              #-}
+{-# COMPILE GHC findIndex         = \ aℓ a                          ->  Data.Vector.findIndex         #-}
+{-# COMPILE GHC findIndices       = \ aℓ a                          ->  Data.Vector.findIndices       #-}
+{-# COMPILE GHC elemIndex         = \ aℓ a AgdaEq                   ->  Data.Vector.elemIndex         #-}
+{-# COMPILE GHC elemIndices       = \ aℓ a AgdaEq                   ->  Data.Vector.elemIndices       #-}
+{-# COMPILE GHC foldl             = \ aℓ a bℓ b                     ->  Data.Vector.foldl             #-}
+{-# COMPILE GHC foldl1            = \ aℓ a                          ->  Data.Vector.foldl1            #-}
+{-# COMPILE GHC foldl'            = \ aℓ a bℓ b                     ->  Data.Vector.foldl'            #-}
+{-# COMPILE GHC foldl1'           = \ aℓ a                          ->  Data.Vector.foldl1'           #-}
+{-# COMPILE GHC foldr             = \ aℓ a bℓ b                     ->  Data.Vector.foldr             #-}
+{-# COMPILE GHC foldr1            = \ aℓ a                          ->  Data.Vector.foldr1            #-}
+{-# COMPILE GHC foldr'            = \ aℓ a bℓ b                     ->  Data.Vector.foldr'            #-}
+{-# COMPILE GHC foldr1'           = \ aℓ a                          ->  Data.Vector.foldr1'           #-}
+{-# COMPILE GHC ifoldl            = \ aℓ a bℓ b                     ->  Data.Vector.ifoldl            #-}
+{-# COMPILE GHC ifoldl'           = \ aℓ a bℓ b                     ->  Data.Vector.ifoldl'           #-}
+{-# COMPILE GHC ifoldr            = \ aℓ a bℓ b                     ->  Data.Vector.ifoldr            #-}
+{-# COMPILE GHC ifoldr'           = \ aℓ a bℓ b                     ->  Data.Vector.ifoldr'           #-}
+{-# COMPILE GHC foldMap           = \ aℓ a bℓ b AgdaMonoid          ->  Data.Vector.foldMap           #-}
+{-# COMPILE GHC foldMap'          = \ aℓ a bℓ b AgdaMonoid          ->  Data.Vector.foldMap'          #-}
+{-# COMPILE GHC all               = \ aℓ a                          ->  Data.Vector.all               #-}
+{-# COMPILE GHC any               = \ aℓ a                          ->  Data.Vector.any               #-}
+{-# COMPILE GHC and               =                                     Data.Vector.and               #-}
+{-# COMPILE GHC or                =                                     Data.Vector.or                #-}
+{-# COMPILE GHC sum               = \ aℓ a AgdaNum                  ->  Data.Vector.sum               #-}
+{-# COMPILE GHC product           = \ aℓ a AgdaNum                  ->  Data.Vector.product           #-}
+{-# COMPILE GHC maximum           = \ aℓ a AgdaOrd                  ->  Data.Vector.maximum           #-}
+{-# COMPILE GHC maximumBy         = \ aℓ a                          ->  Data.Vector.maximumBy         #-}
+{-# COMPILE GHC minimum           = \ aℓ a AgdaOrd                  ->  Data.Vector.minimum           #-}
+{-# COMPILE GHC minimumBy         = \ aℓ a                          ->  Data.Vector.minimumBy         #-}
+{-# COMPILE GHC minIndex          = \ aℓ a AgdaOrd                  ->  Data.Vector.minIndex          #-}
+{-# COMPILE GHC minIndexBy        = \ aℓ a                          ->  Data.Vector.minIndexBy        #-}
+{-# COMPILE GHC maxIndex          = \ aℓ a AgdaOrd                  ->  Data.Vector.maxIndex          #-}
+{-# COMPILE GHC maxIndexBy        = \ aℓ a                          ->  Data.Vector.maxIndexBy        #-}
+{-# COMPILE GHC foldM             = \ mℓ m a bℓ b AgdaMonad         ->  Data.Vector.foldM             #-}
+{-# COMPILE GHC ifoldM            = \ mℓ m a bℓ b AgdaMonad         ->  Data.Vector.ifoldM            #-}
+{-# COMPILE GHC foldM'            = \ mℓ m a bℓ b AgdaMonad         ->  Data.Vector.foldM'            #-}
+{-# COMPILE GHC ifoldM'           = \ mℓ m a bℓ b AgdaMonad         ->  Data.Vector.ifoldM'           #-}
+{-# COMPILE GHC fold1M            = \ mℓ m a AgdaMonad              ->  Data.Vector.fold1M            #-}
+{-# COMPILE GHC fold1M'           = \ mℓ m a AgdaMonad              ->  Data.Vector.fold1M'           #-}
+{-# COMPILE GHC foldM-            = \ mℓ m a bℓ b AgdaMonad         ->  Data.Vector.foldM_            #-}
+{-# COMPILE GHC ifoldM-           = \ mℓ m a bℓ b AgdaMonad         ->  Data.Vector.ifoldM_           #-}
+{-# COMPILE GHC foldM'-           = \ mℓ m a bℓ b AgdaMonad         ->  Data.Vector.foldM'_           #-}
+{-# COMPILE GHC ifoldM'-          = \ mℓ m a bℓ b AgdaMonad         ->  Data.Vector.ifoldM'_          #-}
+{-# COMPILE GHC fold1M-           = \ mℓ m a AgdaMonad              ->  Data.Vector.fold1M_           #-}
+{-# COMPILE GHC fold1M'-          = \ mℓ m a AgdaMonad              ->  Data.Vector.fold1M'_          #-}
+{-# COMPILE GHC sequence          = \ mℓ m a AgdaMonad              ->  Data.Vector.sequence          #-}
+{-# COMPILE GHC sequence-         = \ mℓ m a AgdaMonad              ->  Data.Vector.sequence_         #-}
+{-# COMPILE GHC prescanl          = \ aℓ a bℓ b                     ->  Data.Vector.prescanl          #-}
+{-# COMPILE GHC prescanl'         = \ aℓ a bℓ b                     ->  Data.Vector.prescanl'         #-}
+{-# COMPILE GHC postscanl         = \ aℓ a bℓ b                     ->  Data.Vector.postscanl         #-}
+{-# COMPILE GHC postscanl'        = \ aℓ a bℓ b                     ->  Data.Vector.postscanl'        #-}
+{-# COMPILE GHC scanl             = \ aℓ a bℓ b                     ->  Data.Vector.scanl             #-}
+{-# COMPILE GHC scanl'            = \ aℓ a bℓ b                     ->  Data.Vector.scanl'            #-}
+{-# COMPILE GHC scanl1            = \ aℓ a                          ->  Data.Vector.scanl1            #-}
+{-# COMPILE GHC scanl1'           = \ aℓ a                          ->  Data.Vector.scanl1'           #-}
+{-# COMPILE GHC iscanl            = \ aℓ a bℓ b                     ->  Data.Vector.iscanl            #-}
+{-# COMPILE GHC iscanl'           = \ aℓ a bℓ b                     ->  Data.Vector.iscanl'           #-}
+{-# COMPILE GHC prescanr          = \ aℓ a bℓ b                     ->  Data.Vector.prescanr          #-}
+{-# COMPILE GHC prescanr'         = \ aℓ a bℓ b                     ->  Data.Vector.prescanr'         #-}
+{-# COMPILE GHC postscanr         = \ aℓ a bℓ b                     ->  Data.Vector.postscanr         #-}
+{-# COMPILE GHC postscanr'        = \ aℓ a bℓ b                     ->  Data.Vector.postscanr'        #-}
+{-# COMPILE GHC scanr             = \ aℓ a bℓ b                     ->  Data.Vector.scanr             #-}
+{-# COMPILE GHC scanr'            = \ aℓ a bℓ b                     ->  Data.Vector.scanr'            #-}
+{-# COMPILE GHC scanr1            = \ aℓ a                          ->  Data.Vector.scanr1            #-}
+{-# COMPILE GHC scanr1'           = \ aℓ a                          ->  Data.Vector.scanr1'           #-}
+{-# COMPILE GHC iscanr            = \ aℓ a bℓ b                     ->  Data.Vector.iscanr            #-}
+{-# COMPILE GHC iscanr'           = \ aℓ a bℓ b                     ->  Data.Vector.iscanr'           #-}
+{-# COMPILE GHC eqBy              = \ aℓ a bℓ b                     ->  Data.Vector.eqBy              #-}
+{-# COMPILE GHC cmpBy             = \ aℓ a bℓ b                     ->  Data.Vector.cmpBy             #-}
+{-# COMPILE GHC toList            = \ aℓ a                          ->  Data.Vector.toList            #-}
+{-# COMPILE GHC fromList          = \ aℓ a                          ->  Data.Vector.fromList          #-}
+{-# COMPILE GHC fromListN         = \ aℓ a                          ->  Data.Vector.fromListN         #-}
+{-# COMPILE GHC freeze            = \ mℓ m a AgdaPrimMonad          ->  Data.Vector.freeze            #-}
+{-# COMPILE GHC thaw              = \ mℓ m a AgdaPrimMonad          ->  Data.Vector.thaw              #-}
+{-# COMPILE GHC copy              = \ mℓ m aℓ a AgdaPrimMonad       ->  Data.Vector.copy              #-}
+{-# COMPILE GHC unsafeFreeze      = \ mℓ m a AgdaPrimMonad          ->  Data.Vector.unsafeFreeze      #-}
+{-# COMPILE GHC unsafeThaw        = \ mℓ m a AgdaPrimMonad          ->  Data.Vector.unsafeThaw        #-}
+{-# COMPILE GHC unsafeCopy        = \ mℓ m aℓ a AgdaPrimMonad       ->  Data.Vector.unsafeCopy        #-}
