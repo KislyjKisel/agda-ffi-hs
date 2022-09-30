@@ -13,6 +13,7 @@
 
 ### Substantial raw bindings to
 * `base-4.17.0.0` (no GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*)
+* `JuicyPixels-3.3.8` (no main, Gif, Tiff, Tga, Bmp, Jpg, HDR, internal)
 * `scientific-0.3.7.0` (no Text/ByteString builders)
 * `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Hint, SDL.Internal.\*, SDL.Raw.\*)
 
@@ -23,7 +24,6 @@
 * `primitive`
 * `text-2.0.1` (only Data.Text)
 * `vector-0.12.3.1` (only storable)
-* `JuicyPixels`
 
 ### Planned bindings to
 * `containers`
@@ -45,6 +45,7 @@ Temporary fix - `allow-newer` in `cabal.project`.
 * Preprocessor (like hs CPP ext) is required for correct handling of some library flags, platform dependent modules etc.
 * Anything involving kinds other than `Type` is unsupported.
 * Glue code for stdlib (and mb smth else) is planned.
+* Not sure about handling type families.
 
 
 ## Structure
