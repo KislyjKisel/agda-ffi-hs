@@ -7,13 +7,13 @@
 * `array-0.5.4.0`
 * `dear-imgui-2.1.1` (no GLFW, partial Vulkan)
 * `deepseq-1.4.8.0`
+* `JuicyPixels-3.3.8` (no internals)
 * `StateVar-1.2.2`
 * `stm-2.5.1.0`
 * `unliftio-core-2.0.1` (no `UnliftIO` type)
 
 ### Substantial raw bindings to
 * `base-4.17.0.0` (no GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*)
-* `JuicyPixels-3.3.8` (no main, Gif, Tiff, Tga, Bmp, Jpg, HDR, internal)
 * `scientific-0.3.7.0` (no Text/ByteString builders)
 * `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Hint, SDL.Internal.\*, SDL.Raw.\*)
 
