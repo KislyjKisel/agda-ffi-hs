@@ -78,9 +78,9 @@ data PixelYA8 : Set where
 {-# COMPILE GHC PixelYA8 = data Codec.Picture.Types.PixelYA8 (Codec.Picture.Types.PixelYA8) #-}
 
 postulate
-    Eq[PixelYA8]   : Eq PixelYA8
-    Ord[PixelYA8]  : Ord PixelYA8
-    Show[PixelYA8] : Show PixelYA8
+    Eq[PixelYA8]    : Eq PixelYA8
+    Ord[PixelYA8]   : Ord PixelYA8
+    Show[PixelYA8]  : Show PixelYA8
     Pixel[PixelYA8] : Pixel PixelYA8
     .PixelBaseComponent[PixelYA8] : PixelBaseComponent PixelYA8 ≡ Word8
 
@@ -98,10 +98,13 @@ postulate
     Eq[PixelYA16]   : Eq PixelYA16
     Ord[PixelYA16]  : Ord PixelYA16
     Show[PixelYA16] : Show PixelYA16
+    Pixel[PixelYA16] : Pixel PixelYA16
+    .PixelBaseComponent[PixelYA16] : PixelBaseComponent PixelYA16 ≡ Word16
 
 {-# COMPILE GHC Eq[PixelYA16]   = AgdaEq   #-}
 {-# COMPILE GHC Ord[PixelYA16]  = AgdaOrd  #-}
 {-# COMPILE GHC Show[PixelYA16] = AgdaShow #-}
+{-# COMPILE GHC Pixel[PixelYA16] = AgdaPixel #-}
 
 data PixelRGB8 : Set where
     mkPixelRGB8 : Pixel8 → Pixel8 → Pixel8 → PixelRGB8
@@ -109,13 +112,16 @@ data PixelRGB8 : Set where
 {-# COMPILE GHC PixelRGB8 = data Codec.Picture.Types.PixelRGB8 (Codec.Picture.Types.PixelRGB8) #-}
 
 postulate
-    Eq[PixelRGB8]   : Eq PixelRGB8
-    Ord[PixelRGB8]  : Ord PixelRGB8
-    Show[PixelRGB8] : Show PixelRGB8
+    Eq[PixelRGB8]    : Eq PixelRGB8
+    Ord[PixelRGB8]   : Ord PixelRGB8
+    Show[PixelRGB8]  : Show PixelRGB8
+    Pixel[PixelRGB8] : Pixel PixelRGB8
+    .PixelBaseComponent[PixelRGB8] : PixelBaseComponent PixelRGB8 ≡ Word8
 
-{-# COMPILE GHC Eq[PixelRGB8]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelRGB8]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelRGB8] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelRGB8]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelRGB8]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelRGB8]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelRGB8] = AgdaPixel #-}
 
 data PixelRGB16 : Set where
     mkPixelRGB16 : Pixel16 → Pixel16 → Pixel16 → PixelRGB16
@@ -123,13 +129,16 @@ data PixelRGB16 : Set where
 {-# COMPILE GHC PixelRGB16 = data Codec.Picture.Types.PixelRGB16 (Codec.Picture.Types.PixelRGB16) #-}
 
 postulate
-    Eq[PixelRGB16]   : Eq PixelRGB16
-    Ord[PixelRGB16]  : Ord PixelRGB16
-    Show[PixelRGB16] : Show PixelRGB16
+    Eq[PixelRGB16]    : Eq PixelRGB16
+    Ord[PixelRGB16]   : Ord PixelRGB16
+    Show[PixelRGB16]  : Show PixelRGB16
+    Pixel[PixelRGB16] : Pixel PixelRGB16
+    .PixelBaseComponent[PixelRGB16] : PixelBaseComponent PixelRGB16 ≡ Word16
 
-{-# COMPILE GHC Eq[PixelRGB16]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelRGB16]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelRGB16] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelRGB16]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelRGB16]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelRGB16]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelRGB16] = AgdaPixel #-}
 
 data PixelRGBF : Set where
     mkPixelRGBF : PixelF → PixelF → PixelF → PixelRGBF
@@ -137,13 +146,16 @@ data PixelRGBF : Set where
 {-# COMPILE GHC PixelRGBF = data Codec.Picture.Types.PixelRGBF (Codec.Picture.Types.PixelRGBF) #-}
 
 postulate
-    Eq[PixelRGBF]   : Eq PixelRGBF
-    Ord[PixelRGBF]  : Ord PixelRGBF
-    Show[PixelRGBF] : Show PixelRGBF
+    Eq[PixelRGBF]    : Eq PixelRGBF
+    Ord[PixelRGBF]   : Ord PixelRGBF
+    Show[PixelRGBF]  : Show PixelRGBF
+    Pixel[PixelRGBF] : Pixel PixelRGBF
+    .PixelBaseComponent[PixelRGBF] : PixelBaseComponent PixelRGBF ≡ PixelF
 
-{-# COMPILE GHC Eq[PixelRGBF]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelRGBF]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelRGBF] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelRGBF]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelRGBF]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelRGBF]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelRGBF] = AgdaPixel #-}
 
 data PixelRGBA8 : Set where
     mkPixelRGBA8 : Pixel8 → Pixel8 → Pixel8 → Pixel8 → PixelRGBA8
@@ -151,13 +163,16 @@ data PixelRGBA8 : Set where
 {-# COMPILE GHC PixelRGBA8 = data Codec.Picture.Types.PixelRGBA8 (Codec.Picture.Types.PixelRGBA8) #-}
 
 postulate
-    Eq[PixelRGBA8]   : Eq PixelRGBA8
-    Ord[PixelRGBA8]  : Ord PixelRGBA8
-    Show[PixelRGBA8] : Show PixelRGBA8
+    Eq[PixelRGBA8]    : Eq PixelRGBA8
+    Ord[PixelRGBA8]   : Ord PixelRGBA8
+    Show[PixelRGBA8]  : Show PixelRGBA8
+    Pixel[PixelRGBA8] : Pixel PixelRGBA8
+    .PixelBaseComponent[PixelRGBA8] : PixelBaseComponent PixelRGBA8 ≡ Word8
 
-{-# COMPILE GHC Eq[PixelRGBA8]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelRGBA8]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelRGBA8] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelRGBA8]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelRGBA8]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelRGBA8]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelRGBA8] = AgdaPixel #-}
 
 data PixelRGBA16 : Set where
     mkPixelRGBA16 : Pixel16 → Pixel16 → Pixel16 → Pixel16 → PixelRGBA16
@@ -165,13 +180,16 @@ data PixelRGBA16 : Set where
 {-# COMPILE GHC PixelRGBA16 = data Codec.Picture.Types.PixelRGBA16 (Codec.Picture.Types.PixelRGBA16) #-}
 
 postulate
-    Eq[PixelRGBA16]   : Eq PixelRGBA16
-    Ord[PixelRGBA16]  : Ord PixelRGBA16
-    Show[PixelRGBA16] : Show PixelRGBA16
+    Eq[PixelRGBA16]    : Eq PixelRGBA16
+    Ord[PixelRGBA16]   : Ord PixelRGBA16
+    Show[PixelRGBA16]  : Show PixelRGBA16
+    Pixel[PixelRGBA16] : Pixel PixelRGBA16
+    .PixelBaseComponent[PixelRGBA16] : PixelBaseComponent PixelRGBA16 ≡ Word16
 
-{-# COMPILE GHC Eq[PixelRGBA16]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelRGBA16]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelRGBA16] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelRGBA16]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelRGBA16]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelRGBA16]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelRGBA16] = AgdaPixel #-}
 
 data PixelCMYK8 : Set where
     mkPixelCMYK8 : Pixel8 → Pixel8 → Pixel8 → Pixel8 → PixelCMYK8
@@ -179,13 +197,16 @@ data PixelCMYK8 : Set where
 {-# COMPILE GHC PixelCMYK8 = data Codec.Picture.Types.PixelCMYK8 (Codec.Picture.Types.PixelCMYK8) #-}
 
 postulate
-    Eq[PixelCMYK8]   : Eq PixelCMYK8
-    Ord[PixelCMYK8]  : Ord PixelCMYK8
-    Show[PixelCMYK8] : Show PixelCMYK8
+    Eq[PixelCMYK8]    : Eq PixelCMYK8
+    Ord[PixelCMYK8]   : Ord PixelCMYK8
+    Show[PixelCMYK8]  : Show PixelCMYK8
+    Pixel[PixelCMYK8] : Pixel PixelCMYK8
+    .PixelBaseComponent[PixelCMYK8] : PixelBaseComponent PixelCMYK8 ≡ Word8
 
-{-# COMPILE GHC Eq[PixelCMYK8]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelCMYK8]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelCMYK8] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelCMYK8]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelCMYK8]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelCMYK8]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelCMYK8] = AgdaPixel #-}
 
 data PixelCMYK16 : Set where
     mkPixelCMYK16 : Pixel16 → Pixel16 → Pixel16 → Pixel16 → PixelCMYK16
@@ -193,13 +214,16 @@ data PixelCMYK16 : Set where
 {-# COMPILE GHC PixelCMYK16 = data Codec.Picture.Types.PixelCMYK16 (Codec.Picture.Types.PixelCMYK16) #-}
 
 postulate
-    Eq[PixelCMYK16]   : Eq PixelCMYK16
-    Ord[PixelCMYK16]  : Ord PixelCMYK16
-    Show[PixelCMYK16] : Show PixelCMYK16
+    Eq[PixelCMYK16]    : Eq PixelCMYK16
+    Ord[PixelCMYK16]   : Ord PixelCMYK16
+    Show[PixelCMYK16]  : Show PixelCMYK16
+    Pixel[PixelCMYK16] : Pixel PixelCMYK16
+    .PixelBaseComponent[PixelCMYK16] : PixelBaseComponent PixelCMYK16 ≡ Word16
 
-{-# COMPILE GHC Eq[PixelCMYK16]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelCMYK16]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelCMYK16] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelCMYK16]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelCMYK16]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelCMYK16]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelCMYK16] = AgdaPixel #-}
 
 data PixelYCbCr8 : Set where
     mkPixelYCbCr8 : Pixel8 → Pixel8 → Pixel8 → PixelYCbCr8
@@ -207,13 +231,16 @@ data PixelYCbCr8 : Set where
 {-# COMPILE GHC PixelYCbCr8 = data Codec.Picture.Types.PixelYCbCr8 (Codec.Picture.Types.PixelYCbCr8) #-}
 
 postulate
-    Eq[PixelYCbCr8]   : Eq PixelYCbCr8
-    Ord[PixelYCbCr8]  : Ord PixelYCbCr8
-    Show[PixelYCbCr8] : Show PixelYCbCr8
+    Eq[PixelYCbCr8]    : Eq PixelYCbCr8
+    Ord[PixelYCbCr8]   : Ord PixelYCbCr8
+    Show[PixelYCbCr8]  : Show PixelYCbCr8
+    Pixel[PixelYCbCr8] : Pixel PixelYCbCr8
+    .PixelBaseComponent[PixelYCbCr8] : PixelBaseComponent PixelYCbCr8 ≡ Word8
 
-{-# COMPILE GHC Eq[PixelYCbCr8]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelYCbCr8]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelYCbCr8] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelYCbCr8]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelYCbCr8]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelYCbCr8]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelYCbCr8] = AgdaPixel #-}
 
 data PixelYCbCrK8 : Set where
     mkPixelYCbCrK8 : Pixel8 → Pixel8 → Pixel8 → Pixel8 → PixelYCbCrK8
@@ -221,13 +248,16 @@ data PixelYCbCrK8 : Set where
 {-# COMPILE GHC PixelYCbCrK8 = data Codec.Picture.Types.PixelYCbCrK8 (Codec.Picture.Types.PixelYCbCrK8) #-}
 
 postulate
-    Eq[PixelYCbCrK8]   : Eq PixelYCbCrK8
-    Ord[PixelYCbCrK8]  : Ord PixelYCbCrK8
-    Show[PixelYCbCrK8] : Show PixelYCbCrK8
+    Eq[PixelYCbCrK8]    : Eq PixelYCbCrK8
+    Ord[PixelYCbCrK8]   : Ord PixelYCbCrK8
+    Show[PixelYCbCrK8]  : Show PixelYCbCrK8
+    Pixel[PixelYCbCrK8] : Pixel PixelYCbCrK8
+    .PixelBaseComponent[PixelYCbCrK8] : PixelBaseComponent PixelYCbCrK8 ≡ Word8
 
-{-# COMPILE GHC Eq[PixelYCbCrK8]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[PixelYCbCrK8]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[PixelYCbCrK8] = AgdaShow #-}
+{-# COMPILE GHC Eq[PixelYCbCrK8]    = AgdaEq    #-}
+{-# COMPILE GHC Ord[PixelYCbCrK8]   = AgdaOrd   #-}
+{-# COMPILE GHC Show[PixelYCbCrK8]  = AgdaShow  #-}
+{-# COMPILE GHC Pixel[PixelYCbCrK8] = AgdaPixel #-}
 
 -- Type classes
 
