@@ -23,13 +23,13 @@
 * `linear`
 * `primitive`
 * `text-2.0.1` (only Data.Text)
+* `transformers-0.6.0.4` (core, only IdentityT)
 * `vector-0.12.3.1` (only storable)
 
 ### Planned bindings to
 * `containers`
 * `aeson`
 * `binary`
-* `transformers`
 * ...
 
 
