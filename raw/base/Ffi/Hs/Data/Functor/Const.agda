@@ -17,7 +17,7 @@ private
         aℓ bℓ : Level
         A B : Set aℓ
 
-record Const (A : Set aℓ) (B : Set bℓ) : Set aℓ where
+record Const (A : Set aℓ) (B : Set (aℓ ⊔ bℓ)) : Set (aℓ ⊔ bℓ) where
     constructor mkConst
     field
         getConst : A
@@ -26,22 +26,22 @@ record Const (A : Set aℓ) (B : Set bℓ) : Set aℓ where
 {-# COMPILE GHC Const = data(2) AgdaConst (Data.Functor.Const.Const) #-}
 
 postulate
-    Bifoldable[Const]       : Bifoldable {aℓ} {bℓ} Const
-    Bifunctor[Const]        : Bifunctor {aℓ} {bℓ} Const
-    Bitraversable[Const]    : Bitraversable {aℓ} {bℓ} Const
-    Eq2[Const]              : Eq2 {aℓ} {bℓ} Const
-    Ord2[Const]             : Ord2 {aℓ} {bℓ} Const
-    Read2[Const]            : Read2 {aℓ} {bℓ} Const
-    Show2[Const]            : Show2 {aℓ} {bℓ} Const
-    Foldable[Const[A]]      : Foldable {bℓ} (Const A)
-    Eq1[Const[A]]           : ⦃ Eq A ⦄ → Eq1 {bℓ} (Const A)
-    Ord1[Const[A]]          : ⦃ Ord A ⦄ → Ord1 {bℓ} (Const A)
-    Read1[Const[A]]         : ⦃ Read A ⦄ → Read1 {bℓ} (Const A)
-    Show1[Const[A]]         : ⦃ Show A ⦄ → Show1 {bℓ} (Const A)
-    Contravariant[Const[A]] : Contravariant (Const A)
-    Traversable[Const[A]]   : Traversable {bℓ} (Const A)
-    Applicative[Const[A]]   : ⦃ Monoid A ⦄ → Applicative (Const A)
-    Functor[Const[A]]       : Functor (Const A)
+    Bifoldable[Const]       : Bifoldable (Const {aℓ} {bℓ})
+    Bifunctor[Const]        : Bifunctor (Const {aℓ} {bℓ})
+    Bitraversable[Const]    : Bitraversable (Const {aℓ} {bℓ})
+    Eq2[Const]              : Eq2 (Const {aℓ} {bℓ})
+    Ord2[Const]             : Ord2 (Const {aℓ} {bℓ})
+    Read2[Const]            : Read2 (Const {aℓ} {bℓ})
+    Show2[Const]            : Show2 (Const {aℓ} {bℓ})
+    Foldable[Const[A]]      : Foldable (Const {bℓ = bℓ} A)
+    Eq1[Const[A]]           : ⦃ Eq A ⦄ → Eq1 (Const {bℓ = bℓ} A)
+    Ord1[Const[A]]          : ⦃ Ord A ⦄ → Ord1 (Const {bℓ = bℓ} A)
+    Read1[Const[A]]         : ⦃ Read A ⦄ → Read1 (Const {bℓ = bℓ} A)
+    Show1[Const[A]]         : ⦃ Show A ⦄ → Show1 (Const {bℓ = bℓ} A)
+    Contravariant[Const[A]] : Contravariant (Const {bℓ = bℓ} A)
+    Traversable[Const[A]]   : Traversable (Const {bℓ = bℓ} A)
+    Applicative[Const[A]]   : ⦃ Monoid A ⦄ → Applicative (Const {bℓ = bℓ} A)
+    Functor[Const[A]]       : Functor (Const {bℓ = bℓ} A)
     -- todo: Data instance - Typeable kind
     -- Data[Const[A,B]]        : ⦃ Data A ⦄ → ⦃ Typeable B ⦄ → Data (Const A B)
     IsString[Const[A,B]]    : ⦃ IsString A ⦄   → IsString (Const A B)
