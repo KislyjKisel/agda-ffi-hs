@@ -153,6 +153,12 @@ modify' f = get >>= λ s → primForce (f s) put
 {-# INLINE modify' #-}
 {-# COMPILE GHC modify' = \ mℓ m s AgdaMonad -> Control.Monad.Trans.State.Lazy.modify' #-}
 
+gets : ⦃ Monad M ⦄ → (S → A) → StateT S M A
+gets f = state λ s → mkTuple2 (f s) s
+
+{-# INLINE gets #-}
+{-# COMPILE GHC gets = \ mℓ m s a AgdaMonad -> Control.Monad.Trans.State.Lazy.gets #-}
+
 
 liftCallCC : CallCC M (Tuple2 A S) (Tuple2 B S) → CallCC (StateT S M) A B
 liftCallCC callCC f = mkStateT λ s →
