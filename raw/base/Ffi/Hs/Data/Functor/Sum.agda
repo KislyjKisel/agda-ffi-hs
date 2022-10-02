@@ -43,7 +43,7 @@ postulate
 
 {-# COMPILE GHC Foldable[Sum[F,G]]      = \ aℓ fℓ f gℓ g AgdaFoldable AgdaFoldable       -> AgdaFoldable      #-}
 {-# COMPILE GHC Contravariant[Sum[F,G]] = \ aℓ f g AgdaContravariant AgdaContravariant   -> AgdaContravariant #-}
-{-# COMPILE GHC Traversable[Sum[F,G]]   = \ aℓ fℓ f gℓ g AgdaTraversable AgdaTraversable -> AgdaTraversable   #-}
+{-# COMPILE GHC Traversable[Sum[F,G]]   = \ aℓ f g AgdaTraversable AgdaTraversable       -> AgdaTraversable   #-}
 {-# COMPILE GHC Functor[Sum[F,G]]       = \ aℓ f g AgdaFunctor AgdaFunctor               -> AgdaFunctor       #-}
 {-# COMPILE GHC Read[Sum[F,G,A]]        = \ aℓ fℓ f gℓ g a AgdaRead1 AgdaRead1 AgdaRead  -> AgdaRead          #-}
 {-# COMPILE GHC Show[Sum[F,G,A]]        = \ aℓ fℓ f gℓ g a AgdaShow1 AgdaShow1 AgdaShow  -> AgdaShow          #-}

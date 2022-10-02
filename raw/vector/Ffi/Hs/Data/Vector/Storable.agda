@@ -109,7 +109,7 @@ postulate
     generateM             : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → Int → (Int → M A) → M (Vector A)
     iterateNM             : ⦃ Monad M ⦄ → ⦃ Storable A ⦄ → Int → (A → M A) → A → M (Vector A)
     create                : ⦃ Storable A ⦄ → (∀{S} → ST S (MVector S A)) → Vector A
-    createT               : {F : Set aℓ → Set bℓ} → ⦃ Traversable F ⦄ → ⦃ Storable A ⦄ → (∀{S} → ST S (F (MVector S A))) → F (Vector A)
+    createT               : {F : Set aℓ → Set aℓ} → ⦃ Traversable F ⦄ → ⦃ Storable A ⦄ → (∀{S} → ST S (F (MVector S A))) → F (Vector A)
     unfoldr               : ⦃ Storable A ⦄ → (B → Maybe (Tuple2 A B)) → B → Vector A
     unfoldrN              : ⦃ Storable A ⦄ → Int → (B → Maybe (Tuple2 A B)) → B → Vector A
     unfoldrExactN         : ⦃ Storable A ⦄ → Int → (B → Tuple2 A B) → B → Vector A
@@ -307,7 +307,7 @@ postulate
 {-# COMPILE GHC generateM             = \ mℓ m a AgdaMonad AgdaStorable                                                                                                 ->  Data.Vector.Storable.generateM             #-}
 {-# COMPILE GHC iterateNM             = \ mℓ m a AgdaMonad AgdaStorable                                                                                                 ->  Data.Vector.Storable.iterateNM             #-}
 {-# COMPILE GHC create                = \ aℓ a AgdaStorable f                                                                                                           ->  Data.Vector.Storable.create (f ())         #-}
-{-# COMPILE GHC createT               = \ aℓ bℓ f a AgdaTraversable AgdaStorable g                                                                                      ->  Data.Vector.Storable.createT (g ())        #-}
+{-# COMPILE GHC createT               = \ aℓ f a AgdaTraversable AgdaStorable g                                                                                         ->  Data.Vector.Storable.createT (g ())        #-}
 {-# COMPILE GHC unfoldr               = \ aℓ a bℓ b AgdaStorable                                                                                                        ->  Data.Vector.Storable.unfoldr               #-}
 {-# COMPILE GHC unfoldrN              = \ aℓ a bℓ b AgdaStorable                                                                                                        ->  Data.Vector.Storable.unfoldrN              #-}
 {-# COMPILE GHC unfoldrExactN         = \ aℓ a bℓ b AgdaStorable                                                                                                        ->  Data.Vector.Storable.unfoldrExactN         #-}

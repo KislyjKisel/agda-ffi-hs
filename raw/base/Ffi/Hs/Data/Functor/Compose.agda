@@ -53,7 +53,7 @@ postulate
 {-# COMPILE GHC Read1[Compose[F,G]]         = \ aℓ fℓ f gℓ g AgdaRead1 AgdaRead1              -> AgdaRead1         #-}
 {-# COMPILE GHC Show1[Compose[F,G]]         = \ aℓ fℓ f gℓ g AgdaShow1 AgdaShow1              -> AgdaShow1         #-}
 {-# COMPILE GHC Contravariant[Compose[F,G]] = \ fℓ f g AgdaFunctor AgdaContravariant          -> AgdaContravariant #-}
-{-# COMPILE GHC Traversable[Compose[F,G]]   = \ aℓ fℓ f gℓ g AgdaTraversable AgdaTraversable  -> AgdaTraversable   #-}
+{-# COMPILE GHC Traversable[Compose[F,G]]   = \ fℓ f g AgdaTraversable AgdaTraversable        -> AgdaTraversable   #-}
 {-# COMPILE GHC Alternative[Compose[F,G]]   = \ fℓ f g AgdaAlternative AgdaAlternative        -> AgdaAlternative   #-}
 {-# COMPILE GHC Applicative[Compose[F,G]]   = \ fℓ f g AgdaApplicative AgdaApplicative        -> AgdaApplicative   #-}
 {-# COMPILE GHC Functor[Compose[F,G]]       = \ fℓ f g AgdaFunctor AgdaFunctor                -> AgdaFunctor       #-}

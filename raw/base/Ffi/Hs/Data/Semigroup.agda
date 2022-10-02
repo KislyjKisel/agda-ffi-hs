@@ -100,9 +100,9 @@ record Arg (A : Set aℓ) (B : Set bℓ) : Set (aℓ ⊔ bℓ) where
 postulate
     Bifoldable[Arg]     : Bifoldable {aℓ} {bℓ} Arg
     Bifunctor[Arg]      : Bifunctor {aℓ} {bℓ} Arg
-    Bitraversable[Arg]  : Bitraversable {aℓ} {bℓ} Arg
+    Bitraversable[Arg]  : Bitraversable {aℓ} Arg
     Foldable[Arg[A]]    : Foldable {bℓ} (Arg A)
-    Traversable[Arg[A]] : Traversable {bℓ} (Arg A)
+    Traversable[Arg[A]] : Traversable (Arg {aℓ} {aℓ} A)
     Functor[Arg[A]]     : Functor (Arg {aℓ} {aℓ} A)
     Data[Arg[A,B]]      : ⦃ Data A ⦄ → ⦃ Data B ⦄ → Data (Arg A B)
     Read[Arg[A,B]]      : ⦃ Read A ⦄ → ⦃ Read B ⦄ → Read (Arg A B)
@@ -114,7 +114,7 @@ postulate
 {-# COMPILE GHC Bifunctor[Arg]      = \ aℓ bℓ                       -> AgdaBifunctor     #-}
 {-# COMPILE GHC Bitraversable[Arg]  = \ aℓ bℓ                       -> AgdaBitraversable #-}
 {-# COMPILE GHC Foldable[Arg[A]]    = \ bℓ aℓ a                     -> AgdaFoldable      #-}
-{-# COMPILE GHC Traversable[Arg[A]] = \ bℓ aℓ a                     -> AgdaTraversable   #-}
+{-# COMPILE GHC Traversable[Arg[A]] = \ aℓ a                        -> AgdaTraversable   #-}
 {-# COMPILE GHC Functor[Arg[A]]     = \ aℓ a                        -> AgdaFunctor       #-}
 {-# COMPILE GHC Data[Arg[A,B]]      = \ aℓ a bℓ b AgdaData AgdaData -> AgdaData          #-}
 {-# COMPILE GHC Read[Arg[A,B]]      = \ aℓ a bℓ b AgdaRead AgdaRead -> AgdaRead          #-}

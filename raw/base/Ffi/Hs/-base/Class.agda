@@ -73,7 +73,7 @@ postulate
     Monoid    : Set aℓ → Set aℓ
 
     Foldable    : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
-    Traversable : (Set aℓ → Set bℓ) → Set (aℓ ⊔ bℓ)
+    Traversable : (Set aℓ → Set aℓ) → Set aℓ
 
     Functor       : (Set aℓ → Set aℓ) → Set aℓ
     Contravariant : (Set aℓ → Set aℓ) → Set aℓ
@@ -170,8 +170,8 @@ data AgdaMonoid aℓ a    = Data.Monoid.Monoid a       => AgdaMonoid
 {-# COMPILE GHC Monoid    = type(0) AgdaMonoid    #-}
 
 {-# FOREIGN GHC
-data AgdaFoldable aℓ bℓ f    = Data.Foldable.Foldable f       => AgdaFoldable
-data AgdaTraversable aℓ bℓ f = Data.Traversable.Traversable f => AgdaTraversable
+data AgdaFoldable aℓ bℓ f = Data.Foldable.Foldable f       => AgdaFoldable
+data AgdaTraversable aℓ f = Data.Traversable.Traversable f => AgdaTraversable
 #-}
 {-# COMPILE GHC Foldable    = type(0) AgdaFoldable    #-}
 {-# COMPILE GHC Traversable = type(0) AgdaTraversable #-}

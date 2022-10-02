@@ -99,7 +99,7 @@ postulate
 {-# COMPILE GHC _^/_     = \ fℓ f a AgdaFunctor AgdaFractional             -> (Linear.Vector.^/)     #-}
 {-# COMPILE GHC sumV     = \ aℓ bℓ f v a AgdaFoldable AgdaAdditive AgdaNum -> Linear.Vector.sumV     #-}
 {-# COMPILE GHC basis    = \ fℓ f a AgdaAdditive AgdaTraversable AgdaNum   -> Linear.Vector.basis    #-}
-{-# COMPILE GHC basisFor = \ aℓ bℓ f a b AgdaTraversable AgdaNum           -> Linear.Vector.basisFor #-}
+{-# COMPILE GHC basisFor = \ fℓ f a b AgdaTraversable AgdaNum              -> Linear.Vector.basisFor #-}
 {-# COMPILE GHC scaled   = \ fℓ f a AgdaTraversable AgdaNum                -> Linear.Vector.scaled   #-}
 {-# COMPILE GHC outer    = \ aℓ f g a AgdaFunctor AgdaFunctor AgdaNum      -> Linear.Vector.outer    #-}
 {-# COMPILE GHC unit     = \ fℓ f a AgdaAdditive AgdaNum                   -> Linear.Vector.unit     #-}

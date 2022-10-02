@@ -337,7 +337,7 @@ postulate
     NFData1[Arg[A]]        : ⦃ NFData A ⦄ → NFData1 (Arg {bℓ = bℓ} A)
     NFData1[Proxy]         : NFData1 {aℓ} Proxy
     NFData1[STRef[S]]      : ∀{S} → NFData1 {aℓ} (STRef S)
-    NFData1[Const[A]]      : ⦃ NFData A ⦄ → NFData1 (Const {bℓ = bℓ} A)
+    NFData1[Const[A]]      : ⦃ NFData A ⦄ → NFData1 (Const A)
     NFData1[FSum[F,G]]     : {F : Set aℓ → Set fℓ} → {G : Set aℓ → Set gℓ} → ⦃ NFData1 F ⦄ → ⦃ NFData1 G ⦄ → NFData1 (Fun.Sum F G)
     NFData1[FProduct[F,G]] : {F : Set aℓ → Set fℓ} → {G : Set aℓ → Set gℓ} → ⦃ NFData1 F ⦄ → ⦃ NFData1 G ⦄ → NFData1 (Fun.Product F G)
     NFData1[Compose[F,G]]  : {F : Set gℓ → Set fℓ} → {G : Set aℓ → Set gℓ} → ⦃ NFData1 F ⦄ → ⦃ NFData1 G ⦄ → NFData1 (Fun.Compose F G)
@@ -375,7 +375,7 @@ postulate
 {-# COMPILE GHC NFData1[Arg[A]]        = \ aℓ a bℓ AgdaNFData                                                 -> AgdaNFData1 #-}
 {-# COMPILE GHC NFData1[Proxy]         = \ aℓ                                                                 -> AgdaNFData1 #-}
 {-# COMPILE GHC NFData1[STRef[S]]      = \ aℓ s                                                               -> AgdaNFData1 #-}
-{-# COMPILE GHC NFData1[Const[A]]      = \ bℓ aℓ a AgdaNFData                                                 -> AgdaNFData1 #-}
+{-# COMPILE GHC NFData1[Const[A]]      = \ aℓ a AgdaNFData                                                    -> AgdaNFData1 #-}
 {-# COMPILE GHC NFData1[FSum[F,G]]     = \ aℓ fℓ gℓ f g AgdaNFData1 AgdaNFData1                               -> AgdaNFData1 #-}
 {-# COMPILE GHC NFData1[FProduct[F,G]] = \ aℓ fℓ gℓ f g AgdaNFData1 AgdaNFData1                               -> AgdaNFData1 #-}
 {-# COMPILE GHC NFData1[Compose[F,G]]  = \ aℓ fℓ gℓ f g AgdaNFData1 AgdaNFData1                               -> AgdaNFData1 #-}
@@ -395,7 +395,7 @@ postulate
     NFData2[Tuple3] : ⦃ NFData A ⦄ → NFData2 {bℓ} {cℓ} (Tuple3 A)
     NFData2[Tuple4] : ⦃ NFData A ⦄ → ⦃ NFData B ⦄ → NFData2 {cℓ} {dℓ} (Tuple4 A B)
     NFData2[Tuple5] : ⦃ NFData A ⦄ → ⦃ NFData B ⦄ → ⦃ NFData C ⦄ → NFData2 {dℓ} {eℓ} (Tuple5 A B C)
-    NFData2[Const]  : NFData2 {aℓ} {bℓ} Const
+    NFData2[Const]  : NFData2 {aℓ} Const
     NFData2[:~:]    : NFData2 {aℓ} _:~:_
     -- todo: NFData2[:~~:]   : NFData2 (λ A → _:~~:_ {K₁ = Set (lsuc aℓ)} A {K₂ = Set (lsuc aℓ)})
 
@@ -407,6 +407,6 @@ postulate
 {-# COMPILE GHC NFData2[Tuple3] = \ aℓ bℓ cℓ a AgdaNFData                                 -> AgdaNFData2 #-}
 {-# COMPILE GHC NFData2[Tuple4] = \ aℓ bℓ cℓ dℓ a b AgdaNFData AgdaNFData                 -> AgdaNFData2 #-}
 {-# COMPILE GHC NFData2[Tuple5] = \ aℓ bℓ cℓ dℓ eℓ a b c AgdaNFData AgdaNFData AgdaNFData -> AgdaNFData2 #-}
-{-# COMPILE GHC NFData2[Const]  = \ aℓ bℓ                                                 -> AgdaNFData2 #-}
+{-# COMPILE GHC NFData2[Const]  = \ aℓ                                                    -> AgdaNFData2 #-}
 {-# COMPILE GHC NFData2[:~:]    = \ aℓ                                                    -> AgdaNFData2 #-}
 -- {-# COMPILE GHC NFData2[:~~:]   = \ aℓ                                                    -> AgdaNFData2 #-}

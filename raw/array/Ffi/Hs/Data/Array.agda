@@ -63,7 +63,7 @@ postulate
     IArray[Array,E]       : IArray (Array {iℓ}) E
     Functor[Array[I]]     : Functor (Array {eℓ} {eℓ} I)
     Foldable[Array[I]]    : Foldable (Array {eℓ = eℓ} I)
-    Traversable[Array[I]] : ⦃ Ix I ⦄ → Traversable (Array {eℓ = eℓ} I)
+    Traversable[Array[I]] : {I : Set eℓ} → ⦃ Ix I ⦄ → Traversable (Array {eℓ = eℓ} I)
     Eq[Array[I,E]]        : ⦃ Ix I ⦄ → ⦃ Eq E ⦄ → Eq (Array I E)
     Ord[Array[I,E]]       : ⦃ Ix I ⦄ → ⦃ Ord E ⦄ → Ord (Array I E)
     Read[Array[I,E]]      : ⦃ Ix I ⦄ → ⦃ Read I ⦄ → ⦃ Read E ⦄ → Read (Array I E)
@@ -72,7 +72,7 @@ postulate
 {-# COMPILE GHC IArray[Array,E]       = \ iℓ eℓ e                            -> AgdaIArray      #-}
 {-# COMPILE GHC Functor[Array[I]]     = \ eℓ                                 -> AgdaFunctor     #-}
 {-# COMPILE GHC Foldable[Array[I]]    = \ eℓ iℓ i                            -> AgdaFoldable    #-}
-{-# COMPILE GHC Traversable[Array[I]] = \ iℓ i eℓ AgdaIx                     -> AgdaTraversable #-}
+{-# COMPILE GHC Traversable[Array[I]] = \ eℓ i AgdaIx                        -> AgdaTraversable #-}
 {-# COMPILE GHC Eq[Array[I,E]]        = \ iℓ i eℓ e AgdaIx AgdaEq            -> AgdaEq          #-}
 {-# COMPILE GHC Ord[Array[I,E]]       = \ iℓ i eℓ e AgdaIx AgdaOrd           -> AgdaOrd         #-}
 {-# COMPILE GHC Read[Array[I,E]]      = \ iℓ i eℓ e AgdaIx AgdaRead AgdaRead -> AgdaRead        #-}

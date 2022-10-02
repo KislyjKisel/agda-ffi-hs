@@ -57,7 +57,7 @@ postulate
 {-# COMPILE GHC Read1[Product[F,G]]         = \ aℓ fℓ f gℓ g AgdaRead1 AgdaRead1              -> AgdaRead1         #-}
 {-# COMPILE GHC Show1[Product[F,G]]         = \ aℓ fℓ f gℓ g AgdaShow1 AgdaShow1              -> AgdaShow1         #-}
 {-# COMPILE GHC Contravariant[Product[F,G]] = \ aℓ f g AgdaContravariant AgdaContravariant    -> AgdaContravariant #-}
-{-# COMPILE GHC Traversable[Product[F,G]]   = \ aℓ fℓ f gℓ g AgdaTraversable AgdaTraversable  -> AgdaTraversable   #-}
+{-# COMPILE GHC Traversable[Product[F,G]]   = \ aℓ f g AgdaTraversable AgdaTraversable        -> AgdaTraversable   #-}
 {-# COMPILE GHC Alternative[Product[F,G]]   = \ aℓ f g AgdaAlternative AgdaAlternative        -> AgdaAlternative   #-}
 {-# COMPILE GHC Applicative[Product[F,G]]   = \ aℓ f g AgdaApplicative AgdaApplicative        -> AgdaApplicative   #-}
 {-# COMPILE GHC Functor[Product[F,G]]       = \ aℓ f g AgdaFunctor AgdaFunctor                -> AgdaFunctor       #-}

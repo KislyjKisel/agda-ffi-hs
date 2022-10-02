@@ -39,7 +39,7 @@ postulate
     Ord1[Either[A]]        : ⦃ Ord A ⦄ → Ord1 (Either {bℓ = bℓ} A)
     Read1[Either[A]]       : ⦃ Read A ⦄ → Read1 (Either {bℓ = bℓ} A)
     Show1[Either[A]]       : ⦃ Show A ⦄ → Show1 (Either {bℓ = bℓ} A)
-    Traversable[Either[A]] : Traversable (Either {bℓ = bℓ} A)
+    Traversable[Either[A]] : Traversable (Either {aℓ} {aℓ} A)
     Applicative[Either[A]] : Applicative (Either {aℓ} {aℓ} A)
     Functor[Either[A]]     : Functor (Either {aℓ} {aℓ} A)
     Monad[Either[A]]       : Monad (Either {aℓ} {aℓ} A)
@@ -63,7 +63,7 @@ postulate
 {-# COMPILE GHC Ord1[Either[A]]        = \ aℓ a bℓ AgdaOrd             -> AgdaOrd1          #-}
 {-# COMPILE GHC Read1[Either[A]]       = \ aℓ a bℓ AgdaRead            -> AgdaRead1         #-}
 {-# COMPILE GHC Show1[Either[A]]       = \ aℓ a bℓ AgdaShow            -> AgdaShow1         #-}
-{-# COMPILE GHC Traversable[Either[A]] = \ bℓ aℓ a                     -> AgdaTraversable   #-}
+{-# COMPILE GHC Traversable[Either[A]] = \ aℓ a                        -> AgdaTraversable   #-}
 {-# COMPILE GHC Applicative[Either[A]] = \ aℓ a                        -> AgdaApplicative   #-}
 {-# COMPILE GHC Functor[Either[A]]     = \ aℓ a                        -> AgdaFunctor       #-}
 {-# COMPILE GHC Monad[Either[A]]       = \ aℓ a                        -> AgdaMonad         #-}
