@@ -20,6 +20,8 @@ record Identity (A : Set aℓ) : Set aℓ where
     field
         runIdentity : A
 
+open Identity public
+
 {-# FOREIGN GHC type AgdaIdentity aℓ = Data.Functor.Identity.Identity #-}
 {-# COMPILE GHC Identity = data(1) AgdaIdentity (Data.Functor.Identity.Identity) #-}
 

@@ -22,6 +22,8 @@ record Const (A : Set aℓ) (B : Set aℓ) : Set aℓ where
     field
         getConst : A
 
+open Const public
+
 {-# FOREIGN GHC type AgdaConst aℓ = Data.Functor.Const.Const #-}
 {-# COMPILE GHC Const = data(1) AgdaConst (Data.Functor.Const.Const) #-}
 
