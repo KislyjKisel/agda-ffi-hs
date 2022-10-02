@@ -20,7 +20,7 @@ private
         E : Set eℓ
 
 record Tuple2 (A : Set aℓ) (B : Set bℓ) : Set (aℓ ⊔ bℓ) where
-    constructor tuple2
+    constructor mkTuple2
     field
         fst : A
         snd : B
@@ -28,13 +28,13 @@ record Tuple2 (A : Set aℓ) (B : Set bℓ) : Set (aℓ ⊔ bℓ) where
 open Tuple2 public
 
 data Tuple3 (A : Set aℓ) (B : Set bℓ) (C : Set cℓ) : Set (aℓ ⊔ bℓ ⊔ cℓ) where
-    tuple3 : A → B → C → Tuple3 A B C
+    mkTuple3 : A → B → C → Tuple3 A B C
 
 data Tuple4 (A : Set aℓ) (B : Set bℓ) (C : Set cℓ) (D : Set dℓ) : Set (aℓ ⊔ bℓ ⊔ cℓ ⊔ dℓ) where
-    tuple4 : A → B → C → D → Tuple4 A B C D
+    mkTuple4 : A → B → C → D → Tuple4 A B C D
 
 data Tuple5 (A : Set aℓ) (B : Set bℓ) (C : Set cℓ) (D : Set dℓ) (E : Set eℓ) : Set (aℓ ⊔ bℓ ⊔ cℓ ⊔ dℓ ⊔ eℓ) where
-    tuple5 : A → B → C → D → E → Tuple5 A B C D E
+    mkTuple5 : A → B → C → D → E → Tuple5 A B C D E
 
 {-# FOREIGN GHC type AgdaTuple2 aℓ bℓ          = (,)    #-}
 {-# FOREIGN GHC type AgdaTuple3 aℓ bℓ cℓ       = (,,)   #-}
