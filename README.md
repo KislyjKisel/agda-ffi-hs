@@ -23,8 +23,8 @@
 * `linear`
 * `primitive`
 * `text-2.0.1` (only Data.Text)
-* `transformers-0.6.0.4` (core, only IdentityT)
-* `vector-0.12.3.1` (only storable)
+* `transformers-0.6.0.4` (core; only IdentityT, StateT)
+* `vector-0.12.3.1` (only storable, boxed)
 
 ### Planned bindings to
 * `containers`
@@ -45,7 +45,8 @@ Temporary fix - `allow-newer` in `cabal.project`.
 * Preprocessor (like hs CPP ext) is required for correct handling of some library flags, platform dependent modules etc.
 * Anything involving kinds other than `Type` is unsupported.
 * Glue code for stdlib (and mb smth else) is planned.
-* Not sure about handling type families.
+* Not sure about handling type families (opt: postulate as type + postulate \\== for concrete args).
+* Record fields are often not exported properly.
 
 
 ## Structure
