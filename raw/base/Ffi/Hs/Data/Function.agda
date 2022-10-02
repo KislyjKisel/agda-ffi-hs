@@ -22,31 +22,37 @@ infixr 0 _$_
 id : A → A
 id x = x
 
+{-# INLINE id #-}
 {-# COMPILE GHC id = \ aℓ a -> Data.Function.id #-}
 
 const : A → B → A
 const x _ = x
 
+{-# INLINE const #-}
 {-# COMPILE GHC const = \ aℓ a bℓ b -> Data.Function.const #-}
 
 _∘_ : (B → C) → (A → B) → A → C
 _∘_ f g x = f (g x)
 
+{-# INLINE _∘_ #-}
 {-# COMPILE GHC _∘_ = \ bℓ b cℓ c aℓ a -> (Data.Function..) #-}
 
 flip : (A → B → C) → B → A → C
 flip f x y = f y x
 
+{-# INLINE flip #-}
 {-# COMPILE GHC flip = \ aℓ a bℓ b cℓ c -> Data.Function.flip #-}
 
 _$_ : (A → B) → A → B
 _$_ f = f
 
+{-# INLINE _$_ #-}
 {-# COMPILE GHC _$_ = \ aℓ a bℓ b -> (Data.Function.$) #-}
 
 _&_ : A → (A → B) → B
 _&_ x f = f x
 
+{-# INLINE _&_ #-}
 {-# COMPILE GHC _&_ = \ aℓ a bℓ b -> (Data.Function.&) #-}
 
 {-# NON_TERMINATING #-}
@@ -58,6 +64,7 @@ fix f = f (fix f)
 on : (B → B → C) → (A → B) → A → A → C
 on f g x y = f (g x) (g y)
 
+{-# INLINE on #-}
 {-# COMPILE GHC on = \ bℓ b cℓ c aℓ a -> Data.Function.on #-}
 
 -- todo: (lambda term in compile pragma) Fn instances
