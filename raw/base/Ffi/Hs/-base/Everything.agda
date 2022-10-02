@@ -3,10 +3,8 @@
 module Ffi.Hs.-base.Everything where
 
 -- todo: import Ffi.Hs.Data.Bifoldable
--- todo: import Ffi.Hs.Data.Bifunctor
 -- todo: import Ffi.Hs.Data.Bitraversable
 -- todo: import Ffi.Hs.Data.Data
--- todo: import Ffi.Hs.Data.Traversable
 import Ffi.Hs.-base.Class
 import Ffi.Hs.-base.Dictionaries
 import Ffi.Hs.-base.Kind
@@ -37,6 +35,7 @@ import Ffi.Hs.Control.Monad.ST.Strict
 import Ffi.Hs.Control.Monad.ST.Unsafe
 import Ffi.Hs.Control.Monad.Zip
 import Ffi.Hs.Data.Array.Byte
+import Ffi.Hs.Data.Bifunctor
 import Ffi.Hs.Data.Bits
 import Ffi.Hs.Data.Bool
 import Ffi.Hs.Data.Char
@@ -72,6 +71,7 @@ import Ffi.Hs.Data.STRef
 import Ffi.Hs.Data.STRef.Lazy
 import Ffi.Hs.Data.STRef.Strict
 import Ffi.Hs.Data.String
+import Ffi.Hs.Data.Traversable
 import Ffi.Hs.Data.Tuple
 import Ffi.Hs.Data.Type.Bool
 import Ffi.Hs.Data.Type.Coercion
