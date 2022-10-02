@@ -75,8 +75,8 @@ elimLift f g (Pure x)  = f x
 elimLift f g (Other e) = g e
 
 
-Errors : (E : Set eℓ) → Set (eℓ ⊔ aℓ) → Set (eℓ ⊔ aℓ)
-Errors {aℓ = aℓ} E = Lift (Constant {bℓ = aℓ} E)
+Errors : (E : Set aℓ) → Set aℓ → Set aℓ
+Errors E = Lift (Constant E)
 
 runErrors : Errors E A → Either E A
 runErrors (Pure x)               = Right x

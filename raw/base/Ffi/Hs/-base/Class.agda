@@ -96,7 +96,7 @@ postulate
 
     Bifunctor     : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
     Bifoldable    : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
-    Bitraversable : (Set aℓ → Set bℓ → Set cℓ) → Set (aℓ ⊔ bℓ ⊔ cℓ)
+    Bitraversable : (Set aℓ → Set aℓ → Set aℓ) → Set aℓ
 
     Storable  : Set aℓ → Set aℓ
     Exception : Set aℓ → Set aℓ
@@ -134,7 +134,7 @@ data AgdaRealFloat aℓ a  = GHC.Float.RealFloat a => AgdaRealFloat
 {-# COMPILE GHC RealFrac   = type(0) AgdaRealFrac   #-}
 {-# COMPILE GHC Floating   = type(0) AgdaFloating   #-}
 {-# COMPILE GHC RealFloat  = type(0) AgdaRealFloat  #-}
-    
+
 {-# FOREIGN GHC
 data AgdaBits aℓ a       = Data.Bits.Bits a       => AgdaBits
 data AgdaFiniteBits aℓ a = Data.Bits.FiniteBits a => AgdaFiniteBits
@@ -198,7 +198,7 @@ data AgdaMonadIO fℓ f       = Control.Monad.IO.Class.MonadIO f           => Ag
 {-# COMPILE GHC MonadFix      = type(0) AgdaMonadFix      #-}
 {-# COMPILE GHC MonadZip      = type(0) AgdaMonadZip      #-}
 {-# COMPILE GHC MonadIO       = type(0) AgdaMonadIO       #-}
-    
+
 {-# FOREIGN GHC
 data AgdaCategory aℓ bℓ cℓ a    = Control.Category.Category a => AgdaCategory
 data AgdaArrow aℓ bℓ cℓ a       = Control.Arrow.Arrow a       => AgdaArrow
@@ -215,11 +215,11 @@ data AgdaArrowLoop aℓ bℓ cℓ a   = Control.Arrow.ArrowLoop a   => AgdaArrow
 {-# COMPILE GHC ArrowApply  = type(0) AgdaArrowApply  #-}
 {-# COMPILE GHC ArrowPlus   = type(0) AgdaArrowPlus   #-}
 {-# COMPILE GHC ArrowLoop   = type(0) AgdaArrowLoop   #-}
-    
+
 {-# FOREIGN GHC
-data AgdaBifunctor aℓ bℓ cℓ f     = Data.Bifunctor.Bifunctor f         => AgdaBifunctor
-data AgdaBifoldable aℓ bℓ cℓ f    = Data.Bifoldable.Bifoldable f       => AgdaBifoldable
-data AgdaBitraversable aℓ bℓ cℓ f = Data.Bitraversable.Bitraversable f => AgdaBitraversable
+data AgdaBifunctor aℓ bℓ cℓ f  = Data.Bifunctor.Bifunctor f         => AgdaBifunctor
+data AgdaBifoldable aℓ bℓ cℓ f = Data.Bifoldable.Bifoldable f       => AgdaBifoldable
+data AgdaBitraversable aℓ f    = Data.Bitraversable.Bitraversable f => AgdaBitraversable
 #-}
 {-# COMPILE GHC Bifunctor     = type(0) AgdaBifunctor     #-}
 {-# COMPILE GHC Bifoldable    = type(0) AgdaBifoldable    #-}

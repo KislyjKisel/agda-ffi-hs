@@ -28,7 +28,7 @@ data Either (A : Set aℓ) (B : Set bℓ) : Set (aℓ ⊔ bℓ) where
 postulate
     Bifoldable[Either]     : Bifoldable {aℓ} {bℓ} Either
     Bifunctor[Either]      : Bifunctor {aℓ} {bℓ} Either
-    Bitraversable[Either]  : Bitraversable {aℓ} {bℓ} Either
+    Bitraversable[Either]  : Bitraversable {aℓ} Either
     Eq2[Either]            : Eq2 {aℓ} {bℓ} Either
     Ord2[Either]           : Ord2 {aℓ} {bℓ} Either
     Read2[Either]          : Read2 {aℓ} {bℓ} Either
@@ -52,7 +52,7 @@ postulate
 
 {-# COMPILE GHC Bifoldable[Either]     = \ aℓ bℓ                       -> AgdaBifoldable    #-}
 {-# COMPILE GHC Bifunctor[Either]      = \ aℓ bℓ                       -> AgdaBifunctor     #-}
-{-# COMPILE GHC Bitraversable[Either]  = \ aℓ bℓ                       -> AgdaBitraversable #-}
+{-# COMPILE GHC Bitraversable[Either]  = \ aℓ                          -> AgdaBitraversable #-}
 {-# COMPILE GHC Eq2[Either]            = \ aℓ bℓ                       -> AgdaEq2           #-}
 {-# COMPILE GHC Ord2[Either]           = \ aℓ bℓ                       -> AgdaOrd2          #-}
 {-# COMPILE GHC Show2[Either]          = \ aℓ bℓ                       -> AgdaShow2         #-}
