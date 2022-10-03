@@ -6,3 +6,4 @@ depend:
     ffi-hs-vector
     ffi-hs-bytestring
     ffi-hs-text
+    ffi-hs-linear

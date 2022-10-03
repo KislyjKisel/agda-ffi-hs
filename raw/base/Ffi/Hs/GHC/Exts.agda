@@ -259,7 +259,8 @@ postulate
     TVar# MVar# IOPort# MutVar# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
     SmallMutableArray# MutableArray# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
     State# : Set aℓ → Set aℓ
--- todo Proxy#, rep insts, Vec types, primops, seq : A → B → B
+    Proxy# : Set aℓ → Set aℓ
+-- todo rep insts, Vec types, primops, seq : A → B → B
 
     Tuple2# : Set aℓ → Set bℓ → Set (aℓ ⊔ bℓ)
 
@@ -328,6 +329,9 @@ postulate
 
 {-# FOREIGN GHC type AgdaState# aℓ = GHC.Exts.State# #-}
 {-# COMPILE GHC State# = type(1) AgdaState# #-}
+
+{-# FOREIGN GHC type AgdaProxy# aℓ = GHC.Exts.Proxy# #-}
+{-# COMPILE GHC Proxy# = type(1) AgdaProxy# #-}
 
 -- todo: specify unlifted A B (there are multiple unlifted kinds, levity polymorphism is forbidden...)
 {-# FOREIGN GHC type AgdaTuple2# aℓ bℓ = (# , #) #-}
