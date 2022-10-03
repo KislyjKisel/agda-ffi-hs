@@ -29,6 +29,10 @@ open import Ffi.Hs.-base.Unit public
 open import Ffi.Hs.Data.Bool public
     using (Bool; True; False; not; otherwise; _&&_; _||_)
 
+if_then_else_ : Bool → A → A → A
+if True  then x else _ = x
+if False then _ else y = y
+
 instance
     inst:Data[Bool]       = Ffi.Hs.Data.Bool.Data[Bool]
     inst:Storable[Bool]   = Ffi.Hs.Data.Bool.Storable[Bool]
