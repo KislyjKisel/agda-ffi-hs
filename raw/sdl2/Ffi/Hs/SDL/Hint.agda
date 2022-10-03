@@ -315,8 +315,8 @@ postulate
     HasGetter[Hint[V],V] : HasGetter (Hint V) V
     HasSetter[Hint[V],V] : HasSetter (Hint V) V
 
-{-# COMPILE GHC HasGetter[Hint[V],V] = \ v -> AgdaHasSetter #-}
-{-# COMPILE GHC HasSetter[Hint[V],V] = \ v -> AgdaHasGetter #-}
+{-# COMPILE GHC HasGetter[Hint[V],V] = \ v -> AgdaHasGetter #-}
+{-# COMPILE GHC HasSetter[Hint[V],V] = \ v -> AgdaHasSetter #-}
 
 
 data HintPriority : Set where
@@ -352,5 +352,5 @@ postulate
     setHintWithPriority : ⦃ MonadIO M ⦄ → HintPriority → Hint V → V → M (Liftℓ _ Bool)
     clearHints          : ⦃ MonadIO M ⦄ → M ⊤′
 
-{-# COMPILE GHC setHintWithPriority = \ mℓ m v AgdaMonadIO -> setHintWithPriority #-}
-{-# COMPILE GHC clearHints          = \ mℓ m AgdaMonadIO   -> clearHints          #-}
+{-# COMPILE GHC setHintWithPriority = \ mℓ m v AgdaMonadIO -> SDL.Hint.setHintWithPriority #-}
+{-# COMPILE GHC clearHints          = \ mℓ m AgdaMonadIO   -> SDL.Hint.clearHints          #-}
