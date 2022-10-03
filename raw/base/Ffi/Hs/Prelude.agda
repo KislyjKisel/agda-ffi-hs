@@ -14,6 +14,12 @@ private
 {-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries #-}
 --- tmp
 
+case_return_of_ : ∀{aℓ bℓ} {A : Set aℓ} → (x : A) → (B : A → Set bℓ) → ((x : A) → B x) → B x
+case x return B of f = f x
+
+case_of_ : ∀{aℓ bℓ} {A : Set aℓ} {B : Set bℓ} → A → (A → B) → B
+case x of f = f x
+
 open import Ffi.Hs.-base.Level public
     using (Liftℓ; liftℓ; unliftℓ)
 
@@ -157,7 +163,20 @@ instance
     inst:IsString[String] = Ffi.Hs.Data.String.IsString[String]
 
 open import Ffi.Hs.Data.Tuple public
-    using (Tuple2; Tuple3; Tuple4; Tuple5; fst; snd; curry; uncurry)
+    using
+    ( Tuple2
+    ; mkTuple2
+    ; Tuple3
+    ; mkTuple3
+    ; Tuple4
+    ; mkTuple4
+    ; Tuple5
+    ; mkTuple5
+    ; fst
+    ; snd
+    ; curry
+    ; uncurry
+    )
 
 open import Ffi.Hs.Data.Eq public
     using (Eq; _==_; _/=_)
@@ -169,7 +188,8 @@ open import Ffi.Hs.GHC.Enum public
     ; Bounded; minBound; maxBound
     )
 
-open import Ffi.Hs.Data.Int using (Int)
+open import Ffi.Hs.Data.Int public
+    using (Int)
 
 instance
     inst:Data[Int]       = Ffi.Hs.Data.Int.Data[Int]
