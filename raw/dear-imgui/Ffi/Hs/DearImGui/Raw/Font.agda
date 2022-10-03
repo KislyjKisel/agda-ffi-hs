@@ -37,7 +37,7 @@ postulate
     addFontFromMemoryTTF : ⦃ MonadIO M ⦄ → CStringLen → CFloat → FontConfig → GlyphRanges → M (Liftℓ _ Font)
 
     pushFont : ⦃ MonadIO M ⦄ → Font → M ⊤′
-    popFont  : ⦃ MonadIO M ⦄ → Font → M ⊤′
+    popFont  : ⦃ MonadIO M ⦄ → M ⊤′
 
     clearFontAtlas : ⦃ MonadIO M ⦄ → M ⊤′
     buildFontAtlas : ⦃ MonadIO M ⦄ → M ⊤′

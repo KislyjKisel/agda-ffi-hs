@@ -19,6 +19,7 @@ import Ffi.Hs.-base.Dictionaries
 {-# FOREIGN GHC
 import qualified Control.Monad.Trans.State.Strict
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+import MAlonzo.Code.Ffi.Hs.Control.Monad.Trans.Class (AgdaMonadTrans(AgdaMonadTrans))
 #-}
 
 private
@@ -35,8 +36,8 @@ record StateT (S : Set aℓ) (M : Set aℓ → Set aℓ) (A : Set aℓ) : Set a�
 
 open StateT public
 
-{-# FOREIGN GHC type AgdaStateT sℓ aℓ = Control.Monad.Trans.State.Strict.StateT #-}
-{-# COMPILE GHC StateT = data(2) AgdaStateT (Control.Monad.Trans.State.Strict.StateT) #-}
+{-# FOREIGN GHC type AgdaStateT aℓ = Control.Monad.Trans.State.Strict.StateT #-}
+{-# COMPILE GHC StateT = data(1) AgdaStateT (Control.Monad.Trans.State.Strict.StateT) #-}
 
 postulate
     MonadTrans[StateT[S]]      : MonadTrans (StateT S)
@@ -166,7 +167,7 @@ liftCallCC callCC f = mkStateT λ s →
     runStateT (f λ a → mkStateT λ _ → c (mkTuple2 a s)) s
 
 {-# INLINE liftCallCC #-}
-{-# COMPILE GHC liftCallCC = \ mℓ m a s b s -> Control.Monad.Trans.State.Strict.liftCallCC #-}
+{-# COMPILE GHC liftCallCC = \ mℓ m a s b -> Control.Monad.Trans.State.Strict.liftCallCC #-}
 
 liftCallCC' : CallCC M (Tuple2 A S) (Tuple2 B S) → CallCC (StateT S M) A B
 liftCallCC' callCC f = mkStateT λ s →
@@ -174,7 +175,7 @@ liftCallCC' callCC f = mkStateT λ s →
     runStateT (f λ a → mkStateT λ s' → c $ mkTuple2 a s') s
 
 {-# INLINE liftCallCC' #-}
-{-# COMPILE GHC liftCallCC' = \ mℓ m a s b s -> Control.Monad.Trans.State.Strict.liftCallCC' #-}
+{-# COMPILE GHC liftCallCC' = \ mℓ m a s b -> Control.Monad.Trans.State.Strict.liftCallCC' #-}
 
 liftCatch : Catch E M (Tuple2 A S) → Catch E (StateT S M) A
 liftCatch catchE m h =

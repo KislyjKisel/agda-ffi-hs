@@ -26,6 +26,7 @@ import qualified Codec.Picture.Types
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 import MAlonzo.Code.Ffi.Hs.Control.Monad.Primitive (AgdaPrimMonad(AgdaPrimMonad))
 import MAlonzo.Code.Ffi.Hs.Data.Type.Equality (AgdaTypeEq(AgdaTypeEq))
+import MAlonzo.Code.Ffi.Hs.Control.DeepSeq (AgdaNFData(AgdaNFData))
 #-}
 
 private
@@ -53,8 +54,8 @@ postulate
 {-# FOREIGN GHC data AgdaPixel aℓ a = Codec.Picture.Types.Pixel a => AgdaPixel #-}
 {-# COMPILE GHC Pixel = type(0) AgdaPixel #-}
 
-{-# FOREIGN GHC type AgdaPixelBaseComponent aℓ = Codec.Picture.Types.PixelBaseComponent #-}
-{-# COMPILE GHC PixelBaseComponent = type(1) AgdaPixelBaseComponent #-}
+{-# FOREIGN GHC type AgdaPixelBaseComponent aℓ a = Codec.Picture.Types.PixelBaseComponent a #-}
+{-# COMPILE GHC PixelBaseComponent = type(2) AgdaPixelBaseComponent #-}
 
 -- todo: Image Lenses
 
@@ -82,7 +83,7 @@ postulate
     Ord[PixelYA8]   : Ord PixelYA8
     Show[PixelYA8]  : Show PixelYA8
     Pixel[PixelYA8] : Pixel PixelYA8
-    .PixelBaseComponent[PixelYA8] : PixelBaseComponent PixelYA8 ≡ Word8
+    PixelBaseComponent[PixelYA8] : PixelBaseComponent PixelYA8 ≡ Word8
 
 {-# COMPILE GHC Eq[PixelYA8]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelYA8]   = AgdaOrd   #-}
@@ -99,7 +100,7 @@ postulate
     Ord[PixelYA16]  : Ord PixelYA16
     Show[PixelYA16] : Show PixelYA16
     Pixel[PixelYA16] : Pixel PixelYA16
-    .PixelBaseComponent[PixelYA16] : PixelBaseComponent PixelYA16 ≡ Word16
+    PixelBaseComponent[PixelYA16] : PixelBaseComponent PixelYA16 ≡ Word16
 
 {-# COMPILE GHC Eq[PixelYA16]   = AgdaEq   #-}
 {-# COMPILE GHC Ord[PixelYA16]  = AgdaOrd  #-}
@@ -116,7 +117,7 @@ postulate
     Ord[PixelRGB8]   : Ord PixelRGB8
     Show[PixelRGB8]  : Show PixelRGB8
     Pixel[PixelRGB8] : Pixel PixelRGB8
-    .PixelBaseComponent[PixelRGB8] : PixelBaseComponent PixelRGB8 ≡ Word8
+    PixelBaseComponent[PixelRGB8] : PixelBaseComponent PixelRGB8 ≡ Word8
 
 {-# COMPILE GHC Eq[PixelRGB8]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelRGB8]   = AgdaOrd   #-}
@@ -133,7 +134,7 @@ postulate
     Ord[PixelRGB16]   : Ord PixelRGB16
     Show[PixelRGB16]  : Show PixelRGB16
     Pixel[PixelRGB16] : Pixel PixelRGB16
-    .PixelBaseComponent[PixelRGB16] : PixelBaseComponent PixelRGB16 ≡ Word16
+    PixelBaseComponent[PixelRGB16] : PixelBaseComponent PixelRGB16 ≡ Word16
 
 {-# COMPILE GHC Eq[PixelRGB16]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelRGB16]   = AgdaOrd   #-}
@@ -150,7 +151,7 @@ postulate
     Ord[PixelRGBF]   : Ord PixelRGBF
     Show[PixelRGBF]  : Show PixelRGBF
     Pixel[PixelRGBF] : Pixel PixelRGBF
-    .PixelBaseComponent[PixelRGBF] : PixelBaseComponent PixelRGBF ≡ PixelF
+    PixelBaseComponent[PixelRGBF] : PixelBaseComponent PixelRGBF ≡ PixelF
 
 {-# COMPILE GHC Eq[PixelRGBF]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelRGBF]   = AgdaOrd   #-}
@@ -167,7 +168,7 @@ postulate
     Ord[PixelRGBA8]   : Ord PixelRGBA8
     Show[PixelRGBA8]  : Show PixelRGBA8
     Pixel[PixelRGBA8] : Pixel PixelRGBA8
-    .PixelBaseComponent[PixelRGBA8] : PixelBaseComponent PixelRGBA8 ≡ Word8
+    PixelBaseComponent[PixelRGBA8] : PixelBaseComponent PixelRGBA8 ≡ Word8
 
 {-# COMPILE GHC Eq[PixelRGBA8]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelRGBA8]   = AgdaOrd   #-}
@@ -184,7 +185,7 @@ postulate
     Ord[PixelRGBA16]   : Ord PixelRGBA16
     Show[PixelRGBA16]  : Show PixelRGBA16
     Pixel[PixelRGBA16] : Pixel PixelRGBA16
-    .PixelBaseComponent[PixelRGBA16] : PixelBaseComponent PixelRGBA16 ≡ Word16
+    PixelBaseComponent[PixelRGBA16] : PixelBaseComponent PixelRGBA16 ≡ Word16
 
 {-# COMPILE GHC Eq[PixelRGBA16]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelRGBA16]   = AgdaOrd   #-}
@@ -201,7 +202,7 @@ postulate
     Ord[PixelCMYK8]   : Ord PixelCMYK8
     Show[PixelCMYK8]  : Show PixelCMYK8
     Pixel[PixelCMYK8] : Pixel PixelCMYK8
-    .PixelBaseComponent[PixelCMYK8] : PixelBaseComponent PixelCMYK8 ≡ Word8
+    PixelBaseComponent[PixelCMYK8] : PixelBaseComponent PixelCMYK8 ≡ Word8
 
 {-# COMPILE GHC Eq[PixelCMYK8]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelCMYK8]   = AgdaOrd   #-}
@@ -218,7 +219,7 @@ postulate
     Ord[PixelCMYK16]   : Ord PixelCMYK16
     Show[PixelCMYK16]  : Show PixelCMYK16
     Pixel[PixelCMYK16] : Pixel PixelCMYK16
-    .PixelBaseComponent[PixelCMYK16] : PixelBaseComponent PixelCMYK16 ≡ Word16
+    PixelBaseComponent[PixelCMYK16] : PixelBaseComponent PixelCMYK16 ≡ Word16
 
 {-# COMPILE GHC Eq[PixelCMYK16]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelCMYK16]   = AgdaOrd   #-}
@@ -235,7 +236,7 @@ postulate
     Ord[PixelYCbCr8]   : Ord PixelYCbCr8
     Show[PixelYCbCr8]  : Show PixelYCbCr8
     Pixel[PixelYCbCr8] : Pixel PixelYCbCr8
-    .PixelBaseComponent[PixelYCbCr8] : PixelBaseComponent PixelYCbCr8 ≡ Word8
+    PixelBaseComponent[PixelYCbCr8] : PixelBaseComponent PixelYCbCr8 ≡ Word8
 
 {-# COMPILE GHC Eq[PixelYCbCr8]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelYCbCr8]   = AgdaOrd   #-}
@@ -252,7 +253,7 @@ postulate
     Ord[PixelYCbCrK8]   : Ord PixelYCbCrK8
     Show[PixelYCbCrK8]  : Show PixelYCbCrK8
     Pixel[PixelYCbCrK8] : Pixel PixelYCbCrK8
-    .PixelBaseComponent[PixelYCbCrK8] : PixelBaseComponent PixelYCbCrK8 ≡ Word8
+    PixelBaseComponent[PixelYCbCrK8] : PixelBaseComponent PixelYCbCrK8 ≡ Word8
 
 {-# COMPILE GHC Eq[PixelYCbCrK8]    = AgdaEq    #-}
 {-# COMPILE GHC Ord[PixelYCbCrK8]   = AgdaOrd   #-}
@@ -284,19 +285,19 @@ postulate
 {-# COMPILE GHC Pixel[A]⇒Num[PixelBaseComponent[A]]      = \ aℓ a AgdaPixel -> AgdaNum      #-}
 {-# COMPILE GHC Pixel[A]⇒Eq[A]                           = \ aℓ a AgdaPixel -> AgdaEq       #-}
 
-{-# COMPILE GHC mixWith               = \ aℓ a AgdaPixel   -> Codec.Picture.Types.mixWith               #-}
-{-# COMPILE GHC mixWithAlpha          = \ aℓ a AgdaPixel   -> Codec.Picture.Types.mixWithAlpha          #-}
-{-# COMPILE GHC pixelOpacity          = \ aℓ a AgdaPixel   -> Codec.Picture.Types.pixelOpacity          #-}
-{-# COMPILE GHC componentCount        = \ aℓ a AgdaPixel   -> Codec.Picture.Types.componentCount        #-}
-{-# COMPILE GHC colorMap              = \ aℓ a AgdaPixel   -> Codec.Picture.Types.colorMap              #-}
-{-# COMPILE GHC pixelBaseIndex        = \ aℓ a AgdaPixel   -> Codec.Picture.Types.pixelBaseIndex        #-}
-{-# COMPILE GHC mutablePixelBaseIndex = \ aℓ a s AgdaPixel -> Codec.Picture.Types.mutablePixelBaseIndex #-}
-{-# COMPILE GHC pixelAt               = \ aℓ a AgdaPixel   -> Codec.Picture.Types.pixelAt               #-}
-{-# COMPILE GHC readPixel             = \ aℓ a AgdaPixel   -> Codec.Picture.Types.readPixel             #-}
-{-# COMPILE GHC writePixel            = \ aℓ a AgdaPixel   -> Codec.Picture.Types.writePixel            #-}
-{-# COMPILE GHC unsafePixelAt         = \ aℓ a AgdaPixel   -> Codec.Picture.Types.unsafePixelAt         #-}
-{-# COMPILE GHC unsafeReadPixel       = \ aℓ a AgdaPixel   -> Codec.Picture.Types.unsafeReadPixel       #-}
-{-# COMPILE GHC unsafeWritePixel      = \ aℓ a AgdaPixel   -> Codec.Picture.Types.unsafeWritePixel      #-}
+{-# COMPILE GHC mixWith               = \ aℓ a AgdaPixel             -> Codec.Picture.Types.mixWith               #-}
+{-# COMPILE GHC mixWithAlpha          = \ aℓ a AgdaPixel             -> Codec.Picture.Types.mixWithAlpha          #-}
+{-# COMPILE GHC pixelOpacity          = \ aℓ a AgdaPixel             -> Codec.Picture.Types.pixelOpacity          #-}
+{-# COMPILE GHC componentCount        = \ aℓ a AgdaPixel             -> Codec.Picture.Types.componentCount        #-}
+{-# COMPILE GHC colorMap              = \ aℓ a AgdaPixel             -> Codec.Picture.Types.colorMap              #-}
+{-# COMPILE GHC pixelBaseIndex        = \ aℓ a AgdaPixel             -> Codec.Picture.Types.pixelBaseIndex        #-}
+{-# COMPILE GHC mutablePixelBaseIndex = \ aℓ a s AgdaPixel           -> Codec.Picture.Types.mutablePixelBaseIndex #-}
+{-# COMPILE GHC pixelAt               = \ aℓ a AgdaPixel             -> Codec.Picture.Types.pixelAt               #-}
+{-# COMPILE GHC readPixel             = \ aℓ a m AgdaPixel AgdaPrimMonad -> Codec.Picture.Types.readPixel             #-}
+{-# COMPILE GHC writePixel            = \ aℓ a mℓ m AgdaPixel AgdaPrimMonad -> Codec.Picture.Types.writePixel            #-}
+{-# COMPILE GHC unsafePixelAt         = \ aℓ a AgdaPixel             -> Codec.Picture.Types.unsafePixelAt         #-}
+{-# COMPILE GHC unsafeReadPixel       = \ aℓ a m AgdaPixel AgdaPrimMonad -> Codec.Picture.Types.unsafeReadPixel       #-}
+{-# COMPILE GHC unsafeWritePixel      = \ aℓ a mℓ m AgdaPixel AgdaPrimMonad -> Codec.Picture.Types.unsafeWritePixel      #-}
 
 
 postulate
@@ -481,8 +482,6 @@ postulate
     pixelFoldMap        : ⦃ Pixel A ⦄ → ⦃ Monoid B ⦄ → (A → B) → Image A → B
     dynamicMap          : (∀{aℓ}{A : Set aℓ} → ⦃ Pixel A ⦄ → Image A → B) → DynamicImage → B
     dynamicPixelMap     : (∀{aℓ}{A : Set aℓ} → ⦃ Pixel A ⦄ → Image A → Image A) → DynamicImage → DynamicImage
-    dynSquare           : DynamicImage → DynamicImage
-    squareImage         : ⦃ Pixel A ⦄ → Image A → Image A
     palettedToTrueColor : PalettedImage → DynamicImage
     palettedAsImage     : Palette' A → Image A
     dropAlphaLayer      : ⦃ TransparentPixel A B ⦄ → Image A → Image B
@@ -500,8 +499,6 @@ postulate
 {-# COMPILE GHC pixelFoldMap        = \ aℓ a bℓ b AgdaPixel AgdaMonoid  -> Codec.Picture.Types.pixelFoldMap                        #-}
 {-# COMPILE GHC dynamicMap          = \ bℓ b f                          -> Codec.Picture.Types.dynamicMap (f () () AgdaPixel)      #-}
 {-# COMPILE GHC dynamicPixelMap     = \ f                               -> Codec.Picture.Types.dynamicPixelMap (f () () AgdaPixel) #-}
-{-# COMPILE GHC dynSquare           =                                      Codec.Picture.Types.dynSquare                           #-}
-{-# COMPILE GHC squareImage         = \ aℓ a AgdaPixel                  -> Codec.Picture.Types.squareImage                         #-}
 {-# COMPILE GHC palettedToTrueColor =                                      Codec.Picture.Types.palettedToTrueColor                 #-}
 {-# COMPILE GHC palettedAsImage     = \ aℓ a                            -> Codec.Picture.Types.palettedAsImage                     #-}
 {-# COMPILE GHC dropAlphaLayer      = \ aℓ a bℓ b AgdaTransparentPixel  -> Codec.Picture.Types.dropAlphaLayer                      #-}
@@ -642,12 +639,14 @@ postulate
 {-# COMPILE GHC ColorPlane[PixelYA8,PlaneLuma]       = AgdaColorPlane #-}
 {-# COMPILE GHC ColorPlane[PixelYA8,PlaneAlpha]      = AgdaColorPlane #-}
 
-postulate
-    extractComponent       : ∀{Plane} → ⦃ _ : Pixel A ⦄ → ⦃ _ : Pixel (PixelBaseComponent A) ⦄ → ⦃ PixelBaseComponent (PixelBaseComponent A) ~ PixelBaseComponent A ⦄ → ⦃ ColorPlane A Plane ⦄ → Plane → Image A → Image (PixelBaseComponent A)
-    unsafeExtractComponent : ⦃ _ : Pixel A ⦄ → ⦃ _ : Pixel (PixelBaseComponent A) ⦄ → ⦃ PixelBaseComponent (PixelBaseComponent A) ~ PixelBaseComponent A ⦄ → Int → Image A → Image (PixelBaseComponent A)
 
-{-# COMPILE GHC extractComponent       = \ aℓ a plane AgdaPixel AgdaPixel AgdaTypeEq AgdaColorPlane -> Codec.Picture.Types.extractComponent       #-}
-{-# COMPILE GHC unsafeExtractComponent = \ aℓ a AgdaPixel AgdaPixel AgdaTypeEq                      -> Codec.Picture.Types.unsafeExtractComponent #-}
+-- todo: kinds
+-- postulate
+--     extractComponent       : ∀{Plane} → ⦃ _ : Pixel A ⦄ → ⦃ _ : Pixel (PixelBaseComponent A) ⦄ → ⦃ PixelBaseComponent (PixelBaseComponent A) ~ PixelBaseComponent A ⦄ → ⦃ ColorPlane A Plane ⦄ → Plane → Image A → Image (PixelBaseComponent A)
+--     unsafeExtractComponent : ⦃ _ : Pixel A ⦄ → ⦃ _ : Pixel (PixelBaseComponent A) ⦄ → ⦃ PixelBaseComponent (PixelBaseComponent A) ~ PixelBaseComponent A ⦄ → Int → Image A → Image (PixelBaseComponent A)
+
+-- {-# COMPILE GHC extractComponent       = \ aℓ a plane AgdaPixel AgdaPixel AgdaTypeEq AgdaColorPlane -> Codec.Picture.Types.extractComponent       #-}
+-- {-# COMPILE GHC unsafeExtractComponent = \ aℓ a AgdaPixel AgdaPixel AgdaTypeEq                      -> Codec.Picture.Types.unsafeExtractComponent #-}
 
 -- todo: packeable writing
 

@@ -302,7 +302,7 @@ postulate
 {-# COMPILE GHC NFData[Tuple3[A,B,C]]     = \ aℓ a bℓ b cℓ c AgdaNFData AgdaNFData AgdaNFData                                 -> AgdaNFData #-}
 {-# COMPILE GHC NFData[Tuple4[A,B,C,D]]   = \ aℓ a bℓ b cℓ c dℓ d AgdaNFData AgdaNFData AgdaNFData AgdaNFData                 -> AgdaNFData #-}
 {-# COMPILE GHC NFData[Tuple5[A,B,C,D,E]] = \ aℓ a bℓ b cℓ c dℓ d eℓ e AgdaNFData AgdaNFData AgdaNFData AgdaNFData AgdaNFData -> AgdaNFData #-}
-{-# COMPILE GHC NFData[Const[A,B]]        = \ aℓ a bℓ b AgdaNFData                                                            -> AgdaNFData #-}
+{-# COMPILE GHC NFData[Const[A,B]]        = \ aℓ a b AgdaNFData                                                               -> AgdaNFData #-}
 {-# COMPILE GHC NFData[A:~:B]             = \ aℓ a b                                                                          -> AgdaNFData #-}
 {-# COMPILE GHC NFData[A:~~:B]            = \ aℓ a b                                                                          -> AgdaNFData #-}
 {-# COMPILE GHC NFData[FProduct]          = \ aℓ fℓ f gℓ g a AgdaNFData1 AgdaNFData1 AgdaNFData                               -> AgdaNFData #-}

@@ -265,9 +265,9 @@ postulate
     unsafeThaw            : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → Vector A → M (MVector (PrimState M) A)
     unsafeCopy            : ⦃ Storable A ⦄ → ⦃ _ : PrimMonad M ⦄ → MVector (PrimState M) A → Vector A → M ⊤′
     unsafeFromForeignPtr  : ⦃ Storable A ⦄ → ForeignPtr A → Int → Int → Vector A
-    -- todo: (req v13/Storable) unsafeFromForeignPtr0 : ForeignPtr A → Int → Vector A
-    -- todo: (req v13/Storable) unsafeToForeignPtr    : Vector A → Tuple3 (ForeignPtr A) Int Int
-    -- todo: (req v13/Storable) unsafeToForeignPtr0   : Vector A → Tuple2 (ForeignPtr A) Int
+    unsafeFromForeignPtr0 : ⦃ Storable A ⦄ → ForeignPtr A → Int → Vector A
+    unsafeToForeignPtr    : ⦃ Storable A ⦄ → Vector A → Tuple3 (ForeignPtr A) Int Int
+    unsafeToForeignPtr0   : ⦃ Storable A ⦄ → Vector A → Tuple2 (ForeignPtr A) Int
     unsafeWith            : ⦃ Storable A ⦄ → Vector A → (Ptr A → IO B) → IO B
 
 {-# COMPILE GHC length                = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.length                #-}
@@ -463,7 +463,7 @@ postulate
 {-# COMPILE GHC unsafeThaw            = \ aℓ a m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.unsafeThaw            #-}
 {-# COMPILE GHC unsafeCopy            = \ aℓ a mℓ m AgdaStorable AgdaPrimMonad                                                                                             ->  Data.Vector.Storable.unsafeCopy            #-}
 {-# COMPILE GHC unsafeFromForeignPtr  = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.unsafeFromForeignPtr  #-}
--- {-# COMPILE GHC unsafeFromForeignPtr0 = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeFromForeignPtr0 #-}
--- {-# COMPILE GHC unsafeToForeignPtr    = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeToForeignPtr    #-}
--- {-# COMPILE GHC unsafeToForeignPtr0   = \ aℓ a                                                                                                                          ->  Data.Vector.Storable.unsafeToForeignPtr0   #-}
+{-# COMPILE GHC unsafeFromForeignPtr0 = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.unsafeFromForeignPtr0 #-}
+{-# COMPILE GHC unsafeToForeignPtr    = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.unsafeToForeignPtr    #-}
+{-# COMPILE GHC unsafeToForeignPtr0   = \ aℓ a AgdaStorable                                                                                                             ->  Data.Vector.Storable.unsafeToForeignPtr0   #-}
 {-# COMPILE GHC unsafeWith            = \ aℓ a bℓ b AgdaStorable                                                                                                        ->  Data.Vector.Storable.unsafeWith            #-}

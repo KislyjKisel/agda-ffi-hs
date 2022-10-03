@@ -97,7 +97,7 @@ data GlyphRangesVector : Set where
 {-# COMPILE GHC GlyphRangesVector = data DearImGui.Raw.Font.GlyphRanges.GlyphRangesVector (DearImGui.Raw.Font.GlyphRanges.GlyphRangesVector) #-}
 
 postulate
-    buildRangesVector   : ⦃ MonadIO M ⦄ → GlyphRangesVector → M (Liftℓ _ GlyphRangesVector)
+    buildRangesVector   : ⦃ MonadIO M ⦄ → GlyphRangesBuilder → M (Liftℓ _ GlyphRangesVector)
     fromRangesVector    : GlyphRangesVector → GlyphRanges
     destroyRangesVector : ⦃ MonadIO M ⦄ → GlyphRangesVector → M ⊤′
 

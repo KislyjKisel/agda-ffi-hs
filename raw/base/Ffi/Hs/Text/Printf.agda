@@ -35,10 +35,13 @@ postulate
     printf  : ⦃ PrintfType A ⦄ → List Char → A
     hPrintf : ⦃ HPrintfType A ⦄ → Handle → List Char → A
 
-{-# FOREIGN GHC AgdaPrintfType  aℓ a = Text.Printf.PrintfType a  => AgdaPrintfType  #-}
-{-# FOREIGN GHC AgdaHPrintfType aℓ a = Text.Printf.HPrintfType a => AgdaHPrintfType #-}
-{-# COMPILE GHC PrintfType  = type(0) Text.Printf.PrintfType  #-}
-{-# COMPILE GHC HPrintfType = type(0) Text.Printf.HPrintfType #-}
+{-# FOREIGN GHC
+data AgdaPrintfType  aℓ a = Text.Printf.PrintfType a  => AgdaPrintfType
+data AgdaHPrintfType aℓ a = Text.Printf.HPrintfType a => AgdaHPrintfType
+#-}
+{-# COMPILE GHC PrintfType  = type(0) AgdaPrintfType  #-}
+{-# COMPILE GHC HPrintfType = type(0) AgdaHPrintfType #-}
+
 {-# COMPILE GHC printf  = \ aℓ a AgdaPrintfType  -> Text.Printf.printf  #-}
 {-# COMPILE GHC hPrintf = \ aℓ a AgdaHPrintfType -> Text.Printf.hPrintf #-}
 
@@ -84,7 +87,7 @@ postulate
     PrintfArg : Set aℓ → Set aℓ
     formatArg   : ⦃ PrintfArg A ⦄ → A → FieldFormatter
     parseFormat : ⦃ PrintfArg A ⦄ → A → ModifierParser
-    
+
     vFmt : Char → FieldFormat → FieldFormat
 
 {-# FOREIGN GHC data AgdaPrintfArg aℓ a = Text.Printf.PrintfArg a => AgdaPrintfArg #-}
@@ -98,7 +101,7 @@ postulate
     toChar   : ⦃ IsChar A ⦄ → A → Char
     fromChar : ⦃ IsChar A ⦄ → Char → A
 
-{-# FOREIGN GHC data AgdaIsChar aℓ a = IsChar a => AgdaIsChar #-}
+{-# FOREIGN GHC data AgdaIsChar aℓ a = Text.Printf.IsChar a => AgdaIsChar #-}
 {-# COMPILE GHC IsChar   = type(0) AgdaIsChar   #-}
 {-# COMPILE GHC toChar   = \ aℓ a AgdaIsChar -> Text.Printf.toChar   #-}
 {-# COMPILE GHC fromChar = \ aℓ a AgdaIsChar -> Text.Printf.fromChar #-}
@@ -134,10 +137,10 @@ postulate
     PrintfType[IO[⊤]]      : PrintfType (IO (⊤′ {aℓ}))
     PrintfType[List[Char]] : PrintfType (List Char)
     PrintfType[A⟶B]        : ⦃ PrintfArg A ⦄ → ⦃ PrintfType B ⦄ → PrintfType (A → B)
-    
+
     HPrintfType[IO[⊤]] : HPrintfType (IO (⊤′ {aℓ}))
     HPrintfType[A⟶B]   : ⦃ PrintfArg A ⦄ → ⦃ HPrintfType B ⦄ → HPrintfType (A → B)
-    
+
     PrintfArg[Int]        : PrintfArg Int
     PrintfArg[Int8]       : PrintfArg Int8
     PrintfArg[Int16]      : PrintfArg Int16

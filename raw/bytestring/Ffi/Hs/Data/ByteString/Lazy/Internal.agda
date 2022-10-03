@@ -2,8 +2,6 @@
 
 module Ffi.Hs.Data.ByteString.Lazy.Internal where
 
-open import Ffi.Hs.Data.ByteString.Internal using (StrictByteString)
-
 open import Agda.Builtin.Bool      using (Bool)
 open import Agda.Builtin.Char      using (Char)
 open import Agda.Builtin.List      using (List)
@@ -13,6 +11,8 @@ open import Ffi.Hs.Control.DeepSeq using (NFData)
 open import Ffi.Hs.Data.Int        using (Int)
 open import Ffi.Hs.Data.Word       using (Word8)
 open import Ffi.Hs.GHC.IsList      using (IsList)
+
+open import Ffi.Hs.Data.ByteString.Internal using (StrictByteString)
 
 import Ffi.Hs.-base.Dictionaries
 
@@ -31,11 +31,11 @@ private
 
 data ByteString : Set where
     Empty : ByteString
-    Chunk : StrictByteString → ByteString
+    Chunk : StrictByteString → ByteString → ByteString
 
-{-# COMPILE GHC ByteString = data Data.ByteString.Internal.ByteString
-    ( Data.ByteString.Internal.Empty
-    | Data.ByteString.Internal.Chunk
+{-# COMPILE GHC ByteString = data Data.ByteString.Lazy.Internal.ByteString
+    ( Data.ByteString.Lazy.Internal.Empty
+    | Data.ByteString.Lazy.Internal.Chunk
     ) #-}
 
 postulate
@@ -84,21 +84,21 @@ postulate
     fromStrict : StrictByteString → LazyByteString
     toStrict   : LazyByteString → StrictByteString
 
-{-# COMPILE GHC chunk       =           Data.ByteString.Internal.chunk       #-}
-{-# COMPILE GHC foldrChunks = \ aℓ a -> Data.ByteString.Internal.foldrChunks #-}
-{-# COMPILE GHC foldlChunks = \ aℓ a -> Data.ByteString.Internal.foldlChunks #-}
+{-# COMPILE GHC chunk       =           Data.ByteString.Lazy.Internal.chunk       #-}
+{-# COMPILE GHC foldrChunks = \ aℓ a -> Data.ByteString.Lazy.Internal.foldrChunks #-}
+{-# COMPILE GHC foldlChunks = \ aℓ a -> Data.ByteString.Lazy.Internal.foldlChunks #-}
 
-{-# COMPILE GHC invariant      = Data.ByteString.Internal.invariant      #-}
-{-# COMPILE GHC checkInvariant = Data.ByteString.Internal.checkInvariant #-}
+{-# COMPILE GHC invariant      = Data.ByteString.Lazy.Internal.invariant      #-}
+{-# COMPILE GHC checkInvariant = Data.ByteString.Lazy.Internal.checkInvariant #-}
 
-{-# COMPILE GHC defaultChunkSize = Data.ByteString.Internal.defaultChunkSize #-}
-{-# COMPILE GHC smallChunkSize   = Data.ByteString.Internal.smallChunkSize   #-}
-{-# COMPILE GHC chunkOverhead    = Data.ByteString.Internal.chunkOverhead    #-}
+{-# COMPILE GHC defaultChunkSize = Data.ByteString.Lazy.Internal.defaultChunkSize #-}
+{-# COMPILE GHC smallChunkSize   = Data.ByteString.Lazy.Internal.smallChunkSize   #-}
+{-# COMPILE GHC chunkOverhead    = Data.ByteString.Lazy.Internal.chunkOverhead    #-}
 
-{-# COMPILE GHC packBytes   = Data.ByteString.Internal.packBytes   #-}
-{-# COMPILE GHC packChars   = Data.ByteString.Internal.packChars   #-}
-{-# COMPILE GHC unpackBytes = Data.ByteString.Internal.unpackBytes #-}
-{-# COMPILE GHC unpackChars = Data.ByteString.Internal.unpackChars #-}
+{-# COMPILE GHC packBytes   = Data.ByteString.Lazy.Internal.packBytes   #-}
+{-# COMPILE GHC packChars   = Data.ByteString.Lazy.Internal.packChars   #-}
+{-# COMPILE GHC unpackBytes = Data.ByteString.Lazy.Internal.unpackBytes #-}
+{-# COMPILE GHC unpackChars = Data.ByteString.Lazy.Internal.unpackChars #-}
 
-{-# COMPILE GHC fromStrict = Data.ByteString.Internal.fromStrict #-}
-{-# COMPILE GHC toStrict   = Data.ByteString.Internal.toStrict   #-}
+{-# COMPILE GHC fromStrict = Data.ByteString.Lazy.Internal.fromStrict #-}
+{-# COMPILE GHC toStrict   = Data.ByteString.Lazy.Internal.toStrict   #-}

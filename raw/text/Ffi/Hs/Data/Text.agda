@@ -24,6 +24,7 @@ open import Agda.Builtin.String public
 
 import Ffi.Hs.-base.Dictionaries
 
+{-# FOREIGN GHC {-# LANGUAGE MagicHash #-} #-}
 {-# FOREIGN GHC
 import qualified Data.Text
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
@@ -152,9 +153,7 @@ postulate
     isSuffixOf          : Text → Text → Bool
     isInfixOf           : Text → Text → Bool
     stripPrefix         : Text → Text → Maybe Text
-    fnordLength         : Text → Int
     stripSuffix         : Text → Text → Maybe Text
-    quuxLength          : Text → Int
     commonPrefixes      : Text → Text → Maybe (Tuple3 Text Text Text)
     filter              : (Char → Bool) → Text → Text
     breakOnAll          : ⦃ HasCallStack ⦄ → Text → Text → List (Tuple2 Text Text)
@@ -256,9 +255,7 @@ postulate
 {-# COMPILE GHC isSuffixOf          =                       Data.Text.isSuffixOf          #-}
 {-# COMPILE GHC isInfixOf           =                       Data.Text.isInfixOf           #-}
 {-# COMPILE GHC stripPrefix         =                       Data.Text.stripPrefix         #-}
-{-# COMPILE GHC fnordLength         =                       Data.Text.fnordLength         #-}
 {-# COMPILE GHC stripSuffix         =                       Data.Text.stripSuffix         #-}
-{-# COMPILE GHC quuxLength          =                       Data.Text.quuxLength          #-}
 {-# COMPILE GHC commonPrefixes      =                       Data.Text.commonPrefixes      #-}
 {-# COMPILE GHC filter              =                       Data.Text.filter              #-}
 {-# COMPILE GHC breakOnAll          = \ AgdaHasCallStack -> Data.Text.breakOnAll          #-}

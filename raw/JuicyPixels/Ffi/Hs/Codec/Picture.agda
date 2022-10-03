@@ -18,6 +18,7 @@ open import Ffi.Hs.Foreign.ForeignPtr     using (ForeignPtr)
 
 {-# FOREIGN GHC
 import qualified Codec.Picture
+import MAlonzo.Code.Ffi.Hs.Codec.Picture.Types (AgdaPixel(AgdaPixel))
 import MAlonzo.Code.Ffi.Hs.Data.Type.Equality (AgdaTypeEq(AgdaTypeEq))
 #-}
 
@@ -301,9 +302,9 @@ open import Ffi.Hs.Codec.Picture.Tga public
     )
 
 postulate
-    readTga : List Char → IO (Either (List Char) DynamicImage)
+    readTGA : List Char → IO (Either (List Char) DynamicImage)
 
-{-# COMPILE GHC readTga = Codec.Picture.readTga #-}
+{-# COMPILE GHC readTGA = Codec.Picture.readTGA #-}
 
 
 open import Ffi.Hs.Codec.Picture.Tiff public
@@ -360,7 +361,8 @@ open import Ffi.Hs.Codec.Picture.ColorQuant public
     ; palettize
     )
 
-postulate
-    imageFromUnsafePtr : ∀{A : Set} → ⦃ Pixel A ⦄ → ⦃ PixelBaseComponent A ~ Word8 ⦄ → Int → Int → ForeignPtr Word8 → Image A
+-- todo: kind
+-- postulate
+--     imageFromUnsafePtr : ∀{A : Set} → ⦃ Pixel A ⦄ → ⦃ PixelBaseComponent A ~ Word8 ⦄ → Int → Int → ForeignPtr Word8 → Image A
 
-{-# COMPILE GHC imageFromUnsafePtr = \ a AgdaPixel AgdaTypeEq -> Codec.Picture.imageFromUnsafePtr #-}
+-- {-# COMPILE GHC imageFromUnsafePtr = \ a AgdaPixel AgdaTypeEq -> Codec.Picture.imageFromUnsafePtr #-}

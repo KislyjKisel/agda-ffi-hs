@@ -23,6 +23,9 @@ import Ffi.Hs.-base.Dictionaries
 {-# FOREIGN GHC
 import qualified Data.Vector
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+import MAlonzo.Code.Ffi.Hs.Control.Monad.Primitive (AgdaPrimMonad(AgdaPrimMonad))
+import MAlonzo.Code.Ffi.Hs.Control.DeepSeq (AgdaNFData(AgdaNFData), AgdaNFData1(AgdaNFData1))
+import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList(AgdaIsList))
 #-}
 
 private
@@ -389,18 +392,18 @@ postulate
 {-# COMPILE GHC izipWith3         = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.izipWith3         #-}
 {-# COMPILE GHC izipWith4         = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.izipWith4         #-}
 {-# COMPILE GHC izipWith5         = \ aℓ a bℓ b cℓ c dℓ d eℓ e fℓ f ->  Data.Vector.izipWith5         #-}
-{-# COMPILE GHC zip               = \ aℓ a bℓ b cℓ c                ->  Data.Vector.zip               #-}
-{-# COMPILE GHC zip3              = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.zip3              #-}
-{-# COMPILE GHC zip4              = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.zip4              #-}
-{-# COMPILE GHC zip5              = \ aℓ a bℓ b cℓ c dℓ d eℓ e fℓ f ->  Data.Vector.zip5              #-}
+{-# COMPILE GHC zip               = \ aℓ a bℓ b                     ->  Data.Vector.zip               #-}
+{-# COMPILE GHC zip3              = \ aℓ a bℓ b cℓ c                ->  Data.Vector.zip3              #-}
+{-# COMPILE GHC zip4              = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.zip4              #-}
+{-# COMPILE GHC zip5              = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.zip5              #-}
 {-# COMPILE GHC zipWithM          = \ mℓ m aℓ a bℓ b c AgdaMonad    ->  Data.Vector.zipWithM          #-}
 {-# COMPILE GHC izipWithM         = \ mℓ m aℓ a bℓ b c AgdaMonad    ->  Data.Vector.izipWithM         #-}
 {-# COMPILE GHC zipWithM-         = \ mℓ m aℓ a bℓ b c AgdaMonad    ->  Data.Vector.zipWithM_         #-}
 {-# COMPILE GHC izipWithM-        = \ mℓ m aℓ a bℓ b c AgdaMonad    ->  Data.Vector.izipWithM_        #-}
-{-# COMPILE GHC unzip             = \ aℓ a bℓ b cℓ c                ->  Data.Vector.unzip             #-}
-{-# COMPILE GHC unzip3            = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.unzip3            #-}
-{-# COMPILE GHC unzip4            = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.unzip4            #-}
-{-# COMPILE GHC unzip5            = \ aℓ a bℓ b cℓ c dℓ d eℓ e fℓ f ->  Data.Vector.unzip5            #-}
+{-# COMPILE GHC unzip             = \ aℓ a bℓ b                     ->  Data.Vector.unzip             #-}
+{-# COMPILE GHC unzip3            = \ aℓ a bℓ b cℓ c                ->  Data.Vector.unzip3            #-}
+{-# COMPILE GHC unzip4            = \ aℓ a bℓ b cℓ c dℓ d           ->  Data.Vector.unzip4            #-}
+{-# COMPILE GHC unzip5            = \ aℓ a bℓ b cℓ c dℓ d eℓ e      ->  Data.Vector.unzip5            #-}
 {-# COMPILE GHC filter            = \ aℓ a                          ->  Data.Vector.filter            #-}
 {-# COMPILE GHC ifilter           = \ aℓ a                          ->  Data.Vector.ifilter           #-}
 {-# COMPILE GHC filterM           = \ mℓ m a AgdaMonad              ->  Data.Vector.filterM           #-}

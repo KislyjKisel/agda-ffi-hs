@@ -17,9 +17,11 @@ open import Ffi.Hs.GHC.Float                   using (Double)
 
 import Ffi.Hs.-base.Dictionaries
 
+{-# FOREIGN GHC {-# LANGUAGE GADTs #-} #-}
 {-# FOREIGN GHC
 import qualified Codec.Picture.Metadata
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+import MAlonzo.Code.Ffi.Hs.Control.DeepSeq (AgdaNFData(AgdaNFData))
 #-}
 
 private
@@ -159,8 +161,8 @@ postulate
     Eq[Keys[A]]   : Eq (Keys A)
     Show[Keys[A]] : Show (Keys A)
 
-{-# COMPILE GHC Eq[Keys[A]]   = AgdaEq   #-}
-{-# COMPILE GHC Show[Keys[A]] = AgdaShow #-}
+{-# COMPILE GHC Eq[Keys[A]]   = \ a -> AgdaEq   #-}
+{-# COMPILE GHC Show[Keys[A]] = \ a -> AgdaShow #-}
 
 
 postulate

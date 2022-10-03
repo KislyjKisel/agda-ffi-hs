@@ -112,7 +112,7 @@ postulate
 
 {-# COMPILE GHC Bifoldable[Arg]     = \ aℓ bℓ                       -> AgdaBifoldable    #-}
 {-# COMPILE GHC Bifunctor[Arg]      = \ aℓ bℓ                       -> AgdaBifunctor     #-}
-{-# COMPILE GHC Bitraversable[Arg]  = \ aℓ bℓ                       -> AgdaBitraversable #-}
+{-# COMPILE GHC Bitraversable[Arg]  = \ aℓ                          -> AgdaBitraversable #-}
 {-# COMPILE GHC Foldable[Arg[A]]    = \ bℓ aℓ a                     -> AgdaFoldable      #-}
 {-# COMPILE GHC Traversable[Arg[A]] = \ aℓ a                        -> AgdaTraversable   #-}
 {-# COMPILE GHC Functor[Arg[A]]     = \ aℓ a                        -> AgdaFunctor       #-}
