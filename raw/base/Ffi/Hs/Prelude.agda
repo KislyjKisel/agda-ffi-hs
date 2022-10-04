@@ -2,23 +2,25 @@
 
 module Ffi.Hs.Prelude where
 
---- tmp
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 
 private
     variable
         aℓ : Level
-        A : Set aℓ
+        A B : Set aℓ
 
+-- todo: re-export List/Maybe instances when will be possible
 {-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries #-}
---- tmp
 
 case_return_of_ : ∀{aℓ bℓ} {A : Set aℓ} → (x : A) → (B : A → Set bℓ) → ((x : A) → B x) → B x
 case x return B of f = f x
 
 case_of_ : ∀{aℓ bℓ} {A : Set aℓ} {B : Set bℓ} → A → (A → B) → B
 case x of f = f x
+
+_::_ : ∀{aℓ} (A : Set aℓ) → A → A
+_ :: x = x 
 
 open import Ffi.Hs.-base.Level public
     using (Liftℓ; liftℓ; unliftℓ)
@@ -472,7 +474,25 @@ open import Ffi.Hs.Data.Function public
     ; _$_
     )
 
--- todo: until, asTypeOf, error, errorWithoutStackTrace, undefined, seq
+asTypeOf : A → A → A
+asTypeOf x _ = x
+
+{-# NON_TERMINATING #-}
+until : (A → Bool) → (A → A) → A → A
+until p f x = if p x then x else until p f (f x)
+
+-- todo: different runtime reps
+postulate
+    seq : A → B → B
+
+{-# COMPILE GHC seq = \ aℓ a bℓ b -> Prelude.seq #-}
+
+open import Ffi.Hs.GHC.Err public
+    using
+    ( error
+    ; errorWithoutStackTrace
+    ; undefined
+    )
 
 import Agda.Builtin.Strict
 
@@ -625,3 +645,4 @@ open import Ffi.Hs.Data.Type.Equality public
     using
     ( _~_
     )
+ 
