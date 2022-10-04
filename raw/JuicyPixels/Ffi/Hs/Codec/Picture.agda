@@ -28,6 +28,9 @@ open Ffi.Hs.Codec.Picture.Types public
     using
     ( Image
     ; mkImage
+    ; imageWidth
+    ; imageHeight
+    ; imageData
     ; Eq[Image[A]]
     ; NFData[Image[A]]
 

@@ -659,6 +659,8 @@ record Image A where
         imageHeight : Int
         imageData   : Vector (PixelBaseComponent A)
 
+open Image public
+
 {-# FOREIGN GHC type AgdaImage aℓ = Codec.Picture.Types.Image #-}
 {-# COMPILE GHC Image = data(1) AgdaImage (Codec.Picture.Types.Image) #-}
 
@@ -676,6 +678,8 @@ record MutableImage S A where
         mutableImageWidth  : Int
         mutableImageHeight : Int
         mutableImageData   : STVector S (PixelBaseComponent A)
+
+open MutableImage public
 
 {-# FOREIGN GHC type AgdaMutableImage aℓ = Codec.Picture.Types.MutableImage #-}
 {-# COMPILE GHC MutableImage = data(1) AgdaMutableImage (Codec.Picture.Types.MutableImage) #-}
@@ -736,6 +740,8 @@ record Palette' A where
     field
         _paletteSize : Int
         _paletteData : Vector (PixelBaseComponent A)
+
+open Palette' public
 
 {-# FOREIGN GHC type AgdaPalette' aℓ = Codec.Picture.Types.Palette' #-}
 {-# COMPILE GHC Palette' = data(1) AgdaPalette' (Codec.Picture.Types.Palette') #-}
