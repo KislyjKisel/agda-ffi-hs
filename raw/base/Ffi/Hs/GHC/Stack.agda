@@ -55,13 +55,19 @@ postulate
 {-# COMPILE GHC currentCallStack =           GHC.Stack.currentCallStack #-}
 {-# COMPILE GHC whoCreated       = \ aℓ a -> GHC.Stack.whoCreated       #-}
 
+
+data HasCallStack : Set where
+    mkHasCallStack : HasCallStack
+
+{-# FOREIGN GHC data AgdaHasCallStack = GHC.Stack.HasCallStack => AgdaHasCallStack #-}
+{-# COMPILE GHC HasCallStack = data AgdaHasCallStack (AgdaHasCallStack) #-}
+
+
 postulate
     CallStack : Set
     
     IsList[CallStack] : IsList CallStack
     Show[CallStack]   : Show CallStack
-
-    HasCallStack : Set
 
     callStack           : ⦃ HasCallStack ⦄ → CallStack
     emptyCallStack      : CallStack
@@ -77,9 +83,6 @@ postulate
 
 {-# COMPILE GHC IsList[CallStack] = AgdaIsList #-}
 {-# COMPILE GHC Show[CallStack]   = AgdaShow   #-}
-
-{-# FOREIGN GHC data AgdaHasCallStack = GHC.Stack.HasCallStack => AgdaHasCallStack #-}
-{-# COMPILE GHC HasCallStack = type AgdaHasCallStack #-}
 
 {-# COMPILE GHC callStack = \ AgdaHasCallStack -> GHC.Stack.callStack #-}
 {-# COMPILE GHC emptyCallStack      = GHC.Stack.emptyCallStack   #-}
