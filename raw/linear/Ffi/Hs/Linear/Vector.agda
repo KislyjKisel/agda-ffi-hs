@@ -21,9 +21,9 @@ import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 
 private
     variable
-        aℓ : Level
+        aℓ bℓ : Level
         A B C : Set aℓ
-        F G V : Set aℓ → Set aℓ
+        F G V : Set aℓ → Set bℓ
 
 infixl 6 _^+^_ _^-^_
 
@@ -59,23 +59,24 @@ postulate
 {-# COMPILE GHC liftU2 = \ fℓ f a AgdaAdditive         -> Linear.Vector.liftU2 #-}
 {-# COMPILE GHC liftI2 = \ fℓ f a b c AgdaAdditive     -> Linear.Vector.liftI2 #-}
 
-{-# COMPILE GHC Additive[List]     = \ aℓ     -> AgdaAdditive #-}
-{-# COMPILE GHC Additive[Maybe]    = \ aℓ     -> AgdaAdditive #-}
-{-# COMPILE GHC Additive[Complex]  = \ aℓ     -> AgdaAdditive #-}
-{-# COMPILE GHC Additive[Identity] = \ aℓ     -> AgdaAdditive #-}
-{-# COMPILE GHC Additive[ZipList]  = \ aℓ     -> AgdaAdditive #-}
-{-# COMPILE GHC Additive[Product]  = \ aℓ f g -> AgdaAdditive #-}
-{-# COMPILE GHC Additive[Compose]  = \ aℓ f g -> AgdaAdditive #-}
+{-# COMPILE GHC Additive[List]     = \ aℓ                               -> AgdaAdditive #-}
+{-# COMPILE GHC Additive[Maybe]    = \ aℓ                               -> AgdaAdditive #-}
+{-# COMPILE GHC Additive[Complex]  = \ aℓ                               -> AgdaAdditive #-}
+{-# COMPILE GHC Additive[Identity] = \ aℓ                               -> AgdaAdditive #-}
+{-# COMPILE GHC Additive[ZipList]  = \ aℓ                               -> AgdaAdditive #-}
+{-# COMPILE GHC Additive[Product]  = \ aℓ f g AgdaAdditive AgdaAdditive -> AgdaAdditive #-}
+{-# COMPILE GHC Additive[Compose]  = \ aℓ f g AgdaAdditive AgdaAdditive -> AgdaAdditive #-}
 
 
-record E (T : Set aℓ → Set aℓ) : Set (lsuc aℓ) where
-    constructor mkE
-    field
-        {X} : Set aℓ
-        el : {F : Set aℓ → Set aℓ} → ⦃ Functor F ⦄ → (X → F X) → T X → F (T X)
+-- todo: Linear.Vector.E
+-- record E (T : Set aℓ → Set aℓ) : Set (lsuc aℓ) where
+--     constructor mkE
+--     field
+--         {X} : Set aℓ
+--         el : {F : Set aℓ → Set aℓ} → ⦃ Functor F ⦄ → (X → F X) → T X → F (T X)
 
-{-# FOREIGN GHC type AgdaE aℓ = Linear.Vector.E #-}
-{-# COMPILE GHC E = data(1) AgdaE (Linear.Vector.E) #-}
+-- {-# FOREIGN GHC type AgdaE aℓ = Linear.Vector.E #-}
+-- {-# COMPILE GHC E = data(1) AgdaE (Linear.Vector.E) #-}
 -- todo: indexed-traversable instances for E
 
 
