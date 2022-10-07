@@ -535,6 +535,13 @@ open import Ffi.Hs.Data.List public
     ; unzip3
     )
 
+postulate
+    [_⋯_] : ⦃ Enum A ⦄ → A → A → List A
+    [_,_⋯_] : ⦃ Enum A ⦄ → A → A → A → List A
+
+{-# COMPILE GHC [_⋯_]   = \ aℓ a AgdaEnum x y     -> [x..y]     #-}
+{-# COMPILE GHC [_,_⋯_] = \ aℓ a AgdaEnum x1 x2 y -> [x1,x2..y] #-}
+
 instance
     postulate
         inst:Functor[List]     : Functor {aℓ} List
