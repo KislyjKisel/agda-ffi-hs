@@ -2,13 +2,14 @@
 
 module Ffi.Hs.Control.Monad.Primitive where
 
-open import Ffi.Hs.Control.Monad.ST using () renaming (ST to StrictST)
-open import Ffi.Hs.Control.Monad.ST.Lazy using () renaming (ST to LazyST)
-open import Agda.Builtin.IO using (IO)
+open import Agda.Builtin.Equality        using (_≡_)
+open import Agda.Builtin.IO              using (IO)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Class using (Monad)
-open import Ffi.Hs.GHC.Exts    using (State#; Tuple2#)
-open import Ffi.Hs.-base.Unit using (⊤; ⊤′)
+open import Ffi.Hs.-base.Class           using (Monad)
+open import Ffi.Hs.-base.Unit            using (⊤; ⊤′)
+open import Ffi.Hs.Control.Monad.ST      using () renaming (ST to StrictST)
+open import Ffi.Hs.Control.Monad.ST.Lazy using () renaming (ST to LazyST)
+open import Ffi.Hs.GHC.Exts              using (State#; Tuple2#; RealWorld)
 
 {-# FOREIGN GHC
 import qualified Control.Monad.Primitive
@@ -52,6 +53,11 @@ postulate
 {-# COMPILE GHC PrimMonad[IO]  = \ aℓ   -> AgdaPrimMonad #-}
 {-# COMPILE GHC PrimMonad[SST] = \ aℓ s -> AgdaPrimMonad #-}
 {-# COMPILE GHC PrimMonad[LST] = \ aℓ s -> AgdaPrimMonad #-}
+
+postulate
+    PrimState[IO]  : PrimState {aℓ} IO ⦃ PrimMonad[IO] ⦄ ≡ RealWorld
+    PrimState[SST] : PrimState {aℓ} (StrictST S) ⦃ PrimMonad[SST] ⦄ ≡ S
+    PrimState[LST] : PrimState {aℓ} (LazyST S) ⦃ PrimMonad[LST] ⦄ ≡ S
 
 -- todo: instances for transformers
 
