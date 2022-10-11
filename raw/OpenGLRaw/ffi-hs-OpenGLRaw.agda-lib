@@ -1,0 +1,6 @@
+name: OpenGLRaw
+include: .
+depend:
+    ffi-hs-base
+    ffi-hs-fixed
+    ffi-hs-half
