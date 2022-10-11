@@ -1,4 +1,4 @@
-name: OpenGLRaw
+name: ffi-hs-OpenGLRaw
 include: .
 depend:
     ffi-hs-base
