@@ -59,8 +59,8 @@ postulate
 {-# FOREIGN GHC data AgdaPngSavable aℓ a = Codec.Picture.Png.PngSavable a => AgdaPngSavable #-}
 {-# COMPILE GHC PngSavable = type(0) AgdaPngSavable #-}
 
-{-# COMPILE GHC encodePng             = \ aℓ a AgdaPngSaveable -> Codec.Picture.Png.encodePng             #-}
-{-# COMPILE GHC encodePngWithMetadata = \ aℓ a AgdaPngSaveable -> Codec.Picture.Png.encodePngWithMetadata #-}
+{-# COMPILE GHC encodePng             = \ aℓ a AgdaPngSavable -> Codec.Picture.Png.encodePng             #-}
+{-# COMPILE GHC encodePngWithMetadata = \ aℓ a AgdaPngSavable -> Codec.Picture.Png.encodePngWithMetadata #-}
 
 {-# COMPILE GHC PngSavable[PixelRGBA16] = AgdaPngSavable #-}
 {-# COMPILE GHC PngSavable[PixelRGBA8]  = AgdaPngSavable #-}
@@ -83,6 +83,6 @@ postulate
 {-# COMPILE GHC decodePng                       =                           Codec.Picture.Png.decodePng                       #-}
 {-# COMPILE GHC decodePngWithMetadata           =                           Codec.Picture.Png.decodePngWithMetadata           #-}
 {-# COMPILE GHC decodePngWithPaletteAndMetadata =                           Codec.Picture.Png.decodePngWithPaletteAndMetadata #-}
-{-# COMPILE GHC writePng                        = \ aℓ a AgdaPngSaveable -> Codec.Picture.Png.writePng                        #-}
+{-# COMPILE GHC writePng                        = \ aℓ a AgdaPngSavable -> Codec.Picture.Png.writePng                        #-}
 {-# COMPILE GHC encodeDynamicPng                =                           Codec.Picture.Png.encodeDynamicPng                #-}
 {-# COMPILE GHC writeDynamicPng                 =                           Codec.Picture.Png.writeDynamicPng                 #-}
