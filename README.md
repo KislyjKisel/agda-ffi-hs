@@ -7,6 +7,8 @@
 * `array-0.5.4.0`
 * `dear-imgui-2.1.1` (no GLFW, partial Vulkan)
 * `deepseq-1.4.8.0`
+* `fixed-0.3`
+* `half-0.3.1`
 * `JuicyPixels-3.3.8` (no internals)
 * `StateVar-1.2.2`
 * `stm-2.5.1.0`
@@ -15,12 +17,14 @@
 ### Substantial raw bindings to
 * `base-4.17.0.0` (no GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*)
 * `scientific-0.3.7.0` (no Text/ByteString builders)
-* `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Hint, SDL.Internal.\*, SDL.Raw.\*)
+* `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Internal.\*, SDL.Raw.\*)
 
-### Poor raw bindings (for use by other bindings only) to
+### Poor raw bindings to
 * `bytestring-0.11.3.1` (only Data.ByteString(.Internal), Data.ByteString.Lazy(.Internal))
-* `exceptions`
+* `exceptions` (empty)
 * `linear`
+* `OpenGL`
+* `OpenGLRaw` (only Graphics.GL.Types)
 * `primitive`
 * `text-2.0.1` (only Data.Text)
 * `transformers-0.6.0.4` (core; only IdentityT, StateT)
@@ -47,6 +51,8 @@ Temporary fix - `allow-newer` in `cabal.project`.
 * Glue code for stdlib (and mb smth else) is planned.
 * Not sure about handling type families (opt: postulate as type + postulate \\== for concrete args).
 * Record fields are often not exported properly.
+* Agda's builtin Nat and String are (opaque here) and Text, which is cumbersome to use with Hs libs using Ints and Strings. Literal overloading should help.
+* Many definitions could be defined in Agda for better typing (?). Most of the time only types are transparent currently.
 
 
 ## Structure
