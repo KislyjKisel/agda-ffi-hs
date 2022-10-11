@@ -30,6 +30,8 @@ record Half : Set where
     field
         getHalf : CUShort
 
+open Half public
+
 {-# COMPILE GHC Half = data Numeric.Half.Half (Numeric.Half.Half) #-}
 
 postulate
