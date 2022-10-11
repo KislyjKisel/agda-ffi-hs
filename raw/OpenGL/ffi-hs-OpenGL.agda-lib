@@ -1,3 +1,6 @@
 name: ffi-hs-OpenGL
 include: .
-depend: ffi-hs-base
+depend:
+    ffi-hs-base
+    ffi-hs-OpenGLRaw
+    ffi-hs-StateVar
