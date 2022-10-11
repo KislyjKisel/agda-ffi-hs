@@ -502,6 +502,8 @@ f $! x = Agda.Builtin.Strict.primForce x f
 open import Ffi.Hs.Data.List public
     using
     ( List
+    ; []
+    ; _∷_
     ; map
     ; _++_
     ; filter
