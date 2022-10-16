@@ -5,13 +5,17 @@ module Ffi.Hs.Graphics.Rendering.OpenGL.GL.CoordTrans where
 open import Agda.Builtin.IO          using (IO)
 open import Agda.Builtin.List        using (List)
 open import Agda.Builtin.Maybe       using (Maybe)
+open import Agda.Builtin.Unit        using (⊤)
 open import Agda.Primitive           using (Level)
 open import Ffi.Hs.-base.Class       using (Eq; Ord; Show; Storable)
 open import Ffi.Hs.Data.StateVar     using (StateVar; GettableStateVar)
 open import Ffi.Hs.Data.Tuple        using (Tuple2)
-open import Ffi.Hs.Graphics.GL.Types using (GLclampd; GLint; GLsizei)
+open import Ffi.Hs.Foreign.Ptr       using (Ptr)
+open import Ffi.Hs.Graphics.GL.Types
 
--- todo: Ffi.Hs.Graphics.Rendering.OpenGL.GL.CoordTrans
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Tensor       using (Vector3)
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexArrays using (Capability)
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexSpec   using (TextureUnit)
 
 import Ffi.Hs.-base.Dictionaries
 
@@ -152,15 +156,15 @@ postulate
 postulate
     GLmatrix : Set → Set
 
-    Matrix[GLmatrix] : Matrix GLmatrix
-    Eq[GLmatrix]     : Eq GLmatrix
-    Ord[GLmatrix]    : Ord GLmatrix
-    Show[GLmatrix]   : Show GLmatrix
+    Matrix[GLmatrix]  : Matrix GLmatrix
+    Eq[GLmatrix[A]]   : Eq (GLmatrix A)
+    Ord[GLmatrix[A]]  : Ord (GLmatrix A)
+    Show[GLmatrix[A]] : Show (GLmatrix A)
 
-{-# COMPILE GHC Eq[GLmatrix]     = AgdaEq     #-}
-{-# COMPILE GHC Ord[GLmatrix]    = AgdaOrd    #-}
-{-# COMPILE GHC Show[GLmatrix]   = AgdaShow   #-}
-{-# COMPILE GHC Matrix[GLmatrix] = AgdaMatrix #-}
+{-# COMPILE GHC Matrix[GLmatrix]  =        AgdaMatrix #-}
+{-# COMPILE GHC Eq[GLmatrix[A]]   = \ a -> AgdaEq     #-}
+{-# COMPILE GHC Ord[GLmatrix[A]]  = \ a -> AgdaOrd    #-}
+{-# COMPILE GHC Show[GLmatrix[A]] = \ a -> AgdaShow   #-}
 
 
 postulate
@@ -185,10 +189,10 @@ data Plane (A : Set aℓ) : Set aℓ where
 {-# COMPILE GHC Plane = data(1) AgdaPlane (Graphics.Rendering.OpenGL.GL.CoordTrans.Plane) #-}
 
 postulate
-    Eq[Plane[A]]       : Eq Plane
-    Ord[Plane[A]]      : Ord Plane
-    Show[Plane[A]]     : Show Plane
-    Storable[Plane[A]] : Storable Plane
+    Eq[Plane[A]]       : Eq (Plane A)
+    Ord[Plane[A]]      : Ord (Plane A)
+    Show[Plane[A]]     : Show (Plane A)
+    Storable[Plane[A]] : Storable (Plane A)
 
 {-# COMPILE GHC Eq[Plane[A]]       = \ aℓ a -> AgdaEq       #-}
 {-# COMPILE GHC Ord[Plane[A]]      = \ aℓ a -> AgdaOrd      #-}
