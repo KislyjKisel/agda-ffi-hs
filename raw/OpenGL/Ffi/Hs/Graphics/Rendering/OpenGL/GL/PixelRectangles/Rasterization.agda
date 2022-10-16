@@ -105,13 +105,6 @@ postulate
 {-# COMPILE GHC Ord[PixelFormat]  = AgdaOrd  #-}
 {-# COMPILE GHC Show[PixelFormat] = AgdaShow #-}
 
-postulate
-    drawPixels : Size → PixelData A → IO ⊤
-    pixelZoom  : StateVar (Tuple2 GLfloat GLfloat)
-
-{-# COMPILE GHC drawPixels = \ aℓ a -> Graphics.Rendering.OpenGL.GL.PixelRectangles.Rasterization.drawPixels #-}
-{-# COMPILE GHC pixelZoom  =           Graphics.Rendering.OpenGL.GL.PixelRectangles.Rasterization.pixelZoom  #-}
-
 
 data PixelData (A : Set aℓ) : Set aℓ where
     mkPixelData : PixelFormat → DataType → Ptr A → PixelData A
@@ -127,3 +120,11 @@ postulate
 {-# COMPILE GHC Eq[PixelData[A]]   = \ aℓ a -> AgdaEq   #-}
 {-# COMPILE GHC Ord[PixelData[A]]  = \ aℓ a -> AgdaOrd  #-}
 {-# COMPILE GHC Show[PixelData[A]] = \ aℓ a -> AgdaShow #-}
+
+
+postulate
+    drawPixels : Size → PixelData A → IO ⊤
+    pixelZoom  : StateVar (Tuple2 GLfloat GLfloat)
+
+{-# COMPILE GHC drawPixels = \ aℓ a -> Graphics.Rendering.OpenGL.GL.PixelRectangles.Rasterization.drawPixels #-}
+{-# COMPILE GHC pixelZoom  =           Graphics.Rendering.OpenGL.GL.PixelRectangles.Rasterization.pixelZoom  #-}
