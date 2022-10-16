@@ -2,15 +2,17 @@
 
 module Ffi.Hs.Graphics.Rendering.OpenGL.GL.PixelRectangles.ColorTable where
 
-open import Agda.Builtin.Unit    using (⊤)
+open import Agda.Builtin.IO          using (IO)
+open import Agda.Builtin.Unit        using (⊤)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Class   using (Eq; Ord; Show)
-open import Ffi.Hs.Data.StateVar using (StateVar)
-open import Ffi.Hs.Graphics.GL.Types using (GLsizei)
-open import Agda.Builtin.IO using (IO)
+open import Ffi.Hs.-base.Class       using (Eq; Ord; Show)
+open import Ffi.Hs.Data.StateVar     using (StateVar; GettableStateVar)
+open import Ffi.Hs.Graphics.GL.Types
 
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.CoordTrans                    using (Position)
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.PixelRectangles.Rasterization using (PixelData)
-open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexArrays using (Capability)
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexArrays                  using (Capability)
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexSpec                    using (Color4)
 
 import Ffi.Hs.-base.Dictionaries
 
