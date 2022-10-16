@@ -20,57 +20,33 @@ open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.FramebufferObjects.FramebufferOb
     using (FramebufferObject; FramebufferTarget)
 
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.FramebufferObjects.Attachments
-    using (FramebufferObjectAttachment)
+    using (FramebufferObjectAttachment; FramebufferAttachment)
 
 import Ffi.Hs.-base.Dictionaries
 
 {-# FOREIGN GHC
 import qualified Graphics.Rendering.OpenGL.GL.Framebuffer
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+import MAlonzo.Code.Ffi.Hs.Graphics.Rendering.OpenGL.GL.FramebufferObjects.Attachments
+    (AgdaFramebufferAttachment(AgdaFramebufferAttachment))
 #-}
 
 
 DrawBufferIndex : Set
 DrawBufferIndex = GLuint
 
-
-data BufferMode : Set where
-    NoBuffers           : BufferMode
-    FrontLeftBuffer     : BufferMode
-    FrontRightBuffer    : BufferMode
-    BackLeftBuffer      : BufferMode
-    BackRightBuffer     : BufferMode
-    FrontBuffers        : BufferMode
-    BackBuffers         : BufferMode
-    LeftBuffers         : BufferMode
-    RightBuffers        : BufferMode
-    FrontAndBackBuffers : BufferMode
-    AuxBuffer           : GLsizei → BufferMode
-    FBOColorAttachment  : GLsizei → BufferMode
-
-{-# COMPILE GHC BufferMode = data Graphics.Rendering.OpenGL.GL.Framebuffer.BufferMode
-    ( Graphics.Rendering.OpenGL.GL.Framebuffer.NoBuffers
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.FrontLeftBuffer
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.FrontRightBuffer
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.BackLeftBuffer
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.BackRightBuffer
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.FrontBuffers
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.BackBuffers
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.LeftBuffers
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.RightBuffers
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.FrontAndBackBuffers
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.AuxBuffer
-    | Graphics.Rendering.OpenGL.GL.Framebuffer.FBOColorAttachment
-    ) #-}
+open import Ffi.Hs.-OpenGL.BufferMode public
 
 postulate
-    Eq[BufferMode]   : Eq BufferMode
-    Ord[BufferMode]  : Ord BufferMode
-    Show[BufferMode] : Show BufferMode
+    Eq[BufferMode]                    : Eq BufferMode
+    Ord[BufferMode]                   : Ord BufferMode
+    Show[BufferMode]                  : Show BufferMode
+    FramebufferAttachment[BufferMode] : FramebufferAttachment BufferMode
 
-{-# COMPILE GHC Eq[BufferMode]   = AgdaEq   #-}
-{-# COMPILE GHC Ord[BufferMode]  = AgdaOrd  #-}
-{-# COMPILE GHC Show[BufferMode] = AgdaShow #-}
+{-# COMPILE GHC Eq[BufferMode]                    = AgdaEq                    #-}
+{-# COMPILE GHC Ord[BufferMode]                   = AgdaOrd                   #-}
+{-# COMPILE GHC Show[BufferMode]                  = AgdaShow                  #-}
+{-# COMPILE GHC FramebufferAttachment[BufferMode] = AgdaFramebufferAttachment #-}
 
 
 data ClearBuffer : Set where
