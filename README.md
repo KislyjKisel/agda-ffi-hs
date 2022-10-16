@@ -10,6 +10,7 @@
 * `fixed-0.3`
 * `half-0.3.1`
 * `JuicyPixels-3.3.8` (no internals)
+* `ObjectName-1.1.0.2`
 * `StateVar-1.2.2`
 * `stm-2.5.1.0`
 * `unliftio-core-2.0.1` (no `UnliftIO` type)

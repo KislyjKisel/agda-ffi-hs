@@ -1,0 +1,3 @@
+name: ffi-hs-ObjectName
+include: .
+depend: ffi-hs-base
