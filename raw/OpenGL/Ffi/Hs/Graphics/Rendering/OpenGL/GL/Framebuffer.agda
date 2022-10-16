@@ -5,6 +5,7 @@ module Ffi.Hs.Graphics.Rendering.OpenGL.GL.Framebuffer where
 open import Agda.Builtin.IO   using (IO)
 open import Agda.Builtin.List using (List)
 open import Agda.Builtin.Unit using (⊤)
+open import Ffi.Hs.Graphics.GL.Types using (GLuint)
 
 {-# FOREIGN GHC
 import qualified Graphics.Rendering.OpenGL.GL.Framebuffer
@@ -27,3 +28,6 @@ postulate
     clear : List ClearBuffer → IO ⊤
 
 {-# COMPILE GHC clear = Graphics.Rendering.OpenGL.GL.Framebuffer.clear #-}
+
+DrawBufferIndex : Set
+DrawBufferIndex = GLuint
