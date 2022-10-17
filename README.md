@@ -17,6 +17,7 @@
 
 ### Substantial raw bindings to
 * `base-4.17.0.0` (no GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*)
+* `OpenGL-3.0.3.0`
 * `scientific-0.3.7.0` (no Text/ByteString builders)
 * `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Internal.\*, SDL.Raw.\*)
 
@@ -24,7 +25,6 @@
 * `bytestring-0.11.3.1` (only Data.ByteString(.Internal), Data.ByteString.Lazy(.Internal))
 * `exceptions` (empty)
 * `linear`
-* `OpenGL`
 * `OpenGLRaw` (only Graphics.GL.Types)
 * `primitive`
 * `text-2.0.1` (only Data.Text)
@@ -52,7 +52,6 @@ Temporary fix - `allow-newer` in `cabal.project`.
 * Glue code for stdlib (and mb smth else) is planned.
 * Not sure about handling type families (opt: postulate as type + postulate \\== for concrete args).
 * Record fields are often not exported properly.
-* Agda's builtin Nat and String are (opaque here) and Text, which is cumbersome to use with Hs libs using Ints and Strings. Literal overloading should help.
 * Many definitions could be defined in Agda for better typing (?). Most of the time only types are transparent currently.
 
 
