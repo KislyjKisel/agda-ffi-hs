@@ -2,6 +2,7 @@
 
 module Ffi.Hs.GHC.Num where
 
+open import Agda.Builtin.Nat      using (zero; suc)
 open import Agda.Builtin.Unit     using (⊤)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
@@ -30,6 +31,11 @@ private
 Lit-FromNat[Integer] : Lit-FromNat Integer
 Lit-FromNat[Integer] .Lit-ConstrainNat s = ⊤
 Lit-FromNat[Integer] .Lit-fromNat      s = ℤ.pos s
+
+Lit-FromNeg[Integer] : Lit-FromNeg Integer
+Lit-FromNeg[Integer] .Lit-ConstrainNeg n = ⊤
+Lit-FromNeg[Integer] .Lit-fromNeg zero    = ℤ.pos 0
+Lit-FromNeg[Integer] .Lit-fromNeg (suc n) = ℤ.negsuc n
 
 postulate
     Data[Integer]     : Data Integer

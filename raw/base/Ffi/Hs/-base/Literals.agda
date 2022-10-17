@@ -27,3 +27,16 @@ open Lit-FromNat public
     ( Constraint to Lit-ConstrainNat
     ; fromNat to Lit-fromNat
     )
+
+open import Agda.Builtin.FromNeg public
+    using ()
+    renaming
+    ( Negative to Lit-FromNeg
+    )
+
+open Lit-FromNeg public
+    using ()
+    renaming
+    ( Constraint to Lit-ConstrainNeg
+    ; fromNeg to Lit-fromNeg
+    )

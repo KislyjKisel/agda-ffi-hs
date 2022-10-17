@@ -2,7 +2,14 @@
 
 module Ffi.Hs.Data.Int where
 
+open import Agda.Builtin.Bool          using (true; false)
+open import Agda.Builtin.Int      as ℤ using ()
+open import Agda.Builtin.Nat      as ℕ using (zero; suc)
+open import Agda.Builtin.Unit          using (⊤)
 open import Ffi.Hs.-base.Class
+open import Ffi.Hs.-base.Literals
+open import Ffi.Hs.Data.Void           using (Void)
+open import Ffi.Hs.GHC.Num             using (fromInteger)
 
 open import Ffi.Hs.GHC.Exts public
     using (Int; Int8; Int16; Int32; Int64)
@@ -162,3 +169,69 @@ postulate
 {-# COMPILE GHC Show[Int64]       = AgdaShow       #-}
 {-# COMPILE GHC Eq[Int64]         = AgdaEq         #-}
 {-# COMPILE GHC Ord[Int64]        = AgdaOrd        #-}
+
+
+Lit-FromNat[Int] : Lit-FromNat Int
+Lit-FromNat[Int] .Lit-ConstrainNat n with n ℕ.< 536870912
+... | false = Void
+... | true  = ⊤
+Lit-FromNat[Int] .Lit-fromNat n = fromInteger ⦃ Num[Int] ⦄ (ℤ.pos n)
+
+Lit-FromNat[Int8] : Lit-FromNat Int8
+Lit-FromNat[Int8] .Lit-ConstrainNat n with n ℕ.< 128
+... | false = Void
+... | true  = ⊤
+Lit-FromNat[Int8] .Lit-fromNat n = fromInteger ⦃ Num[Int8] ⦄ (ℤ.pos n)
+
+Lit-FromNat[Int16] : Lit-FromNat Int16
+Lit-FromNat[Int16] .Lit-ConstrainNat n with n ℕ.< 32768
+... | false = Void
+... | true  = ⊤
+Lit-FromNat[Int16] .Lit-fromNat n = fromInteger ⦃ Num[Int16] ⦄ (ℤ.pos n)
+
+Lit-FromNat[Int32] : Lit-FromNat Int32
+Lit-FromNat[Int32] .Lit-ConstrainNat n with n ℕ.< 2147483648
+... | false = Void
+... | true  = ⊤
+Lit-FromNat[Int32] .Lit-fromNat n = fromInteger ⦃ Num[Int32] ⦄ (ℤ.pos n)
+
+Lit-FromNat[Int64] : Lit-FromNat Int64
+Lit-FromNat[Int64] .Lit-ConstrainNat n with n ℕ.< 9223372036854775808
+... | false = Void
+... | true  = ⊤
+Lit-FromNat[Int64] .Lit-fromNat n = fromInteger ⦃ Num[Int64] ⦄ (ℤ.pos n)
+
+Lit-FromNeg[Int] : Lit-FromNeg Int
+Lit-FromNeg[Int] .Lit-ConstrainNeg n with n ℕ.< 536870913
+... | false = Void
+... | true  = ⊤
+Lit-FromNeg[Int] .Lit-fromNeg zero    = fromInteger ⦃ Num[Int] ⦄ (ℤ.pos 0)
+Lit-FromNeg[Int] .Lit-fromNeg (suc n) = fromInteger ⦃ Num[Int] ⦄ (ℤ.negsuc n)
+
+Lit-FromNeg[Int8] : Lit-FromNeg Int8
+Lit-FromNeg[Int8] .Lit-ConstrainNeg n with n ℕ.< 129
+... | false = Void
+... | true  = ⊤
+Lit-FromNeg[Int8] .Lit-fromNeg zero    = fromInteger ⦃ Num[Int8] ⦄ (ℤ.pos 0)
+Lit-FromNeg[Int8] .Lit-fromNeg (suc n) = fromInteger ⦃ Num[Int8] ⦄ (ℤ.negsuc n)
+
+Lit-FromNeg[Int16] : Lit-FromNeg Int16
+Lit-FromNeg[Int16] .Lit-ConstrainNeg n with n ℕ.< 32769
+... | false = Void
+... | true  = ⊤
+Lit-FromNeg[Int16] .Lit-fromNeg zero    = fromInteger ⦃ Num[Int16] ⦄ (ℤ.pos 0)
+Lit-FromNeg[Int16] .Lit-fromNeg (suc n) = fromInteger ⦃ Num[Int16] ⦄ (ℤ.negsuc n)
+
+Lit-FromNeg[Int32] : Lit-FromNeg Int32
+Lit-FromNeg[Int32] .Lit-ConstrainNeg n with n ℕ.< 2147483649
+... | false = Void
+... | true  = ⊤
+Lit-FromNeg[Int32] .Lit-fromNeg zero    = fromInteger ⦃ Num[Int32] ⦄ (ℤ.pos 0)
+Lit-FromNeg[Int32] .Lit-fromNeg (suc n) = fromInteger ⦃ Num[Int32] ⦄ (ℤ.negsuc n)
+
+Lit-FromNeg[Int64] : Lit-FromNeg Int64
+Lit-FromNeg[Int64] .Lit-ConstrainNeg n with n ℕ.< 9223372036854775809
+... | false = Void
+... | true  = ⊤
+Lit-FromNeg[Int64] .Lit-fromNeg zero    = fromInteger ⦃ Num[Int64] ⦄ (ℤ.pos 0)
+Lit-FromNeg[Int64] .Lit-fromNeg (suc n) = fromInteger ⦃ Num[Int64] ⦄ (ℤ.negsuc n)

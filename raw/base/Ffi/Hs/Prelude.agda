@@ -216,6 +216,10 @@ instance
     inst:Eq[Int]         = Ffi.Hs.Data.Int.Eq[Int]
     inst:Ord[Int]        = Ffi.Hs.Data.Int.Ord[Int]
 
+    inst:Lit-FromNat[Int] = Ffi.Hs.Data.Int.Lit-FromNat[Int]
+    inst:Lit-FromNeg[Int] = Ffi.Hs.Data.Int.Lit-FromNeg[Int]
+
+
 open import Ffi.Hs.GHC.Num public
     using
     ( Integer
@@ -234,6 +238,7 @@ open import Ffi.Hs.GHC.Num public
 
 instance
     inst:Lit-FromNat[Integer] = Ffi.Hs.GHC.Num.Lit-FromNat[Integer]
+    inst:Lit-FromNeg[Integer] = Ffi.Hs.GHC.Num.Lit-FromNeg[Integer]
 
     inst:Data[Integer]     = Ffi.Hs.GHC.Num.Data[Integer]
     inst:Bits[Integer]     = Ffi.Hs.GHC.Num.Bits[Integer]
