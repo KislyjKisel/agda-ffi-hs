@@ -5,6 +5,8 @@ module Ffi.Hs.Prelude where
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 
+open import Ffi.Hs.-base.Literals public
+
 private
     variable
         aℓ : Level
@@ -166,7 +168,8 @@ open import Ffi.Hs.Data.String public
     )
 
 instance
-    inst:IsString[String] = Ffi.Hs.Data.String.IsString[String]
+    inst:IsString[String]     = Ffi.Hs.Data.String.IsString[String]
+    inst:Lit-FromText[String] = Ffi.Hs.Data.String.Lit-FromText[String]
 
 open import Ffi.Hs.Data.Tuple public
     using
@@ -230,6 +233,8 @@ open import Ffi.Hs.GHC.Num public
     )
 
 instance
+    inst:Lit-FromNat[Integer] = Ffi.Hs.GHC.Num.Lit-FromNat[Integer]
+
     inst:Data[Integer]     = Ffi.Hs.GHC.Num.Data[Integer]
     inst:Bits[Integer]     = Ffi.Hs.GHC.Num.Bits[Integer]
     inst:Enum[Integer]     = Ffi.Hs.GHC.Num.Enum[Integer]

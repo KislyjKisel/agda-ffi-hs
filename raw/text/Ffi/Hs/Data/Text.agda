@@ -2,21 +2,23 @@
 
 module Ffi.Hs.Data.Text where
 
-open import Agda.Builtin.Bool      using (Bool)
-open import Agda.Builtin.Char      using (Char)
-open import Agda.Builtin.List      using (List)
-open import Agda.Builtin.Maybe     using (Maybe)
+open import Agda.Builtin.Bool             using (Bool)
+open import Agda.Builtin.Char             using (Char)
+open import Agda.Builtin.List             using (List)
+open import Agda.Builtin.Maybe            using (Maybe)
+open import Agda.Builtin.Unit             using (⊤)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Level     using (Liftℓ)
-open import Ffi.Hs.Control.DeepSeq using (NFData)
-open import Ffi.Hs.Data.Int        using (Int)
-open import Ffi.Hs.Data.Ord        using (Ordering)
-open import Ffi.Hs.Data.Tuple      using (Tuple2; Tuple3)
-open import Ffi.Hs.GHC.Exts        using (Addr#)
-open import Ffi.Hs.GHC.IsList      using (IsList)
-open import Ffi.Hs.GHC.Stack       using (HasCallStack)
-open import Ffi.Hs.Text.Printf     using (PrintfArg)
+open import Ffi.Hs.-base.Level            using (Liftℓ)
+open import Ffi.Hs.-base.Literals
+open import Ffi.Hs.Control.DeepSeq        using (NFData)
+open import Ffi.Hs.Data.Int               using (Int)
+open import Ffi.Hs.Data.Ord               using (Ordering)
+open import Ffi.Hs.Data.Tuple             using (Tuple2; Tuple3)
+open import Ffi.Hs.GHC.Exts               using (Addr#)
+open import Ffi.Hs.GHC.IsList             using (IsList)
+open import Ffi.Hs.GHC.Stack              using (HasCallStack)
+open import Ffi.Hs.Text.Printf            using (PrintfArg)
 
 open import Agda.Builtin.String public
     using ()
@@ -39,6 +41,11 @@ private
         aℓ : Level
         A : Set aℓ
         M : Set aℓ → Set aℓ
+
+
+Lit-FromText[Text] : Lit-FromText Text
+Lit-FromText[Text] .Lit-ConstrainText s = ⊤
+Lit-FromText[Text] .Lit-fromText      s = s
 
 postulate
     IsList[Text]    : IsList Text
@@ -271,3 +278,4 @@ postulate
 {-# COMPILE GHC unpackCString#      =                       Data.Text.unpackCString#      #-}
 {-# COMPILE GHC unpackCStringAscii# =                       Data.Text.unpackCStringAscii# #-}
 {-# COMPILE GHC measureOff          =                       Data.Text.measureOff          #-}
+ 

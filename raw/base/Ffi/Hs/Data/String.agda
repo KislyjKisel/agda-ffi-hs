@@ -2,9 +2,12 @@
 
 module Ffi.Hs.Data.String where
 
-open import Agda.Builtin.Char using (Char)
-open import Agda.Builtin.List using (List)
+open import Agda.Builtin.Char     using (Char)
+open import Agda.Builtin.List     using (List)
+open import Agda.Builtin.String   using ()
+open import Agda.Builtin.Unit     using (⊤)
 open import Agda.Primitive
+open import Ffi.Hs.-base.Literals
 
 open import Ffi.Hs.-base.Class public
     using (IsString)
@@ -41,3 +44,7 @@ postulate
     IsString[String] : IsString String
 
 {-# COMPILE GHC IsString[String] = AgdaIsString #-}
+
+Lit-FromText[String] : Lit-FromText String
+Lit-FromText[String] .Lit-ConstrainText s = ⊤
+Lit-FromText[String] .Lit-fromText      s = Agda.Builtin.String.primStringToList s
