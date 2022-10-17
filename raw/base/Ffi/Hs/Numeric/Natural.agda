@@ -2,7 +2,11 @@
 
 module Ffi.Hs.Numeric.Natural where
 
+open import Agda.Builtin.Int      as ℤ using ()
+open import Agda.Builtin.Unit          using (⊤)
 open import Ffi.Hs.-base.Class
+open import Ffi.Hs.-base.Literals
+open import Ffi.Hs.GHC.Num             using (fromInteger)
 
 import Ffi.Hs.-base.Dictionaries
 
@@ -39,3 +43,7 @@ postulate
 {-# COMPILE GHC Show[Natural]     = AgdaShow     #-}
 {-# COMPILE GHC Eq[Natural]       = AgdaEq       #-}
 {-# COMPILE GHC Ord[Natural]      = AgdaOrd      #-}
+
+Lit-FromNat[Natural] : Lit-FromNat Natural
+Lit-FromNat[Natural] .Lit-ConstrainNat s = ⊤
+Lit-FromNat[Natural] .Lit-fromNat      s = fromInteger ⦃ Num[Natural] ⦄ (ℤ.pos s)
