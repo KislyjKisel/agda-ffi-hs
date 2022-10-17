@@ -349,6 +349,7 @@ data Word16 : Set where
 data Word32 : Set where
     W32# : Word32# → Word32
 
+-- todo: use Agda's builtin Word?
 data Word64 : Set where
     W64# : Word64# → Word64
 
