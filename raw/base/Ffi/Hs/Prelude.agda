@@ -388,6 +388,9 @@ instance
     inst:Eq[Word]         = Ffi.Hs.Data.Word.Eq[Word]
     inst:Ord[Word]        = Ffi.Hs.Data.Word.Ord[Word]
 
+    inst:Lit-FromNat[Word] = Ffi.Hs.Data.Word.Lit-FromNat[Word]
+
+
 open import Ffi.Hs.Data.Semigroup public
     using
     ( Semigroup
