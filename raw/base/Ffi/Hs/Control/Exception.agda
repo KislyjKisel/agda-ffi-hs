@@ -23,7 +23,7 @@ private
         A : Set aℓ
 
 data Handler {eℓ} {aℓ} (A : Set aℓ) : Set (lsuc eℓ ⊔ aℓ) where
-    mkHandler : {E : Set eℓ} → ⦃ Exception E ⦄ → (E → IO A) → Handler A 
+    mkHandler : {E : Set eℓ} → ⦃ Exception E ⦄ → (E → IO A) → Handler A
 
 {-# FOREIGN GHC type AgdaHandler eℓ aℓ = Control.Exception.Handler #-}
 {-# COMPILE GHC Handler = data(1) AgdaHandler (Control.Exception.Handler) #-}

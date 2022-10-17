@@ -34,7 +34,7 @@ data BlockedIndefinitelyOnMVar : Set where
 postulate
     Exception[BlockedIndefinitelyOnMVar] : Exception BlockedIndefinitelyOnMVar
     Show[BlockedIndefinitelyOnMVar]      : Show BlockedIndefinitelyOnMVar
-    
+
     blockedIndefinitelyOnMVar : SomeException {seℓ}
 
 {-# COMPILE GHC Exception[BlockedIndefinitelyOnMVar] = AgdaException #-}
@@ -51,7 +51,7 @@ data BlockedIndefinitelyOnSTM : Set where
 postulate
     Exception[BlockedIndefinitelyOnSTM] : Exception BlockedIndefinitelyOnSTM
     Show[BlockedIndefinitelyOnSTM]      : Show BlockedIndefinitelyOnSTM
-    
+
     blockedIndefinitelyOnSTM : SomeException {seℓ}
 
 {-# COMPILE GHC Exception[BlockedIndefinitelyOnSTM] = AgdaException #-}
@@ -81,7 +81,7 @@ data AllocationLimitExceeded : Set where
 postulate
     Exception[AllocationLimitExceeded] : Exception AllocationLimitExceeded
     Show[AllocationLimitExceeded]      : Show AllocationLimitExceeded
-    
+
     allocationLimitExceeded : SomeException {seℓ}
 
 {-# COMPILE GHC Exception[AllocationLimitExceeded] = AgdaException #-}
@@ -125,7 +125,7 @@ postulate
 
 -- instance isn't erased
 -- data SomeAsyncException {sℓ} : Set (lsuc sℓ) where
---     mkSomeAsyncException : {A : Set sℓ} → ⦃ Exception A ⦄ → A → SomeAsyncException 
+--     mkSomeAsyncException : {A : Set sℓ} → ⦃ Exception A ⦄ → A → SomeAsyncException
 
 -- {-# FOREIGN GHC type AgdaSomeAsyncException sℓ = GHC.IO.Exception.SomeAsyncException #-}
 -- {-# COMPILE GHC SomeAsyncException = data(1) AgdaSomeAsyncException (GHC.IO.Exception.SomeAsyncException) #-}

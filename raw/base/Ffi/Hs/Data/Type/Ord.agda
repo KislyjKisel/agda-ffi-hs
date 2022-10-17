@@ -40,13 +40,13 @@ postulate
     Eq[OrderingI]   : Eq (OrderingI A B)
 
     OrdCond : `Ordering → K → K → K → K
-    -- _<=_ : 
+    -- _<=_ :
     _<=?_ : K → K → `Bool
-    -- _>=_ : 
+    -- _>=_ :
     _>=?_ : K → K → `Bool
-    -- _>_ : 
+    -- _>_ :
     _>?_ : K → K → `Bool
-    -- _<_ : 
+    -- _<_ :
     _<?_ : K → K → `Bool
     Max : K → K → K
     Min : K → K → K

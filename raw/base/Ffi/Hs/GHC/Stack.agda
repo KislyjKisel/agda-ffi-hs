@@ -65,7 +65,7 @@ data HasCallStack : Set where
 
 postulate
     CallStack : Set
-    
+
     IsList[CallStack] : IsList CallStack
     Show[CallStack]   : Show CallStack
 

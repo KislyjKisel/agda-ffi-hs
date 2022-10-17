@@ -7,7 +7,7 @@ open import Agda.Builtin.Char  using (Char)
 open import Agda.Builtin.List  using (List)
 open import Agda.Builtin.Maybe using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Class using (Integral) 
+open import Ffi.Hs.-base.Class using (Integral)
 open import Ffi.Hs.Data.Either using (Either)
 open import Ffi.Hs.Data.Int    using (Int)
 open import Ffi.Hs.Text.ParserCombinators.ReadPrec using (ReadPrec)

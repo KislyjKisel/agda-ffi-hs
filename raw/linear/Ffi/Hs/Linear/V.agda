@@ -56,4 +56,4 @@ postulate
     reifyVector    : forall a r. Vector a → (forall (n : Type). Dim n => V n a → r) → r
     reifyDimNat    : Int → (forall (n : Nat). KnownNat n => Proxy n → r) → r
     reifyVectorNat : forall a r. Vector a → (forall (n : Nat). KnownNat n => V n a → r) → r
-    fromVector     : forall n a. Dim n => Vector a → Maybe (V n a) 
+    fromVector     : forall n a. Dim n => Vector a → Maybe (V n a)

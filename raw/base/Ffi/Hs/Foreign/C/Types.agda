@@ -27,7 +27,7 @@ postulate
 
     CFloat  : Set
     CDouble : Set
-    
+
     CSize    : Set
     CIntPtr  : Set
     CUIntPtr : Set
@@ -37,7 +37,7 @@ postulate
     CTime      : Set
     CUSeconds  : Set
     CSUSeconds : Set
-   
+
     CBool      : Set
     CSigAtomic : Set
     CFile      : Set
@@ -302,7 +302,7 @@ postulate
     Eq[CDouble]         : Eq CDouble
     Ord[CDouble]        : Ord CDouble
 
-    
+
     Storable[CSize]   : Storable CSize
     Bits[CSize]       : Bits CSize
     FiniteBits[CSize] : FiniteBits CSize

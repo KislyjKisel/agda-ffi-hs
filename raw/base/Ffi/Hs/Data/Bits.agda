@@ -109,7 +109,7 @@ postulate
     And : Set aℓ → Set aℓ
     mkAnd : A → And A
     getAnd : And A → A
-    
+
     Ior : Set aℓ → Set aℓ
     mkIor : A → Ior A
     getIor : Ior A → A
@@ -126,7 +126,7 @@ postulate
 {-# COMPILE GHC And = type(1) AgdaAnd #-}
 {-# COMPILE GHC mkAnd  = \ aℓ a -> Data.Bits.mkAnd  #-}
 {-# COMPILE GHC getAnd = \ aℓ a -> Data.Bits.getAnd #-}
-    
+
 {-# FOREIGN GHC type AgdaIor aℓ = Data.Bits.Ior #-}
 {-# COMPILE GHC Ior = type(1) AgdaIor #-}
 {-# COMPILE GHC mkIor  = \ aℓ a -> Data.Bits.mkIor  #-}

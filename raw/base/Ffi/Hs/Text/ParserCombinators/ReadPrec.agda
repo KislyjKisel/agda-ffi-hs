@@ -30,7 +30,7 @@ Prec = ReadPrec Int
 
 postulate
     minPrec : Prec
-    
+
     lift  : ReadP A → ReadPrec A
     prec  : Prec → ReadPrec A → ReadPrec A
     step  : ReadPrec A → ReadPrec A

@@ -615,7 +615,7 @@ data IntegerHandling : Set where
     ToNormalizedFloat : IntegerHandling
     KeepIntegral      : IntegerHandling
 
-{-# COMPILE GHC IntegerHandling = data Graphics.Rendering.OpenGL.GL.VertexSpec.IntegerHandling 
+{-# COMPILE GHC IntegerHandling = data Graphics.Rendering.OpenGL.GL.VertexSpec.IntegerHandling
     ( Graphics.Rendering.OpenGL.GL.VertexSpec.ToFloat
     | Graphics.Rendering.OpenGL.GL.VertexSpec.ToNormalizedFloat
     | Graphics.Rendering.OpenGL.GL.VertexSpec.KeepIntegral

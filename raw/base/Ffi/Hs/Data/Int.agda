@@ -27,7 +27,7 @@ postulate
     Show[Int]       : Show Int
     Eq[Int]         : Eq Int
     Ord[Int]        : Ord Int
-    
+
     Data[Int8]       : Data Int8
     Storable[Int8]   : Storable Int8
     Bits[Int8]       : Bits Int8

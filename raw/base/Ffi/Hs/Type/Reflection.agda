@@ -47,7 +47,7 @@ type AgdaTypeRep kℓ k = Type.Reflection.TypeRep
 -- todo: separate versions for types and kinds? (can't mix?: Sets are translated as units)
 -- mb types work better as sets, kinds - with ⦃IsKind⦄ (iskindortype?)
 
--- only for types - otherwise ∀K→(A : K)→... - A is not erased (K mb ≠ Set) 
+-- only for types - otherwise ∀K→(A : K)→... - A is not erased (K mb ≠ Set)
 data SomeTypeRep {kℓ} : Set (lsuc kℓ) where
     mkSomeTypeRep : {A : Set kℓ} → TypeRep A → SomeTypeRep
 

@@ -50,10 +50,10 @@ type AgdaTypePropHEq aℓ k1 (a :: k1) k2 = (Data.Type.Equality.:~~:) a
 {-# COMPILE GHC _:~~:_ = data(4) AgdaTypePropHEq (Data.Type.Equality.HRefl) #-}
 
 postulate
-    sym : A :~: B → B :~: A 
+    sym : A :~: B → B :~: A
     trans : A :~: B → B :~: C → A :~: C
     castWith : A :~: B → A → B
-    -- -- gcastWith : A :~: B → 
+    -- -- gcastWith : A :~: B →
     apply : F :~: G → A :~: B → F A :~: G B
     inner : F A :~: G B → A :~: B
     outer : F A :~: G B → F :~: G

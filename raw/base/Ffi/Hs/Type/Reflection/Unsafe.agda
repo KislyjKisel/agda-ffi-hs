@@ -68,7 +68,7 @@ postulate
     mkTyCon                : List Char → List Char → List Char → Int → KindRep → TyCon
     typeRepFingerprint     : TypeRep A → Fingerprint
     someTypeRepFingerprint : SomeTypeRep {aℓ} → Fingerprint
-    
+
     mkTrCon          : {K : Set (lsuc aℓ)} {A : K} → TyCon → List (SomeTypeRep {bℓ}) → TypeRep A
     tyConKindRep     : TyCon → KindRep
     tyConKindArgs    : TyCon → Int

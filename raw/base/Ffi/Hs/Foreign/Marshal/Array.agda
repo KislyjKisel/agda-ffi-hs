@@ -29,7 +29,7 @@ postulate
     reallocArray0 : ⦃ Storable A ⦄ → Ptr A → Int → IO (Ptr A)
     callocArray   : ⦃ Storable A ⦄ → Int → IO (Ptr A)
     callocArray0  : ⦃ Storable A ⦄ → Int → IO (Ptr A)
-    
+
     peekArray  : ⦃ Storable A ⦄ → Int → Ptr A → IO (List A)
     peekArray0 : ⦃ Storable A ⦄ → ⦃ Eq A ⦄ → A → Ptr A → IO (List A)
     pokeArray  : ⦃ Storable A ⦄ → Ptr A → List A → IO ⊤

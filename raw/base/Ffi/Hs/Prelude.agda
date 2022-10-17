@@ -22,7 +22,7 @@ case_of_ : ∀{aℓ bℓ} {A : Set aℓ} {B : Set bℓ} → A → (A → B) → 
 case x of f = f x
 
 _::_ : ∀{aℓ} (A : Set aℓ) → A → A
-_ :: x = x 
+_ :: x = x
 
 open import Ffi.Hs.-base.Level public
     using (Liftℓ; liftℓ; unliftℓ)
@@ -659,4 +659,3 @@ open import Ffi.Hs.Data.Type.Equality public
     using
     ( _~_
     )
- 

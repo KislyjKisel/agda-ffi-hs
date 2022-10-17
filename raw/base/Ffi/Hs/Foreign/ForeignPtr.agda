@@ -46,7 +46,7 @@ postulate
     newForeignPtr_            : Ptr A → IO (ForeignPtr A)
     addForeignPtrFinalizer    : ∀{ℓ} → FinalizerPtr {ℓ = ℓ} A → ForeignPtr A → IO ⊤
     newForeignPtrEnv          : ∀{ℓ} {Env : Set eℓ} → FinalizerEnvPtr {ℓ = ℓ} Env A → Ptr Env → Ptr A → IO (ForeignPtr A)
-    addForeignPtrFinalizerEnv : ∀{ℓ} {Env : Set eℓ} → FinalizerEnvPtr {ℓ = ℓ} Env A → Ptr Env → ForeignPtr A → IO ⊤ 
+    addForeignPtrFinalizerEnv : ∀{ℓ} {Env : Set eℓ} → FinalizerEnvPtr {ℓ = ℓ} Env A → Ptr Env → ForeignPtr A → IO ⊤
     withForeignPtr            : ForeignPtr A → (Ptr A → IO B) → IO B
     finalizeForeignPtr        : ForeignPtr A → IO ⊤
 

@@ -7,7 +7,7 @@ open import Agda.Primitive
 import Ffi.Hs.-base.Dictionaries
 
 {-# FOREIGN GHC
-import qualified 
+import qualified Linear.Algebra
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 

@@ -62,7 +62,7 @@ record FieldFormat : Set where
         fmtPrecision : Maybe Int
         fmtAdjust    : Maybe FormatAdjustment
         fmtSign      : Maybe FormatSign
-        fmtAlternate : Bool 
+        fmtAlternate : Bool
         fmtModifiers : List Char
         fmtChar      : Char
 

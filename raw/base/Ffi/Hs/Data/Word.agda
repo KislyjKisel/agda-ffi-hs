@@ -46,7 +46,7 @@ postulate
     Show[Word]       : Show Word
     Eq[Word]         : Eq Word
     Ord[Word]        : Ord Word
-    
+
     Data[Word8]       : Data Word8
     Storable[Word8]   : Storable Word8
     Bits[Word8]       : Bits Word8

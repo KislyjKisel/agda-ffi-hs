@@ -278,4 +278,3 @@ postulate
 {-# COMPILE GHC unpackCString#      =                       Data.Text.unpackCString#      #-}
 {-# COMPILE GHC unpackCStringAscii# =                       Data.Text.unpackCStringAscii# #-}
 {-# COMPILE GHC measureOff          =                       Data.Text.measureOff          #-}
- 

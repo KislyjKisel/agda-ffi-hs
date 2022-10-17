@@ -27,7 +27,7 @@ private
 postulate
     div'    : ⦃ Real A ⦄ → ⦃ Integral B ⦄ → A → A → B
     mod'    : ⦃ Real A ⦄ → A → A → A
-    divMod' : ⦃ Real A ⦄ → ⦃ Integral B ⦄ → A → A → Tuple2 B A 
+    divMod' : ⦃ Real A ⦄ → ⦃ Integral B ⦄ → A → A → Tuple2 B A
 
     HasResolution : Set aℓ → Set aℓ
     resolution : ⦃ HasResolution A ⦄ → F A → Integer
@@ -67,7 +67,7 @@ postulate
 {-# COMPILE GHC HasResolution[E12] = AgdaHasResolution #-}
 
 data Fixed (A : Set aℓ) : Set aℓ where
-    MkFixed : Integer → Fixed A 
+    MkFixed : Integer → Fixed A
 
 {-# FOREIGN GHC type AgdaFixed aℓ = Data.Fixed.Fixed #-}
 {-# COMPILE GHC Fixed = data(1) AgdaFixed (Data.Fixed.MkFixed) #-}

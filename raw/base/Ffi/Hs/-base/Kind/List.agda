@@ -19,7 +19,7 @@ private
 {-# POLARITY P`List _ ++ #-}
 
 `List : (A : Set aℓ) → ⦃ IsKind A ⦄ → Set aℓ
-`List A = P`List A 
+`List A = P`List A
 
 postulate
     `[] : ⦃ _ : IsKind A ⦄ → `List A

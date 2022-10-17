@@ -56,17 +56,17 @@ postulate
     liftA    : ⦃ Applicative F ⦄ → (A → B) → F A → F B
     liftA3   : ⦃ Applicative F ⦄ → (A → B → C → D) → F A → F B → F C → F D
     optional : ⦃ Alternative F ⦄ → F A → F (Maybe A)
- 
+
     filterM      : ⦃ Applicative F ⦄ → (A → F Bool) → List A → F (List A)
     mapAndUnzipM : ⦃ Applicative F ⦄ → (A → F (Tuple2 B C)) → List A → F (Tuple2 (List B) (List C))
     zipWithM     : ⦃ Applicative F ⦄ → (A → B → F C) → List A → List B → F (List C)
     zipWithM_    : ⦃ Applicative F ⦄ → (A → B → F C) → List A → List B → F ⊤′
     replicateM   : ⦃ Applicative F ⦄ → Int → F A → F (List A)
     replicateM_  : ⦃ Applicative F ⦄ → Int → F A → F ⊤′
-    
+
     guard  : ⦃ Alternative F ⦄ → Bool → F ⊤′
     when   : ⦃ Applicative F ⦄ → Bool → F ⊤′ → F ⊤′
-    unless : ⦃ Applicative F ⦄ → Bool → F ⊤′ → F ⊤′ 
+    unless : ⦃ Applicative F ⦄ → Bool → F ⊤′ → F ⊤′
 
 {-# COMPILE GHC pure   = \ ℓ f a     AgdaApplicative -> Control.Applicative.pure   #-}
 {-# COMPILE GHC _<*>_  = \ ℓ f a b   AgdaApplicative -> (Control.Applicative.<*>)  #-}

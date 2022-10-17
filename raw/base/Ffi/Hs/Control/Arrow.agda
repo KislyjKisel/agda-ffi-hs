@@ -144,7 +144,7 @@ module _ ⦃ Arrow[Cat] : Arrow {aℓ} {aℓ} Cat ⦄ where
     infixr 1 _^>>_ _>>^_ _<<^_ _^<<_
 
     _^>>_ : (A → B) → Cat B C → Cat A C
-    f ^>> a = arr f >>> a 
+    f ^>> a = arr f >>> a
 
     _>>^_ : Cat A B → (B → C) → Cat A C
     a >>^ f = a >>> arr f

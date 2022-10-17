@@ -40,11 +40,11 @@ postulate
 
     mzero : ⦃ MonadPlus M ⦄ → M A
     mplus : ⦃ MonadPlus M ⦄ → M A → M A → M A
-    
-    _=<<_ : ⦃ Monad M ⦄ → (A → M B) → M A → M B 
+
+    _=<<_ : ⦃ Monad M ⦄ → (A → M B) → M A → M B
     _>=>_ : {A B C : Set mℓ} → ⦃ Monad M ⦄ → (A → M B) → (B → M C) → A → M C
     _<=<_ : {A B C : Set mℓ} → ⦃ Monad M ⦄ → (B → M C) → (A → M B) → A → M C
-    
+
     forever : ⦃ Applicative M ⦄ → M A → M B
 
     join : ⦃ Monad M ⦄ → M (M A) → M A
@@ -55,7 +55,7 @@ postulate
     liftM3 : ⦃ Monad M ⦄ → (A → B → C → D) → M A → M B → M C → M D
     liftM4 : ⦃ Monad M ⦄ → (A → B → C → D → E) → M A → M B → M C → M D → M E
     liftM5 : ⦃ Monad M ⦄ → (A → B → C → D → E → F) → M A → M B → M C → M D → M E → M F
-    ap     : ⦃ Monad M ⦄ → M (A → B) → M A → M B 
+    ap     : ⦃ Monad M ⦄ → M (A → B) → M A → M B
 
     _<$!>_ : ⦃ Monad M ⦄ → (A → B) → M A → M B
 

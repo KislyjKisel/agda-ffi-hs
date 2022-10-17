@@ -25,7 +25,7 @@ private
 
 -- instance not erased, but this type can be used with a pair of cast fns?
 -- data SomeException {seℓ} : Set (lsuc seℓ) where
---     mkSomeException : {A : Set seℓ} → ⦃ Exception A ⦄ → A → SomeException 
+--     mkSomeException : {A : Set seℓ} → ⦃ Exception A ⦄ → A → SomeException
 
 -- {-# FOREIGN GHC type AgdaSomeException seℓ = GHC.Exception.Type.SomeException #-}
 -- {-# COMPILE GHC SomeException = data(1) AgdaSomeException (GHC.Exception.Type.SomeException) #-}

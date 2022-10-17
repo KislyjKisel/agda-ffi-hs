@@ -32,7 +32,7 @@ CFilePath = CString
 
 postulate
     puts : List Char → IO ⊤
-    
+
     CFLock     : Set
     CGroup     : Set
     CLconv     : Set
@@ -105,7 +105,7 @@ postulate
     c-tcgetattr           : CInt → Ptr CTermios → IO CInt
     c-tcsetattr           : CInt → CInt → Ptr CTermios → IO CInt
     c-waitpid             : CPid → Ptr CInt → CInt → IO CPid
-    
+
     o-RDONLY   : CInt
     o-WRONLY   : CInt
     o-RDWR     : CInt
@@ -158,7 +158,7 @@ postulate
     ptr-c-cc     : Ptr CTermios → IO (Ptr Word8)
     s-issock     : CMode → Bool
     c-s-issock   : CMode → CInt
-    
+
     dEFAULT-BUFFER-SIZE : Int
     sEEK-CUR : CInt
     sEEK-SET : CInt
@@ -238,7 +238,7 @@ postulate
 {-# COMPILE GHC c-tcgetattr           = System.Posix.Internals.c_tcgetattr           #-}
 {-# COMPILE GHC c-tcsetattr           = System.Posix.Internals.c_tcsetattr           #-}
 {-# COMPILE GHC c-waitpid             = System.Posix.Internals.c_waitpid             #-}
-    
+
 {-# COMPILE GHC o-RDONLY   = System.Posix.Internals.o_RDONLY   #-}
 {-# COMPILE GHC o-WRONLY   = System.Posix.Internals.o_WRONLY   #-}
 {-# COMPILE GHC o-RDWR     = System.Posix.Internals.o_RDWR     #-}

@@ -100,7 +100,7 @@ postulate
     shaderDeleteStatus    : Shader → GettableStateVar Bool
     compileStatus         : Shader → GettableStateVar Bool
     shaderInfoLog         : Shader → GettableStateVar (List Char)
-    shaderPrecisionFormat : ShaderType → PrecisionType → GettableStateVar (Tuple2 (Tuple2 GLint GLint) GLint) 
+    shaderPrecisionFormat : ShaderType → PrecisionType → GettableStateVar (Tuple2 (Tuple2 GLint GLint) GLint)
     packUtf8              : List Char → ByteString
     unpackUtf8            : ByteString → List Char
 

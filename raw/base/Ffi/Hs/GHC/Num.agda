@@ -2,12 +2,17 @@
 
 module Ffi.Hs.GHC.Num where
 
-open import Agda.Builtin.Int   using (Int)
+open import Agda.Builtin.Unit     using (⊤)
 open import Agda.Primitive
 open import Ffi.Hs.-base.Class
+open import Ffi.Hs.-base.Literals
 
 open Ffi.Hs.-base.Class public
     using (Num)
+
+open import Agda.Builtin.Int as ℤ public
+    using ()
+    renaming (Int to Integer)
 
 import Ffi.Hs.-base.Dictionaries
 
@@ -21,8 +26,10 @@ private
         aℓ : Level
         A : Set aℓ
 
-Integer : Set
-Integer = Int
+
+Lit-FromNat[Integer] : Lit-FromNat Integer
+Lit-FromNat[Integer] .Lit-ConstrainNat s = ⊤
+Lit-FromNat[Integer] .Lit-fromNat      s = ℤ.pos s
 
 postulate
     Data[Integer]     : Data Integer

@@ -85,7 +85,7 @@ postulate
     last          : NonEmpty A → A
     init          : NonEmpty A → List A
     singleton     : A → NonEmpty A
-    _<|_          : A → NonEmpty A → NonEmpty A  
+    _<|_          : A → NonEmpty A → NonEmpty A
     cons          : A → NonEmpty A → NonEmpty A
     uncons        : NonEmpty A → Tuple2 A (Maybe (NonEmpty A))
     unfoldr       : (A → Tuple2 B (Maybe A)) → A → NonEmpty B
