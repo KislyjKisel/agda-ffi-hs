@@ -7,8 +7,8 @@ open import Agda.Builtin.Int      as ℤ using ()
 open import Agda.Builtin.Nat      as ℕ using ()
 open import Agda.Builtin.Unit          using (⊤)
 open import Ffi.Hs.-base.Class
-open import Ffi.Hs.-base.Empty         using (⊥)
 open import Ffi.Hs.-base.Literals
+open import Ffi.Hs.Data.Void           using (Void)
 open import Ffi.Hs.GHC.Num             using (fromInteger)
 
 open import Ffi.Hs.GHC.Exts public
@@ -192,30 +192,30 @@ postulate
 
 Lit-FromNat[Word] : Lit-FromNat Word
 Lit-FromNat[Word] .Lit-ConstrainNat s with s ℕ.< 1073741824
-... | false = ⊥
+... | false = Void
 ... | true  = ⊤
 Lit-FromNat[Word] .Lit-fromNat s = fromInteger ⦃ Num[Word] ⦄ (ℤ.pos s)
 
 Lit-FromNat[Word8] : Lit-FromNat Word8
 Lit-FromNat[Word8] .Lit-ConstrainNat s with s ℕ.< 256
-... | false = ⊥
+... | false = Void
 ... | true  = ⊤
 Lit-FromNat[Word8] .Lit-fromNat s = fromInteger ⦃ Num[Word8] ⦄ (ℤ.pos s)
 
 Lit-FromNat[Word16] : Lit-FromNat Word16
 Lit-FromNat[Word16] .Lit-ConstrainNat s with s ℕ.< 65536
-... | false = ⊥
+... | false = Void
 ... | true  = ⊤
 Lit-FromNat[Word16] .Lit-fromNat s = fromInteger ⦃ Num[Word16] ⦄ (ℤ.pos s)
 
 Lit-FromNat[Word32] : Lit-FromNat Word32
 Lit-FromNat[Word32] .Lit-ConstrainNat s with s ℕ.< 4294967296
-... | false = ⊥
+... | false = Void
 ... | true  = ⊤
 Lit-FromNat[Word32] .Lit-fromNat s = fromInteger ⦃ Num[Word32] ⦄ (ℤ.pos s)
 
 Lit-FromNat[Word64] : Lit-FromNat Word64
 Lit-FromNat[Word64] .Lit-ConstrainNat s with s ℕ.< 18446744073709551616
-... | false = ⊥
+... | false = Void
 ... | true  = ⊤
 Lit-FromNat[Word64] .Lit-fromNat s = fromInteger ⦃ Num[Word64] ⦄ (ℤ.pos s)
