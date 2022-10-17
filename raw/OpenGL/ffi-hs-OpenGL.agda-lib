@@ -2,6 +2,7 @@ name: ffi-hs-OpenGL
 include: .
 depend:
     ffi-hs-base
+    ffi-hs-bytestring
     ffi-hs-ObjectName
     ffi-hs-OpenGLRaw
     ffi-hs-StateVar
