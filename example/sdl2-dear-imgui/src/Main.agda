@@ -4,6 +4,7 @@ module Main where
 
 open import Ffi.Hs.Prelude
 open import Ffi.Hs.Control.Applicative using (unless)
+open import Ffi.Hs.Data.Text as Text using ()
 
 import Ffi.Hs.SDL.Init           as SDL
 import Ffi.Hs.SDL.Video          as SDL
@@ -18,6 +19,7 @@ import Ffi.Hs.DearImGui.OpenGL3    as ImGui
 
 instance
     _ = SDL.Eq[EventPayload]
+    _ = Text.Lit-FromText[Text]
 
 {-# NON_TERMINATING #-}
 loop : SDL.Window → IO ⊤′
