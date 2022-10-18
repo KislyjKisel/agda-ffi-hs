@@ -1,0 +1,5 @@
+name: ffi-hs-binary
+include: .
+depend:
+    ffi-hs-base
+    ffi-hs-bytestring
