@@ -1,0 +1,7 @@
+name: ffi-hs-http-types
+include: .
+depend:
+    ffi-hs-base
+    ffi-hs-binary
+    ffi-hs-bytestring
+    ffi-hs-case-insensitive
