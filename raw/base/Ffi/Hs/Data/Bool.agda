@@ -15,8 +15,8 @@ import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Kind (AgdaIsKind(AgdaIsKind))
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 #-}
 
-infixr 6 _&&_
-infixr 5 _||_
+infixr 3 _&&_
+infixr 2 _||_
 
 _&&_ : Bool → Bool → Bool
 True  && x = x
