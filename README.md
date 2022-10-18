@@ -5,10 +5,13 @@
 
 ### (Almost) complete raw bindings to
 * `array-0.5.4.0`
+* `binary-0.8.6.0` (no `Data.Binary.Get.Internal`)
+* `case-insensitive-1.2.1.0`
 * `dear-imgui-2.1.1` (no GLFW, partial Vulkan)
 * `deepseq-1.4.8.0`
 * `fixed-0.3`
 * `half-0.3.1`
+* `http-types-0.12.3`
 * `JuicyPixels-3.3.8` (no internals)
 * `ObjectName-1.1.0.2`
 * `StateVar-1.2.2`
@@ -17,12 +20,12 @@
 
 ### Substantial raw bindings to
 * `base-4.17.0.0` (no GHC.\*, Type.\*, Data.Type.\*, Data.Bi\*)
+* `bytestring-0.11.3.1` (no Builder, Unsafe, Char8)
 * `OpenGL-3.0.3.0`
 * `scientific-0.3.7.0` (no Text/ByteString builders)
 * `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Internal.\*, SDL.Raw.\*)
 
 ### Poor raw bindings to
-* `bytestring-0.11.3.1` (only Data.ByteString(.Internal), Data.ByteString.Lazy(.Internal))
 * `exceptions` (empty)
 * `linear`
 * `OpenGLRaw` (only Graphics.GL.Types)
@@ -34,7 +37,6 @@
 ### Planned bindings to
 * `containers`
 * `aeson`
-* `binary`
 * ...
 
 

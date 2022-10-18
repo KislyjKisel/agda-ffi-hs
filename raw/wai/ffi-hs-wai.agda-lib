@@ -1,0 +1,6 @@
+name: ffi-hs-wai
+include: .
+depend:
+    ffi-hs-base
+    ffi-hs-bytestring
+    ffi-hs-http-types
