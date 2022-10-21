@@ -5,7 +5,7 @@ module Ffi.Hs.Graphics.Rendering.OpenGL.GL.FramebufferObjects.Attachments where
 open import Agda.Builtin.IO           using (IO)
 open import Agda.Builtin.Maybe        using (Maybe)
 open import Agda.Builtin.Unit         using (⊤)
-open import Agda.Primitive            using (Level)
+open import Agda.Primitive            using ()
 open import Ffi.Hs.-base.Class        using (Eq; Ord; Show)
 open import Ffi.Hs.-OpenGL.BufferMode using (BufferMode)
 open import Ffi.Hs.Graphics.GL.Types  using (GLuint; GLenum; GLint)
@@ -14,7 +14,7 @@ open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Texturing.Objects
     using (TextureObject)
 
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Texturing.Specification
-    using (TextureTarget1D; TextureTarget2D; TextureTarget3D)
+    using (TextureTarget1D; TextureTarget2D; TextureTarget3D; Level)
 
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.FramebufferObjects.FramebufferObjects
     using (FramebufferTarget)
@@ -31,7 +31,7 @@ import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 
 private
     variable
-        aℓ : Level
+        aℓ : Agda.Primitive.Level
         A : Set aℓ
 
 

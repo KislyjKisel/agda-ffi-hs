@@ -12,7 +12,7 @@ open import Ffi.Hs.Data.Tuple        using (Tuple3)
 open import Ffi.Hs.Foreign.Ptr       using (Ptr)
 open import Ffi.Hs.Graphics.GL.Types
 
-open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.CoordTrans             using (GLmatrix)
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.CoordTrans             using (GLmatrix; MatrixComponent)
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Shaders.Attribs        using (VariableType)
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Shaders.ProgramObjects using (Program)
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Tensor
@@ -23,6 +23,7 @@ import Ffi.Hs.-base.Dictionaries
 {-# FOREIGN GHC
 import qualified Graphics.Rendering.OpenGL.GL.Shaders.Uniform
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
+import MAlonzo.Code.Ffi.Hs.Graphics.Rendering.OpenGL.GL.CoordTrans (AgdaMatrixComponent(AgdaMatrixComponent))
 #-}
 
 private
@@ -31,7 +32,7 @@ private
 
 
 data UniformLocation : Set where
-    mkUniformLocation : GLuint → UniformLocation
+    mkUniformLocation : GLint → UniformLocation
 
 {-# COMPILE GHC UniformLocation = data Graphics.Rendering.OpenGL.GL.Shaders.Uniform.UniformLocation
     ( Graphics.Rendering.OpenGL.GL.Shaders.Uniform.UniformLocation
@@ -103,7 +104,7 @@ postulate
     Uniform[TexCoord3[A]] : ⦃ UniformComponent A ⦄ → Uniform (TexCoord3 A)
     Uniform[TexCoord2[A]] : ⦃ UniformComponent A ⦄ → Uniform (TexCoord2 A)
     Uniform[TexCoord1[A]] : ⦃ UniformComponent A ⦄ → Uniform (TexCoord1 A)
-    Uniform[GLmatrix[A]]  : ⦃ UniformComponent A ⦄ → Uniform (GLmatrix A)
+    Uniform[GLmatrix[A]]  : ⦃ MatrixComponent A ⦄ → Uniform (GLmatrix A)
 
 {-# FOREIGN GHC data AgdaUniform a = Graphics.Rendering.OpenGL.GL.Shaders.Uniform.Uniform a => AgdaUniform #-}
 {-# COMPILE GHC Uniform = type(0) AgdaUniform #-}
@@ -133,4 +134,4 @@ postulate
 {-# COMPILE GHC Uniform[TexCoord3[A]] = \ a AgdaUniformComponent -> AgdaUniform #-}
 {-# COMPILE GHC Uniform[TexCoord2[A]] = \ a AgdaUniformComponent -> AgdaUniform #-}
 {-# COMPILE GHC Uniform[TexCoord1[A]] = \ a AgdaUniformComponent -> AgdaUniform #-}
-{-# COMPILE GHC Uniform[GLmatrix[A]]  = \ a AgdaUniformComponent -> AgdaUniform #-}
+{-# COMPILE GHC Uniform[GLmatrix[A]]  = \ a AgdaMatrixComponent -> AgdaUniform #-}

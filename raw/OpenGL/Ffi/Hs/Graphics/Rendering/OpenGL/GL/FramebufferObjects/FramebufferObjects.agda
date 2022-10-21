@@ -76,7 +76,7 @@ data FramebufferStatus : Set where
     IncompleteMultiSample       : FramebufferStatus
     Unsupported                 : FramebufferStatus
 
-{-# COMPILE GHC FramebufferStatus = data FramebufferStatus
+{-# COMPILE GHC FramebufferStatus = data Graphics.Rendering.OpenGL.GL.FramebufferObjects.FramebufferObjects.FramebufferStatus
     ( Graphics.Rendering.OpenGL.GL.FramebufferObjects.FramebufferObjects.Complete
     | Graphics.Rendering.OpenGL.GL.FramebufferObjects.FramebufferObjects.Undefined
     | Graphics.Rendering.OpenGL.GL.FramebufferObjects.FramebufferObjects.IncompleteMissingAttachment

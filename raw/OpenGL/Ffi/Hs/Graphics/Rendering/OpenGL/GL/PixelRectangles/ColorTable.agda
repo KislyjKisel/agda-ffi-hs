@@ -86,7 +86,7 @@ data ColorTable : Set where
     SharedTexturePalette      : ColorTable
 
 {-# COMPILE GHC ColorTable = data Graphics.Rendering.OpenGL.GL.PixelRectangles.ColorTable.ColorTable
-    ( Graphics.Rendering.OpenGL.GL.PixelRectangles.ColorTable.mkColorTable
+    ( Graphics.Rendering.OpenGL.GL.PixelRectangles.ColorTable.ColorTable
     | Graphics.Rendering.OpenGL.GL.PixelRectangles.ColorTable.PostConvolutionColorTable
     | Graphics.Rendering.OpenGL.GL.PixelRectangles.ColorTable.PostColorMatrixColorTable
     | Graphics.Rendering.OpenGL.GL.PixelRectangles.ColorTable.Texture1DColorTable

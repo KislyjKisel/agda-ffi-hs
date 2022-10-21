@@ -14,12 +14,12 @@ import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries
 -- ...
 
 data Face : Set where
-    mkFront      : Face
+    Front        : Face
     Back         : Face
     FrontAndBack : Face
 
 {-# COMPILE GHC Face = data Graphics.Rendering.OpenGL.GL.Colors.Face
-    ( Graphics.Rendering.OpenGL.GL.Colors.Face
+    ( Graphics.Rendering.OpenGL.GL.Colors.Front
     | Graphics.Rendering.OpenGL.GL.Colors.Back
     | Graphics.Rendering.OpenGL.GL.Colors.FrontAndBack
     ) #-}

@@ -81,7 +81,7 @@ data ClearBufferCommand : Set where
     ClearDepthAndStencilBuffers : GLfloat → GLint → ClearBufferCommand
 
 {-# COMPILE GHC ClearBufferCommand = data Graphics.Rendering.OpenGL.GL.Framebuffer.ClearBufferCommand
-    ( Graphics.Rendering.OpenGL.GL.Framebuffer.ClearColorBufferUint
+    ( Graphics.Rendering.OpenGL.GL.Framebuffer.ClearColorBufferInt
     | Graphics.Rendering.OpenGL.GL.Framebuffer.ClearColorBufferFloat
     | Graphics.Rendering.OpenGL.GL.Framebuffer.ClearColorBufferUint
     | Graphics.Rendering.OpenGL.GL.Framebuffer.ClearDepthBuffer

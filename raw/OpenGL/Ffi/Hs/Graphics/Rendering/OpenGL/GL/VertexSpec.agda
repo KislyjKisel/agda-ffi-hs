@@ -691,8 +691,8 @@ postulate
 postulate
     VertexAttrib : Set → Set
 
-    vertexAttrib  : IntegerHandling → AttribLocation → A → IO ⊤
-    vertexAttribv : IntegerHandling → AttribLocation → Ptr A → IO ⊤
+    vertexAttrib  : ⦃ VertexAttrib A ⦄ → IntegerHandling → AttribLocation → A → IO ⊤
+    vertexAttribv : ⦃ VertexAttrib A ⦄ → IntegerHandling → AttribLocation → Ptr A → IO ⊤
 
     VertexAttrib[Vector4[A]]   : ⦃ VertexAttribComponent A ⦄ → VertexAttrib (Vector4 A)
     VertexAttrib[Vector3[A]]   : ⦃ VertexAttribComponent A ⦄ → VertexAttrib (Vector3 A)
@@ -711,6 +711,12 @@ postulate
     VertexAttrib[TexCoord3[A]] : ⦃ VertexAttribComponent A ⦄ → VertexAttrib (TexCoord3 A)
     VertexAttrib[TexCoord2[A]] : ⦃ VertexAttribComponent A ⦄ → VertexAttrib (TexCoord2 A)
     VertexAttrib[TexCoord1[A]] : ⦃ VertexAttribComponent A ⦄ → VertexAttrib (TexCoord1 A)
+
+{-# FOREIGN GHC data AgdaVertexAttrib a = Graphics.Rendering.OpenGL.GL.VertexSpec.VertexAttrib a => AgdaVertexAttrib #-}
+{-# COMPILE GHC VertexAttrib = type(0) AgdaVertexAttrib #-}
+
+{-# COMPILE GHC vertexAttrib  = \ a AgdaVertexAttrib -> Graphics.Rendering.OpenGL.GL.VertexSpec.vertexAttrib  #-}
+{-# COMPILE GHC vertexAttribv = \ a AgdaVertexAttrib -> Graphics.Rendering.OpenGL.GL.VertexSpec.vertexAttribv #-}
 
 {-# COMPILE GHC VertexAttrib[Vector4[A]]   = \ a AgdaVertexAttribComponent -> AgdaVertexAttrib #-}
 {-# COMPILE GHC VertexAttrib[Vector3[A]]   = \ a AgdaVertexAttribComponent -> AgdaVertexAttrib #-}

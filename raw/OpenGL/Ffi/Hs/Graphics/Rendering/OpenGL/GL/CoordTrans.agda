@@ -133,12 +133,24 @@ postulate
     MatrixComponent : Set → Set
     MatrixComponent[C]⇒Storable[C] : ⦃ MatrixComponent C ⦄ → Storable C
 
-    rotate    : ⦃ MatrixComponent C ⦄ → Vector3 C → IO ⊤
+    rotate    : ⦃ MatrixComponent C ⦄ → C → Vector3 C → IO ⊤
     translate : ⦃ MatrixComponent C ⦄ → Vector3 C → IO ⊤
     scale     : ⦃ MatrixComponent C ⦄ → C → C → C → IO ⊤
 
     MatrixComponent[GLfloat]  : MatrixComponent GLfloat
     MatrixComponent[GLdouble] : MatrixComponent GLdouble
+
+{-# FOREIGN GHC data AgdaMatrixComponent a = Graphics.Rendering.OpenGL.GL.CoordTrans.MatrixComponent a => AgdaMatrixComponent #-}
+{-# COMPILE GHC MatrixComponent = type(0) AgdaMatrixComponent #-}
+
+{-# COMPILE GHC MatrixComponent[C]⇒Storable[C] = \ c AgdaMatrixComponent -> AgdaStorable #-}
+
+{-# COMPILE GHC rotate    = \ c AgdaMatrixComponent -> Graphics.Rendering.OpenGL.GL.CoordTrans.rotate    #-}
+{-# COMPILE GHC translate = \ c AgdaMatrixComponent -> Graphics.Rendering.OpenGL.GL.CoordTrans.translate #-}
+{-# COMPILE GHC scale     = \ c AgdaMatrixComponent -> Graphics.Rendering.OpenGL.GL.CoordTrans.scale     #-}
+
+{-# COMPILE GHC MatrixComponent[GLfloat]  = AgdaMatrixComponent #-}
+{-# COMPILE GHC MatrixComponent[GLdouble] = AgdaMatrixComponent #-}
 
 
 postulate
@@ -152,6 +164,17 @@ postulate
     matrix     : ⦃ Matrix M ⦄ → ⦃ MatrixComponent C ⦄ → Maybe MatrixMode → StateVar (M C)
     multMatrix : ⦃ Matrix M ⦄ → ⦃ MatrixComponent C ⦄ → M C → IO ⊤
 
+{-# FOREIGN GHC data AgdaMatrix m = Graphics.Rendering.OpenGL.GL.CoordTrans.Matrix m => AgdaMatrix #-}
+{-# COMPILE GHC Matrix = type(0) AgdaMatrix #-}
+
+{-# COMPILE GHC withNewMatrix       = \ m c AgdaMatrix AgdaMatrixComponent      -> Graphics.Rendering.OpenGL.GL.CoordTrans.withNewMatrix       #-}
+{-# COMPILE GHC withMatrix          = \ m c aℓ a AgdaMatrix AgdaMatrixComponent -> Graphics.Rendering.OpenGL.GL.CoordTrans.withMatrix          #-}
+{-# COMPILE GHC newMatrix           = \ m c AgdaMatrix AgdaMatrixComponent      -> Graphics.Rendering.OpenGL.GL.CoordTrans.newMatrix           #-}
+{-# COMPILE GHC getMatrixComponents = \ m c AgdaMatrix AgdaMatrixComponent      -> Graphics.Rendering.OpenGL.GL.CoordTrans.getMatrixComponents #-}
+
+{-# COMPILE GHC matrix     = \ m c AgdaMatrix AgdaMatrixComponent -> Graphics.Rendering.OpenGL.GL.CoordTrans.matrix     #-}
+{-# COMPILE GHC multMatrix = \ m c AgdaMatrix AgdaMatrixComponent -> Graphics.Rendering.OpenGL.GL.CoordTrans.multMatrix #-}
+
 
 postulate
     GLmatrix : Set → Set
@@ -160,6 +183,8 @@ postulate
     Eq[GLmatrix[A]]   : Eq (GLmatrix A)
     Ord[GLmatrix[A]]  : Ord (GLmatrix A)
     Show[GLmatrix[A]] : Show (GLmatrix A)
+
+{-# COMPILE GHC GLmatrix = type(0) Graphics.Rendering.OpenGL.GL.CoordTrans.GLmatrix #-}
 
 {-# COMPILE GHC Matrix[GLmatrix]  =        AgdaMatrix #-}
 {-# COMPILE GHC Eq[GLmatrix[A]]   = \ a -> AgdaEq     #-}
@@ -181,6 +206,19 @@ postulate
     rescaleNormal : StateVar Capability
     normalize     : StateVar Capability
 
+{-# COMPILE GHC loadIdentity           =           Graphics.Rendering.OpenGL.GL.CoordTrans.loadIdentity           #-}
+{-# COMPILE GHC ortho                  =           Graphics.Rendering.OpenGL.GL.CoordTrans.ortho                  #-}
+{-# COMPILE GHC frustum                =           Graphics.Rendering.OpenGL.GL.CoordTrans.frustum                #-}
+{-# COMPILE GHC depthClamp             =           Graphics.Rendering.OpenGL.GL.CoordTrans.depthClamp             #-}
+{-# COMPILE GHC activeTexture          =           Graphics.Rendering.OpenGL.GL.CoordTrans.activeTexture          #-}
+{-# COMPILE GHC preservingMatrix       = \ aℓ a -> Graphics.Rendering.OpenGL.GL.CoordTrans.preservingMatrix       #-}
+{-# COMPILE GHC unsafePreservingMatrix = \ aℓ a -> Graphics.Rendering.OpenGL.GL.CoordTrans.unsafePreservingMatrix #-}
+{-# COMPILE GHC stackDepth             =           Graphics.Rendering.OpenGL.GL.CoordTrans.stackDepth             #-}
+{-# COMPILE GHC maxStackDepth          =           Graphics.Rendering.OpenGL.GL.CoordTrans.maxStackDepth          #-}
+
+{-# COMPILE GHC rescaleNormal = Graphics.Rendering.OpenGL.GL.CoordTrans.rescaleNormal #-}
+{-# COMPILE GHC normalize     = Graphics.Rendering.OpenGL.GL.CoordTrans.normalize     #-}
+
 
 data Plane (A : Set aℓ) : Set aℓ where
     mkPlane : A → A → A → A → Plane A
@@ -189,15 +227,15 @@ data Plane (A : Set aℓ) : Set aℓ where
 {-# COMPILE GHC Plane = data(1) AgdaPlane (Graphics.Rendering.OpenGL.GL.CoordTrans.Plane) #-}
 
 postulate
-    Eq[Plane[A]]       : Eq (Plane A)
-    Ord[Plane[A]]      : Ord (Plane A)
-    Show[Plane[A]]     : Show (Plane A)
-    Storable[Plane[A]] : Storable (Plane A)
+    Eq[Plane[A]]       : ⦃ Eq A ⦄ → Eq (Plane A)
+    Ord[Plane[A]]      : ⦃ Ord A ⦄ → Ord (Plane A)
+    Show[Plane[A]]     : ⦃ Show A ⦄ → Show (Plane A)
+    Storable[Plane[A]] : ⦃ Storable A ⦄ → Storable (Plane A)
 
-{-# COMPILE GHC Eq[Plane[A]]       = \ aℓ a -> AgdaEq       #-}
-{-# COMPILE GHC Ord[Plane[A]]      = \ aℓ a -> AgdaOrd      #-}
-{-# COMPILE GHC Show[Plane[A]]     = \ aℓ a -> AgdaShow     #-}
-{-# COMPILE GHC Storable[Plane[A]] = \ aℓ a -> AgdaStorable #-}
+{-# COMPILE GHC Eq[Plane[A]]       = \ aℓ a AgdaEq       -> AgdaEq       #-}
+{-# COMPILE GHC Ord[Plane[A]]      = \ aℓ a AgdaOrd      -> AgdaOrd      #-}
+{-# COMPILE GHC Show[Plane[A]]     = \ aℓ a AgdaShow     -> AgdaShow     #-}
+{-# COMPILE GHC Storable[Plane[A]] = \ aℓ a AgdaStorable -> AgdaStorable #-}
 
 
 data TextureCoordName : Set where

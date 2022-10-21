@@ -305,5 +305,5 @@ postulate
 {-# COMPILE GHC primitiveRestartIndex                       =           Graphics.Rendering.OpenGL.GL.VertexArrays.primitiveRestartIndex                       #-}
 {-# COMPILE GHC primitiveRestartIndexNV                     =           Graphics.Rendering.OpenGL.GL.VertexArrays.primitiveRestartIndexNV                     #-}
 
-{-# COMPILE GHC vertexAttribPointer = Graphics.Rendering.OpenGL.GL.VertexArrays.vertexAttribPointer #-}
-{-# COMPILE GHC vertexAttribArray   = Graphics.Rendering.OpenGL.GL.VertexArrays.vertexAttribArray   #-}
+{-# COMPILE GHC vertexAttribPointer = \ aℓ a -> Graphics.Rendering.OpenGL.GL.VertexArrays.vertexAttribPointer #-}
+{-# COMPILE GHC vertexAttribArray   =           Graphics.Rendering.OpenGL.GL.VertexArrays.vertexAttribArray   #-}
