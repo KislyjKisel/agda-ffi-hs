@@ -200,24 +200,26 @@ open import Ffi.Hs.GHC.Enum public
 open import Ffi.Hs.Data.Int public
     using (Int)
 
-instance
-    inst:Data[Int]       = Ffi.Hs.Data.Int.Data[Int]
-    inst:Storable[Int]   = Ffi.Hs.Data.Int.Storable[Int]
-    inst:Bits[Int]       = Ffi.Hs.Data.Int.Bits[Int]
-    inst:FiniteBits[Int] = Ffi.Hs.Data.Int.FiniteBits[Int]
-    inst:Bounded[Int]    = Ffi.Hs.Data.Int.Bounded[Int]
-    inst:Enum[Int]       = Ffi.Hs.Data.Int.Enum[Int]
-    inst:Ix[Int]         = Ffi.Hs.Data.Int.Ix[Int]
-    inst:Num[Int]        = Ffi.Hs.Data.Int.Num[Int]
-    inst:Read[Int]       = Ffi.Hs.Data.Int.Read[Int]
-    inst:Integral[Int]   = Ffi.Hs.Data.Int.Integral[Int]
-    inst:Real[Int]       = Ffi.Hs.Data.Int.Real[Int]
-    inst:Show[Int]       = Ffi.Hs.Data.Int.Show[Int]
-    inst:Eq[Int]         = Ffi.Hs.Data.Int.Eq[Int]
-    inst:Ord[Int]        = Ffi.Hs.Data.Int.Ord[Int]
+open import Ffi.Hs.Data.Int-Instanced public
+    using
+    ( inst:Data[Int]
+    ; inst:Storable[Int]
+    ; inst:Bits[Int]
+    ; inst:FiniteBits[Int]
+    ; inst:Bounded[Int]
+    ; inst:Enum[Int]
+    ; inst:Ix[Int]
+    ; inst:Num[Int]
+    ; inst:Read[Int]
+    ; inst:Integral[Int]
+    ; inst:Real[Int]
+    ; inst:Show[Int]
+    ; inst:Eq[Int]
+    ; inst:Ord[Int]
 
-    inst:Lit-FromNat[Int] = Ffi.Hs.Data.Int.Lit-FromNat[Int]
-    inst:Lit-FromNeg[Int] = Ffi.Hs.Data.Int.Lit-FromNeg[Int]
+    ; inst:Lit-FromNat[Int]
+    ; inst:Lit-FromNeg[Int]
+    )
 
 
 open import Ffi.Hs.GHC.Num public
@@ -377,24 +379,25 @@ instance
 open import Ffi.Hs.Data.Word public
     using (Word)
 
-instance
-    inst:Data[Word]       = Ffi.Hs.Data.Word.Data[Word]
-    inst:Storable[Word]   = Ffi.Hs.Data.Word.Storable[Word]
-    inst:Bits[Word]       = Ffi.Hs.Data.Word.Bits[Word]
-    inst:FiniteBits[Word] = Ffi.Hs.Data.Word.FiniteBits[Word]
-    inst:Bounded[Word]    = Ffi.Hs.Data.Word.Bounded[Word]
-    inst:Enum[Word]       = Ffi.Hs.Data.Word.Enum[Word]
-    inst:Ix[Word]         = Ffi.Hs.Data.Word.Ix[Word]
-    inst:Num[Word]        = Ffi.Hs.Data.Word.Num[Word]
-    inst:Read[Word]       = Ffi.Hs.Data.Word.Read[Word]
-    inst:Integral[Word]   = Ffi.Hs.Data.Word.Integral[Word]
-    inst:Real[Word]       = Ffi.Hs.Data.Word.Real[Word]
-    inst:Show[Word]       = Ffi.Hs.Data.Word.Show[Word]
-    inst:Eq[Word]         = Ffi.Hs.Data.Word.Eq[Word]
-    inst:Ord[Word]        = Ffi.Hs.Data.Word.Ord[Word]
+open import Ffi.Hs.Data.Word-Instanced
+    using
+    ( inst:Data[Word]
+    ; inst:Storable[Word]
+    ; inst:Bits[Word]
+    ; inst:FiniteBits[Word]
+    ; inst:Bounded[Word]
+    ; inst:Enum[Word]
+    ; inst:Ix[Word]
+    ; inst:Num[Word]
+    ; inst:Read[Word]
+    ; inst:Integral[Word]
+    ; inst:Real[Word]
+    ; inst:Show[Word]
+    ; inst:Eq[Word]
+    ; inst:Ord[Word]
 
-    inst:Lit-FromNat[Word] = Ffi.Hs.Data.Word.Lit-FromNat[Word]
-
+    ; inst:Lit-FromNat[Word]
+    )
 
 open import Ffi.Hs.Data.Semigroup public
     using
