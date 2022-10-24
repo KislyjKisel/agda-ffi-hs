@@ -29,7 +29,7 @@ open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.FramebufferObjects public
 -- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Points public
 -- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.LineSegments public
 -- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Polygons public
--- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.PixelRectangles public
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.PixelRectangles public
 -- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Bitmaps public
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Texturing public
 -- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.ColorSum public
