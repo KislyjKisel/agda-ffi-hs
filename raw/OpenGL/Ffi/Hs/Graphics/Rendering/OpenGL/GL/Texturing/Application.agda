@@ -8,7 +8,7 @@ open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Texturing.Specification using (P
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexArrays            using (Capability)
 
 {-# FOREIGN GHC
-import qualified Graphics.Rendering.OpenGL.GL.Texturing.Objects
+import qualified Graphics.Rendering.OpenGL.GL.Texturing.Application
 import MAlonzo.Code.Ffi.Hs.Graphics.Rendering.OpenGL.GL.Texturing.Specification
     (AgdaParameterizedTextureTarget(AgdaParameterizedTextureTarget))
 #-}
