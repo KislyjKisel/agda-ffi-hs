@@ -11,6 +11,7 @@
 * `deepseq-1.4.8.0`
 * `fixed-0.3`
 * `half-0.3.1`
+* `hashable-1.4.1.0`
 * `http-types-0.12.3`
 * `JuicyPixels-3.3.8` (no internals)
 * `ObjectName-1.1.0.2`
@@ -24,6 +25,7 @@
 * `OpenGL-3.0.3.0`
 * `scientific-0.3.7.0` (no Text/ByteString builders)
 * `sdl2-2.5.3.3` (no SDL.Time, SDL.Input.Keyboard\[.Codes\], SDL.Internal.\*, SDL.Raw.\*)
+* `vault-0.3.1.5` (only Lazy)
 
 ### Poor raw bindings to
 * `exceptions` (empty)
