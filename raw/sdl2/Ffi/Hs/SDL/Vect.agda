@@ -15,6 +15,8 @@ open import Ffi.Hs.Linear.V4 public
     using
     ( V4
     ; mkV4
+    ; Functor[V4]
+    ; Additive[V4]
     )
 
 open import Ffi.Hs.Linear.Affine public
