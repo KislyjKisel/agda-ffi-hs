@@ -12,6 +12,7 @@ open import Ffi.Hs.-base.Class
 open import Ffi.Hs.-base.Level            using (Liftℓ)
 open import Ffi.Hs.-base.Literals
 open import Ffi.Hs.Control.DeepSeq        using (NFData)
+open import Ffi.Hs.Data.Binary            using (Binary)
 open import Ffi.Hs.Data.Int               using (Int)
 open import Ffi.Hs.Data.Ord               using (Ordering)
 open import Ffi.Hs.Data.Tuple             using (Tuple2; Tuple3)
@@ -34,6 +35,7 @@ import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList(AgdaIsList))
 import MAlonzo.Code.Ffi.Hs.Control.DeepSeq (AgdaNFData(AgdaNFData))
 import MAlonzo.Code.Ffi.Hs.Text.Printf (AgdaPrintfArg(AgdaPrintfArg))
 import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack(AgdaHasCallStack))
+import MAlonzo.Code.Data.Binary (AgdaBinary(AgdaBinary))
 #-}
 
 private
@@ -58,7 +60,7 @@ postulate
     Semigroup[Text] : Semigroup Text
     Monoid[Text]    : Monoid Text
     PrintfArg[Text] : PrintfArg Text
-    -- todo: (binary) Binary[Text] : Binary Text
+    Binary[Text]    : Binary Text
     NFData[Text]    : NFData Text
     -- todo: (TH?) Lift
 
@@ -72,6 +74,7 @@ postulate
 {-# COMPILE GHC Semigroup[Text] = AgdaSemigroup #-}
 {-# COMPILE GHC Monoid[Text]    = AgdaMonoid    #-}
 {-# COMPILE GHC PrintfArg[Text] = AgdaPrintfArg #-}
+{-# COMPILE GHC Binary[Text]    = AgdaBinary    #-}
 {-# COMPILE GHC NFData[Text]    = AgdaNFData    #-}
 
 postulate
