@@ -17,7 +17,7 @@ open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.BeginEnd public
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexSpec public
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexArrays public
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.VertexArrayObjects public
--- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.BufferObjects public
+open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.BufferObjects public
 open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.CoordTrans public hiding (Color)
 -- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.Clipping public
 -- open import Ffi.Hs.Graphics.Rendering.OpenGL.GL.RasterPos public
