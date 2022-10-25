@@ -60,7 +60,7 @@ postulate
 
 mapReaderT : (M A → N B) → ReaderT R M A → ReaderT R N B
 mapReaderT f m = mkReaderT $ f ∘ runReaderT m
-{-# COMPILE GHC mapReaderT = \ ℓ m a n b r -> Control.Monad.Trans.Reader.runReaderT #-}
+{-# COMPILE GHC mapReaderT = \ ℓ m a n b r -> Control.Monad.Trans.Reader.mapReaderT #-}
 
 withReaderT : (R′ → R) → ReaderT R M A → ReaderT R′ M A
 withReaderT f m = mkReaderT $ runReaderT m ∘ f
