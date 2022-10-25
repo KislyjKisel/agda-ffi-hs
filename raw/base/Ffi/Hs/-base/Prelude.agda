@@ -28,9 +28,10 @@ case_of_ : ∀{aℓ bℓ} {A : Set aℓ} {B : Set bℓ} → A → (A → B) → 
 case x of f = f x
 {-# INLINE case_of_ #-}
 
-_::_ : ∀{aℓ} (A : Set aℓ) → A → A
-_ :: x = x
-{-# INLINE _::_ #-}
+infix -1 _∋_
+_∋_ : ∀{aℓ} (A : Set aℓ) → A → A
+_ ∋ x = x
+{-# INLINE _∋_ #-}
 
 if_then_else_ : Bool → A → A → A
 if true  then x else _ = x
@@ -51,6 +52,7 @@ postulate
 
 {-# COMPILE GHC seq = \ aℓ a bℓ b -> Prelude.seq #-}
 
+infixr 0 _$!_
 _$!_ : ∀{aℓ bℓ} {A : Set aℓ} {B : A → Set bℓ} → (∀ x → B x) → (x : A) → B x
 f $! x = Agda.Builtin.Strict.primForce x f
 {-# COMPILE GHC _$!_ = \ aℓ bℓ a b -> (Prelude.$!) #-}
