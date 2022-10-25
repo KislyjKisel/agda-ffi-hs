@@ -6,6 +6,7 @@ open import Agda.Primitive
 open import Ffi.Hs.-base.Class
 
 open import Ffi.Hs.-base.Literals public
+open import Ffi.Hs.-base.Prelude  public
 
 private
     variable
@@ -15,14 +16,6 @@ private
 -- todo: re-export List/Maybe instances when will be possible
 {-# FOREIGN GHC import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Dictionaries #-}
 
-case_return_of_ : ∀{aℓ bℓ} {A : Set aℓ} → (x : A) → (B : A → Set bℓ) → ((x : A) → B x) → B x
-case x return B of f = f x
-
-case_of_ : ∀{aℓ bℓ} {A : Set aℓ} {B : Set bℓ} → A → (A → B) → B
-case x of f = f x
-
-_::_ : ∀{aℓ} (A : Set aℓ) → A → A
-_ :: x = x
 
 open import Ffi.Hs.-base.Level public
     using (Liftℓ; liftℓ; unliftℓ)
@@ -32,10 +25,6 @@ open import Ffi.Hs.-base.Unit public
 
 open import Ffi.Hs.Data.Bool public
     using (Bool; True; False; not; otherwise; _&&_; _||_)
-
-if_then_else_ : Bool → A → A → A
-if True  then x else _ = x
-if False then _ else y = y
 
 instance
     inst:Data[Bool]       = Ffi.Hs.Data.Bool.Data[Bool]
@@ -490,30 +479,12 @@ open import Ffi.Hs.Data.Function public
     ; _$_
     )
 
-asTypeOf : A → A → A
-asTypeOf x _ = x
-
-{-# NON_TERMINATING #-}
-until : (A → Bool) → (A → A) → A → A
-until p f x = if p x then x else until p f (f x)
-
--- todo: different runtime reps
-postulate
-    seq : A → B → B
-
-{-# COMPILE GHC seq = \ aℓ a bℓ b -> Prelude.seq #-}
-
 open import Ffi.Hs.GHC.Err public
     using
     ( error
     ; errorWithoutStackTrace
     ; undefined
     )
-
-import Agda.Builtin.Strict
-
-_$!_ : ∀{aℓ bℓ} {A : Set aℓ} {B : A → Set bℓ} → (∀ x → B x) → (x : A) → B x
-f $! x = Agda.Builtin.Strict.primForce x f
 
 open import Ffi.Hs.Data.List public
     using
@@ -552,13 +523,6 @@ open import Ffi.Hs.Data.List public
     ; unzip
     ; unzip3
     )
-
-postulate
-    [_⋯_] : ⦃ Enum A ⦄ → A → A → List A
-    [_,_⋯_] : ⦃ Enum A ⦄ → A → A → A → List A
-
-{-# COMPILE GHC [_⋯_]   = \ aℓ a AgdaEnum x y     -> [x..y]     #-}
-{-# COMPILE GHC [_,_⋯_] = \ aℓ a AgdaEnum x1 x2 y -> [x1,x2..y] #-}
 
 instance
     postulate
