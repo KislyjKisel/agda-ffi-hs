@@ -213,7 +213,7 @@ data PlaybackState : Set where
     Pause : PlaybackState
     Play  : PlaybackState
 
-{-# COMPILE GHC PlaybackState = SDL.Audio.PlaybackState
+{-# COMPILE GHC PlaybackState = data SDL.Audio.PlaybackState
     ( SDL.Audio.Pause
     | SDL.Audio.Play
     ) #-}

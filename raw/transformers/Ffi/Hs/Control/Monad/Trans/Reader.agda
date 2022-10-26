@@ -72,7 +72,7 @@ Reader R = ReaderT R Identity
 
 reader : ⦃ Monad M ⦄ → (R → A) → ReaderT R M A
 reader f = mkReaderT $ return ∘ f
-{-# COMPILE GHC reader = \ ℓ m r a -> Control.Monad.Trans.Reader.reader #-}
+{-# COMPILE GHC reader = \ ℓ m r a AgdaMonad -> Control.Monad.Trans.Reader.reader #-}
 
 runReader : Reader R A → R → A
 runReader m = runIdentity ∘ runReaderT m

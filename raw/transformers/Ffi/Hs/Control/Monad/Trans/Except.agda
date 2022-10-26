@@ -87,7 +87,7 @@ runExceptT (mkExceptT m) = m
 
 mapExceptT : (M (Either E A) → N (Either E′ B)) → ExceptT E M A → ExceptT E′ N B
 mapExceptT f m = mkExceptT $ f (runExceptT m)
-{-# COMPILE GHC mapExceptT = \ ℓ m e a n e' b -> Control.Monad.Trans.Except.mapExceptT #-}
+{-# COMPILE GHC mapExceptT = \ mℓ m e a nℓ n e' b -> Control.Monad.Trans.Except.mapExceptT #-}
 
 withExceptT : ⦃ Functor M ⦄ → (E → E′) → ExceptT E M A → ExceptT E′ M A
 withExceptT f = mapExceptT $ fmap $ either (Left ∘ f) Right
@@ -107,7 +107,7 @@ runExcept (mkExceptT m) = runIdentity m
 
 mapExcept : (Either E A → Either E′ B) → Except E A → Except E′ B
 mapExcept f = mapExceptT (mkIdentity ∘ f ∘ runIdentity)
-{-# COMPILE GHC mapExcept = \ ℓ e a e' b -> Control.Monad.Trans.Except.mapExcept #-}
+{-# COMPILE GHC mapExcept = \ aℓ e a bℓ e' b -> Control.Monad.Trans.Except.mapExcept #-}
 
 withExcept : (E → E′) → Except E A → Except E′ A
 withExcept = withExceptT ⦃ Functor[Identity] ⦄

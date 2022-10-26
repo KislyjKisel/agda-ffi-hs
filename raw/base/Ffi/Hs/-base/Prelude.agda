@@ -10,7 +10,7 @@ open import Ffi.Hs.-base.Class using (Enum)
 import Agda.Builtin.Strict
 
 {-# FOREIGN GHC
-import qualified Prelude
+import Prelude
 import MAlonzo.Code.Ffi.Hs.QZ45Zbase.Class (AgdaEnum(AgdaEnum))
 #-}
 

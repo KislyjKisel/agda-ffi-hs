@@ -35,7 +35,7 @@ import MAlonzo.Code.Ffi.Hs.GHC.IsList (AgdaIsList(AgdaIsList))
 import MAlonzo.Code.Ffi.Hs.Control.DeepSeq (AgdaNFData(AgdaNFData))
 import MAlonzo.Code.Ffi.Hs.Text.Printf (AgdaPrintfArg(AgdaPrintfArg))
 import MAlonzo.Code.Ffi.Hs.GHC.Stack (AgdaHasCallStack(AgdaHasCallStack))
-import MAlonzo.Code.Data.Binary (AgdaBinary(AgdaBinary))
+import MAlonzo.Code.Ffi.Hs.Data.Binary (AgdaBinary(AgdaBinary))
 #-}
 
 private
