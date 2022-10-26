@@ -86,7 +86,7 @@ data Clamping : Set where
     ClampToEdge   : Clamping
     ClampToBorder : Clamping
 
-{-# COMPILE GHC Clamping = data Clamping
+{-# COMPILE GHC Clamping = data Graphics.Rendering.OpenGL.GL.Texturing.Parameters.Clamping
     ( Graphics.Rendering.OpenGL.GL.Texturing.Parameters.Clamp
     | Graphics.Rendering.OpenGL.GL.Texturing.Parameters.Repeat
     | Graphics.Rendering.OpenGL.GL.Texturing.Parameters.ClampToEdge
