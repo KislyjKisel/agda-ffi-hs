@@ -2,18 +2,19 @@
 
 module Ffi.Hs.Data.ByteString.Lazy where
 
-open import Agda.Builtin.Bool      using (Bool)
-open import Agda.Builtin.List      using (List)
-open import Agda.Builtin.Maybe     using (Maybe)
+open import Agda.Builtin.Bool               using (Bool)
+open import Agda.Builtin.List               using (List)
+open import Agda.Builtin.Maybe              using (Maybe)
 open import Agda.Primitive
-open import Ffi.Hs.-base.Unit      using (⊤)
-open import Ffi.Hs.Control.DeepSeq using (NFData)
-open import Ffi.Hs.Data.Int        using (Int; Int64)
-open import Ffi.Hs.Data.Ord        using (Ordering)
-open import Ffi.Hs.Data.Tuple      using (Tuple2)
-open import Ffi.Hs.Data.Word       using (Word8)
-open import Ffi.Hs.GHC.Stack       using (HasCallStack)
-open import Ffi.Hs.System.IO       using (IO; Handle; FilePath)
+open import Ffi.Hs.-base.Unit               using (⊤)
+open import Ffi.Hs.Control.DeepSeq          using (NFData)
+open import Ffi.Hs.Data.ByteString.Internal using (StrictByteString)
+open import Ffi.Hs.Data.Int                 using (Int; Int64)
+open import Ffi.Hs.Data.Ord                 using (Ordering)
+open import Ffi.Hs.Data.Tuple               using (Tuple2)
+open import Ffi.Hs.Data.Word                using (Word8)
+open import Ffi.Hs.GHC.Stack                using (HasCallStack)
+open import Ffi.Hs.System.IO                using (IO; Handle; FilePath)
 
 {-# FOREIGN GHC
 import qualified Data.ByteString.Lazy
@@ -61,8 +62,8 @@ infixl 9 _!?_
 postulate
     empty           : ByteString
     singleton       : Word8 → ByteString
-    fromChunks      : List ByteString → ByteString
-    toChunks        : ByteString → List ByteString
+    fromChunks      : List StrictByteString → ByteString
+    toChunks        : ByteString → List StrictByteString
     cons            : Word8 → ByteString → ByteString
     cons'           : Word8 → ByteString → ByteString
     snoc            : ByteString → Word8 → ByteString
@@ -173,10 +174,10 @@ postulate
 {-# COMPILE GHC head            = \ AgdaHasCallStack -> Data.ByteString.Lazy.head            #-}
 {-# COMPILE GHC uncons          =                       Data.ByteString.Lazy.uncons          #-}
 {-# COMPILE GHC unsnoc          =                       Data.ByteString.Lazy.unsnoc          #-}
-{-# COMPILE GHC last            =                       Data.ByteString.Lazy.last            #-}
+{-# COMPILE GHC last            = \ AgdaHasCallStack -> Data.ByteString.Lazy.last            #-}
 {-# COMPILE GHC tail            = \ AgdaHasCallStack -> Data.ByteString.Lazy.tail            #-}
 {-# COMPILE GHC init            = \ AgdaHasCallStack -> Data.ByteString.Lazy.init            #-}
-{-# COMPILE GHC null            = \ AgdaHasCallStack -> Data.ByteString.Lazy.null            #-}
+{-# COMPILE GHC null            =                       Data.ByteString.Lazy.null            #-}
 {-# COMPILE GHC length          =                       Data.ByteString.Lazy.length          #-}
 {-# COMPILE GHC map             =                       Data.ByteString.Lazy.map             #-}
 {-# COMPILE GHC reverse         =                       Data.ByteString.Lazy.reverse         #-}
