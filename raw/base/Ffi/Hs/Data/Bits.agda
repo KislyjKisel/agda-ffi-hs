@@ -105,42 +105,46 @@ postulate
 {-# COMPILE GHC _!>>∙_ = \ aℓ a AgdaBits -> (Data.Bits.!>>.) #-}
 {-# COMPILE GHC _!<<∙_ = \ aℓ a AgdaBits -> (Data.Bits.!<<.) #-}
 
-postulate
-    And : Set aℓ → Set aℓ
-    mkAnd : A → And A
-    getAnd : And A → A
 
-    Ior : Set aℓ → Set aℓ
-    mkIor : A → Ior A
-    getIor : Ior A → A
+record And (A : Set aℓ) : Set aℓ where
+    constructor mkAnd
+    field
+        getAnd : A
 
-    Xor : Set aℓ → Set aℓ
-    mkXor : A → Xor A
-    getXor : Xor A → A
+open And public
 
-    Iff : Set aℓ → Set aℓ
-    mkIff : A → Iff A
-    getIff : Iff A → A
+record Ior (A : Set aℓ) : Set aℓ where
+    constructor mkIor
+    field
+        getIor : A
+
+open Ior public
+
+record Xor (A : Set aℓ) : Set aℓ where
+    constructor mkXor
+    field
+        getXor : A
+
+open Xor public
+
+record Iff (A : Set aℓ) : Set aℓ where
+    constructor mkIff
+    field
+        getIff : A
+
+open Iff public
 
 {-# FOREIGN GHC type AgdaAnd aℓ = Data.Bits.And #-}
-{-# COMPILE GHC And = type(1) AgdaAnd #-}
-{-# COMPILE GHC mkAnd  = \ aℓ a -> Data.Bits.mkAnd  #-}
-{-# COMPILE GHC getAnd = \ aℓ a -> Data.Bits.getAnd #-}
+{-# COMPILE GHC And = data(1) AgdaAnd (Data.Bits.And) #-}
 
 {-# FOREIGN GHC type AgdaIor aℓ = Data.Bits.Ior #-}
-{-# COMPILE GHC Ior = type(1) AgdaIor #-}
-{-# COMPILE GHC mkIor  = \ aℓ a -> Data.Bits.mkIor  #-}
-{-# COMPILE GHC getIor = \ aℓ a -> Data.Bits.getIor #-}
+{-# COMPILE GHC Ior = data(1) AgdaIor (Data.Bits.Ior) #-}
 
 {-# FOREIGN GHC type AgdaXor aℓ = Data.Bits.Xor #-}
-{-# COMPILE GHC Xor = type(1) AgdaXor #-}
-{-# COMPILE GHC mkXor  = \ aℓ a -> Data.Bits.mkXor  #-}
-{-# COMPILE GHC getXor = \ aℓ a -> Data.Bits.getXor #-}
+{-# COMPILE GHC Xor = data(1) AgdaXor (Data.Bits.Xor) #-}
 
 {-# FOREIGN GHC type AgdaIff aℓ = Data.Bits.Iff #-}
-{-# COMPILE GHC Iff = type(1) AgdaIff #-}
-{-# COMPILE GHC mkIff  = \ aℓ a -> Data.Bits.mkIff  #-}
-{-# COMPILE GHC getIff = \ aℓ a -> Data.Bits.getIff #-}
+{-# COMPILE GHC Iff = data(1) AgdaIff (Data.Bits.Iff) #-}
 
 postulate
     Bits[A]⇒Eq[A]         : ⦃ Bits A ⦄ → Eq A
