@@ -10,6 +10,7 @@ open import Ffi.Hs.-base.Unit           using (⊤′)
 open import Ffi.Hs.Data.Int             using (Int)
 open import Ffi.Hs.Data.StateVar        using (StateVar)
 open import Ffi.Hs.Data.Vector.Storable using (Vector)
+open import Ffi.Hs.Data.Word            using (Word8)
 open import Ffi.Hs.Foreign.C.Types      using (CInt)
 open import Ffi.Hs.SDL.Internal.Types   using (Window)
 open import Ffi.Hs.SDL.Vect             using (Point; V2)
@@ -238,7 +239,7 @@ postulate
 
     cursorVisible      : StateVar Bool
     activeCursor       : StateVar Cursor
-    createCursor       : ⦃ MonadIO M ⦄ → Vector Bool → Vector Bool → V2 CInt → Point V2 CInt → M (Liftℓ _ Cursor)
+    createCursor       : ⦃ MonadIO M ⦄ → Vector Word8 → Vector Word8 → V2 CInt → Point V2 CInt → M (Liftℓ _ Cursor)
     freeCursor         : ⦃ MonadIO M ⦄ → Cursor → M ⊤′
     createColorCursor  : ⦃ MonadIO M ⦄ → Surface → Point V2 CInt → M (Liftℓ _ Cursor)
     createSystemCursor : ⦃ MonadIO M ⦄ → SystemCursor → M (Liftℓ _ Cursor)
